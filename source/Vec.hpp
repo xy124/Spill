@@ -12,7 +12,7 @@
 #include "Block.hpp"
 #include "FloatRect.hpp"
 
-class CBlockKoord; //vorwärtsdeklaration
+class CBlockKoord; // forward declaration
 class CBlock;
 
 class CVec { //real Koords in Pixels!
