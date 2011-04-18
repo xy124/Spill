@@ -28,7 +28,7 @@ class CLogfile : public TSingleton<CLogfile> {
 		~CLogfile();
 		void CreateLogfile	(const char *LogName);
 		void WriteTopic		(const std::string Topic, int HeadingSize);
-		void Textout		(const std::string Text); //der ursprung allen übels :P gibt Text ohne Umbruchaus!!!! evtl. privaten....
+		void Textout		(const std::string Text); //der ursprung allen Ã¼bels :P gibt Text ohne Umbruchaus!!!! evtl. privaten....
 		void Textout		(int Color, const std::string Text);
 		void Textout		(int Color, bool List, const std::string Text);
 		void fTextout		(const std::string Text, ...);// zum ausgeben von Variablen
