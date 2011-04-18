@@ -3,10 +3,7 @@
 
 #include "Sprite.hpp"
 #include "BlockKoord.hpp"
-
-class CSprite;
-
-class CVec;
+#include "Vec.hpp"
 
 class CBlock { //I don't want to vererben the
 	//Different kinds of blocks:

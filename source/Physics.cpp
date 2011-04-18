@@ -44,12 +44,24 @@ bool CPhysics::doPhysics(CGame * Game) {
 	return true;
 }
 
-bool CPhysics::isCollission(const FloatRect &FR, const CGame * Game) {
+CBlock::BlockType CPhysics::getBlockType(CVec vec, CGame * Game) {
+	CBlockKoord blockKoord;
+	blockKoord = vec.toBlockKoord();
+	map<CBlockKoord, CBlock*>::iterator it;
+	it = Game->m_Gameboard.find(blockKoord);
+	if (it != (Game->m_Gameboard.end)) { //vec existiert tatsächlich!
+		CBlock::BlockType res = it->second->getBlockType();
+		return res;
+	}
+	return CBlock::NORMAL;
+}
+
+bool CPhysics::isCollission(const FloatRect &FR, CGame * Game) {
 	//TODO wir überprüfen nur die ecken!
-	CBlock::BlockType BT_TopLeft  = getBlockType(CVec(FR)					,	Game);//TODO: game als membervariable!
-	CBlock::BlockType BT_TopRight = getBlockType(CVec(FR.x+FR.w, FR.y)		,	Game);
-	CBlock::BlockType BT_BotLeft  = getBlockType(CVec(FR.x, FR.y+FR.h)		,	Game);
-	CBlock::BlockType BT_BotRight = getBlockType(CVec(FR.x+FR.w, FR.y+FR.h)	,	Game);
+	CBlock::BlockType BT_TopLeft  = CPhysics::getBlockType(CVec(FR)						,	Game);//TODO: game als membervariable!
+	CBlock::BlockType BT_TopRight = CPhysics::getBlockType(CVec(FR.x+FR.w, FR.y)		,	Game);
+	CBlock::BlockType BT_BotLeft  = CPhysics::getBlockType(CVec(FR.x, FR.y+FR.h)		,	Game);
+	CBlock::BlockType BT_BotRight = CPhysics::getBlockType(CVec(FR.x+FR.w, FR.y+FR.h)	,	Game);
 
 	CBlock::BlockType air = CBlock::AIR;
 	if (    (BT_TopLeft == air) &&
@@ -61,15 +73,5 @@ bool CPhysics::isCollission(const FloatRect &FR, const CGame * Game) {
 		return false;
 }
 
-CBlock::BlockType CPhysics::getBlockType(CVec &vec, const CGame * Game) {
-	CBlockKoord blockKoord;
-	blockKoord = vec.toBlockKoord();
-	map<CBlockKoord, CBlock*>::iterator it;
-	it = Game->m_Gameboard.find(blockKoord);
-	if (it != (Game->m_Gameboard.end)) { //vec existiert tatsächlich!
-		CBlock::BlockType res = it->second->getBlockType();
-		return res;
-	}
-	return CBlock::NORMAL;
-}
+
 

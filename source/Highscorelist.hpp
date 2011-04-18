@@ -5,6 +5,8 @@
 #include <string>
 #include "Worm.hpp"
 #include "Singleton.hpp"
+#include "Logfile.hpp"
+#include <fstream>
 
 class CHighscorelist : public TSingleton<CHighscorelist> {
 	private:

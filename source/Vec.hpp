@@ -10,7 +10,8 @@
 
 #include "BlockKoord.hpp"
 #include "FloatRect.hpp"
-#include "Block.hpp"
+//HINT: Vec DARF NICHT Block includieren da sonst kreisincludierung!
+
 
 //class CBlockKoord; // forward declaration
 

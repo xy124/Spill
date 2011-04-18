@@ -19,8 +19,8 @@ class CPhysics
 	private:
 		static const float Gravity;			//Makes objects fall down
 		static const float BouncingFactor;	//Makes objects colliding with other ones to slow down on bouncing
-		static bool isCollission(const FloatRect &FR, const CGame * Game);
-		static CBlock::BlockType getBlockType(CVec &vec, const CGame * Game);
+		static bool isCollission(const FloatRect &FR, CGame * Game);//MBE eigentlich const was....
+		static CBlock::BlockType getBlockType(CVec vec, CGame * Game);
 
 	public:
 

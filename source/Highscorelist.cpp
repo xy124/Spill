@@ -1,7 +1,4 @@
 #include "Highscorelist.hpp"
-#include "Logfile.hpp"
-#include <fstream>
-#include <map>
 #define HIGHSCORESIZE 15
 //die besten 15 sind in der Highscoreliste aufgeführt
 
