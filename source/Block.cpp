@@ -2,20 +2,22 @@
 
 
 const int CBlock::BlockCosts[5] = {0, 5, 10, 10, 10}; //TODO!!!
+
+//DECLARATION: static CSprite * m_pBlockSprites[5];
 void CBlock::InitBlockSprites() {
 	//CBlock::m_pBlockSprites[5] = { //darf nciht const sein da ja ->render und so davon aufgerufen wird!
-	CBlock::m_pBlockSprites[0] = new CSprite("BlockAir.bmp");
-	CBlock::m_pBlockSprites[1] = new CSprite("BlockNormal.bmp");
-	CBlock::m_pBlockSprites[2] = new CSprite("BlockShooting.bmp");
-	CBlock::m_pBlockSprites[3] = new CSprite("BlockJumpboard.bmp");
-	CBlock::m_pBlockSprites[4] = new CSprite("BlockInvisible.bmp");
+	m_pBlockSprites[0] = new CSprite("BlockAir.bmp");
+	m_pBlockSprites[1] = new CSprite("BlockNormal.bmp");
+	m_pBlockSprites[2] = new CSprite("BlockShooting.bmp");
+	m_pBlockSprites[3] = new CSprite("BlockJumpboard.bmp");
+	m_pBlockSprites[4] = new CSprite("BlockInvisible.bmp");
 }
 
 void CBlock::FreeBlockSprites() {
 	for (int i=0; i<5; i++) {
-		if (CBlock::m_pBlockSprites[i] != NULL) {
-			delete (CBlock::m_pBlockSprites[i]);
-			CBlock::m_pBlockSprites[i] = NULL;
+		if (m_pBlockSprites[i] != NULL) {
+			delete (m_pBlockSprites[i]);
+			m_pBlockSprites[i] = NULL;
 		}
 	}
 }

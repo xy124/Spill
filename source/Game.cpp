@@ -94,7 +94,7 @@ void CGame::quit() {
 	//free Blockimages!
 
 	vector<CWorm*>::iterator wit;
-	for (wit = m_vWorms.begin(); wit<m_vWorms.end(); wit++) {
+	for (wit = m_vWorms.begin(); wit!=m_vWorms.end(); wit++) {
 		if ((*wit)!=NULL) {
 			delete ((*wit));
 			(*wit) = NULL;
@@ -102,8 +102,8 @@ void CGame::quit() {
 	}
 	m_vWorms.clear();
 
-	map<CBlockKoord,CBlock*>::iterator mit;
-	for (mit = m_Gameboard.begin(); mit < m_Gameboard.end(); ++mit) {
+	map<CBlockKoord, CBlock*>::iterator mit;
+	for (mit = m_Gameboard.begin(); mit != m_Gameboard.end(); ++mit) {
 		if (mit->second != NULL) {
 			delete (mit->second);
 			mit->second = NULL;
