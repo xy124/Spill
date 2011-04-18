@@ -34,7 +34,8 @@ C[cc]=g++
 C[c]=gcc
 
 typeset -A Cflags
-Cflags[.]="-I kyotocabinet"
+Cflags[.]="-I source"
+[ "$(uname)" = "Darwin" ] && Cflags[.]+=" -I /Library/Frameworks/SDL.framework/Headers"
 
 # $1 - c/cpp-file
 # will compile the o-file
@@ -51,8 +52,6 @@ function srccompile() {
 
 typeset -A Lflags
 Lflags[.]="-lz"
-Lflags[db-fuse.cpp]="-lfuse"
-[ "$(uname)" = "Darwin" ] && Lflags[db-fuse.cpp]="-lfuse_ino64"
 
 # $1 - c/cpp-file
 # will link all the $OBJS together
@@ -66,26 +65,14 @@ function srclink() {
 	$C[$fext] $OBJS $o -o $b ${(z)Lflags[$f]} ${(z)Lflags[.]} || exit -1
 }
 
-BINS=("test-png-dumpchunks.cpp" "test-png-reader.cpp"
-	"pnginfo.cpp"
-	"db-push.cpp" "db-push-dir.cpp"
-	"db-list-dir.cpp" "db-extract-file.cpp"
-	"db-fuse.cpp")
+BINS=("source/main.cpp")
 
 # compile all sources
 OBJS=()
-for f in *.cpp; do
+for f in source/*.cpp; do
 	srccompile "$f"
 	[[ ${BINS[(i)$f]} -gt ${#BINS} ]] && \
 		OBJS=($OBJS "$BUILDDIR/${f/.cpp/.o}")
-done
-for f in hiredis/*.c; do
-	srccompile "$f"
-	OBJS=($OBJS "$BUILDDIR/${f/.c/.o}")
-done
-for f in kyotocabinet/*.cc; do
-	srccompile "$f"
-	OBJS=($OBJS "$BUILDDIR/${f/.cc/.o}")
 done
 
 mkdir -p bin
