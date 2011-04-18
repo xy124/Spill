@@ -10,6 +10,7 @@
 #include "Block.hpp"
 #include <vector>
 #include <map>
+#include "Worm.hpp"
 
 class CGame;
 
@@ -19,7 +20,7 @@ class CPhysics
 		static const float Gravity;			//Makes objects fall down
 		static const float BouncingFactor;	//Makes objects colliding with other ones to slow down on bouncing
 		static bool isCollission(const FloatRect &FR, const CGame * Game);
-		static CBlock::BlockType getBlockType(const CVec &vec, const CGame * Game);
+		static CBlock::BlockType getBlockType(CVec &vec, const CGame * Game);
 
 	public:
 

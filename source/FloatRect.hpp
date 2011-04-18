@@ -7,8 +7,8 @@
 
 #ifndef FLOATRECT_HPP_
 #define FLOATRECT_HPP_
-#include "Vec.hpp"
-#include <SDL.h>
+/*#include "Vec.hpp"
+#include <SDL.h>*/
 
 struct FloatRect {
 	float x;

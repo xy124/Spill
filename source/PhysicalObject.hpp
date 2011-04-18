@@ -10,8 +10,6 @@
 #include "Vec.hpp"
 #include "FloatRect.hpp"
 
-class CVec;
-
 class CPhysicalObject { //HINT: diese klasse nicht instanzieren!!!!!! nur vererben!!!
 	//HINT: Blocks sind keine PhysicalObjects!!!!!
 	private:

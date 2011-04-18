@@ -11,7 +11,6 @@ void CBlock::InitBlockSprites() {
 			new CSprite("BlockInvisible.bmp")
 	};
 }
-const int CBlock::BlockSize = 20;//Width and height of a block!
 
 CBlock::CBlock(BlockType BT) {
 	m_BlockType = BT;

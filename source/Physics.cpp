@@ -8,7 +8,7 @@ const float CPhysics::BouncingFactor = 0.7f;
 bool CPhysics::doPhysics(CGame * Game) {
 	//Hint: Nur hier sollte der Timer eingesetzt werden!!! und bei animphasen!!
 	vector<CWorm*>::iterator i;
-	for (i = Game->m_vWorms.begin(); i<=Game->m_vWorms.end(); i++) {
+	for (i = Game->m_vWorms.begin(); i<=Game->m_vWorms.end(); ++i) {
 		if ( !(i->getCanMove() && i->isAlive()) )
 			break; //auf zum nächsten Wurm!
 		FloatRect FR = i->getRect();
@@ -49,7 +49,7 @@ bool CPhysics::isCollission(const FloatRect &FR, const CGame * Game) {
 	CBlock::BlockType BT_TopLeft  = getBlockType(CVec(FR)					,	Game);//TODO: game als membervariable!
 	CBlock::BlockType BT_TopRight = getBlockType(CVec(FR.x+FR.w, FR.y)		,	Game);
 	CBlock::BlockType BT_BotLeft  = getBlockType(CVec(FR.x, FR.y+FR.h)		,	Game);
-	CBlock::BlockType BT_BopRight = getBlockType(CVec(FR.x+FR.w, FR.y+FR.h)	,	Game);
+	CBlock::BlockType BT_BotRight = getBlockType(CVec(FR.x+FR.w, FR.y+FR.h)	,	Game);
 
 	CBlock::BlockType air = CBlock::AIR;
 	if (    (BT_TopLeft == air) &&
@@ -61,8 +61,9 @@ bool CPhysics::isCollission(const FloatRect &FR, const CGame * Game) {
 		return false;
 }
 
-CBlock::BlockType CPhysics::getBlockType(const CVec &vec, const CGame * Game) {
-	CBlockKoord blockKoord(vec);
+CBlock::BlockType CPhysics::getBlockType(CVec &vec, const CGame * Game) {
+	CBlockKoord blockKoord;
+	blockKoord = vec.toBlockKoord();
 	map<CBlockKoord, CBlock*>::iterator it;
 	it = Game->m_Gameboard.find(blockKoord);
 	if (it != (Game->m_Gameboard.end)) { //vec existiert tatsächlich!
