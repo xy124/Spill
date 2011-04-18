@@ -12,6 +12,9 @@
 #include "Block.hpp"
 #include "FloatRect.hpp"
 
+class CBlockKoord; //vorwärtsdeklaration
+class CBlock;
+
 class CVec { //real Koords in Pixels!
 	public:
 		float x;

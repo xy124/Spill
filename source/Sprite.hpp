@@ -14,8 +14,8 @@ class CSprite {
 		CSprite(const std::string sBlockFilename); //even fills the Sprite with the fitting Image
 		//TODO ^^Standardcolorkey
 
-		void Load		(const string sFilename);
-		void Load		(const string sFilename, int NumFrames, int FrameWidth, int FrameHight);
+		void Load		(const std::string sFilename);
+		void Load		(const std::string sFilename, int NumFrames, int FrameWidth, int FrameHight);
 		void SetColorKey(int R, int G, int B);// beim Render transparente Farbe
 		void SetPos		(float fXPos, float fYPos);
 		void SetPos		(const CVec &newPos);

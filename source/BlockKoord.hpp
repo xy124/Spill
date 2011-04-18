@@ -5,6 +5,9 @@
 #include "FloatRect.hpp"
 #include "Block.hpp"
 
+class CVec;
+class CBlock;
+
 class CBlockKoord {
 	public:
 		int x;

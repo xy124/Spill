@@ -5,6 +5,8 @@
 #include "PhysicalObject.hpp"
 #include "BlockKoord.hpp"
 
+class CBlockKoord;
+
 class CBlock { //I don't want to vererben the
 	//Different kinds of blocks:
 	public:
