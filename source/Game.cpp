@@ -17,7 +17,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 		m_GBWidth = MAXGAMEBOARDWIDTH;
 		CLogfile::get()->Textout("Can't Create Gameboard with this WIDTH, will create Gameboard with width MAXGAMEBOARDWIDTH<br />");
 	} else
-		m_GBWidth = GameBoardWidth
+		m_GBWidth = GameBoardWidth;
 
 	if (GameBoardHeight > MAXGAMEBOARDHEIGHT) {
 		m_GBHeight = MAXGAMEBOARDHEIGHT;
@@ -51,6 +51,9 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 			it->second->setTeamID(-1);
 		}
 	}
+
+	CBlock::InitBlockSprites();
+
 	m_bIsRunning = true;
 
 }

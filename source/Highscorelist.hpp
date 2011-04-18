@@ -9,7 +9,7 @@
 class CHighscorelist : public TSingleton<CHighscorelist> {
 	private:
 		//				<Punkte, Name>
-		multimap<int, std::string> m_map;
+		std::multimap<int, std::string> m_map;
 	public:		
 		void SaveToFile(char * filename);
 		void LoadFromFile(char * filename);

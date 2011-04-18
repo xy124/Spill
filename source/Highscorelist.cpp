@@ -5,6 +5,8 @@
 #define HIGHSCORESIZE 15
 //die besten 15 sind in der Highscoreliste aufgeführt
 
+using namespace std;
+
 void CHighscorelist::LoadFromFile(char * filename) {
 	ifstream Input(filename, ios::binary);
 	if (Input == NULL) {

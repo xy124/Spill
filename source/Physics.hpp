@@ -11,6 +11,7 @@
 #include <vector>
 #include <map>
 
+class CGame;
 
 class CPhysics
 {
