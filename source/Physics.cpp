@@ -8,7 +8,7 @@ const float CPhysics::BouncingFactor = 0.7f;
 bool CPhysics::doPhysics(CGame * Game) {
 	//Hint: Nur hier sollte der Timer eingesetzt werden!!! und bei animphasen!!
 	vector<CWorm*>::iterator i;
-	for (i = CGame->m_vWorms.begin(); i<=m_vWorms.end(); i++) {
+	for (i = Game->m_vWorms.begin(); i<=m_vWorms.end(); i++) {
 		if ( !(i->getCanMove() && i->isAlive()) )
 			break; //auf zum nächsten Wurm!
 		FloatRect FR = i->getRect();
