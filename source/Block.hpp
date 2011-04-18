@@ -36,6 +36,7 @@ class CBlock { //I don't want to vererben the
 		static const int BlockSize = 20;
 		static CSprite * m_pBlockSprites[5];//TODO hoffe das geht
 		static void InitBlockSprites();
+		static void FreeBlockSprites();
 	private:
 			BlockType m_BlockType;
 			int m_TeamID;

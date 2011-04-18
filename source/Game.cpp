@@ -70,7 +70,7 @@ void CGame::run() {
 		CPhysics::doPhysics(this);
 		//würmer zeichnen!
 		vector<CWorm*>::iterator i;
-		for (i = m_vWorms.begin(); i<=m_vWorms.end(); i++) {
+		for (i = m_vWorms.begin(); i<m_vWorms.end(); i++) {
 			(*i)->update();
 			(*i)->render();
 		}
@@ -86,6 +86,31 @@ void CGame::renderGameboard() {
 		CBlockKoord pos = it->first;
 		it->second->render(pos);
 	}
+}
+
+void CGame::quit() {
+	//DeleteWorms
+	//free Gameboard
+	//free Blockimages!
+
+	vector<CWorm*>::iterator wit;
+	for (wit = m_vWorms.begin(); wit<m_vWorms.end(); wit++) {
+		if ((*wit)!=NULL) {
+			delete ((*wit));
+			(*wit) = NULL;
+		}
+	}
+	m_vWorms.clear();
+
+	map<CBlockKoord,CBlock*>::iterator mit;
+	for (mit = m_Gameboard.begin(); mit < m_Gameboard.end(); ++mit) {
+		if (mit->second != NULL) {
+			delete (mit->second);
+			mit->second = NULL;
+		}
+	}
+
+	CBlock::FreeBlockSprites();
 }
 
 CGame::~CGame() {
