@@ -2,7 +2,6 @@
 #define __CLOGFILE
 
 
-#include <windows.h>
 #include <stdio.h>
 #include "Singleton.hpp"
 #include <string>
