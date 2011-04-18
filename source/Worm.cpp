@@ -1,5 +1,7 @@
 #include "Worm.hpp"
 
+using namespace std;
+
 
 CWorm::CWorm(int WormID) {
 	CWorm(WormID, 0, 0, WC_RED);	

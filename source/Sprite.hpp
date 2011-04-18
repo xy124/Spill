@@ -6,6 +6,8 @@
 #include "Logfile.hpp"
 #include "Vec.hpp"
 
+class CVec;
+
 class CSprite {
 	public:
 		CSprite			(void);

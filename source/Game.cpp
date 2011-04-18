@@ -17,13 +17,13 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 		m_GBWidth = MAXGAMEBOARDWIDTH;
 		CLogfile::get()->Textout("Can't Create Gameboard with this WIDTH, will create Gameboard with width MAXGAMEBOARDWIDTH<br />");
 	} else
-		m_GBWidth = GameBoardSizeX;
+		m_GBWidth = GameBoardWidth
 
 	if (GameBoardHeight > MAXGAMEBOARDHEIGHT) {
 		m_GBHeight = MAXGAMEBOARDHEIGHT;
 		CLogfile::get()->Textout("Can't Create Gameboard with this HEIGHT, will create Gameboard with HEIGHT MAXGAMEBOARDHEIGHT<br />");
 	} else
-		m_GBHeight = GameBoardSizeY;
+		m_GBHeight = GameBoardHeight;
 
 	g_pLogfile->Textout("Created Gameboard <br />");
 
@@ -33,7 +33,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	for (int x=0; x<m_GBWidth; x++) {	//Das gesamte Gameboard zu Luft machen
 		for (int y=0; y<m_GBHeight; y++) {	
 			CBlockKoord pos(x,y);						
-			Gamefield = make_pair( pos, new CBlock(AIR));
+			Gamefield = make_pair( pos, new CBlock(CBlock::AIR));
 			m_Gameboard.insert(Gamefield);
 		}
 	}
@@ -51,10 +51,6 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 			it->second->setTeamID(-1);
 		}
 	}
-	//TODO: unschön die blocks hier zu laden
-	//FIXME eigentlich kein pointer, wozu also das p im namen???
-	CBlock::m_pBlockSprites.
-
 	m_bIsRunning = true;
 
 }
@@ -104,11 +100,6 @@ int CGame::getGBWidth() const
     return m_GBWidth;
 }
 
-vector<CWorm*> CGame::getVWorms() const
-{
-    return m_vWorms;
-}
-
 void CGame::setGBHeight(int m_GBHeight)
 {
     this->m_GBHeight = m_GBHeight;
@@ -117,10 +108,5 @@ void CGame::setGBHeight(int m_GBHeight)
 void CGame::setGBWidth(int m_GBWidth)
 {
     this->m_GBWidth = m_GBWidth;
-}
-
-void CGame::setVWorms(vector<CWorm*> m_vWorms)
-{
-    this->m_vWorms = m_vWorms;
 }
 

@@ -7,6 +7,8 @@
 
 class CBlockKoord;
 
+class CSprite;
+
 class CBlock { //I don't want to vererben the
 	//Different kinds of blocks:
 	public:
@@ -36,7 +38,7 @@ class CBlock { //I don't want to vererben the
 
 		static const int BlockCosts[5]; //The index is a Blocktype!
 		static const int BlockSize;
-		static CSprite m_pBlockSprites[5];//TODO eigentlich will ich die als zeiger
+		static const CSprite * m_pBlockSprites[5];//TODO hoffe das geht
 	private:
 			BlockType m_BlockType;
 			int m_TeamID;

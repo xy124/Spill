@@ -28,6 +28,10 @@ class CVec { //real Koords in Pixels!
 					x = fr.x;
 					y = fr.y;
 		}
+		CVec(const CBlockKoord blockKoord) {
+			x = CBlock::BlockSize * blockKoord.x;
+			y = CBlock::BlockSize * blockKoord.y;
+		}
 
 
 	//wozu ist nur das zweite const in der folgenden zeile???
