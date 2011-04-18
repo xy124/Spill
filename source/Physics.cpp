@@ -9,10 +9,10 @@ bool CPhysics::doPhysics(CGame * Game) {
 	//Hint: Nur hier sollte der Timer eingesetzt werden!!! und bei animphasen!!
 	vector<CWorm*>::iterator i;
 	for (i = Game->m_vWorms.begin(); i<=Game->m_vWorms.end(); ++i) {
-		if ( !(i->getCanMove() && i->isAlive()) )
+		if ( !((*i)->getCanMove() && (*i)->isAlive()) )
 			break; //auf zum nächsten Wurm!
-		FloatRect FR = i->getRect();
-		CVec dir = i->getDir();
+		FloatRect FR = (*i)->getRect();
+		CVec dir = (*i)->getDir();
 		//Fallbeschleunigung dazu!
 		dir.y += Gravity*g_pTimer->getElapsed(); //graviy muss nach unten zeigen...
 
@@ -47,9 +47,9 @@ bool CPhysics::doPhysics(CGame * Game) {
 CBlock::BlockType CPhysics::getBlockType(CVec vec, CGame * Game) {
 	CBlockKoord blockKoord;
 	blockKoord = vec.toBlockKoord();
-	map<CBlockKoord, CBlock*>::iterator it;
+	std::map<CBlockKoord,CBlock*>::iterator it;
 	it = Game->m_Gameboard.find(blockKoord);
-	if (it != (Game->m_Gameboard.end)) { //vec existiert tatsächlich!
+	if (it != Game->m_Gameboard.end()) { //vec existiert tatsächlich!
 		CBlock::BlockType res = it->second->getBlockType();
 		return res;
 	}

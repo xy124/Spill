@@ -2,14 +2,16 @@
 #ifndef _PHYSICS_HPP_
 #define _PHYSICS_HPP_
 
+#include <vector>
+#include <map>
 #include "Game.hpp"
 #include "Timer.hpp"
 #include "FloatRect.hpp"
 #include "Vec.hpp"
 #include "BlockKoord.hpp"
 #include "Block.hpp"
-#include <vector>
-#include <map>
+
+
 #include "Worm.hpp"
 
 class CGame;
