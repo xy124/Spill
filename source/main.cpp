@@ -16,7 +16,7 @@ int main (int argc, char *argv[]) {
 		return (0); //Fehler werden schon in Framework selbst abgehandelt!
 
 	//TODO: Start game selected in Menu!
-	CGame game(1,40,30); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap wäre per new)
+	CGame game(1,40,30); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap wï¿½re per new)
 	//^^ergibt nur 1 bildschirmvoll, da 40*BlockSize=800 und co...
 
 	game.run();
