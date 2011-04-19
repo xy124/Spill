@@ -78,7 +78,7 @@ void CLogfile::Textout(int Color, bool List, const std::string Text) {
 }
 
 void CLogfile::fTextout(const std::string Text, ...) {
-	TCHAR buffer[MAX_BUFFER];
+	char buffer[MAX_BUFFER];
 	va_list pArgList;	//hierrein hauts jetzt die übergebenen parameter!
 
 	if (Text.length()+1>MAX_BUFFER) {
@@ -96,7 +96,7 @@ void CLogfile::fTextout(const std::string Text, ...) {
 }
 
 void CLogfile::fTextout(int Color, const std::string Text, ...) {
-	TCHAR buffer[MAX_BUFFER];
+	char buffer[MAX_BUFFER];
 	va_list pArgList;	//hierrein hauts jetzt die übergebenen parameter!
 
 	if (Text.length()+1>MAX_BUFFER) {
@@ -114,7 +114,7 @@ void CLogfile::fTextout(int Color, const std::string Text, ...) {
 }
 
 void CLogfile::fTextout(int Color, bool List, const std::string Text, ...) {
-	TCHAR buffer[MAX_BUFFER];
+	char buffer[MAX_BUFFER];
 	va_list pArgList;	//hierrein hauts jetzt die übergebenen parameter!
 	fTextout("sizeof=%i",sizeof(Text));
 	if (sizeof(Text)>MAX_BUFFER) {
