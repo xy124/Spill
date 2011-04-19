@@ -2,7 +2,7 @@
 #define __SINGLETON
 
 //FIXME
-#define NULL 0
+#include <stddef.h> //definet NULL
 
 template <class T>
 class TSingleton {
