@@ -1,9 +1,11 @@
 #include "Framework.hpp"
 
+using namespace std;
+
 bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bFullscreen) {
 	//alle Systeme die wir brauchen der SDL initialisieren
 	if (SDL_Init (SDL_INIT_VIDEO | SDL_INIT_TIMER) == -1 ) {
-		std::string describtion ("SDL konnte nicht initialisiert werden");
+		string describtion ("SDL konnte nicht initialisiert werden");
 		describtion = describtion + SDL_GetError();
 
 		g_pLogfile->FunctionResult("CFramework::Init", L_FAIL, describtion  );
@@ -23,7 +25,7 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	}
 
 	if (m_pScreen == NULL) {
-		std::string describtion ("Videomodus konnte nicht gesetzt werden");
+		string describtion ("Videomodus konnte nicht gesetzt werden");
 		describtion = describtion + SDL_GetError();
 
 		g_pLogfile->FunctionResult("CFramework::Init", L_FAIL, describtion  );
