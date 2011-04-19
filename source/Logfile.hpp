@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "Singleton.hpp"
 #include <string>
+#include <windows.h>
 
 
 #define MAX_BUFFER 1024
