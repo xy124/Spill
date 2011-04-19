@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "Game.hpp"
 #include "Logfile.hpp"
 #include "Highscorelist.hpp"
