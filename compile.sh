@@ -83,6 +83,6 @@ if [ "$(uname)" = "Darwin" ]; then
 fi
 
 for b in $BINS; do
-	mkdir -p "$(dirname "$b")"
+	mkdir -p "bin/$(dirname "$b")"
 	srclink $b
 done
