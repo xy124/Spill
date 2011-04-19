@@ -46,7 +46,7 @@ void CLogfile::WriteTopic (const std::string Topic, int HeadingSize) {//macht ne
 }
 
 void CLogfile::Textout(const std::string Text) {
-	fprintf(m_Logfile, Text.c_str()); //schreibt den Text in die logfile
+	fprintf(m_Logfile, "%s", Text.c_str()); //schreibt den Text in die logfile
 	fflush(m_Logfile); //erzwingt das schreiben aller ncoh ausstehenden daten, wenns programm abstürtzt weiß man wo...
 }
 
