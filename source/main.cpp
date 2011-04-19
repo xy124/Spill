@@ -5,19 +5,9 @@
 
 #define HIGHSCOREFILE "highscore.hsc"
 
+#include <SDL.h>
 
-
-
-#ifdef _WIN32
-#include <windows.h>
-
-
-//YEAH!: http://www.spieleprogrammierer.de/index.php?page=Thread&threadID=9250
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCMd) {
-#else
-int main() {
-#endif
-//int main (int argc, char *argv[]) {
+int main (int argc, char *argv[]) {
 	CLogfile::get()->CreateLogfile("Logfile.html");
 	CHighscorelist::get()->LoadFromFile(HIGHSCOREFILE);
 	//TODO: show menu
