@@ -32,6 +32,7 @@ typeset -A C
 C[cpp]=g++
 C[cc]=g++
 C[c]=gcc
+C[m]=gcc
 
 typeset -A Cflags
 Cflags[.]="-I source"
@@ -52,6 +53,7 @@ function srccompile() {
 
 typeset -A Lflags
 Lflags[.]="-lz"
+[ "$(uname)" = "Darwin" ] && Lflags[.]+=" -framework SDL -framework Cocoa"
 
 # $1 - c/cpp-file
 # will link all the $OBJS together
@@ -74,6 +76,11 @@ for f in source/*.cpp; do
 	[[ ${BINS[(i)$f]} -gt ${#BINS} ]] && \
 		OBJS=($OBJS "$BUILDDIR/${f/.cpp/.o}")
 done
+
+if [ "$(uname)" = "Darwin" ]; then
+	srccompile "source/SDLmain.m"
+	OBJS=($OBJS "$BUILDDIR/source/SDLmain.o")
+fi
 
 mkdir -p bin
 for b in $BINS; do
