@@ -5,7 +5,7 @@
 
 #define HIGHSCOREFILE "highscore.hsc"
 
-#include <SDL.h>
+
 
 int main (int argc, char *argv[]) {
 	CLogfile::get()->CreateLogfile("Logfile.html");

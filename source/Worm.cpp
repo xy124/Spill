@@ -52,7 +52,8 @@ void CWorm::reset() { //HINT: resettet nicht die Position
 }
 
 void CWorm::render() {
-	m_pWormSprite->SetPos( CVec(getRect()) );
+	CVec newWormPos = CVec(getRect());
+	m_pWormSprite->SetPos( newWormPos );
 	m_pWormSprite->Render(m_fAnimphase);
 }
 

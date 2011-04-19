@@ -7,7 +7,12 @@ CSprite::CSprite(void) {
 }
 
 CSprite::~CSprite(void) {
-	SDL_FreeSurface(m_pImage); //Surface freigeben, nicht per delete!!
+	
+	if (m_pImage != NULL)
+		SDL_FreeSurface(m_pImage); //Surface freigeben, nicht per delete!!
+	else
+		g_pLogfile->Textout("<br />Error on freeing Image!<br />");
+	
 }
 
 void CSprite::Load(const string sFilename) { //Läd nicht animiertes sprite
@@ -74,11 +79,12 @@ void CSprite::Render(float fFrameNumber) { //aktuellen Frame reinrendern..
 }
 
 CSprite::CSprite(const std::string sBlockFilename) {
-	CSprite();
+	//CSprite();
+	m_pScreen = g_pFramework->GetScreen();
 	Load(sBlockFilename);
 }
 
 void CSprite::SetPos(const CVec &newPos) {
-	m_Rect.x = static_cast<int>(newPos.x);
+	m_Rect.x = /*static_cast<int>*/(newPos.x);
 	m_Rect.y = static_cast<int>(newPos.y);
 }
