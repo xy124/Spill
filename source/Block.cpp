@@ -7,11 +7,11 @@ CSprite * CBlock::m_pBlockSprites[5];
 //DECLARATION: static CSprite * m_pBlockSprites[5];
 void CBlock::InitBlockSprites() {
 	//CBlock::m_pBlockSprites[5] = { //darf nciht const sein da ja ->render und so davon aufgerufen wird!
-	m_pBlockSprites[0] = new CSprite("BlockAir.bmp");
-	m_pBlockSprites[1] = new CSprite("BlockNormal.bmp");
-	m_pBlockSprites[2] = new CSprite("BlockShooting.bmp");
-	m_pBlockSprites[3] = new CSprite("BlockJumpboard.bmp");
-	m_pBlockSprites[4] = new CSprite("BlockInvisible.bmp");
+	m_pBlockSprites[0] = new CSprite("data/BlockAir.bmp");
+	m_pBlockSprites[1] = new CSprite("data/BlockNormal.bmp");
+	m_pBlockSprites[2] = new CSprite("data/BlockShooting.bmp");
+	m_pBlockSprites[3] = new CSprite("data/BlockJumpboard.bmp");
+	m_pBlockSprites[4] = new CSprite("data/BlockInvisible.bmp");
 }
 
 void CBlock::FreeBlockSprites() {

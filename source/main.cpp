@@ -12,7 +12,7 @@ int main (int argc, char *argv[]) {
 	CHighscorelist::get()->LoadFromFile(HIGHSCOREFILE);
 	//TODO: show menu
 
-	if (g_pFramework->Init(800, 600, 16, true) == false)
+	if (g_pFramework->Init(800, 600, 16, false) == false) //MBE yum debuggen
 		return (0); //Fehler werden schon in Framework selbst abgehandelt!
 
 	//TODO: Start game selected in Menu!

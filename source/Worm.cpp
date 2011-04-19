@@ -56,7 +56,7 @@ void CWorm::render() {
 	m_pWormSprite->Render(m_fAnimphase);
 }
 
-void CWorm::ProcessMoving() {//FIXME nicht alle Würmer dürfen die selben Tasten nutzen!!!
+void CWorm::ProcessMoving() {//FIXME nicht alle Wï¿½rmer dï¿½rfen die selben Tasten nutzen!!!
 	CVec newDir(0,0);
 	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump()) { //Jump!
 		setCanJump(false);
