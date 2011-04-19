@@ -1,9 +1,6 @@
 #ifndef __SINGLETON
 #define __SINGLETON
 
-//FIXME
-#define NULL 0
-
 template <class T>
 class TSingleton {
 	protected://die erber dürfens nciht überschreiben
