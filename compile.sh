@@ -82,7 +82,7 @@ if [ "$(uname)" = "Darwin" ]; then
 	OBJS=($OBJS "$BUILDDIR/source/SDLmain.o")
 fi
 
-mkdir -p bin
 for b in $BINS; do
+	mkdir -p "$(dirname "$b")"
 	srclink $b
 done
