@@ -1,5 +1,7 @@
 #include "Logfile.hpp"
 
+using namespace std;
+
 
 CLogfile::CLogfile() {} //juhu ein leerer constructor!
 

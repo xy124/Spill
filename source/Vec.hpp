@@ -9,11 +9,12 @@
 #define _CVEC_HPP_
 
 #include "BlockKoord.hpp"
-#include "Block.hpp"
 #include "FloatRect.hpp"
+//HINT: Vec DARF NICHT Block includieren da sonst kreisincludierung!
 
-class CBlockKoord; // forward declaration
-class CBlock;
+
+//class CBlockKoord; // forward declaration
+
 
 class CVec { //real Koords in Pixels!
 	public:
@@ -28,6 +29,12 @@ class CVec { //real Koords in Pixels!
 					x = fr.x;
 					y = fr.y;
 		}
+		CVec(const CBlockKoord blockKoord) {
+			/*x = CBlock::BlockSize * blockKoord.x;
+			y = CBlock::BlockSize * blockKoord.y;*///FIXME
+			x = 20*blockKoord.x;
+			y = 20*blockKoord.y;
+		}
 
 
 	//wozu ist nur das zweite const in der folgenden zeile???
@@ -41,8 +48,8 @@ class CVec { //real Koords in Pixels!
 		}
 
 		CBlockKoord toBlockKoord() {
-			int xx = static_cast<int>(x/(CBlock::BlockSize));
-			int yy = static_cast<int>(y/(CBlock::BlockSize));
+			int xx = static_cast<int>(x/(20/*CBlock::BlockSize*/));
+			int yy = static_cast<int>(y/(20/*CBlock::BlockSize*/));
 			CBlockKoord result(xx, yy);
 			return result;
 		}

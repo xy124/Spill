@@ -1,12 +1,10 @@
 #ifndef _BLOCKKOORD_HPP_
 #define _BLOCKKOORD_HPP_
 
-#include "Vec.hpp"
 #include "FloatRect.hpp"
-#include "Block.hpp"
 
-class CVec;
-class CBlock;
+
+
 
 class CBlockKoord {
 	public:
@@ -40,10 +38,10 @@ class CBlockKoord {
 			return CBlockKoord(x-rhs.x, y-rhs.y);
 		};
 
-		CVec toVec() {
+		/*CVec toVec() {
 			CVec result(CBlock::BlockSize*x, CBlock::BlockSize*y);
 			return (result);
-		};
+		};*/ //Circledeclaration not allowed in c++, use instead constructor of CVec(CBlockKoord)
 			
 };
 

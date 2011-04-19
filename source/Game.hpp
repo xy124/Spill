@@ -4,11 +4,14 @@
 #include "Block.hpp"
 #include "Worm.hpp"
 #include "BlockKoord.hpp"
-#include "Physics.hpp"
 #include <vector>
 #include <map>
 #include "Sprite.hpp"
 #include "Logfile.hpp"
+
+#include "Physics.hpp"
+
+
 
 #define MAXGAMEBOARDWIDTH 500
 #define MAXGAMEBOARDHEIGHT 50
@@ -21,7 +24,7 @@ class CGame
 		int m_GBWidth;
 		int m_GBHeight;
 
-		std::vector<CWorm*> m_vWorms;
+
 		int m_WormAmount;
 
 		bool m_bIsRunning;
@@ -29,6 +32,8 @@ class CGame
 		void renderGameboard();
 
 	public:
+
+		std::vector<CWorm*> m_vWorms;
 		std::map<CBlockKoord,CBlock*> m_Gameboard;
 		CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight);
 		void save(const char *Filename);
@@ -40,10 +45,8 @@ class CGame
 		//Getters and Setters:
 		int getGBHeight() const;
 		int getGBWidth() const;
-		std::vector<CWorm*> getVWorms() const;
 		void setGBHeight(int m_GBHeight);
 		void setGBWidth(int m_GBWidth);
-		void setVWorms(std::vector<CWorm*> m_vWorms);
 };
 
 #endif

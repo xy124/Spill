@@ -3,6 +3,7 @@
 
 
 #include <stdio.h>
+#include <windows.h>
 #include "Singleton.hpp"
 #include <string>
 

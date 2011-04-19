@@ -2,10 +2,8 @@
 #define _BLOCK_HPP
 
 #include "Sprite.hpp"
-#include "PhysicalObject.hpp"
 #include "BlockKoord.hpp"
-
-class CBlockKoord;
+#include "Vec.hpp"
 
 class CBlock { //I don't want to vererben the
 	//Different kinds of blocks:
@@ -35,8 +33,10 @@ class CBlock { //I don't want to vererben the
 		void setBlockType(BlockType BlockType) {m_BlockType = BlockType;};
 
 		static const int BlockCosts[5]; //The index is a Blocktype!
-		static const int BlockSize;
-		static CSprite m_pBlockSprites[5];//TODO eigentlich will ich die als zeiger
+		static const int BlockSize = 20;
+		static CSprite * m_pBlockSprites[5];//TODO hoffe das geht
+		static void InitBlockSprites();
+		static void FreeBlockSprites();
 	private:
 			BlockType m_BlockType;
 			int m_TeamID;

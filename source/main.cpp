@@ -1,7 +1,8 @@
+#include "Framework.hpp"
 #include "Game.hpp"
 #include "Logfile.hpp"
 #include "Highscorelist.hpp"
-#include "Framework.hpp"
+
 
 #define HIGHSCOREFILE "highscore.hsc"
 
@@ -18,7 +19,7 @@ int main (int argc, char *argv[]) {
 	CGame game(1,40,30); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap wäre per new)
 	//^^ergibt nur 1 bildschirmvoll, da 40*BlockSize=800 und co...
 
-	game.run();
+	game.runn();
 
 	game.quit();
 

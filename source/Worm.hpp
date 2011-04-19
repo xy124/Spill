@@ -24,9 +24,9 @@ class CWorm : public CPhysicalObject {
 		int m_Money;
 		int m_Points;		
 		bool m_Alive;
-		string m_Name;
+		std::string m_Name;
 
-		string getWormColorString();
+		std::string getWormColorString();
 
 		CSprite * m_pWormSprite;
 		float m_fAnimphase;
@@ -64,8 +64,8 @@ class CWorm : public CPhysicalObject {
 		int getEnergy() {return m_Energy;};
 		void setEnergy(int Energy) {m_Energy = Energy;};
 
-		string getName() {return m_Name;};
-		void setName(string Name) {m_Name = Name;};
+		std::string getName() {return m_Name;};
+		void setName(std::string Name) {m_Name = Name;};
 
 		bool isAlive();
 		void setName(bool Alive) {m_Alive = Alive;};

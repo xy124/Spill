@@ -1,8 +1,8 @@
 #ifndef __SINGLETON
 #define __SINGLETON
 
+//FIXME
 #define NULL 0
-//FIXME!!!
 
 template <class T>
 class TSingleton {

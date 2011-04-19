@@ -1,5 +1,7 @@
 #include "Worm.hpp"
 
+using namespace std;
+
 
 CWorm::CWorm(int WormID) {
 	CWorm(WormID, 0, 0, WC_RED);	
@@ -121,4 +123,8 @@ void CWorm::update() {
 	ProcessAnim();
 
 	//Physics happens in do physics!
+}
+
+bool CWorm::isAlive() {
+	return m_Alive;
 }
