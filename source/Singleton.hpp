@@ -1,6 +1,8 @@
 #ifndef __SINGLETON
 #define __SINGLETON
 
+#include <cstring> // NULL
+
 template <class T>
 class TSingleton {
 	protected://die erber dürfens nciht überschreiben
