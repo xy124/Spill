@@ -124,3 +124,7 @@ void CWorm::update() {
 
 	//Physics happens in do physics!
 }
+
+bool CWorm::isAlive() {
+	return m_Alive;
+}

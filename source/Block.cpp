@@ -2,6 +2,7 @@
 
 
 const int CBlock::BlockCosts[5] = {0, 5, 10, 10, 10}; //TODO!!!
+CSprite * CBlock::m_pBlockSprites[5];
 
 //DECLARATION: static CSprite * m_pBlockSprites[5];
 void CBlock::InitBlockSprites() {
