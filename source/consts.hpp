@@ -23,7 +23,7 @@
 #define BLOCKCOSTS {0, 5, 10, 10, 10}
 
 //Physics.hpp:
-#define GRAVITY 9.81f
+#define GRAVITY 981.0f
 #define BOUNCINGFACTOR 0.7f
 
 //DATA:

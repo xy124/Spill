@@ -82,7 +82,7 @@ void CGame::run() {
 			(*i)->render();
 		}
 
-		g_pFramework->showDebugValue("Elapsed %f", (g_pTimer->getElapsed()));
+		//g_pFramework->showDebugValue("Elapsed %f", (g_pTimer->getElapsed()));
 		g_pFramework->RenderDebugText();
 		g_pFramework->Flip();
 	}
