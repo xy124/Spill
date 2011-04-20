@@ -116,6 +116,7 @@ bool 			endofText(const std::string& Text);
 void			TrimSpaces(std::string& szLine);
 bool			replace(const std::string& text, const std::string& what, const std::string& with, std::string& result);
 bool			replace(std::string& text, const std::string& what, const std::string& with);
+inline std::string replaceStr(const std::string& txt, const std::string& what, const std::string& with) { std::string ret; replace(txt, what, with, ret); return ret; }
 std::string		replacemax(const std::string& text, const std::string& what, const std::string& with, std::string& result, int max);
 std::string		replacemax(const std::string& text, const std::string& what, const std::string& with, int max);
 std::string		strip(const std::string& text, int width);
