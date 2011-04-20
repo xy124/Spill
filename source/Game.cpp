@@ -67,8 +67,7 @@ void CGame::run() {
 
 		//tasten holen, screen flippen, Zeit holen:
 		g_pFramework->Clear();
-		g_pFramework->Update();
-		g_pTimer->Update();
+		g_pFramework->Update();//Timer und frameworkupdate!
 		ProcessEvents();//reagiert auf excape usw zum beenden!
 		//W�rmer verschieben, abbremsen usw.
 		CPhysics::doPhysics(this);
@@ -83,6 +82,7 @@ void CGame::run() {
 			(*i)->render();
 		}
 
+		g_pFramework->showDebugValue("Elapsed %f", (g_pTimer->getElapsed()));
 		g_pFramework->RenderDebugText();
 		g_pFramework->Flip();
 	}
