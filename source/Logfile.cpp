@@ -54,21 +54,34 @@ static std::string htmlToSimpleOut(const std::string& s) {
 		else if(state == 1) {
 			if(c == '>') {
 			finishTag:
-				if(tag == "br") ret += '\n';
-				else if(tag == "title") ret += "* ";
-				else if(tag == "title/") ret += " *\n";
-				else ret += "\n";
+				if(tag == "br" || tag == "br/") ret += '\n';
+				else if(tag == "title") ret += "Title: ";
+				else if(tag == "/title") ret += "\n";
+				else if(tag.size() == 2 && tag[0] == 'h' && '1' <= tag[1] && tag[1] <= '5') ret += std::string(size_t(6 - (tag[1] - '0')), '*') + " ";
+				else if(tag.size() == 3 && tag.substr(0,2) == "/h" && '1' <= tag[2] && tag[2] <= '5') ret += " " + std::string(size_t(6 - (tag[2] - '0')), '*') + "\n";
+				else if(tag == "a" || tag == "/a") {}
+				else if(tag == "/td") ret += " | ";
+				else if(tag == "/tr") ret += "\n";
+				else if(tag == "/table") {}
 				tag = "";
 				state = 0;
 			}
-			else if(c == '/') {}
+			else if(c == '/') {
+				if(tag != "") {
+					state = 2;
+					goto tagContinued;
+				}
+				else tag += "/";
+			}
 			else if(c == ' ') {
 				if(tag != "") state = 2;
 			}
 			else tag += c;
 		}
 		else if(state == 2) {
-			if(c == '>') goto finishTag;
+		tagContinued:
+			if(c == '/') tag += "/";
+			else if(c == '>') goto finishTag;
 		}
 	}
 	return ret;
@@ -78,7 +91,6 @@ void CLogfile::WriteTopic (const std::string Topic, int HeadingSize) {//macht ne
 	fTextout("<h%i>",HeadingSize);
 	Textout(Topic);
 	fTextout("</h%i>",HeadingSize);
-	cout << "H" << HeadingSize << " " << Topic << endl;
 }
 
 void CLogfile::Textout(const std::string Text) {
