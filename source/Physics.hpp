@@ -1,4 +1,4 @@
-//pragma once heißt deklariere einmal
+//pragma once heiï¿½t deklariere einmal
 #ifndef _PHYSICS_HPP_
 #define _PHYSICS_HPP_
 
@@ -23,7 +23,7 @@ class CPhysics
 		static const float BouncingFactor;	//Makes objects colliding with other ones to slow down on bouncing
 		static bool isCollission(const FloatRect &FR, CGame * Game);//MBE eigentlich const was....
 		static CBlock::BlockType getBlockType(CVec vec, CGame * Game);
-
+		static bool rectCollission(const FloatRect &FR1, const FloatRect &FR2);
 	public:
 
 		static bool doPhysics(CGame * Game); //changes X, Y, of Worms and other objects!, when no collission

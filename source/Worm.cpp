@@ -80,6 +80,7 @@ void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tas
 
 void CWorm::ProcessBuilding() {
 	//TODO!!+Processweapons!!! for attacks of othe blocks!
+
 }
 
 void CWorm::ProcessAnim() {

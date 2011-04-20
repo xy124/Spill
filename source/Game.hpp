@@ -30,6 +30,7 @@ class CGame
 		bool m_bIsRunning;
 
 		void renderGameboard();
+		void ProcessEvents();
 
 	public:
 

@@ -68,6 +68,7 @@ void CGame::run() {
 		//tasten holen, screen flippen, Zeit holen:
 		g_pFramework->Update();
 		g_pTimer->Update();
+		processEvents();//reagiert auf excape usw zum beenden!
 		//W�rmer verschieben, abbremsen usw.
 		CPhysics::doPhysics(this);
 		//w�rmer zeichnen!
@@ -88,6 +89,24 @@ void CGame::renderGameboard() {
 		CBlockKoord pos = it->first;
 		it->second->render(pos);
 	}
+}
+
+void CGame::ProcessEvents() {
+	SDL_Event event;
+	if (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case (SDL_QUIT): {
+				m_bIsRunning = false;
+			} break;
+			case (SDL_KEYDOWN): {
+				switch (event.key.keysym.sym) {
+					case (SDLK_ESCAPE): {
+						m_bIsRunning = false;
+					} break;
+				} //switch event.key.keysym.sym
+			} break;
+		} //Switch event.type
+	} //if
 }
 
 void CGame::quit() {
