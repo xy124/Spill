@@ -65,18 +65,21 @@ void CWorm::render() {
 }
 
 void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
-	CVec newDir(0,0);
+	CVec newDir = getDir();
 	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump()) { //Jump!
 		setCanJump(false);
 		
 		newDir.y = -500.0f; //TODO Jumpfactor = const!!
 	}
 
+	m_isWalking = false;
 	//Left or Right!!
 	if (g_pFramework->KeyDown(SDLK_LEFT) == true) {
 		newDir.x = -300.0f;
+		m_isWalking = true;
 	} else if (g_pFramework->KeyDown(SDLK_RIGHT) == true ) {
 		newDir.x = +300.0f;
+		m_isWalking = true;
 	}
 	setDir(newDir);
 }
@@ -88,7 +91,8 @@ void CWorm::ProcessBuilding() {
 
 void CWorm::ProcessAnim() {
 	//TODO! Nicht immer nur die selbe animation
-	m_fAnimphase += 10.0f*g_pTimer->getElapsed();
+	if (m_isWalking)
+		m_fAnimphase += 10.0f*g_pTimer->getElapsed();
 	if (m_fAnimphase >= 3.0f)
 		m_fAnimphase -= 3.0f;
 	//g_pFramework->showDebugValue("WormAnimPhase: %f", m_fAnimphase);

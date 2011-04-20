@@ -5,7 +5,8 @@ using namespace std;
 bool CPhysics::doPhysics(CGame * Game) {
 	//Hint: Nur hier sollte der Timer eingesetzt werden!!! und bei animphasen!!
 	vector<CWorm*>::iterator i;
-	for (i = Game->m_vWorms.begin(); i<Game->m_vWorms.end(); ++i) {
+	for (i = Game->m_vWorms.begin(); i!=Game->m_vWorms.end(); ++i) {
+		//TODO: != in derartigen schleifen!!!
 		if ( !((*i)->getCanMove() && (*i)->isAlive()) )
 			break; //auf zum n�chsten Wurm!
 		FloatRect FR = (*i)->getRect();
@@ -34,6 +35,10 @@ bool CPhysics::doPhysics(CGame * Game) {
 
 
 		//Wenn keine kollission dann Verschieben !...^^
+		(*i)->setRect(FR);
+
+		(*i)->setDir(dir);
+
 
 		// Kollission mit bildschirmr�ndern!!
 	}
@@ -50,7 +55,7 @@ CBlock::BlockType CPhysics::getBlockType(CVec vec, CGame * Game) {
 		CBlock::BlockType res = it->second->getBlockType();
 		return res;
 	}
-	return CBlock::NORMAL;
+	return CBlock::AIR;
 }
 
 bool CPhysics::rectCollission(const FloatRect &FR1, const FloatRect &FR2) { //überprüft ob sich zwei rects schneiden!
@@ -72,9 +77,9 @@ bool CPhysics::isCollission(const FloatRect &FR, CGame * Game) {
 			(BT_TopRight == air) &&
 			(BT_BotLeft == air) &&
 			(BT_BotRight == air) )
-		return true;
-	 else
 		return false;
+	 else
+		return true;
 }
 
 
