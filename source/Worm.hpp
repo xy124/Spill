@@ -7,8 +7,9 @@
 #include "Sprite.hpp"
 #include <SDL.h>
 #include "Logfile.hpp"
+#include "consts.hpp"
 
-#define MAXENERGY 100
+
 
 class CWorm : public CPhysicalObject {
 	public:

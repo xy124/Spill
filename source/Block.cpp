@@ -1,7 +1,7 @@
 #include "Block.hpp"
 
 
-const int CBlock::BlockCosts[5] = {0, 5, 10, 10, 10}; //TODO!!!
+const int CBlock::BlockCosts[5] = BLOCKCOSTS; //TODO!!!
 CSprite * CBlock::m_pBlockSprites[5];
 
 //DECLARATION: static CSprite * m_pBlockSprites[5];

@@ -2,9 +2,6 @@
 
 using namespace std;
 
-const float CPhysics::Gravity = 9.81f;
-const float CPhysics::BouncingFactor = 0.7f;
-
 bool CPhysics::doPhysics(CGame * Game) {
 	//Hint: Nur hier sollte der Timer eingesetzt werden!!! und bei animphasen!!
 	vector<CWorm*>::iterator i;

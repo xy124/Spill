@@ -45,7 +45,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	//with a GROUND!
 	map<CBlockKoord, CBlock*>::iterator it;
 	for (int x = 0; x < m_GBWidth; x++) {
-		CBlockKoord pos(x,2);
+		CBlockKoord pos(x,18);
 		it = m_Gameboard.find(pos);
 		if (it != m_Gameboard.end()) {
 			it->second->setBlockType(CBlock::NORMAL);
@@ -68,7 +68,7 @@ void CGame::run() {
 		//tasten holen, screen flippen, Zeit holen:
 		g_pFramework->Update();
 		g_pTimer->Update();
-		processEvents();//reagiert auf excape usw zum beenden!
+		ProcessEvents();//reagiert auf excape usw zum beenden!
 		//W�rmer verschieben, abbremsen usw.
 		CPhysics::doPhysics(this);
 		//w�rmer zeichnen!
@@ -103,6 +103,8 @@ void CGame::ProcessEvents() {
 					case (SDLK_ESCAPE): {
 						m_bIsRunning = false;
 					} break;
+					default: //nothing
+						break;
 				} //switch event.key.keysym.sym
 			} break;
 		} //Switch event.type

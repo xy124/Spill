@@ -4,6 +4,7 @@
 #include "Sprite.hpp"
 #include "BlockKoord.hpp"
 #include "Vec.hpp"
+#include "consts.hpp"
 
 class CBlock { //I don't want to vererben the
 	//Different kinds of blocks:
@@ -33,7 +34,7 @@ class CBlock { //I don't want to vererben the
 		void setBlockType(BlockType BlockType) {m_BlockType = BlockType;};
 
 		static const int BlockCosts[5]; //The index is a Blocktype!
-		static const int BlockSize = 20;
+		static const int BlockSize = BLOCKSIZE;
 		static CSprite * m_pBlockSprites[5];//TODO hoffe das geht
 		static void InitBlockSprites();
 		static void FreeBlockSprites();

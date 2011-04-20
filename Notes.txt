@@ -1,0 +1,24 @@
+How to get this project compiling with eclipse - MingW:
+**************************************************************************
+	-you need SDL for MINGW
+	-you need to add the following Paths:
+		INCLUDE: D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL
+		LIB: D:\Daten\Programmierung\SDL-1.2.14_MINGW\lib
+	-LIDS: (in that order...)
+		mingw32
+		SDLmain
+		SDL
+	-if the Debugger cancels because he cant do "gdc --version"
+		go in debugConfigurations and give him the full path to gdc.exe
+			(like C:\Programme\eclipse\mingw\bin\gdb.exe)
+
+
+How to get this project compiling with MSVC++:
+**************************************************************************
+	-!!!!enable CONSOLE-Appilcation in Project-Settings (Linker->System->Subsystem)
+	-Linker-Eingabe needs to have SDLmain.lib SDL.lib in Zusätzliche Abhängigkeiten
+	-extras-Options needs to get added path to SDL-Includes and libs
+	
+			
+			
+		  
