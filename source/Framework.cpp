@@ -59,13 +59,15 @@ void CFramework::Update() {
 	//Timer...
 	g_pTimer->Update();
 
+	//Tastaturstatus ermittlen
+	SDL_PumpEvents();
+}
+
+void CFramework::RenderDebugText() {
 	//DebugText:
 	if (m_DebugValue != "") {
 		SFont_Write(m_pScreen, pGameFont, 0,50, m_DebugValue.c_str());
 	}
-
-	//Tastaturstatus ermittlen
-	SDL_PumpEvents();
 }
 
 bool CFramework::KeyDown(int Key_ID) {

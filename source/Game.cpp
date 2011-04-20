@@ -82,6 +82,8 @@ void CGame::run() {
 			(*i)->update();
 			(*i)->render();
 		}
+
+		g_pFramework->RenderDebugText();
 		g_pFramework->Flip();
 	}
 }

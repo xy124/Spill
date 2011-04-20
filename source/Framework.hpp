@@ -26,6 +26,7 @@ class CFramework : public TSingleton<CFramework> {
 
 
 		void showDebugValue(std::string value);
+		void RenderDebugText();
 
 	private:
 		SDL_Surface * m_pScreen;//Surface f�r Screen TODO: sp�ter trennen - screensurface und weltsurface, screensurface ist immer nur ein bestimmter Ausschnitt von Weltsurface

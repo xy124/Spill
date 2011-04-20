@@ -85,10 +85,10 @@ void CWorm::ProcessBuilding() {
 
 void CWorm::ProcessAnim() {
 	//TODO! Nicht immer nur die selbe animation
-	m_fAnimphase += (20.0f*g_pTimer->getElapsed());
+	m_fAnimphase += (200.0f*g_pTimer->getElapsed());
 	if (m_fAnimphase >= 21.0f)
 		m_fAnimphase -= 21.0f;
-	char wormString[20];
+	 char wormString[20];
 	sprintf (wormString, "%f", m_fAnimphase);
 	string s1 = "WormAnimPhase ";
 	s1 += wormString;
