@@ -71,10 +71,10 @@ BINS=("source/main.cpp")
 
 # compile all sources
 OBJS=()
-for f in source/*.cpp; do
+for f in source/*.cpp source/SFont/*.c; do
 	srccompile "$f"
 	[[ ${BINS[(i)$f]} -gt ${#BINS} ]] && \
-		OBJS=($OBJS "$BUILDDIR/${f/.cpp/.o}")
+		OBJS=($OBJS "$BUILDDIR/${f/.${f##*.}/.o}")
 done
 
 if [ "$(uname)" = "Darwin" ]; then
