@@ -55,6 +55,9 @@ static std::string htmlToSimpleOut(const std::string& s) {
 			if(c == '>') {
 			finishTag:
 				if(tag == "br") ret += '\n';
+				else if(tag == "title") ret += "* ";
+				else if(tag == "title/") ret += " *\n";
+				else ret += "\n";
 				tag = "";
 				state = 0;
 			}
