@@ -39,10 +39,22 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 
 	m_pKeystate = SDL_GetKeyState(NULL);
 	
+	//Init SFont
+	g_pLogfile->Textout("did sth.");
+	string s = _DIRDATA_; s+="/24P_Copperplate_Blue.bmp";
+	g_pLogfile->Textout("<br />"+s);
+	SDL_Surface * pFontImage = SDL_LoadBMP((_DIRDATA_+"/24P_Copperplate_Blue.bmp").c_str());
+	SDL_SetColorKey(pFontImage, SDL_SRCCOLORKEY, SDL_MapRGB(pFontImage->format, 0, 0, 0)); //COLORKEY Black!
+	pGameFont = SFont_InitFont(pFontImage);
+
+	//Init Debugvalue
+	m_DebugValue = "";
+
 	return (true);
 }
 
 void CFramework::Quit() {
+	SFont_FreeFont(pGameFont);
 	SDL_Quit();
 }
 
@@ -54,18 +66,42 @@ void CFramework::Update() {
 	SDL_PumpEvents();
 }
 
+void CFramework::RenderDebugText() {
+	//DebugText:
+	if (m_DebugValue != "") {
+		SFont_Write(m_pScreen, pGameFont, 0,50, m_DebugValue.c_str());
+	}
+}
+
 bool CFramework::KeyDown(int Key_ID) {
 	return (m_pKeystate[Key_ID] ? true : false); //na das is ja mal sinnlos
 }
 
 
-void CFramework::Clear() {//Augabe: Buffer löschen
+void CFramework::Clear() {//Augabe: Buffer lï¿½schen
 	SDL_FillRect (m_pScreen, NULL, SDL_MapRGB(m_pScreen->format, 0, 0, 0));
-	//mit hintergrundfarbe füllen
+	//mit hintergrundfarbe fï¿½llen
 }
 
 void CFramework::Flip() {//surface umschalten, flippen
 	SDL_Flip(m_pScreen);
 }
 
+void CFramework::showDebugValue(const string Text, ...) {
+	char buffer[MAX_BUFFER];
+	va_list pArgList;	//hierrein hauts jetzt die ï¿½bergebenen parameter!
+
+	if (Text.length()+1>MAX_BUFFER) {
+		g_pLogfile->FunctionResult("showDebugValue", L_FAIL, "*Text > MAX_BUFFER!");
+		return;
+	}
+
+	va_start (pArgList, Text); //std::string aus Argumenten erstellen!
+	vsprintf(buffer, Text.c_str(), pArgList);
+	va_end (pArgList);
+
+
+	//erzeugten std::string schreiben:
+	m_DebugValue = buffer;
+}
 

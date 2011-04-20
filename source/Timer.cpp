@@ -10,6 +10,7 @@ CTimer::CTimer(void) {
 //Updated werte die in CTimer gespeichert sind
 void CTimer::Update() {
 	m_fCurTime = SDL_GetTicks() / 1000.0f;
+
 	m_fElapsed = m_fCurTime - m_fLastTime;
 	m_fLastTime = m_fCurTime;
 }

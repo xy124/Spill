@@ -10,6 +10,7 @@
 
 #include "BlockKoord.hpp"
 #include "FloatRect.hpp"
+#include "consts.hpp"
 //HINT: Vec DARF NICHT Block includieren da sonst kreisincludierung!
 
 
@@ -30,10 +31,8 @@ class CVec { //real Koords in Pixels!
 					y = fr.y;
 		}
 		CVec(const CBlockKoord blockKoord) {
-			/*x = CBlock::BlockSize * blockKoord.x;
-			y = CBlock::BlockSize * blockKoord.y;*///FIXME
-			x = 20*blockKoord.x;
-			y = 20*blockKoord.y;
+			x = BLOCKSIZE*blockKoord.x;
+			y = BLOCKSIZE*blockKoord.y;
 		}
 
 
@@ -48,8 +47,8 @@ class CVec { //real Koords in Pixels!
 		}
 
 		CBlockKoord toBlockKoord() {
-			int xx = static_cast<int>(x/(20/*CBlock::BlockSize*/));
-			int yy = static_cast<int>(y/(20/*CBlock::BlockSize*/));
+			int xx = static_cast<int>(x/(BLOCKSIZE));
+			int yy = static_cast<int>(y/(BLOCKSIZE));
 			CBlockKoord result(xx, yy);
 			return result;
 		}

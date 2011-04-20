@@ -8,8 +8,10 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 		CLogfile::get()->Textout("Can't Create so many Players, will create 4<br />");
 	}
 
-	for (int i=1; i<=AmountOfPlayers; i++) {//würmer auffüllen
-		m_vWorms.push_back(new CWorm(i)); //MBE: evtl Teams
+	for (int i=1; i<=AmountOfPlayers; i++) {//wï¿½rmer auffï¿½llen
+		CWorm* pWorm = new CWorm();
+		pWorm->init(i, 40.0f, 40.0f, CWorm::WC_RED); //wir machen alle WÃ¼rmer rot....
+		m_vWorms.push_back(pWorm); //MBE: evtl Teams
 	}
 	m_WormAmount = AmountOfPlayers;
 
@@ -43,7 +45,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	//with a GROUND!
 	map<CBlockKoord, CBlock*>::iterator it;
 	for (int x = 0; x < m_GBWidth; x++) {
-		CBlockKoord pos(x,2);
+		CBlockKoord pos(x,18);
 		it = m_Gameboard.find(pos);
 		if (it != m_Gameboard.end()) {
 			it->second->setBlockType(CBlock::NORMAL);
@@ -64,28 +66,55 @@ void CGame::run() {
 		//Spielen!
 
 		//tasten holen, screen flippen, Zeit holen:
-		g_pFramework->Update();
-		g_pTimer->Update();
-		//Würmer verschieben, abbremsen usw.
+		g_pFramework->Clear();
+		g_pFramework->Update();//Timer und frameworkupdate!
+		ProcessEvents();//reagiert auf excape usw zum beenden!
+		//Wï¿½rmer verschieben, abbremsen usw.
 		CPhysics::doPhysics(this);
-		//würmer zeichnen!
+
+		//render Gameboard before you render worms xD
+		renderGameboard();
+
+		//wï¿½rmer zeichnen!
 		vector<CWorm*>::iterator i;
 		for (i = m_vWorms.begin(); i<m_vWorms.end(); i++) {
 			(*i)->update();
 			(*i)->render();
 		}
 
-		renderGameboard();
+		g_pFramework->showDebugValue("Elapsed %f", (g_pTimer->getElapsed()));
+		g_pFramework->RenderDebugText();
+		g_pFramework->Flip();
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
 
 void CGame::renderGameboard() {
 	map<CBlockKoord, CBlock*>::iterator it;
-	for (it=m_Gameboard.begin() ; it!=m_Gameboard.end(); ++it) {//alle Blöcke rendern!
+	for (it=m_Gameboard.begin() ; it!=m_Gameboard.end(); ++it) {//alle Blï¿½cke rendern!
 		CBlockKoord pos = it->first;
 		it->second->render(pos);
 	}
+}
+
+void CGame::ProcessEvents() {
+	SDL_Event event;
+	if (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case (SDL_QUIT): {
+				m_bIsRunning = false;
+			} break;
+			case (SDL_KEYDOWN): {
+				switch (event.key.keysym.sym) {
+					case (SDLK_ESCAPE): {
+						m_bIsRunning = false;
+					} break;
+					default: //nothing
+						break;
+				} //switch event.key.keysym.sym
+			} break;
+		} //Switch event.type
+	} //if
 }
 
 void CGame::quit() {

@@ -11,16 +11,15 @@
 
 #include "Physics.hpp"
 
+#include "consts.hpp"
 
-
-#define MAXGAMEBOARDWIDTH 500
-#define MAXGAMEBOARDHEIGHT 50
 
 class CPhysics;
 
 class CGame
 {
 	private:
+		//in Blocks:
 		int m_GBWidth;
 		int m_GBHeight;
 
@@ -30,6 +29,7 @@ class CGame
 		bool m_bIsRunning;
 
 		void renderGameboard();
+		void ProcessEvents();
 
 	public:
 

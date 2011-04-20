@@ -3,9 +3,6 @@
 
 #include "FloatRect.hpp"
 
-
-
-
 class CBlockKoord {
 	public:
 		int x;
@@ -38,10 +35,6 @@ class CBlockKoord {
 			return CBlockKoord(x-rhs.x, y-rhs.y);
 		};
 
-		/*CVec toVec() {
-			CVec result(CBlock::BlockSize*x, CBlock::BlockSize*y);
-			return (result);
-		};*/ //Circledeclaration not allowed in c++, use instead constructor of CVec(CBlockKoord)
 			
 };
 
