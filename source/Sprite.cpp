@@ -4,6 +4,14 @@ using namespace std;
 
 CSprite::CSprite(void) {
 	m_pScreen = g_pFramework->GetScreen(); //zeiger auf screen holen
+	m_NumFrames = 0;
+	m_FrameWidth = 0;
+	m_FrameHeight = 0;
+	m_FrameRect.x = 0;
+	m_FrameRect.y = 0;
+	m_FrameRect.w = 0;
+	m_FrameRect.h = 0;
+	m_NumFramesX = 1;
 }
 
 CSprite::~CSprite(void) {
