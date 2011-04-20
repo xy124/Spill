@@ -1,4 +1,6 @@
 #include "Logfile.hpp"
+#include "StringUtils.hpp"
+#include <iostream>
 
 using namespace std;
 
@@ -38,24 +40,55 @@ void CLogfile::CreateLogfile(const char *LogName) {
 	}
 }
 
+static std::string htmlToSimpleOut(const std::string& s) {
+	std::string ret;
+	std::string tag;
+	ret.reserve(s.size());
+	int state = 0;
+	for(size_t i = 0; i < s.size(); ++i) {
+		char c = s[i];
+		if(state == 0) {
+			if(c == '<') state = 1;
+			else ret += c;
+		}
+		else if(state == 1) {
+			if(c == '>') {
+			finishTag:
+				if(tag == "br") ret += '\n';
+				tag = "";
+				state = 0;
+			}
+			else if(c == '/') {}
+			else if(c == ' ') {
+				if(tag != "") state = 2;
+			}
+			else tag += c;
+		}
+		else if(state == 2) {
+			if(c == '>') goto finishTag;
+		}
+	}
+	return ret;
+}
 
 void CLogfile::WriteTopic (const std::string Topic, int HeadingSize) {//macht ne überschrift
 	fTextout("<h%i>",HeadingSize);
 	Textout(Topic);
-	fTextout("</h%i>",HeadingSize);	
+	fTextout("</h%i>",HeadingSize);
+	cout << "H" << HeadingSize << " " << Topic << endl;
 }
 
 void CLogfile::Textout(const std::string Text) {
 	fprintf(m_Logfile, "%s", Text.c_str()); //schreibt den Text in die logfile
 	fflush(m_Logfile); //erzwingt das schreiben aller ncoh ausstehenden daten, wenns programm abstürtzt weiß man wo...
+	cout << htmlToSimpleOut(Text) << flush;
 }
 
 void CLogfile::Textout(int Color, const std::string Text) {
 	Textout(Color, false, Text); //Trick 17, man beachte das false
 }
 
-void CLogfile::Textout(int Color, bool List, const std::string Text) {
-	
+void CLogfile::Textout(int Color, bool List, const std::string Text) {	
 	switch (Color) {
 		case BLACK:
 			Textout("<div style='color: black'>"); break;
