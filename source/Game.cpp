@@ -8,8 +8,10 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 		CLogfile::get()->Textout("Can't Create so many Players, will create 4<br />");
 	}
 
-	for (int i=1; i<=AmountOfPlayers; i++) {//würmer auffüllen
-		m_vWorms.push_back(new CWorm(i)); //MBE: evtl Teams
+	for (int i=1; i<=AmountOfPlayers; i++) {//wï¿½rmer auffï¿½llen
+		CWorm* pWorm = new CWorm();
+		pWorm->init(i, 40.0f, 40.0f, CWorm::WC_RED); //wir machen alle WÃ¼rmer rot....
+		m_vWorms.push_back(pWorm); //MBE: evtl Teams
 	}
 	m_WormAmount = AmountOfPlayers;
 
@@ -66,9 +68,9 @@ void CGame::run() {
 		//tasten holen, screen flippen, Zeit holen:
 		g_pFramework->Update();
 		g_pTimer->Update();
-		//Würmer verschieben, abbremsen usw.
+		//Wï¿½rmer verschieben, abbremsen usw.
 		CPhysics::doPhysics(this);
-		//würmer zeichnen!
+		//wï¿½rmer zeichnen!
 		vector<CWorm*>::iterator i;
 		for (i = m_vWorms.begin(); i<m_vWorms.end(); i++) {
 			(*i)->update();
@@ -82,7 +84,7 @@ void CGame::run() {
 
 void CGame::renderGameboard() {
 	map<CBlockKoord, CBlock*>::iterator it;
-	for (it=m_Gameboard.begin() ; it!=m_Gameboard.end(); ++it) {//alle Blöcke rendern!
+	for (it=m_Gameboard.begin() ; it!=m_Gameboard.end(); ++it) {//alle Blï¿½cke rendern!
 		CBlockKoord pos = it->first;
 		it->second->render(pos);
 	}

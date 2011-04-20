@@ -11,12 +11,13 @@
 #define MAXENERGY 100
 
 class CWorm : public CPhysicalObject {
-	enum WORMCOLORS {
-		WC_RED,
-		WC_BLUE,
-		WC_GREEN,
-		WC_YELLOW
-	};
+	public:
+		enum WORMCOLORS {
+				WC_RED,
+				WC_BLUE,
+				WC_GREEN,
+				WC_YELLOW
+		};
 	private:
 		int m_WormID;
 		WORMCOLORS m_Color;
@@ -34,13 +35,13 @@ class CWorm : public CPhysicalObject {
 		void ProcessMoving();
 		void ProcessBuilding();
 		void ProcessAnim();
-
 	public:
-		//Evtl noch nen Konstruktor ohne Parameter		
-		CWorm(int WormID);
-		CWorm(int WormID, float X, float Y);
-		CWorm(int WormID, float X, float Y, WORMCOLORS WC);
-		CWorm(int WormID, WORMCOLORS WC);
+		//Evtl noch nen Konstruktor ohne Parameter
+		CWorm();
+		void init(int WormID);
+		void init(int WormID, float X, float Y);
+		void init(int WormID, float X, float Y, WORMCOLORS WC);
+		void init(int WormID, WORMCOLORS WC);
 
 		void render();
 		void update();
@@ -72,6 +73,7 @@ class CWorm : public CPhysicalObject {
 
 
 		~CWorm();
+
 		
 };
 

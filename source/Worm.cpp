@@ -2,27 +2,31 @@
 
 using namespace std;
 
-
-CWorm::CWorm(int WormID) {
-	CWorm(WormID, 0, 0, WC_RED);	
+CWorm::CWorm() {
+	m_pWormSprite = NULL;
 }
 
-CWorm::CWorm(int WormID, float X, float Y) {
-	CWorm(WormID, X, Y, WC_RED);
+void CWorm::init(int WormID) {
+	init(WormID, 0, 0, WC_RED);
 }
 
-CWorm::CWorm(int WormID, WORMCOLORS WC){
-	CWorm(WormID, 0, 0, WC);	
+void CWorm::init(int WormID, float X, float Y) {
+	init(WormID, X, Y, WC_RED);
+}
+
+void CWorm::init(int WormID, WORMCOLORS WC){
+	init(WormID, 0, 0, WC);
 }
 
 
-CWorm::CWorm(int WormID, float X, float Y, WORMCOLORS WC) {
+void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	m_WormID = WormID;
 	setCanJump(false);
 	m_Color = WC;
 	m_Money = 0;
 	m_Points = 0;
 	m_Energy = MAXENERGY;
+	setCanMove(true);
 	
 	m_Name = ""; //getName(); --> TODO!!! Abfrage per Eingabe vom User!!!!
 	
