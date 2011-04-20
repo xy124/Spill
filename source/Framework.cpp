@@ -84,8 +84,21 @@ void CFramework::Flip() {//surface umschalten, flippen
 	SDL_Flip(m_pScreen);
 }
 
-void CFramework::showDebugValue(string value) {
-	m_DebugValue = value;
-}
+void CFramework::showDebugValue(const string Text, ...) {
+	char buffer[MAX_BUFFER];
+	va_list pArgList;	//hierrein hauts jetzt die �bergebenen parameter!
 
+	if (Text.length()+1>MAX_BUFFER) {
+		g_pLogfile->FunctionResult("showDebugValue", L_FAIL, "*Text > MAX_BUFFER!");
+		return;
+	}
+
+	va_start (pArgList, Text); //std::string aus Argumenten erstellen!
+	vsprintf(buffer, Text.c_str(), pArgList);
+	va_end (pArgList);
+
+
+	//erzeugten std::string schreiben:
+	m_DebugValue = buffer;
+}
 

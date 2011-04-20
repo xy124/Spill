@@ -8,6 +8,7 @@
 #include <SDL.h>
 
 #include "SFont/SFont.h"
+#include "stdarg.h"
 
 #define g_pFramework CFramework::get()
 
@@ -25,7 +26,7 @@ class CFramework : public TSingleton<CFramework> {
 		SFont_Font * pGameFont;
 
 
-		void showDebugValue(std::string value);
+		void showDebugValue(const std::string Text, ...);
 		void RenderDebugText();
 
 	private:
