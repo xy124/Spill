@@ -21,7 +21,7 @@ class CBlock { //I don't want to vererben the
 		CBlock(BlockType BT);
 		~CBlock() {};
 
-		void render(CBlockKoord &BlockPos);
+		void render(CBlockKoord &MyBlockPos);
 
 		//Getters and Setters:
 		int getTeamID() {return m_TeamID;};

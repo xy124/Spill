@@ -31,8 +31,6 @@ class CVec { //real Koords in Pixels!
 					y = fr.y;
 		}
 		CVec(const CBlockKoord blockKoord) {
-			/*x = CBlock::BlockSize * blockKoord.x;
-			y = CBlock::BlockSize * blockKoord.y;*///FIXME
 			x = BLOCKSIZE*blockKoord.x;
 			y = BLOCKSIZE*blockKoord.y;
 		}

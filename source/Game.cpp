@@ -66,19 +66,23 @@ void CGame::run() {
 		//Spielen!
 
 		//tasten holen, screen flippen, Zeit holen:
+		g_pFramework->Clear();
 		g_pFramework->Update();
 		g_pTimer->Update();
 		ProcessEvents();//reagiert auf excape usw zum beenden!
 		//W�rmer verschieben, abbremsen usw.
 		CPhysics::doPhysics(this);
+
+		//render Gameboard before you render worms xD
+		renderGameboard();
+
 		//w�rmer zeichnen!
 		vector<CWorm*>::iterator i;
 		for (i = m_vWorms.begin(); i<m_vWorms.end(); i++) {
 			(*i)->update();
 			(*i)->render();
 		}
-
-		renderGameboard();
+		g_pFramework->Flip();
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////

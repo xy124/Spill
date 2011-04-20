@@ -11,6 +11,9 @@ How to get this project compiling with eclipse - MingW:
 	-if the Debugger cancels because he cant do "gdc --version"
 		go in debugConfigurations and give him the full path to gdc.exe
 			(like C:\Programme\eclipse\mingw\bin\gdb.exe)
+			
+	-included SFont to print Text --> just files in source are set to be sourcefiles
+		(look at projectproperties)
 
 
 How to get this project compiling with MSVC++:

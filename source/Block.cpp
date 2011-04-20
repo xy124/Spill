@@ -27,8 +27,8 @@ CBlock::CBlock(BlockType BT) {
 	m_BlockType = BT;
 }
 
-void CBlock::render(CBlockKoord &BlockPos) {
-	CVec vec(BlockPos);
+void CBlock::render(CBlockKoord &MyBlockPos) {
+	CVec vec(MyBlockPos);
 	CBlock::m_pBlockSprites[this->m_BlockType]->SetPos(vec);
 	CBlock::m_pBlockSprites[this->m_BlockType]->Render();
 }

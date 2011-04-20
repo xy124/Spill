@@ -7,6 +7,8 @@
 #include <string>
 #include <SDL.h>
 
+#include "SFont/SFont.h"
+
 #define g_pFramework CFramework::get()
 
 class CFramework : public TSingleton<CFramework> {
@@ -20,9 +22,15 @@ class CFramework : public TSingleton<CFramework> {
 		bool KeyDown (int Key_ID);
 		SDL_Surface * GetScreen() {return m_pScreen;}
 
+		SFont_Font * pGameFont;
+
+
+		void showDebugValue(std::string value);
+
 	private:
-		SDL_Surface * m_pScreen;//Surface für Screen TODO: später trennen - screensurface und weltsurface, screensurface ist immer nur ein bestimmter Ausschnitt von Weltsurface
+		SDL_Surface * m_pScreen;//Surface fï¿½r Screen TODO: spï¿½ter trennen - screensurface und weltsurface, screensurface ist immer nur ein bestimmter Ausschnitt von Weltsurface
 		Uint8 *m_pKeystate;	//arraay mit aktuellem Tastaturstatus
+		std::string m_DebugValue;
 };
 
 #endif
