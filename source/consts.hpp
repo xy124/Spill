@@ -26,6 +26,9 @@
 #define GRAVITY 9.81f
 #define BOUNCINGFACTOR 0.7f
 
+//DATA:
+#define _DIRDATA_ std::string("data")
+
 
 
 #endif /* CONSTS_HPP_ */

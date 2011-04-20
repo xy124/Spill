@@ -9,6 +9,7 @@
 
 #include "SFont/SFont.h"
 #include "stdarg.h"
+#include "consts.hpp"
 
 #define g_pFramework CFramework::get()
 

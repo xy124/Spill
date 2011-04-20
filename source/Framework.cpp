@@ -40,7 +40,10 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	m_pKeystate = SDL_GetKeyState(NULL);
 	
 	//Init SFont
-	SDL_Surface * pFontImage = SDL_LoadBMP("data/24P_Copperplate_Blue.bmp");
+	g_pLogfile->Textout("did sth.");
+	string s = _DIRDATA_; s+="/24P_Copperplate_Blue.bmp";
+	g_pLogfile->Textout("<br />"+s);
+	SDL_Surface * pFontImage = SDL_LoadBMP((_DIRDATA_+"/24P_Copperplate_Blue.bmp").c_str());
 	SDL_SetColorKey(pFontImage, SDL_SRCCOLORKEY, SDL_MapRGB(pFontImage->format, 0, 0, 0)); //COLORKEY Black!
 	pGameFont = SFont_InitFont(pFontImage);
 

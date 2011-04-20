@@ -26,6 +26,8 @@ class CWorm : public CPhysicalObject {
 		int m_Money;
 		int m_Points;		
 		bool m_Alive;
+		bool m_isWalking;
+
 		std::string m_Name;
 
 		std::string getWormColorString();

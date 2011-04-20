@@ -15,7 +15,7 @@ class CSprite {
 		//TODO ^^Standardcolorkey
 
 		void Load		(const std::string sFilename);
-		void Load		(const std::string sFilename, int NumFrames, int FrameWidth, int FrameHight);
+		void Load		(const std::string sFilename, int NumFrames, int FrameWidth, int FrameHeight);
 		void SetColorKey(int R, int G, int B);// beim Render transparente Farbe
 		void SetPos		(float fXPos, float fYPos);
 		void SetPos		(const CVec &newPos);
@@ -26,12 +26,12 @@ class CSprite {
 	private:
 		SDL_Surface *m_pScreen;	//Zeiger auf Screen des Framworks
 		SDL_Surface *m_pImage;	//Das eigentliche Bild des Sprites
-		SDL_Rect m_Rect;		//Rect des Sprites, enthält größe und position auf bildschirm wo gerendert wird
-		SDL_Rect m_FrameRect;	//Ausschnitt für Animationsphase, ausschnitt aus Image der gerendert wird
+		SDL_Rect m_Rect;		//Rect des Sprites, enthï¿½lt grï¿½ï¿½e und position auf bildschirm wo gerendert wird
+		SDL_Rect m_FrameRect;	//Ausschnitt fï¿½r Animationsphase, ausschnitt aus Image der gerendert wird
 		int m_NumFrames;		//Anzahl der Animationsphasen
 		int m_FrameWidth;		//Breite einer Animationsphase
-		int m_FrameHeight;		//Höhe einer Animationsphase
-		int m_NumFramesX;			//Woe voeöe Anim-Phasen in X-Richtung ?
+		int m_FrameHeight;		//Hï¿½he einer Animationsphase
+		int m_NumFramesX;			//Woe voeï¿½e Anim-Phasen in X-Richtung ?
 
 };
 
