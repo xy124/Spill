@@ -115,6 +115,8 @@ void CGame::run() {
 		//TODO: je nach spieler...
 		i = m_vWorms.begin(); //hier für spieler 1
 		(*i)->ProcessView();
+
+		g_pFramework->showDebugValue("Fasd: %f", (g_pTimer->getElapsed()) );
 		g_pFramework->BlitView();
 
 
