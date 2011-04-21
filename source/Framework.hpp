@@ -10,6 +10,7 @@
 #include "SFont/SFont.h"
 #include "stdarg.h"
 #include "consts.hpp"
+#include "Vec.hpp"
 
 #define g_pFramework CFramework::get()
 
@@ -26,6 +27,8 @@ class CFramework : public TSingleton<CFramework> {
 
 		SFont_Font * pGameFont;
 
+		void TextOut(std::string Text, int x, int y);
+		void TextOut(std::string Text, CVec Where);
 
 		void showDebugValue(const std::string Text, ...);
 		void RenderDebugText();

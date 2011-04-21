@@ -69,7 +69,7 @@ void CFramework::Update() {
 void CFramework::RenderDebugText() {
 	//DebugText:
 	if (m_DebugValue != "") {
-		SFont_Write(m_pScreen, pGameFont, 0,50, m_DebugValue.c_str());
+		TextOut(m_DebugValue, 0,50);
 	}
 }
 
@@ -104,4 +104,15 @@ void CFramework::showDebugValue(const string Text, ...) {
 	//erzeugten std::string schreiben:
 	m_DebugValue = buffer;
 }
+
+void CFramework::TextOut(std::string Text, int x, int y) {
+	SFont_Write(m_pScreen, pGameFont, x, y, Text.c_str());
+}
+void CFramework::TextOut(std::string Text, CVec Where) {
+	int xx = static_cast<int>(Where.x);
+	int yy = static_cast<int>(Where.y);
+
+	SFont_Write(m_pScreen, pGameFont, xx, yy, Text.c_str());
+}
+
 

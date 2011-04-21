@@ -78,6 +78,9 @@ void CWorm::render() {
 	CVec newWormPos = CVec(getRect());
 	m_pWormSprite->SetPos( newWormPos );
 	m_pWormSprite->Render(m_fAnimphase);
+	char buffer[1024];
+	sprintf(buffer, "Money: %iEur,   Points: %i,   Energy: %i/%i", m_Money, m_Points, m_Energy, MAXENERGY);
+	g_pFramework->TextOut(string(buffer), 0, 0);
 }
 
 void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
