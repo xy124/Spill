@@ -80,7 +80,7 @@ bool CFramework::KeyDown(int Key_ID) {
 
 void CFramework::Clear() {//Augabe: Buffer l�schen
 	SDL_FillRect (m_pScreen, NULL, SDL_MapRGB(m_pScreen->format, 0, 0, 0));
-	//mit hintergrundfarbe f�llen
+	//fill Black
 }
 
 void CFramework::Flip() {//surface umschalten, flippen

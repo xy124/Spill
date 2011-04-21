@@ -39,12 +39,8 @@ void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	m_fAnimphase = 0.0f;
 	m_isWalking = false;
 
-	FloatRect FR; //TODO: per operator!
-	SDL_Rect sdlrect = m_pWormSprite->GetRect();
-	FR.x = sdlrect.x;
-	FR.y = sdlrect.y;
-	FR.w = sdlrect.w;
-	FR.h = sdlrect.h;
+	FloatRect FR;
+	FR = m_pWormSprite->GetRect();
 	setRect(FR);
 	setDir(CVec(0,0));
 
@@ -86,7 +82,7 @@ void CWorm::render() {
 void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
 	CVec newDir = getDir();
 	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump() && !m_bJumpKeyLock) { //Jump!
-		setCanJump(false); //TODO überflüssig da in physic eh immer erstmal false
+		//setCanJump(false); //TODO überflüssig da in physic eh immer erstmal false
 		m_bJumpKeyLock = true;
 
 		if (m_lastCollisionY.BlockType == CBlock::JUMPBOARD)
@@ -124,7 +120,6 @@ void CWorm::ProcessAnim() {
 		m_fAnimphase += 10.0f*g_pTimer->getElapsed();
 	if (m_fAnimphase >= 3.0f)
 		m_fAnimphase -= 3.0f;
-	//g_pFramework->showDebugValue("WormAnimPhase: %f", m_fAnimphase);
 }
 
 CWorm::~CWorm() {

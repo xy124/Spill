@@ -17,7 +17,7 @@ class CBlock { //I don't want to vererben the
 					INVISIBLE
 		};
 
-		CBlock() {}; //TODO: fill it
+		CBlock() {}; //MBE
 		CBlock(BlockType BT);
 		~CBlock() {};
 

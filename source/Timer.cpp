@@ -2,7 +2,7 @@
 
 CTimer::CTimer(void) {
 	//Initialisierung
-	m_fCurTime = 0.0f; // na das ist ja mal komsich, das CurTime != LastTime TODO???
+	m_fCurTime = 0.0f;
 	m_fLastTime = SDL_GetTicks() / 1000.0f;
 	m_fElapsed = 0.0f;
 }

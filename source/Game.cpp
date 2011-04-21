@@ -78,19 +78,20 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 ///////////////////////////////////////////////////////////////////////////////////
 void CGame::run() {
 	while (m_bIsRunning) {
-		//Spielen!
+		//Play!
 
-		//tasten holen, screen flippen, Zeit holen:
-		g_pFramework->Clear();
-		g_pFramework->Update();//Timer und frameworkupdate!
-		ProcessEvents();//reagiert auf excape usw zum beenden!
-		//W�rmer verschieben, abbremsen usw.
-		CPhysics::doPhysics(this);
 
-		//render Gameboard before you render worms xD
+		g_pFramework->Clear(); //Clear current surface
+		g_pFramework->Update();//Update Timer and Framework!
+		ProcessEvents();//react on escape for close...
+
+		//Move Worms, slow them down and so on...
+		g_pPhysics->doPhysics();
+
+		//render gameboard before you render worms xD
 		renderGameboard();
 
-		//w�rmer zeichnen!
+		//Draw Worms and react on keys...
 		vector<CWorm*>::iterator i;
 		for (i = m_vWorms.begin(); i<m_vWorms.end(); i++) {
 			(*i)->update();

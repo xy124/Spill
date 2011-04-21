@@ -2,10 +2,10 @@
 
 using namespace std;
 
-bool CPhysics::doPhysics(CGame * Game) {
+bool CPhysics::doPhysics() {
 	//Hint: Nur hier sollte der Timer eingesetzt werden!!! und bei animphasen!!
 	vector<CWorm*>::iterator i;
-	for (i = Game->m_vWorms.begin(); i<Game->m_vWorms.end(); ++i) {
+	for (i = m_pGame->m_vWorms.begin(); i!=m_pGame->m_vWorms.end(); ++i) {
 		if ( !((*i)->getCanMove() && (*i)->isAlive()) )
 			break; //auf zum n�chsten Wurm!
 		FloatRect FR = (*i)->getRect();
@@ -73,7 +73,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 		//X-Collisions:
 		FR.x += dir.x*g_pTimer->getElapsed();
 		S_Collision XCollision;
-		XCollision = getCollision(FR, Game);
+		XCollision = getCollision(FR);
 		if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
 			FR.x -= dir.x*g_pTimer->getElapsed(); //dann x-Rutschen wieder r�ckg�ngig machen
 			dir.x *= (-1 * XCollision.BouncingFactorX);
@@ -85,7 +85,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 		//Kollission durch y-Verschiebung??
 		FR.y += dir.y*g_pTimer->getElapsed();
 		S_Collision YCollision;
-		YCollision = getCollision(FR, Game);
+		YCollision = getCollision(FR);
 		if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
 			//JumpingBoard...
 			//getBouncingfactor from Blocktype
@@ -115,12 +115,12 @@ bool CPhysics::doPhysics(CGame * Game) {
 	return true;
 }
 
-CBlock::BlockType CPhysics::getBlockType(CVec vec, CGame * Game) {
+CBlock::BlockType CPhysics::getBlockType(CVec vec) {
 	CBlockKoord blockKoord;
 	blockKoord = vec.toBlockKoord();
 	std::map<CBlockKoord,CBlock*>::iterator it;
-	it = Game->m_Gameboard.find(blockKoord);
-	if (it != Game->m_Gameboard.end()) { //vec existiert tats�chlich!
+	it = m_pGame->m_Gameboard.find(blockKoord);
+	if (it != m_pGame->m_Gameboard.end()) { //vec existiert tats�chlich!
 		CBlock::BlockType res = it->second->getBlockType();
 		return res;
 	}
@@ -132,10 +132,8 @@ bool CPhysics::rectCollision(const FloatRect &FR1, const FloatRect &FR2) { //üb
 			&& (FR1.x < FR2.x+FR2.w) && (FR1.x+FR1.w > FR2.x) );
 }
 
-S_Collision CPhysics::getCollision(const FloatRect &FR, CGame * Game) {
-	//TODO Game as member
-	//TODO wir �berpr�fen nur die ecken!
-	//FIXME USE RECTCOLLISION!!!
+S_Collision CPhysics::getCollision(const FloatRect &FR) {
+	//TODO USE RECTCOLLISION!!!
 	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
 	S_Collision result;//init Result:
 	result.BouncingFactorX = 0.0f;
@@ -153,7 +151,7 @@ S_Collision CPhysics::getCollision(const FloatRect &FR, CGame * Game) {
 	vecs[5] = CVec (FR.x+FR.w/2, FR.y+FR.h);
 
 	for (int i=0; i<6; i++) {
-		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i], Game);
+		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i]);
 		if (curType != CBlock::AIR)
 			result.bIsCollision = true;
 		if (CBlock::BlockBouncingX[curType] > result.BouncingFactorX)
@@ -166,8 +164,11 @@ S_Collision CPhysics::getCollision(const FloatRect &FR, CGame * Game) {
 	}
 
 
-
 	return result;
+}
+
+void CPhysics::init(CGame * Game) {
+	m_pGame = Game;
 }
 
 
