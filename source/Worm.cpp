@@ -122,6 +122,27 @@ void CWorm::ProcessAnim() {
 		m_fAnimphase -= 3.0f;
 }
 
+void CWorm::ProcessView() {
+	FloatRect WormRect = getRect();
+	SDL_Rect ViewRect  = g_pFramework->getViewRect();
+
+	if (static_cast<int>(WormRect.x) > ViewRect.x+600) {
+		//move View rect that worm is at 300
+		ViewRect.x = static_cast<int>(WormRect.x) - 600;
+	}
+
+	if (static_cast<int>(WormRect.x) < ViewRect.x + 400)
+		ViewRect.x = static_cast<int>(WormRect.x) - 400;
+
+	if (ViewRect.x + ViewRect.w > g_pFramework->getWorld()->w)
+		ViewRect.x = g_pFramework->getWorld()->w - ViewRect.w;
+
+	if (ViewRect.x < 0)
+		ViewRect.x = 0;
+
+	g_pFramework->setViewRect(ViewRect);
+}
+
 CWorm::~CWorm() {
 	if (m_pWormSprite != NULL) {
 		delete (m_pWormSprite);

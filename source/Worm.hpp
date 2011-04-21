@@ -41,87 +41,89 @@ class CWorm : public CPhysicalObject {
 		void ProcessMoving();
 		void ProcessBuilding();
 		void ProcessAnim();
+
 	public:
-    CWorm();
-    void init(int WormID);
-    void init(int WormID, float X, float Y);
-    void init(int WormID, float X, float Y, WORMCOLORS WC);
-    void init(int WormID, WORMCOLORS WC);
-    void render();
-    void update();
-    void reset();
-    bool isAlive();
-    ~CWorm();
+		CWorm();
+		void init(int WormID);
+		void init(int WormID, float X, float Y);
+		void init(int WormID, float X, float Y, WORMCOLORS WC);
+		void init(int WormID, WORMCOLORS WC);
+		void render();
+		void update();
+		void reset();
+		bool isAlive();
+		void ProcessView();
+		~CWorm();
 
-    int getWormID()
-    {
-        return m_WormID;
-    }
+		int getWormID()
+		{
+			return m_WormID;
+		}
 
-    void setWormID(int WormID)
-    {
-        m_WormID = WormID;
-    }
+		void setWormID(int WormID)
+		{
+			m_WormID = WormID;
+		}
 
-    WORMCOLORS getColor()
-    {
-        return m_Color;
-    }
+		WORMCOLORS getColor()
+		{
+			return m_Color;
+		}
 
-    void setColor(WORMCOLORS Color)
-    {
-        m_Color = Color;
-    }
+		void setColor(WORMCOLORS Color)
+		{
+			m_Color = Color;
+		}
 
-    int getPoints()
-    {
-        return m_Points;
-    }
+		int getPoints()
+		{
+			return m_Points;
+		}
 
-    void setPoints(int Points)
-    {
-        m_Points = Points;
-    }
+		void setPoints(int Points)
+		{
+			m_Points = Points;
+		}
 
-    int getMoney()
-    {
-        return m_Money;
-    }
+		int getMoney()
+		{
+			return m_Money;
+		}
 
-    void setMoney(int Money)
-    {
-        m_Money = Money;
-    }
+		void setMoney(int Money)
+		{
+			m_Money = Money;
+		}
 
-    int getEnergy()
-    {
-        return m_Energy;
-    }
+		int getEnergy()
+		{
+			return m_Energy;
+		}
 
-    void setEnergy(int Energy)
-    {
-        m_Energy = Energy;
-    }
+		void setEnergy(int Energy)
+		{
+			m_Energy = Energy;
+		}
 
-    std::string getName()
-    {
-        return m_Name;
-    }
+		std::string getName()
+		{
+			return m_Name;
+		}
 
-    void setName(std::string Name)
-    {
-        m_Name = Name;
-    }
-
-
-    void setName(bool Alive)
-    {
-        m_Alive = Alive;
-    }
+		void setName(std::string Name)
+		{
+			m_Name = Name;
+		}
 
 
-    S_Collision getLastCollisionY() const;
-    void setLastCollisionY(S_Collision m_lastCollisionY);
+		void setName(bool Alive)
+		{
+			m_Alive = Alive;
+		}
+
+
+		S_Collision getLastCollisionY() const;
+		void setLastCollisionY(S_Collision m_lastCollisionY);
 
 		
 };

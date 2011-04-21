@@ -3,6 +3,8 @@
 using namespace std;
 
 CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
+	g_pFramework->InitWorld(GameBoardWidth * BLOCKSIZE, GameBoardHeight * BLOCKSIZE, 16);
+
 	if (AmountOfPlayers > 4) {
 		AmountOfPlayers = 4;
 		CLogfile::get()->Textout("Can't Create so many Players, will create 4<br />");
@@ -51,7 +53,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	}
 
 	//build a wall
-	for (int y = 0; y < m_GBHeight; y++) {
+	for (int y = 0; y < m_GBHeight-5; y++) {
 		CBlockKoord pos(22,y);
 		BuildBlock(pos, CBlock::SHOOTING, NOBODY, NOBODY);
 	}
@@ -65,6 +67,18 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	pos.x = 4;
 	pos.y = 17;
 	BuildBlock(pos, CBlock::INVISIBLE, NOBODY, NOBODY);
+
+	//"Stairs"
+	pos.x = 19;
+	pos.y = 14;
+	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
+	pos.x = 20;
+	pos.y = 10;
+	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
+	pos.x = 21;
+	pos.y = 7;
+	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
+
 
 
 
@@ -97,6 +111,11 @@ void CGame::run() {
 			(*i)->update();
 			(*i)->render();
 		}
+
+		//TODO: je nach spieler...
+		i = m_vWorms.begin(); //hier für spieler 1
+		(*i)->ProcessView();
+		g_pFramework->BlitView();
 
 
 		g_pFramework->RenderDebugText();

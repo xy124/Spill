@@ -17,14 +17,14 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 
 	//Fullscreen/Windowmode???
 	if (bFullscreen) {
-		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
+		m_pView = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
 										SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 	} else {
-		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
+		m_pView = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
 										SDL_HWSURFACE | SDL_DOUBLEBUF);
 	}
 
-	if (m_pScreen == NULL) {
+	if (m_pView == NULL) {
 		string describtion ("Videomodus konnte nicht gesetzt werden");
 		describtion = describtion + SDL_GetError();
 
@@ -34,6 +34,9 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 
 		return (false);
 	}
+
+	m_ViewRect.w = ScreenWidth;
+	m_ViewRect.h = ScreenHeight;
 
 	//Tastenstatusarray ZEIGER belegen
 
@@ -53,8 +56,16 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	return (true);
 }
 
+bool CFramework::InitWorld(int ScreenWidth, int ScreenHeight, int ColorDepth) {
+	m_pWorld = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth, SDL_HWSURFACE);
+	return (m_pWorld != NULL);
+}
+
 void CFramework::Quit() {
 	SFont_FreeFont(pGameFont);
+//MBE SDL_FreeSurface
+	SDL_FreeSurface(m_pView);
+	SDL_FreeSurface(m_pWorld);
 	SDL_Quit();
 }
 
@@ -79,12 +90,13 @@ bool CFramework::KeyDown(int Key_ID) {
 
 
 void CFramework::Clear() {//Augabe: Buffer l�schen
-	SDL_FillRect (m_pScreen, NULL, SDL_MapRGB(m_pScreen->format, 0, 0, 0));
+	SDL_FillRect (m_pWorld, NULL, SDL_MapRGB(m_pWorld->format, 0, 0, 0));
 	//fill Black
 }
 
 void CFramework::Flip() {//surface umschalten, flippen
-	SDL_Flip(m_pScreen);
+	//SDL_
+	SDL_Flip(m_pView);
 }
 
 void CFramework::showDebugValue(const string Text, ...) {
@@ -106,13 +118,17 @@ void CFramework::showDebugValue(const string Text, ...) {
 }
 
 void CFramework::TextOut(std::string Text, int x, int y) {
-	SFont_Write(m_pScreen, pGameFont, x, y, Text.c_str());
+	SFont_Write(m_pWorld, pGameFont, x, y, Text.c_str());
 }
 void CFramework::TextOut(std::string Text, CVec Where) {
 	int xx = static_cast<int>(Where.x);
 	int yy = static_cast<int>(Where.y);
 
-	SFont_Write(m_pScreen, pGameFont, xx, yy, Text.c_str());
+	SFont_Write(m_pWorld, pGameFont, xx, yy, Text.c_str());
+}
+
+void CFramework::BlitView() {//TODO brauchen wir noch flip wenn wir eh mit 2 views arbeiten???
+	SDL_BlitSurface(m_pWorld, &m_ViewRect, m_pView, NULL);
 }
 
 
