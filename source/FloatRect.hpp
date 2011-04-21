@@ -16,7 +16,7 @@ struct FloatRect {
 	float w;
 	float h;
 
-	FloatRect operator = (const SDL_Rect &rhs) {
+	void operator = (const SDL_Rect &rhs) {
 		x = rhs.x;
 		y = rhs.y;
 		w = rhs.w;
