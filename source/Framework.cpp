@@ -68,23 +68,23 @@ bool CFramework::InitWorld(int WorldWidth, int WorldHeight, int ColorDepth) {
 	/*m_pWorldw = ScreenWidth;
 	m_pWorldh = ScreenHeight;*/
 	//SDL_Surface()
-	m_pWorld;// = new SDL_Surface()
+	//m_pWorld;// = new SDL_Surface()
 
 
 	Uint32 rmask, gmask, bmask, amask;
 
 	    /* SDL interprets each pixel as a 32-bit number, so our masks must depend
 	       on the endianness (byte order) of the machine */
-	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	    rmask = 0xff000000;
-	    gmask = 0x00ff0000;
-	    bmask = 0x0000ff00;
-	    amask = 0x000000ff;
+	#if SDL_BYTEORDER == SDL_BIG_ENDIAN //HINT: AUF 16BIT anpassen!!!!!
+	    rmask = 0xf000;
+	    gmask = 0x0f00;
+	    bmask = 0x00f0;
+	    amask = 0x000f;
 	#else
-	    rmask = 0x000000ff;
-	    gmask = 0x0000ff00;
-	    bmask = 0x00ff0000;
-	    amask = 0xff000000;
+	    rmask = 0x000f;
+	    gmask = 0x00f0;
+	    bmask = 0x0f00;
+	    amask = 0xf000;
 	#endif
 	m_pWorld = SDL_CreateRGBSurface(SDL_HWSURFACE, WorldWidth, WorldHeight, ColorDepth,
 			rmask, gmask, bmask, amask );
