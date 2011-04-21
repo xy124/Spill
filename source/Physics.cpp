@@ -21,7 +21,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 
 
 		//Kollission durch x-Verschiebung??
-		float deltaX = dir.x*g_pTimer->getElapsed();
+		/*float deltaX = dir.x*g_pTimer->getElapsed();
 		if (deltaX > BLOCKSIZE) { //per while alle möglichen blockschritte durchgehen
 			/*float newX = FR.x;
 			while (IdeltaX < deltaX) {
@@ -43,7 +43,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 				IdeltaX += BLOCKSIZE;
 			}*/
 
-
+/*
 		} else {
 			FR.x += deltaX;
 			if (isCollission(FR, Game)) {
@@ -62,9 +62,18 @@ bool CPhysics::doPhysics(CGame * Game) {
 				dir.x *= (-1 * BouncingFactor);
 			}
 
+		}*/
+
+		////////////////////
+		//X-Collissions:
+		FR.x += dir.x*g_pTimer->getElapsed();
+		if (isCollission(FR, Game)) { //kollission durch x-Rutschen?
+			FR.x -= dir.x*g_pTimer->getElapsed(); //dann x-Rutschen wieder r�ckg�ngig machen
+			dir.x *= (-1 * BouncingFactor);
 		}
 
-
+		////////////////////
+		//Y-Collissions:
 		(*i)->setCanJump(false); //kann auf jeden erstmal nciht springen
 		//Kollission durch y-Verschiebung??
 		FR.y += dir.y*g_pTimer->getElapsed();

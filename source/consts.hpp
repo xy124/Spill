@@ -14,6 +14,7 @@
 //Game.hpp:
 #define MAXGAMEBOARDWIDTH 500
 #define MAXGAMEBOARDHEIGHT 50
+#define NOBODY -1
 
 //Worm.hpp:
 #define MAXENERGY 100

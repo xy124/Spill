@@ -42,6 +42,8 @@ class CGame
 		void quit();
 		~CGame();
 
+		bool BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID, int TeamID);
+
 		//Getters and Setters:
 		int getGBHeight() const;
 		int getGBWidth() const;

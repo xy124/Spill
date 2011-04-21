@@ -36,6 +36,8 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 		for (int y=0; y<m_GBHeight; y++) {	
 			CBlockKoord pos(x,y);						
 			Gamefield = make_pair( pos, new CBlock(CBlock::AIR));
+			Gamefield.second->setBuilderID(NOBODY);
+			Gamefield.second->setTeamID(NOBODY);
 			m_Gameboard.insert(Gamefield);
 		}
 	}
@@ -43,16 +45,18 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	//TODO: load World...
 	//ok infact might be good to generate an sensfull empty World at first:
 	//with a GROUND!
-	map<CBlockKoord, CBlock*>::iterator it;
 	for (int x = 0; x < m_GBWidth; x++) {
 		CBlockKoord pos(x,18);
-		it = m_Gameboard.find(pos);
-		if (it != m_Gameboard.end()) {
-			it->second->setBlockType(CBlock::NORMAL);
-			it->second->setBuilderID(-1); //BuilderID -1 means its from levelbuilder!
-			it->second->setTeamID(-1);
-		}
+		BuildBlock(pos, CBlock::AIR, NOBODY, NOBODY);
 	}
+
+	//build a wall
+	for (int y = 0; y < m_GBHeight; y++) {
+		CBlockKoord pos(16,y);
+		BuildBlock(pos, CBlock::AIR, NOBODY, NOBODY);
+	}
+
+
 
 	CBlock::InitBlockSprites();
 
@@ -140,6 +144,17 @@ void CGame::quit() {
 	}
 
 	CBlock::FreeBlockSprites();
+}
+
+bool CGame::BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID, int TeamID) {
+	map<CBlockKoord, CBlock*>::iterator it;
+	it = m_Gameboard.find(Where);
+	if (it != m_Gameboard.end()) {
+		it->second->setBlockType(Type);
+		it->second->setBuilderID(BuilderID);
+		it->second->setTeamID(TeamID);
+		return true;
+	} else return false;
 }
 
 CGame::~CGame() {
