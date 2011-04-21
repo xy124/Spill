@@ -27,6 +27,7 @@ class CWorm : public CPhysicalObject {
 		int m_Points;		
 		bool m_Alive;
 		bool m_isWalking;
+		bool m_bJumpKeyLock;
 
 		std::string m_Name;
 

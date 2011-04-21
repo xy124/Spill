@@ -52,6 +52,7 @@ class CVec { //real Koords in Pixels!
 			CBlockKoord result(xx, yy);
 			return result;
 		}
+
 };
 
 #endif

@@ -66,20 +66,26 @@ void CWorm::render() {
 
 void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
 	CVec newDir = getDir();
-	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump()) { //Jump!
-		setCanJump(false);
-		
+	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump() && !m_bJumpKeyLock) { //Jump!
+		setCanJump(false); //TODO überflüssig da in physic eh immer erstmal false
+		m_bJumpKeyLock = true;
 		newDir.y = -500.0f; //TODO Jumpfactor = const!!
 	}
+
+	if (!g_pFramework->KeyDown(SDLK_UP))
+		m_bJumpKeyLock = false;
+
 
 	m_isWalking = false;
 	//Left or Right!!
 	if (g_pFramework->KeyDown(SDLK_LEFT) == true) {
-		newDir.x = -300.0f;
+		newDir.x += -WORMACCELLERATION;
 		m_isWalking = true;
+		if (newDir.x < -WORMMAXSPEED_X) newDir.x = -WORMMAXSPEED_X;
 	} else if (g_pFramework->KeyDown(SDLK_RIGHT) == true ) {
-		newDir.x = +300.0f;
+		newDir.x += +WORMACCELLERATION;
 		m_isWalking = true;
+		if (newDir.x > WORMMAXSPEED_X) newDir.x = WORMMAXSPEED_X;
 	}
 	setDir(newDir);
 }

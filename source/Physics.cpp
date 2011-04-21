@@ -11,31 +11,82 @@ bool CPhysics::doPhysics(CGame * Game) {
 		FloatRect FR = (*i)->getRect();
 		CVec dir = (*i)->getDir();
 		//Fallbeschleunigung dazu!
+		//HINT: Fallkurve hängt von getTimeelapsed ab!! evtl mit s=g/2t² arbeieten
 		dir.y += Gravity*g_pTimer->getElapsed(); //graviy muss nach unten zeigen...
 
 
 
 		//TODO: wir testen noch keine kollission auf dem weg dahin, nur ob das ziel frei ist!
 		//--> h�ngt also von pcspeed ab!!!
-		//TODO: zudem tun wir so als ob unser Worm nur 1 Feld Gro� w�re. aber das ist ja ok
-		//Kollission rechts, links, oben, unten
+
 
 		//Kollission durch x-Verschiebung??
-		FR.x += dir.x*g_pTimer->getElapsed();
-		if (isCollission(FR, Game)) //kollission durch X-Rutschen?
-			FR.x -= dir.x*g_pTimer->getElapsed(); //dann x-Rutschen wieder r�ckg�ngig machen
-		//TODO: eigentlich muss jez gepr�ft werden wie weit man denn rutschen darf....., wie weits noch geht.
+		float deltaX = dir.x*g_pTimer->getElapsed();
+		if (deltaX > BLOCKSIZE) { //per while alle möglichen blockschritte durchgehen
+			/*float newX = FR.x;
+			while (IdeltaX < deltaX) {
+				FR.x += IdeltaX;
+				if (isCollission(FR, Game)) {
+					//Verschiebung erstmal rückgängig machen
+					FR.x -= IdeltaX;
+					//bis zur letztenblockgrenze zurückschieben
+					if (IdeltaX > 0) { //rechtsverschiebung also nach links zurückschieben
+						CBlockKoord CollisionBlockX = CVec(FR.x + FR.w, 0).toBlockKoord();//!y-Value doesn't matter!!!!
+						FR.x = CVec(CollisionBlockX).x-FR.w -1; //-1 damit nicht gleich wieder kollission
+					} else if (deltaX < 0) {
+						CBlockKoord CollissionBlockX = CVec(FR.x, 0).toBlockKoord();
+						CollissionBlockX.x += 1; //ein block weiter rechts
+						FR.x = CVec(CollissionBlockX).x +1;
+					}
+				}
 
+				IdeltaX += BLOCKSIZE;
+			}*/
+
+
+		} else {
+			FR.x += deltaX;
+			if (isCollission(FR, Game)) {
+				//Verschiebung erstmal rückgängig machen
+				FR.x -= deltaX;
+				//bis zur letztenblockgrenze zurückschieben
+				if (deltaX > 0) { //rechtsverschiebung also nach links zurückschieben
+					CBlockKoord CollisionBlockX = CVec(FR.x + FR.w, 0).toBlockKoord();//!y-Value doesn't matter!!!!
+					FR.x = CVec(CollisionBlockX).x-FR.w -1; //-1 damit nicht gleich wieder kollission
+				} else if (deltaX < 0) {
+					CBlockKoord CollissionBlockX = CVec(FR.x, 0).toBlockKoord();
+					CollissionBlockX.x += 1; //ein block weiter rechts
+					FR.x = CVec(CollissionBlockX).x +1;
+				}
+
+				dir.x *= (-1 * BouncingFactor);
+			}
+
+		}
+
+
+		(*i)->setCanJump(false); //kann auf jeden erstmal nciht springen
 		//Kollission durch y-Verschiebung??
 		FR.y += dir.y*g_pTimer->getElapsed();
-		if (isCollission(FR, Game)) //kollission durch y-Rutschen?
+		if (isCollission(FR, Game)) { //kollission durch y-Rutschen?
 			FR.y -= dir.y*g_pTimer->getElapsed(); //dann y-Rutschen wieder r�ckg�ngig machen
-		//TODO: eigentlich muss jez gepr�ft werden wie weit man denn rutschen darf....., wie weits noch geht.
+			dir.y *= (-1 * BouncingFactor);
+			if (Abs(dir.y) < 6.0f) {
+				(*i)->setCanJump(true);
+			}
+			g_pFramework->showDebugValue("abs Y %f",Abs(dir.y));
+		}
 
+
+		//TODO: falls es noch andere solid-physicalobjets gibt, diese berücksichtigen!!!
 
 		//Wenn keine kollission dann Verschieben !...^^
 
+		//HINT:Reibung://Flugreibung ist Sinnlos!
+		dir.x *= (Friction ) ; //TODO TimeElapsed einrechnen!
 		// Kollission mit bildschirmr�ndern!!
+		(*i)->setDir(dir);
+		(*i)->setRect(FR);
 	}
 
 	return true;
@@ -62,6 +113,7 @@ bool CPhysics::isCollission(const FloatRect &FR, CGame * Game) {
 	//TODO Game as member
 	//TODO wir �berpr�fen nur die ecken!
 	//FIXME USE RECTCOLLISSION!!!
+	//HINT: reicht z.z.T wenn wir die Ecken überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
 	CBlock::BlockType BT_TopLeft  = CPhysics::getBlockType(CVec(FR)						,	Game);
 	CBlock::BlockType BT_TopRight = CPhysics::getBlockType(CVec(FR.x+FR.w, FR.y)		,	Game);
 	CBlock::BlockType BT_BotLeft  = CPhysics::getBlockType(CVec(FR.x, FR.y+FR.h)		,	Game);
@@ -72,9 +124,9 @@ bool CPhysics::isCollission(const FloatRect &FR, CGame * Game) {
 			(BT_TopRight == air) &&
 			(BT_BotLeft == air) &&
 			(BT_BotRight == air) )
-		return true;
-	 else
 		return false;
+	 else
+		return true;
 }
 
 

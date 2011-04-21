@@ -17,6 +17,8 @@
 
 //Worm.hpp:
 #define MAXENERGY 100
+#define WORMMAXSPEED_X 175.0f
+#define WORMACCELLERATION 100.0f
 
 //BLock.hpp:
 #define BLOCKSIZE 20
@@ -24,7 +26,8 @@
 
 //Physics.hpp:
 #define GRAVITY 981.0f
-#define BOUNCINGFACTOR 0.7f
+#define BOUNCINGFACTOR 0.3f
+#define FRICTION 0.8f
 
 //DATA:
 #define _DIRDATA_ std::string("data")
