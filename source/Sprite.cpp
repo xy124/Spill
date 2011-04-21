@@ -23,15 +23,15 @@ CSprite::~CSprite(void) {
 	
 }
 
-void CSprite::Load(const string sFilename) { //Läd nicht animiertes sprite
+void CSprite::Load(const string sFilename) { //Lï¿½d nicht animiertes sprite
 	m_pImage = SDL_LoadBMP(sFilename.c_str());
 
-	//prüfen ob alles glattging
+	//prï¿½fen ob alles glattging
 	if (m_pImage == NULL) {
 		string describtion("Error while Loading "+sFilename);
 		describtion = describtion + SDL_GetError();
 		g_pLogfile->FunctionResult("CSprite::Load", L_FAIL, describtion);
-		//ÄFramework herunterfahren
+		//ï¿½Framework herunterfahren
 		g_pFramework->Quit();
 
 		//gesamtes Spiel beenden
@@ -46,15 +46,19 @@ void CSprite::Load(const string sFilename) { //Läd nicht animiertes sprite
 
 }
 
-void CSprite::Load(const string sFilename, int NumFrames, int FrameWidth, int FrameHeight) { //Läd animierte Frames
+void CSprite::Load(const string sFilename, int NumFrames, int FrameWidth, int FrameHeight) { //Lï¿½d animierte Frames
 	Load(sFilename); //animierte Bmp laden!
 
-	//Rect für Animationsphase initialisieren, x&y kommt später :)
+	//Rect fï¿½r Animationsphase initialisieren, x&y kommt spï¿½ter :)
 	m_NumFrames = NumFrames;
 	m_FrameWidth = FrameWidth;
 	m_FrameHeight = FrameHeight;
 	m_FrameRect.w = FrameWidth;
 	m_FrameRect.h = FrameHeight;
+
+	m_Rect.w = FrameWidth;
+	m_Rect.h = FrameHeight;
+
 	m_NumFramesX = m_pImage->w / m_FrameWidth;
 }
 
@@ -83,7 +87,8 @@ void CSprite::Render(float fFrameNumber) { //aktuellen Frame reinrendern..
 	m_FrameRect.y = row * m_FrameHeight;
 
 	//Ausschnitt rendern
-	SDL_BlitSurface(m_pImage, &m_FrameRect, m_pScreen, &m_Rect); //von dem lettzterem Rect werden nur die x-Ywerte übernommen!!!
+	//HINT:!! if Sprite is animated m_Rect hast not the whole Height/width, just the height/width of one frame!!!
+	SDL_BlitSurface(m_pImage, &m_FrameRect, m_pScreen, &m_Rect); //von dem lettzterem Rect werden nur die x-Ywerte ï¿½bernommen!!!
 }
 
 CSprite::CSprite(const std::string sBlockFilename) {

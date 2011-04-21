@@ -47,20 +47,27 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	//with a GROUND!
 	for (int x = 0; x < m_GBWidth; x++) {
 		CBlockKoord pos(x,18);
-		BuildBlock(pos, CBlock::AIR, NOBODY, NOBODY);
+		BuildBlock(pos, CBlock::SHOOTING, NOBODY, NOBODY);
 	}
 
 	//build a wall
 	for (int y = 0; y < m_GBHeight; y++) {
-		CBlockKoord pos(16,y);
-		BuildBlock(pos, CBlock::AIR, NOBODY, NOBODY);
+		CBlockKoord pos(22,y);
+		BuildBlock(pos, CBlock::NORMAL, NOBODY, NOBODY);
 	}
+
+	//build a single block
+	CBlockKoord pos(14, 14);
+	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
+	pos.x = 3;
+	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
 
 
 
 	CBlock::InitBlockSprites();
 
 	m_bIsRunning = true;
+	g_pLogfile->Textout(RED, true, "End Of CGame::CGame");
 
 }
 
@@ -86,7 +93,7 @@ void CGame::run() {
 			(*i)->render();
 		}
 
-		//g_pFramework->showDebugValue("Elapsed %f", (g_pTimer->getElapsed()));
+
 		g_pFramework->RenderDebugText();
 		g_pFramework->Flip();
 	}

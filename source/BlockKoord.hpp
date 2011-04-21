@@ -2,6 +2,7 @@
 #define _BLOCKKOORD_HPP_
 
 #include "FloatRect.hpp"
+#include "consts.hpp"
 
 class CBlockKoord {
 	public:
@@ -13,8 +14,8 @@ class CBlockKoord {
 			y = Y;
 		}
 		CBlockKoord (FloatRect &FR) {
-			x = static_cast<int>(FR.x);
-			y = static_cast<int>(FR.y);
+			x = static_cast<int>(FR.x/BLOCKSIZE);
+			y = static_cast<int>(FR.y/BLOCKSIZE);
 		}
 		~CBlockKoord() {};
 

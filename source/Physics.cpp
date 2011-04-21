@@ -10,6 +10,12 @@ bool CPhysics::doPhysics(CGame * Game) {
 			break; //auf zum n�chsten Wurm!
 		FloatRect FR = (*i)->getRect();
 		CVec dir = (*i)->getDir();
+
+		CBlockKoord BC = CBlockKoord(FR);
+		//g_pFramework->showDebugValue("WormBlockKoord %i, %i", BC.x, BC.y);
+		g_pFramework->showDebugValue("deltaY %f",dir.y*g_pTimer->getElapsed());
+
+
 		//Fallbeschleunigung dazu!
 		//HINT: Fallkurve hängt von getTimeelapsed ab!! evtl mit s=g/2t² arbeieten
 		dir.y += Gravity*g_pTimer->getElapsed(); //graviy muss nach unten zeigen...
@@ -83,7 +89,6 @@ bool CPhysics::doPhysics(CGame * Game) {
 			if (Abs(dir.y) < 6.0f) {
 				(*i)->setCanJump(true);
 			}
-			g_pFramework->showDebugValue("abs Y %f",Abs(dir.y));
 		}
 
 
@@ -123,10 +128,16 @@ bool CPhysics::isCollission(const FloatRect &FR, CGame * Game) {
 	//TODO wir �berpr�fen nur die ecken!
 	//FIXME USE RECTCOLLISSION!!!
 	//HINT: reicht z.z.T wenn wir die Ecken überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
-	CBlock::BlockType BT_TopLeft  = CPhysics::getBlockType(CVec(FR)						,	Game);
-	CBlock::BlockType BT_TopRight = CPhysics::getBlockType(CVec(FR.x+FR.w, FR.y)		,	Game);
-	CBlock::BlockType BT_BotLeft  = CPhysics::getBlockType(CVec(FR.x, FR.y+FR.h)		,	Game);
-	CBlock::BlockType BT_BotRight = CPhysics::getBlockType(CVec(FR.x+FR.w, FR.y+FR.h)	,	Game);
+	CVec vTopLeft (FR);
+	CVec vTopRight(FR.x+FR.w, FR.y);
+	CVec vBotLeft (FR.x, FR.y+FR.h);
+	CVec vBotRight(FR.x+FR.w, FR.y+FR.h);
+
+
+	CBlock::BlockType BT_TopLeft  = CPhysics::getBlockType(vTopLeft ,	Game);
+	CBlock::BlockType BT_TopRight = CPhysics::getBlockType(vTopRight,	Game);
+	CBlock::BlockType BT_BotLeft  = CPhysics::getBlockType(vBotLeft ,	Game);
+	CBlock::BlockType BT_BotRight = CPhysics::getBlockType(vBotRight,	Game);
 
 	CBlock::BlockType air = CBlock::AIR;
 	if (    (BT_TopLeft == air) &&
