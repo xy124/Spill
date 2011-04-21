@@ -93,35 +93,63 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 void CGame::run() {
 	while (m_bIsRunning) {
 		//Play!
+		g_pLogfile->fTextout(BLUE,"<br/> Lalala <br/>");
 
 
-		g_pFramework->Clear(); //Clear current surface
+		float time;
+		time = SDL_GetTicks();
+		//nimmt unwesentliche Zeit von 1ms:
+		//g_pFramework->Clear(); //Clear current surface
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
 
-		//Move Worms, slow them down and so on...
-		g_pPhysics->doPhysics();
+		time = SDL_GetTicks() - time;
+		g_pLogfile->fTextout("<br />Section1: /%fms", time);
 
+
+
+		time = SDL_GetTicks();
+		//Move Worms, slow them down and so on...
+		g_pPhysics->doPhysics();//schnell!!
+
+		time = SDL_GetTicks() - time;
+		g_pLogfile->fTextout("<br />Section2: /%fms", time);
+
+		time = SDL_GetTicks();
 		//render gameboard before you render worms xD
 		renderGameboard();
+		time = SDL_GetTicks() - time;
+		g_pLogfile->fTextout("<br />Section3: /%fms", time);
 
+		time = SDL_GetTicks();
 		//Draw Worms and react on keys...
 		vector<CWorm*>::iterator i;
 		for (i = m_vWorms.begin(); i<m_vWorms.end(); i++) {
 			(*i)->update();
 			(*i)->render();
 		}
+		time = SDL_GetTicks() - time;
+		g_pLogfile->fTextout("<br />Section4: /%fms", time);
 
+		time = SDL_GetTicks();
 		//TODO: je nach spieler...
 		i = m_vWorms.begin(); //hier für spieler 1
 		(*i)->ProcessView();
+		time = SDL_GetTicks() - time;
+		g_pLogfile->fTextout("<br />Section5: /%fms", time);
+		time = SDL_GetTicks();
 
 		g_pFramework->showDebugValue("Fasd: %f", (g_pTimer->getElapsed()) );
 
-
 		g_pFramework->RenderDebugText();
+		time = SDL_GetTicks() - time;
+		g_pLogfile->fTextout("<br />Section6: /%fms", time);
+		time = SDL_GetTicks();
 
 		g_pFramework->BlitView();
+		time = SDL_GetTicks() - time;
+		g_pLogfile->fTextout("<br />Section7: /%fms", time);
+
 		g_pFramework->Flip();
 	}
 }
