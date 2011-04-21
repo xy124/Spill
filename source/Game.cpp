@@ -117,10 +117,11 @@ void CGame::run() {
 		(*i)->ProcessView();
 
 		g_pFramework->showDebugValue("Fasd: %f", (g_pTimer->getElapsed()) );
-		g_pFramework->BlitView();
 
 
 		g_pFramework->RenderDebugText();
+
+		g_pFramework->BlitView();
 		g_pFramework->Flip();
 	}
 }

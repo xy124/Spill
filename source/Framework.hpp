@@ -18,7 +18,7 @@ class CFramework : public TSingleton<CFramework> {
 	public:
 		bool Init(int ScreenWidth, int ScreenHeight,
 					int ColorDepth, bool bFullscreen);
-		bool InitWorld(int ScreenWidth, int ScreenHeight, int ColorDepth);
+		bool InitWorld(int WorldWidth, int WorldHeight, int ColorDepth);
 		void Quit();
 		void Update();
 		void Clear();
@@ -45,6 +45,7 @@ class CFramework : public TSingleton<CFramework> {
 		Uint8 *m_pKeystate;	//arraay mit aktuellem Tastaturstatus
 		std::string m_DebugValue;
 		SDL_Rect m_ViewRect; //the rect that is shown
+		SDL_Rect m_ScreenRect;
 };
 
 #endif

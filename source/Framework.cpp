@@ -16,6 +16,8 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	}
 
 	//Fullscreen/Windowmode???
+	m_pWorld = NULL;
+
 	if (bFullscreen) {
 		m_pView = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
 										SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
@@ -34,6 +36,11 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 
 		return (false);
 	}
+
+	m_ScreenRect.x = 0;
+	m_ScreenRect.y = 0;
+	m_ScreenRect.w = ScreenWidth;
+	m_ScreenRect.h = ScreenHeight;
 
 	m_ViewRect.w = ScreenWidth;
 	m_ViewRect.h = ScreenHeight;
@@ -56,8 +63,35 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	return (true);
 }
 
-bool CFramework::InitWorld(int ScreenWidth, int ScreenHeight, int ColorDepth) {
-	m_pWorld = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth, SDL_HWSURFACE);
+bool CFramework::InitWorld(int WorldWidth, int WorldHeight, int ColorDepth) {
+
+	/*m_pWorldw = ScreenWidth;
+	m_pWorldh = ScreenHeight;*/
+	//SDL_Surface()
+	m_pWorld;// = new SDL_Surface()
+
+
+	Uint32 rmask, gmask, bmask, amask;
+
+	    /* SDL interprets each pixel as a 32-bit number, so our masks must depend
+	       on the endianness (byte order) of the machine */
+	#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	    rmask = 0xff000000;
+	    gmask = 0x00ff0000;
+	    bmask = 0x0000ff00;
+	    amask = 0x000000ff;
+	#else
+	    rmask = 0x000000ff;
+	    gmask = 0x0000ff00;
+	    bmask = 0x00ff0000;
+	    amask = 0xff000000;
+	#endif
+	m_pWorld = SDL_CreateRGBSurface(SDL_HWSURFACE, WorldWidth, WorldHeight, ColorDepth,
+			rmask, gmask, bmask, amask );
+
+	SDL_DisplayFormat(m_pWorld);
+
+	g_pLogfile->fTextout(RED, "Init m_pWorld, w:%i, h:%i Adress:%i", m_pWorld->w, m_pWorld->h, m_pWorld);
 	return (m_pWorld != NULL);
 }
 
@@ -90,13 +124,15 @@ bool CFramework::KeyDown(int Key_ID) {
 
 
 void CFramework::Clear() {//Augabe: Buffer l�schen
-	SDL_FillRect (m_pWorld, NULL, SDL_MapRGB(m_pWorld->format, 0, 0, 0));
+	SDL_FillRect (m_pWorld, NULL, SDL_MapRGB(m_pWorld->format, 255, 255, 255));
+	SDL_FillRect(m_pView, NULL, SDL_MapRGB(m_pView->format, 128,128,128));
 	//fill Black
 }
 
 void CFramework::Flip() {//surface umschalten, flippen
 	//SDL_
 	SDL_Flip(m_pView);
+	//SDL_Flip(m_pWorld); //hat ja kein doublebuffer...
 }
 
 void CFramework::showDebugValue(const string Text, ...) {
@@ -128,7 +164,8 @@ void CFramework::TextOut(std::string Text, CVec Where) {
 }
 
 void CFramework::BlitView() {//TODO brauchen wir noch flip wenn wir eh mit 2 views arbeiten???
-	SDL_BlitSurface(m_pWorld, &m_ViewRect, m_pView, NULL);
+	if (SDL_BlitSurface(m_pWorld, &m_ViewRect, m_pView, NULL)==0)
+		g_pLogfile->Textout("yes");
 }
 
 
