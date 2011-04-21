@@ -8,6 +8,7 @@
 #include <SDL.h>
 #include "Logfile.hpp"
 #include "consts.hpp"
+#include "Collision.hpp"
 
 
 
@@ -28,6 +29,7 @@ class CWorm : public CPhysicalObject {
 		bool m_Alive;
 		bool m_isWalking;
 		bool m_bJumpKeyLock;
+		S_Collision lastCollision;
 
 		std::string m_Name;
 

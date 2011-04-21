@@ -47,6 +47,11 @@ void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	setRect(FR);
 	setDir(CVec(0,0));
 
+	lastCollision.BlockType = CBlock::AIR;
+	lastCollision.BouncingFactorX = 0.0f;
+	lastCollision.BouncingFactorY = 0.0f;
+	lastCollision.bIsCollision = false;
+
 	m_Alive = true;
 	CLogfile::get()->fTextout("New Worm; ID:%i<br />",m_WormID);
 }
@@ -79,11 +84,11 @@ void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tas
 	m_isWalking = false;
 	//Left or Right!!
 	if (g_pFramework->KeyDown(SDLK_LEFT) == true) {
-		newDir.x += -WORMACCELLERATION;
+		newDir.x += -WORMACCELERATION;
 		m_isWalking = true;
 		if (newDir.x < -WORMMAXSPEED_X) newDir.x = -WORMMAXSPEED_X;
 	} else if (g_pFramework->KeyDown(SDLK_RIGHT) == true ) {
-		newDir.x += +WORMACCELLERATION;
+		newDir.x += +WORMACCELERATION;
 		m_isWalking = true;
 		if (newDir.x > WORMMAXSPEED_X) newDir.x = WORMMAXSPEED_X;
 	}

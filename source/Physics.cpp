@@ -31,7 +31,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 			/*float newX = FR.x;
 			while (IdeltaX < deltaX) {
 				FR.x += IdeltaX;
-				if (isCollission(FR, Game)) {
+				if (isCollision(FR, Game)) {
 					//Verschiebung erstmal rückgängig machen
 					FR.x -= IdeltaX;
 					//bis zur letztenblockgrenze zurückschieben
@@ -39,9 +39,9 @@ bool CPhysics::doPhysics(CGame * Game) {
 						CBlockKoord CollisionBlockX = CVec(FR.x + FR.w, 0).toBlockKoord();//!y-Value doesn't matter!!!!
 						FR.x = CVec(CollisionBlockX).x-FR.w -1; //-1 damit nicht gleich wieder kollission
 					} else if (deltaX < 0) {
-						CBlockKoord CollissionBlockX = CVec(FR.x, 0).toBlockKoord();
-						CollissionBlockX.x += 1; //ein block weiter rechts
-						FR.x = CVec(CollissionBlockX).x +1;
+						CBlockKoord CollisionBlockX = CVec(FR.x, 0).toBlockKoord();
+						CollisionBlockX.x += 1; //ein block weiter rechts
+						FR.x = CVec(CollisionBlockX).x +1;
 					}
 				}
 
@@ -51,7 +51,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 /*
 		} else {
 			FR.x += deltaX;
-			if (isCollission(FR, Game)) {
+			if (isCollision(FR, Game)) {
 				//Verschiebung erstmal rückgängig machen
 				FR.x -= deltaX;
 				//bis zur letztenblockgrenze zurückschieben
@@ -59,9 +59,9 @@ bool CPhysics::doPhysics(CGame * Game) {
 					CBlockKoord CollisionBlockX = CVec(FR.x + FR.w, 0).toBlockKoord();//!y-Value doesn't matter!!!!
 					FR.x = CVec(CollisionBlockX).x-FR.w -1; //-1 damit nicht gleich wieder kollission
 				} else if (deltaX < 0) {
-					CBlockKoord CollissionBlockX = CVec(FR.x, 0).toBlockKoord();
-					CollissionBlockX.x += 1; //ein block weiter rechts
-					FR.x = CVec(CollissionBlockX).x +1;
+					CBlockKoord CollisionBlockX = CVec(FR.x, 0).toBlockKoord();
+					CollisionBlockX.x += 1; //ein block weiter rechts
+					FR.x = CVec(CollisionBlockX).x +1;
 				}
 
 				dir.x *= (-1 * BouncingFactor);
@@ -70,32 +70,31 @@ bool CPhysics::doPhysics(CGame * Game) {
 		}*/
 
 		////////////////////
-		//X-Collissions:
+		//X-Collisions:
 		FR.x += dir.x*g_pTimer->getElapsed();
-		S_Collission XCollission;
-		XCollission = getCollission(FR, Game);
-		if (XCollission.bIsCollission) { //kollission durch x-Rutschen?
+		S_Collision XCollision;
+		XCollision = getCollision(FR, Game);
+		if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
 			FR.x -= dir.x*g_pTimer->getElapsed(); //dann x-Rutschen wieder r�ckg�ngig machen
-			dir.x *= (-1 * XCollission.BouncingFactorY);
+			dir.x *= (-1 * XCollision.BouncingFactorY);
 		}
 
 		////////////////////
-		//Y-Collissions:
+		//Y-Collisions:
 		(*i)->setCanJump(false); //kann auf jeden erstmal nciht springen
 		//Kollission durch y-Verschiebung??
 		FR.y += dir.y*g_pTimer->getElapsed();
-		S_Collission YCollission;
-		YCollission = getCollission(FR, Game);
-		if (YCollission.bIsCollission) { //kollission durch y-Rutschen?
+		S_Collision YCollision;
+		YCollision = getCollision(FR, Game);
+		if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
 			//JumpingBoard...
 			//getBouncingfactor from Blocktype
 			FR.y -= dir.y*g_pTimer->getElapsed(); //dann y-Rutschen wieder r�ckg�ngig machen
-			dir.y *= (-1 * YCollission.BouncingFactorY);//neues Y
-			if (Abs(dir.y) < 6.0f) {
+			dir.y *= (-1 * YCollision.BouncingFactorY);//neues Y
+			if ((Abs(dir.y) < 6.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
 				(*i)->setCanJump(true);
 			}
 		}
-
 
 		//TODO: falls es noch andere solid-physicalobjets gibt, diese berücksichtigen!!!
 
@@ -106,6 +105,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 		// Kollission mit bildschirmr�ndern!!
 		(*i)->setDir(dir);
 		(*i)->setRect(FR);
+
 	}
 
 	return true;
@@ -123,20 +123,20 @@ CBlock::BlockType CPhysics::getBlockType(CVec vec, CGame * Game) {
 	return CBlock::NORMAL;
 }
 
-bool CPhysics::rectCollission(const FloatRect &FR1, const FloatRect &FR2) { //überprüft ob sich zwei rects schneiden!
+bool CPhysics::rectCollision(const FloatRect &FR1, const FloatRect &FR2) { //überprüft ob sich zwei rects schneiden!
 	return ( (FR1.y < FR2.y+FR2.h) && (FR1.y+FR1.h > FR2.y)
 			&& (FR1.x < FR2.x+FR2.w) && (FR1.x+FR1.w > FR2.x) );
 }
 
-S_Collission CPhysics::getCollission(const FloatRect &FR, CGame * Game) {
+S_Collision CPhysics::getCollision(const FloatRect &FR, CGame * Game) {
 	//TODO Game as member
 	//TODO wir �berpr�fen nur die ecken!
-	//FIXME USE RECTCOLLISSION!!!
+	//FIXME USE RECTCOLLISION!!!
 	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
-	S_Collission result;//init Result:
+	S_Collision result;//init Result:
 	result.BouncingFactorX = 0.0f;
 	result.BouncingFactorY = 0.0f;
-	result.bIsCollission = false;
+	result.bIsCollision = false;
 	result.BlockType = CBlock::AIR;
 
 	CVec vecs[6];
@@ -151,11 +151,14 @@ S_Collission CPhysics::getCollission(const FloatRect &FR, CGame * Game) {
 	for (int i=0; i<6; i++) {
 		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i], Game);
 		if (curType != CBlock::AIR)
-			result.bIsCollission = true;
+			result.bIsCollision = true;
 		if (CBlock::BlockBouncingX[curType] > result.BouncingFactorX)
 			result.BouncingFactorX = CBlock::BlockBouncingX[curType];
 		if (CBlock::BlockBouncingY[curType] > result.BouncingFactorY)
 			result.BouncingFactorY = CBlock::BlockBouncingY[curType];
+		if (curType > result.BlockType) {
+			result.BlockType = curType;
+		}
 	}
 
 

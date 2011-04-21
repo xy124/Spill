@@ -8,6 +8,8 @@
 #ifndef CONSTS_HPP_
 #define CONSTS_HPP_
 
+
+#include "Block.hpp"
 //TODO als const-singleton???
 
 
@@ -20,14 +22,14 @@
 #define MAXENERGY 100
 #define WORMJUMPSPEED_Y -500.0f
 #define WORMMAXSPEED_X 175.0f
-#define WORMACCELLERATION 100.0f
+#define WORMACCELERATION 100.0f
 
 //BLock.hpp:
 #define BLOCKSIZE 20
 							//AIR,NORMAL,SHOOTING,JUMPBOARD,INVISIBLE
 #define BLOCKCOSTS 			{0   ,     5,      10,       10,       10}
 #define BLOCKBOUNCING_X 	{0.7f,  0.7f,    0.7f,     0.7f,     0.7f}//Bouncingfactors...
-#define BLOCKBOUNCING_Y 	{0.7f,  0.7f,    0.7f,     1.1f,     0.7f}//Bouncingfactors...
+#define BLOCKBOUNCING_Y 	{0.7f,  0.7f,    0.7f,     1.4f,     0.7f}//Bouncingfactors...
 
 //Physics.hpp:
 #define GRAVITY 981.0f
