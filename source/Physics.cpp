@@ -28,7 +28,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 		//Kollission durch x-Verschiebung??
 		/*float deltaX = dir.x*g_pTimer->getElapsed();
 		if (deltaX > BLOCKSIZE) { //per while alle möglichen blockschritte durchgehen
-			/*float newX = FR.x;
+			float newX = FR.x;
 			while (IdeltaX < deltaX) {
 				FR.x += IdeltaX;
 				if (isCollision(FR, Game)) {
@@ -76,7 +76,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 		XCollision = getCollision(FR, Game);
 		if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
 			FR.x -= dir.x*g_pTimer->getElapsed(); //dann x-Rutschen wieder r�ckg�ngig machen
-			dir.x *= (-1 * XCollision.BouncingFactorY);
+			dir.x *= (-1 * XCollision.BouncingFactorX);
 		}
 
 		////////////////////
@@ -91,7 +91,7 @@ bool CPhysics::doPhysics(CGame * Game) {
 			//getBouncingfactor from Blocktype
 			FR.y -= dir.y*g_pTimer->getElapsed(); //dann y-Rutschen wieder r�ckg�ngig machen
 			dir.y *= (-1 * YCollision.BouncingFactorY);//neues Y
-			if ((Abs(dir.y) < 6.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
+			if ((Abs(dir.y) < 10.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
 				(*i)->setCanJump(true);
 			}
 		}
@@ -105,6 +105,10 @@ bool CPhysics::doPhysics(CGame * Game) {
 		// Kollission mit bildschirmr�ndern!!
 		(*i)->setDir(dir);
 		(*i)->setRect(FR);
+
+		//gegebenenfalls neue collision setzen
+		if (YCollision.BlockType != CBlock::AIR)
+			(*i)->setLastCollisionY(YCollision);
 
 	}
 

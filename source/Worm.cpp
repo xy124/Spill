@@ -48,13 +48,23 @@ void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	setRect(FR);
 	setDir(CVec(0,0));
 
-	lastCollision.BlockType = CBlock::AIR;
-	lastCollision.BouncingFactorX = 0.0f;
-	lastCollision.BouncingFactorY = 0.0f;
-	lastCollision.bIsCollision = false;
+	m_lastCollisionY.BlockType = CBlock::AIR;
+	m_lastCollisionY.BouncingFactorX = 0.0f;
+	m_lastCollisionY.BouncingFactorY = 0.0f;
+	m_lastCollisionY.bIsCollision = false;
 
 	m_Alive = true;
 	CLogfile::get()->fTextout("New Worm; ID:%i<br />",m_WormID);
+}
+
+S_Collision CWorm::getLastCollisionY() const
+{
+    return m_lastCollisionY;
+}
+
+void CWorm::setLastCollisionY(S_Collision m_lastCollisionY)
+{
+    this->m_lastCollisionY = m_lastCollisionY;
 }
 
 void CWorm::reset() { //HINT: resettet nicht die Position
@@ -75,7 +85,11 @@ void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tas
 	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump() && !m_bJumpKeyLock) { //Jump!
 		setCanJump(false); //TODO überflüssig da in physic eh immer erstmal false
 		m_bJumpKeyLock = true;
-		newDir.y = WORMJUMPSPEED_Y;
+
+		if (m_lastCollisionY.BlockType == CBlock::JUMPBOARD)
+			newDir.y = 1.25f*WORMJUMPSPEED_Y;
+		else
+			newDir.y = WORMJUMPSPEED_Y;
 	}
 
 	if (!g_pFramework->KeyDown(SDLK_UP))

@@ -2,8 +2,8 @@
 
 
 const int CBlock::BlockCosts[5]     = BLOCKCOSTS;//TODO
-const int CBlock::BlockBouncingX[5] = BLOCKBOUNCING_X;
-const int CBlock::BlockBouncingY[5] = BLOCKBOUNCING_Y;
+const float CBlock::BlockBouncingX[5] = BLOCKBOUNCING_X;
+const float CBlock::BlockBouncingY[5] = BLOCKBOUNCING_Y;
 CSprite * CBlock::m_pBlockSprites[5];
 
 //DECLARATION: static CSprite * m_pBlockSprites[5];

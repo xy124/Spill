@@ -29,7 +29,7 @@ class CWorm : public CPhysicalObject {
 		bool m_Alive;
 		bool m_isWalking;
 		bool m_bJumpKeyLock;
-		S_Collision lastCollision;
+		S_Collision m_lastCollisionY;
 
 		std::string m_Name;
 
@@ -42,43 +42,86 @@ class CWorm : public CPhysicalObject {
 		void ProcessBuilding();
 		void ProcessAnim();
 	public:
-		//Evtl noch nen Konstruktor ohne Parameter
-		CWorm();
-		void init(int WormID);
-		void init(int WormID, float X, float Y);
-		void init(int WormID, float X, float Y, WORMCOLORS WC);
-		void init(int WormID, WORMCOLORS WC);
+    CWorm();
+    void init(int WormID);
+    void init(int WormID, float X, float Y);
+    void init(int WormID, float X, float Y, WORMCOLORS WC);
+    void init(int WormID, WORMCOLORS WC);
+    void render();
+    void update();
+    void reset();
+    bool isAlive();
+    ~CWorm();
 
-		void render();
-		void update();
-		void reset();
+    int getWormID()
+    {
+        return m_WormID;
+    }
 
-		
+    void setWormID(int WormID)
+    {
+        m_WormID = WormID;
+    }
 
-		//Getters and Setters
-		int getWormID() {return m_WormID;};
-		void setWormID(int WormID) {m_WormID = WormID;};
+    WORMCOLORS getColor()
+    {
+        return m_Color;
+    }
 
-		WORMCOLORS getColor() {return m_Color;};
-		void setColor(WORMCOLORS Color) {m_Color = Color;};
+    void setColor(WORMCOLORS Color)
+    {
+        m_Color = Color;
+    }
 
-		int getPoints() {return m_Points;};
-		void setPoints(int Points) {m_Points = Points;};
+    int getPoints()
+    {
+        return m_Points;
+    }
 
-		int getMoney() {return m_Money;};
-		void setMoney(int Money) {m_Money = Money;};
+    void setPoints(int Points)
+    {
+        m_Points = Points;
+    }
 
-		int getEnergy() {return m_Energy;};
-		void setEnergy(int Energy) {m_Energy = Energy;};
+    int getMoney()
+    {
+        return m_Money;
+    }
 
-		std::string getName() {return m_Name;};
-		void setName(std::string Name) {m_Name = Name;};
+    void setMoney(int Money)
+    {
+        m_Money = Money;
+    }
 
-		bool isAlive();
-		void setName(bool Alive) {m_Alive = Alive;};
+    int getEnergy()
+    {
+        return m_Energy;
+    }
+
+    void setEnergy(int Energy)
+    {
+        m_Energy = Energy;
+    }
+
+    std::string getName()
+    {
+        return m_Name;
+    }
+
+    void setName(std::string Name)
+    {
+        m_Name = Name;
+    }
 
 
-		~CWorm();
+    void setName(bool Alive)
+    {
+        m_Alive = Alive;
+    }
+
+
+    S_Collision getLastCollisionY() const;
+    void setLastCollisionY(S_Collision m_lastCollisionY);
 
 		
 };
