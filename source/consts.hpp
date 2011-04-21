@@ -17,6 +17,7 @@
 
 //Worm.hpp:
 #define MAXENERGY 100
+#define WORMJUMPSPEED_Y -500.0f
 #define WORMMAXSPEED_X 175.0f
 #define WORMACCELLERATION 100.0f
 

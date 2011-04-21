@@ -69,7 +69,7 @@ void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tas
 	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump() && !m_bJumpKeyLock) { //Jump!
 		setCanJump(false); //TODO überflüssig da in physic eh immer erstmal false
 		m_bJumpKeyLock = true;
-		newDir.y = -500.0f; //TODO Jumpfactor = const!!
+		newDir.y = WORMJUMPSPEED_Y;
 	}
 
 	if (!g_pFramework->KeyDown(SDLK_UP))
