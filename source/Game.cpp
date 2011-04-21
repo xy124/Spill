@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "Performancecheck.hpp"
 
 using namespace std;
 
@@ -104,7 +105,7 @@ void CGame::run() {
 		ProcessEvents();//react on escape for close...
 
 		time = SDL_GetTicks() - time;
-		g_pLogfile->fTextout("<br />Section1: /%fms", time);
+		g_pLogfile->fTextout("<br />Section1: %f ms", time);
 
 
 
@@ -113,13 +114,13 @@ void CGame::run() {
 		g_pPhysics->doPhysics();//schnell!!
 
 		time = SDL_GetTicks() - time;
-		g_pLogfile->fTextout("<br />Section2: /%fms", time);
+		g_pLogfile->fTextout("<br />Section2: %f ms", time);
 
 		time = SDL_GetTicks();
 		//render gameboard before you render worms xD
 		renderGameboard();
 		time = SDL_GetTicks() - time;
-		g_pLogfile->fTextout("<br />Section3: /%fms", time);
+		g_pLogfile->fTextout("<br />Section3: %f ms", time);
 
 		time = SDL_GetTicks();
 		//Draw Worms and react on keys...
@@ -129,38 +130,45 @@ void CGame::run() {
 			(*i)->render();
 		}
 		time = SDL_GetTicks() - time;
-		g_pLogfile->fTextout("<br />Section4: /%fms", time);
+		g_pLogfile->fTextout("<br />Section4: %f ms", time);
 
 		time = SDL_GetTicks();
 		//TODO: je nach spieler...
 		i = m_vWorms.begin(); //hier für spieler 1
 		(*i)->ProcessView();
 		time = SDL_GetTicks() - time;
-		g_pLogfile->fTextout("<br />Section5: /%fms", time);
+		g_pLogfile->fTextout("<br />Section5: %f ms", time);
 		time = SDL_GetTicks();
 
 		g_pFramework->showDebugValue("Fasd: %f", (g_pTimer->getElapsed()) );
 
 		g_pFramework->RenderDebugText();
 		time = SDL_GetTicks() - time;
-		g_pLogfile->fTextout("<br />Section6: /%fms", time);
+		g_pLogfile->fTextout("<br />Section6: %f ms", time);
 		time = SDL_GetTicks();
 
 		g_pFramework->BlitView();
 		time = SDL_GetTicks() - time;
-		g_pLogfile->fTextout("<br />Section7: /%fms", time);
+		g_pLogfile->fTextout("<br />Section7: %f ms", time);
 
 		g_pFramework->Flip();
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
 
-void CGame::renderGameboard() {
-	map<CBlockKoord, CBlock*>::iterator it;
-	for (it=m_Gameboard.begin() ; it!=m_Gameboard.end(); ++it) {//alle Bl�cke rendern!
+void CGame::renderGameboard() {//TODO: Performance, nur blöcke laden, die auch im Bild sind!
+
+	map<CBlockKoord, CBlock*>::iterator it, s, e;
+	s = m_Gameboard.begin();//TODO bringt das was???
+	e = m_Gameboard.end();
+
+	for (it= s; it!=e; ++it) {//alle Bl�cke rendern!
 		CBlockKoord pos = it->first;
+		startWatch();
 		it->second->render(pos);
+		stopWatch("Watch");
 	}
+
 }
 
 void CGame::ProcessEvents() {

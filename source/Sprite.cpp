@@ -100,6 +100,6 @@ CSprite::CSprite(const std::string sBlockFilename) {
 }
 
 void CSprite::SetPos(const CVec &newPos) {
-	m_Rect.x = /*static_cast<int>*/(newPos.x);
+	m_Rect.x = static_cast<int>(newPos.x);
 	m_Rect.y = static_cast<int>(newPos.y);
 }
