@@ -1,4 +1,5 @@
 #include "Worm.hpp"
+#include "Block.hpp"
 
 using namespace std;
 

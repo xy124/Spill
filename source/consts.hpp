@@ -9,7 +9,6 @@
 #define CONSTS_HPP_
 
 
-#include "Block.hpp"
 //TODO als const-singleton???
 
 
