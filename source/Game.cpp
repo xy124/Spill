@@ -62,6 +62,10 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	pos.x = 3;
 	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
 
+	pos.x = 4;
+	pos.y = 17;
+	BuildBlock(pos, CBlock::INVISIBLE, NOBODY, NOBODY);
+
 
 
 	CBlock::InitBlockSprites();

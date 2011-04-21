@@ -11,9 +11,8 @@ bool CPhysics::doPhysics(CGame * Game) {
 		FloatRect FR = (*i)->getRect();
 		CVec dir = (*i)->getDir();
 
-		CBlockKoord BC = CBlockKoord(FR);
+		//CBlockKoord BC = CBlockKoord(FR);
 		//g_pFramework->showDebugValue("WormBlockKoord %i, %i", BC.x, BC.y);
-		g_pFramework->showDebugValue("deltaY %f",dir.y*g_pTimer->getElapsed());
 
 
 		//Fallbeschleunigung dazu!
@@ -127,23 +126,35 @@ bool CPhysics::isCollission(const FloatRect &FR, CGame * Game) {
 	//TODO Game as member
 	//TODO wir �berpr�fen nur die ecken!
 	//FIXME USE RECTCOLLISSION!!!
-	//HINT: reicht z.z.T wenn wir die Ecken überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
+	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
 	CVec vTopLeft (FR);
 	CVec vTopRight(FR.x+FR.w, FR.y);
 	CVec vBotLeft (FR.x, FR.y+FR.h);
 	CVec vBotRight(FR.x+FR.w, FR.y+FR.h);
+	CVec vTopMid  (FR.x+FR.w/2, FR.y);
+	CVec vBotMid  (FR.x+FR.w/2, FR.y+FR.h);
 
 
 	CBlock::BlockType BT_TopLeft  = CPhysics::getBlockType(vTopLeft ,	Game);
 	CBlock::BlockType BT_TopRight = CPhysics::getBlockType(vTopRight,	Game);
 	CBlock::BlockType BT_BotLeft  = CPhysics::getBlockType(vBotLeft ,	Game);
 	CBlock::BlockType BT_BotRight = CPhysics::getBlockType(vBotRight,	Game);
+	CBlock::BlockType BT_TopMid   = CPhysics::getBlockType(vTopMid,		Game);
+	CBlock::BlockType BT_BotMid   = CPhysics::getBlockType(vBotMid,		Game);
+
+	g_pFramework->showDebugValue("Wo:%i,%i; TR%i,%i;\n BL%i,%i; BR%i,%i",
+			vTopLeft.toBlockKoord().x, vTopLeft.toBlockKoord().y,
+			vTopRight.toBlockKoord().x, vTopRight.toBlockKoord().y,
+			vBotLeft.toBlockKoord().x, vBotLeft.toBlockKoord().y,
+			vBotRight.toBlockKoord().x, vBotRight.toBlockKoord().y);
 
 	CBlock::BlockType air = CBlock::AIR;
-	if (    (BT_TopLeft == air) &&
+	if (    (BT_TopLeft  == air) &&
 			(BT_TopRight == air) &&
-			(BT_BotLeft == air) &&
-			(BT_BotRight == air) )
+			(BT_BotLeft  == air) &&
+			(BT_BotRight == air) &&
+			(BT_TopMid   == air) &&
+			(BT_BotMid   == air))
 		return false;
 	 else
 		return true;
