@@ -72,9 +72,11 @@ bool CPhysics::doPhysics(CGame * Game) {
 		////////////////////
 		//X-Collissions:
 		FR.x += dir.x*g_pTimer->getElapsed();
-		if (isCollission(FR, Game)) { //kollission durch x-Rutschen?
+		S_Collission XCollission;
+		XCollission = getCollission(FR, Game);
+		if (XCollission.bIsCollission) { //kollission durch x-Rutschen?
 			FR.x -= dir.x*g_pTimer->getElapsed(); //dann x-Rutschen wieder r�ckg�ngig machen
-			dir.x *= (-1 * BouncingFactor);
+			dir.x *= (-1 * XCollission.BouncingFactorY);
 		}
 
 		////////////////////
@@ -82,9 +84,13 @@ bool CPhysics::doPhysics(CGame * Game) {
 		(*i)->setCanJump(false); //kann auf jeden erstmal nciht springen
 		//Kollission durch y-Verschiebung??
 		FR.y += dir.y*g_pTimer->getElapsed();
-		if (isCollission(FR, Game)) { //kollission durch y-Rutschen?
+		S_Collission YCollission;
+		YCollission = getCollission(FR, Game);
+		if (YCollission.bIsCollission) { //kollission durch y-Rutschen?
+			//JumpingBoard...
+			//getBouncingfactor from Blocktype
 			FR.y -= dir.y*g_pTimer->getElapsed(); //dann y-Rutschen wieder r�ckg�ngig machen
-			dir.y *= (-1 * BouncingFactor);
+			dir.y *= (-1 * YCollission.BouncingFactorY);//neues Y
 			if (Abs(dir.y) < 6.0f) {
 				(*i)->setCanJump(true);
 			}
@@ -122,42 +128,39 @@ bool CPhysics::rectCollission(const FloatRect &FR1, const FloatRect &FR2) { //ü
 			&& (FR1.x < FR2.x+FR2.w) && (FR1.x+FR1.w > FR2.x) );
 }
 
-bool CPhysics::isCollission(const FloatRect &FR, CGame * Game) {
+S_Collission CPhysics::getCollission(const FloatRect &FR, CGame * Game) {
 	//TODO Game as member
 	//TODO wir �berpr�fen nur die ecken!
 	//FIXME USE RECTCOLLISSION!!!
 	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
-	CVec vTopLeft (FR);
-	CVec vTopRight(FR.x+FR.w, FR.y);
-	CVec vBotLeft (FR.x, FR.y+FR.h);
-	CVec vBotRight(FR.x+FR.w, FR.y+FR.h);
-	CVec vTopMid  (FR.x+FR.w/2, FR.y);
-	CVec vBotMid  (FR.x+FR.w/2, FR.y+FR.h);
+	S_Collission result;//init Result:
+	result.BouncingFactorX = 0.0f;
+	result.BouncingFactorY = 0.0f;
+	result.bIsCollission = false;
+	result.BlockType = CBlock::AIR;
+
+	CVec vecs[6];
+
+	vecs[0] = CVec (FR);
+	vecs[1] = CVec (FR.x+FR.w, FR.y);
+	vecs[2] = CVec (FR.x, FR.y+FR.h);
+	vecs[3] = CVec (FR.x+FR.w, FR.y+FR.h);
+	vecs[4] = CVec (FR.x+FR.w/2, FR.y);
+	vecs[5] = CVec (FR.x+FR.w/2, FR.y+FR.h);
+
+	for (int i=0; i<6; i++) {
+		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i], Game);
+		if (curType != CBlock::AIR)
+			result.bIsCollission = true;
+		if (CBlock::BlockBouncingX[curType] > result.BouncingFactorX)
+			result.BouncingFactorX = CBlock::BlockBouncingX[curType];
+		if (CBlock::BlockBouncingY[curType] > result.BouncingFactorY)
+			result.BouncingFactorY = CBlock::BlockBouncingY[curType];
+	}
 
 
-	CBlock::BlockType BT_TopLeft  = CPhysics::getBlockType(vTopLeft ,	Game);
-	CBlock::BlockType BT_TopRight = CPhysics::getBlockType(vTopRight,	Game);
-	CBlock::BlockType BT_BotLeft  = CPhysics::getBlockType(vBotLeft ,	Game);
-	CBlock::BlockType BT_BotRight = CPhysics::getBlockType(vBotRight,	Game);
-	CBlock::BlockType BT_TopMid   = CPhysics::getBlockType(vTopMid,		Game);
-	CBlock::BlockType BT_BotMid   = CPhysics::getBlockType(vBotMid,		Game);
 
-	g_pFramework->showDebugValue("Wo:%i,%i; TR%i,%i;\n BL%i,%i; BR%i,%i",
-			vTopLeft.toBlockKoord().x, vTopLeft.toBlockKoord().y,
-			vTopRight.toBlockKoord().x, vTopRight.toBlockKoord().y,
-			vBotLeft.toBlockKoord().x, vBotLeft.toBlockKoord().y,
-			vBotRight.toBlockKoord().x, vBotRight.toBlockKoord().y);
-
-	CBlock::BlockType air = CBlock::AIR;
-	if (    (BT_TopLeft  == air) &&
-			(BT_TopRight == air) &&
-			(BT_BotLeft  == air) &&
-			(BT_BotRight == air) &&
-			(BT_TopMid   == air) &&
-			(BT_BotMid   == air))
-		return false;
-	 else
-		return true;
+	return result;
 }
 
 

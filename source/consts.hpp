@@ -24,11 +24,13 @@
 
 //BLock.hpp:
 #define BLOCKSIZE 20
-#define BLOCKCOSTS {0, 5, 10, 10, 10}
+							//AIR,NORMAL,SHOOTING,JUMPBOARD,INVISIBLE
+#define BLOCKCOSTS 			{0   ,     5,      10,       10,       10}
+#define BLOCKBOUNCING_X 	{0.7f,  0.7f,    0.7f,     0.7f,     0.7f}//Bouncingfactors...
+#define BLOCKBOUNCING_Y 	{0.7f,  0.7f,    0.7f,     1.1f,     0.7f}//Bouncingfactors...
 
 //Physics.hpp:
 #define GRAVITY 981.0f
-#define BOUNCINGFACTOR 0.3f
 #define FRICTION 0.8f
 
 //DATA:

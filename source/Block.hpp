@@ -34,8 +34,11 @@ class CBlock { //I don't want to vererben the
 		void setBlockType(BlockType BlockType) {m_BlockType = BlockType;};
 
 		static const int BlockCosts[5]; //The index is a Blocktype!
+		static const int BlockBouncingX[5];
+		static const int BlockBouncingY[5];
+
 		static const int BlockSize = BLOCKSIZE;
-		static CSprite * m_pBlockSprites[5];//TODO hoffe das geht
+		static CSprite * m_pBlockSprites[5];
 		static void InitBlockSprites();
 		static void FreeBlockSprites();
 	private:
