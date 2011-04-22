@@ -8,8 +8,8 @@ bool CPhysics::doPhysics() {
 	for (i = m_pGame->m_vWorms.begin(); i!=m_pGame->m_vWorms.end(); ++i) {
 		if ( !((*i)->getCanMove() && (*i)->isAlive()) )
 			break; //auf zum n�chsten Wurm!
-		FloatRect FR = (*i)->getRect();
-		CVec dir = (*i)->getDir();
+		FloatRect FR = (*i)->getRect(); //rect of worm
+		CVec dir = (*i)->getDir(); //dir of Worm
 
 		//CBlockKoord BC = CBlockKoord(FR);
 		//g_pFramework->showDebugValue("WormBlockKoord %i, %i", BC.x, BC.y);
@@ -102,7 +102,9 @@ bool CPhysics::doPhysics() {
 
 		//HINT:Reibung://Flugreibung ist Sinnlos!
 		dir.x *= (Friction ) ; //TODO TimeElapsed einrechnen!
-		// Kollission mit bildschirmr�ndern!!
+
+
+		if (FR.x < 0.0f) FR.x = 0.0f; //man kann nicht aus dem linken bildschirm fallen!!
 		(*i)->setDir(dir);
 		(*i)->setRect(FR);
 
