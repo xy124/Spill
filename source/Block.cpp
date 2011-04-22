@@ -36,3 +36,30 @@ void CBlock::render(CBlockKoord &MyBlockPos) {
 		CBlock::m_pBlockSprites[this->m_BlockType]->Render();
 	}
 }
+
+std::string CBlock::BlockTypeString(CBlock::BlockType BT) {
+	std::string s;
+	switch (BT) {
+		case (CBlock::AIR): 		s="AIR"; 		break;
+		case (CBlock::INVISIBLE): 	s="INVISIBLE"; 	break;
+		case (CBlock::JUMPBOARD): 	s="JUMPBOARD"; 	break;
+		case (CBlock::NORMAL): 		s="NORMAL"; 	break;
+		case (CBlock::SHOOTING): 	s="SHOOTING";	break;
+		default: 					s="None"; 		break;
+	}
+	return s;
+}
+
+CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType Now) {
+	CBlock::BlockType s;
+	switch (BT) {
+			case (CBlock::AIR): 		s=CBlock::INVISIBLE; 	break;
+			case (CBlock::INVISIBLE): 	s=CBlock::JUMPBOARD; 	break;
+			case (CBlock::JUMPBOARD): 	s=CBlock::NORMAL; 	break;
+			case (CBlock::NORMAL): 		s=CBlock::SHOOTING; 	break;
+			case (CBlock::SHOOTING): 	s=CBlock::AIR;			break;
+			default: 					s=CBlock::AIR; 		break;
+		}
+		return s;
+
+}

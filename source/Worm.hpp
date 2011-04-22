@@ -9,6 +9,12 @@
 #include "Logfile.hpp"
 #include "consts.hpp"
 #include "Collision.hpp"
+#include "Game.hpp"
+
+#include "Block.hpp"
+
+
+class CGame;
 
 
 
@@ -21,15 +27,22 @@ class CWorm : public CPhysicalObject {
 				WC_YELLOW
 		};
 	private:
+		CGame* m_pGame;
+
 		int m_WormID;
 		WORMCOLORS m_Color;
+		int m_TeamID;
 		int m_Energy;
 		int m_Money;
 		int m_Points;		
 		bool m_Alive;
 		bool m_isWalking;
 		bool m_bJumpKeyLock;
+		bool m_bOrientation;
 		S_Collision m_lastCollisionY;
+
+		bool m_bNextBTypeKeyLock;
+		CBlock::BlockType m_selectedBType;
 
 		std::string m_Name;
 
@@ -43,7 +56,7 @@ class CWorm : public CPhysicalObject {
 		void ProcessAnim();
 
 	public:
-		CWorm();
+		CWorm(CGame *pGame);
 		void init(int WormID);
 		void init(int WormID, float X, float Y);
 		void init(int WormID, float X, float Y, WORMCOLORS WC);

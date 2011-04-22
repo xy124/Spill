@@ -1,10 +1,11 @@
 #include "Worm.hpp"
-#include "Block.hpp"
+#include <map>
 
 using namespace std;
 
-CWorm::CWorm() {
+CWorm::CWorm(CGame *pGame) {
 	m_pWormSprite = NULL;
+	m_pGame = pGame;
 }
 
 void CWorm::init(int WormID) {
@@ -22,6 +23,7 @@ void CWorm::init(int WormID, WORMCOLORS WC){
 
 void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	m_WormID = WormID;
+	m_TeamID = 0; //MBE
 	setCanJump(false);
 	m_Color = WC;
 	m_Money = 0;
@@ -29,6 +31,11 @@ void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	m_Energy = MAXENERGY;
 	setCanMove(true);
 	
+	m_bNextBTypeKeyLock = false;
+	m_selectedBType = CBlock::AIR;
+
+	m_bOrientation = ORIGHT;
+
 	m_Name = ""; //getName(); --> TODO!!! Abfrage per Eingabe vom User!!!!
 	
 	m_pWormSprite = new CSprite();
@@ -74,9 +81,6 @@ void CWorm::render() {
 	CVec newWormPos = CVec(getRect());
 	m_pWormSprite->SetPos( newWormPos );
 	m_pWormSprite->Render(m_fAnimphase);
-	char buffer[1024];
-	sprintf(buffer, "Money: %iEur,   Points: %i,   Energy: %i/%i", m_Money, m_Points, m_Energy, MAXENERGY);
-	g_pFramework->TextOut(string(buffer), 0, 0);
 }
 
 void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
@@ -100,22 +104,50 @@ void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tas
 	if (g_pFramework->KeyDown(SDLK_LEFT) == true) {
 		newDir.x += -WORMACCELERATION;
 		m_isWalking = true;
+		m_bOrientation = OLEFT;
 		if (newDir.x < -WORMMAXSPEED_X) newDir.x = -WORMMAXSPEED_X;
 	} else if (g_pFramework->KeyDown(SDLK_RIGHT) == true ) {
 		newDir.x += +WORMACCELERATION;
 		m_isWalking = true;
+		m_bOrientation = ORIGHT;
 		if (newDir.x > WORMMAXSPEED_X) newDir.x = WORMMAXSPEED_X;
 	}
+
 	setDir(newDir);
 }
 
 void CWorm::ProcessBuilding() {
 	//TODO!!+Processweapons!!! for attacks of othe blocks!
+	/*
+	 * KeyDown:	MineBlock
+	 * STRG:	BuildBlock
+	 * Shift:	SelectBuildBlockType
+	 */
+
+	if (g_pFramework->KeyDown(SDLK_DOWN)) {
+		//get Block under Worm!
+		CBlockKoord pos = CVec(getRect()).toBlockKoord();
+		pos.y++; //Block UNDER worm
+		pos.x += (m_bOrientation==ORIGHT ? 1 : 0); //Orientation
+		CBlock* miningBlock = m_pGame->getBlock(pos);
+		if (miningBlock->getBlockType() != CBlock::AIR) {
+			if (m_pGame->BuildBlock(pos, CBlock::AIR, m_WormID, m_TeamID)) {
+				m_Money += CBlock::BlockCosts[miningBlock->getBlockType()];
+				m_Points++;
+			}
+		}
+	}//Keydown
+
+	if ( (g_pFramework->KeyDown(SDLK_GREATER)) && (m_bNextBTypeKeyLock == false) ) {//FIXME right key???
+		m_selectedBType++;//MBE überschlag
+	}
+
 
 }
 
 void CWorm::ProcessAnim() {
 	//TODO! Nicht immer nur die selbe animation
+	//FIXME think of Orientation
 	if (m_isWalking)
 		m_fAnimphase += 10.0f*g_pTimer->getElapsed();
 	if (m_fAnimphase >= 3.0f)
@@ -142,6 +174,13 @@ void CWorm::ProcessView() {
 		ViewRect.x = 0;
 
 	g_pFramework->setViewRect(ViewRect);
+
+	char buffer[1024];
+	sprintf(buffer, "Money: %iEur,   Points: %i,   Energy: %i/%i",m_Money, m_Points, m_Energy, MAXENERGY);
+
+	string s = "::"+CBlock::BlockTypeString(m_selectedBType)+"::"+buffer;
+
+	g_pFramework->TextOut(s, 0, 0);
 }
 
 CWorm::~CWorm() {

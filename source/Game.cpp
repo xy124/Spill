@@ -10,7 +10,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	}
 
 	for (int i=1; i<=AmountOfPlayers; i++) {//w�rmer auff�llen
-		CWorm* pWorm = new CWorm();
+		CWorm* pWorm = new CWorm(this);
 		pWorm->init(i, 40.0f, 40.0f, CWorm::WC_RED); //wir machen alle Würmer rot....
 		m_vWorms.push_back(pWorm); //MBE: evtl Teams
 	}
@@ -82,9 +82,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	pos.x = 20;
 	pos.y = 10;
 	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
-	pos.x = 21;
-	pos.y = 7;
-	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
+
 
 
 
@@ -193,13 +191,20 @@ void CGame::quit() {
 	CBlock::FreeBlockSprites();
 }
 
-bool CGame::BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID, int TeamID) {
+CBlock* CGame::getBlock(CBlockKoord Where) { //TODO use that in physics blocktypeget
 	map<CBlockKoord, CBlock*>::iterator it;
 	it = m_Gameboard.find(Where);
 	if (it != m_Gameboard.end()) {
-		it->second->setBlockType(Type);
-		it->second->setBuilderID(BuilderID);
-		it->second->setTeamID(TeamID);
+		return (it->second);
+	} else return NULL;
+}
+
+bool CGame::BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID, int TeamID) {
+	CBlock *pBlock = getBlock(Where);
+	if (pBlock != NULL) {
+		pBlock->setBlockType(Type);
+		pBlock->setBuilderID(BuilderID);
+		pBlock->setTeamID(TeamID);
 		return true;
 	} else return false;
 }

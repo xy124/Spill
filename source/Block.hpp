@@ -5,6 +5,7 @@
 #include "BlockKoord.hpp"
 #include "Vec.hpp"
 #include "consts.hpp"
+#include <string>
 
 class CBlock { //I don't want to vererben the
 	//Different kinds of blocks:
@@ -16,6 +17,9 @@ class CBlock { //I don't want to vererben the
 					JUMPBOARD,
 					INVISIBLE
 		};
+		static BlockType nextBlockType(BlockType Now);
+		static std::string BlockTypeString(BlockType BT);
+
 
 		CBlock() {}; //MBE
 		CBlock(BlockType BT);

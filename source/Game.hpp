@@ -13,7 +13,7 @@
 
 #include "consts.hpp"
 
-
+class CWorm;
 class CPhysics;
 
 class CGame
@@ -42,6 +42,7 @@ class CGame
 		void quit();
 		~CGame();
 
+		CBlock* getBlock(CBlockKoord Where);
 		bool BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID, int TeamID);
 
 		//Getters and Setters:

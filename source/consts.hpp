@@ -22,9 +22,16 @@
 #define WORMJUMPSPEED_Y -500.0f
 #define WORMMAXSPEED_X 175.0f
 #define WORMACCELERATION 100.0f
+//Orientation:
+#define OLEFT true
+#define ORIGHT false
 
 //BLock.hpp:
-#define BLOCKSIZE 20
+#define BLOCKSIZE 30
+/*
+ * IMPORTANT: 	if you change amount of blocktypes also change
+ * 				CBlock::BlockTypeString and CBlock::nextBlockType(BlockType Now)
+ */
 							//AIR,NORMAL,SHOOTING,JUMPBOARD,INVISIBLE
 #define BLOCKCOSTS 			{0   ,     5,      40,       10,       10}
 #define BLOCKBOUNCING_X 	{0.3f,  0.3f,    0.0f,     0.9f,     0.3f}//Bouncingfactors...
