@@ -4,7 +4,8 @@
  *  Created on: 21.04.2011
  *      Author: Sebastian
  */
-
+//TODO: surround it with a debug-tag
+//		do the same with the show DebugValue....
 #ifndef PERFORMANCECHECK_HPP_
 #define PERFORMANCECHECK_HPP_
 #include <SDL.h>

@@ -3,7 +3,7 @@
 using namespace std;
 
 CSprite::CSprite(void) {
-	m_pScreen = g_pFramework->getWorld(); //zeiger auf screen holen
+	m_pScreen = g_pFramework->getView(); //zeiger auf screen holen
 	m_NumFrames = 0;
 	m_FrameWidth = 0;
 	m_FrameHeight = 0;
@@ -110,7 +110,7 @@ void CSprite::Render(float fFrameNumber) { //aktuellen Frame reinrendern..
 
 CSprite::CSprite(const std::string sBlockFilename) {
 	//CSprite();
-	m_pScreen = g_pFramework->getWorld();
+	m_pScreen = g_pFramework->getView();
 	Load(sBlockFilename);
 }
 

@@ -1,5 +1,4 @@
 #include "Game.hpp"
-#include "Performancecheck.hpp"
 
 using namespace std;
 
@@ -29,6 +28,14 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	} else
 		m_GBHeight = GameBoardHeight;
 
+	//SetWorldrect in Framework
+	//MBE: worldrect as an member of Game would be perhaps better
+	SDL_Rect worldrect;
+	worldrect = g_pFramework->getWorldRect();
+	worldrect.w = m_GBWidth  * BLOCKSIZE;
+	worldrect.h = m_GBHeight * BLOCKSIZE;
+	g_pFramework->setWorldRect(worldrect);
+
 	g_pLogfile->Textout("Created Gameboard <br />");
 
 	
@@ -53,7 +60,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	}
 
 	//build a wall
-	for (int y = 2; y < m_GBHeight-2; y++) {
+	for (int y = 2; y < m_GBHeight-10; y++) {
 		CBlockKoord pos(22,y);
 		BuildBlock(pos, CBlock::SHOOTING, NOBODY, NOBODY);
 	}
@@ -117,7 +124,7 @@ void CGame::run() {
 		i = m_vWorms.begin(); //hier für spieler 1
 		(*i)->ProcessView();
 
-		g_pFramework->showDebugValue("Fps: %f", 1/(g_pTimer->getElapsed()) );
+		//g_pFramework->showDebugValue("Fps: %f", 1/(g_pTimer->getElapsed()) );
 
 		g_pFramework->RenderDebugText();
 

@@ -23,7 +23,7 @@ class CFramework : public TSingleton<CFramework> {
 		void Clear();
 		void Flip();
 		bool KeyDown (int Key_ID);
-		SDL_Surface * getWorld() {return m_pView;}//TODO???
+		SDL_Surface * getView() {return m_pView;}
 
 		SFont_Font * pGameFont;
 
@@ -38,12 +38,18 @@ class CFramework : public TSingleton<CFramework> {
 
 		bool RectInView(SDL_Rect rect);
 
+		SDL_Rect getWorldRect() {return m_WorldRect;}
+		void setWorldRect(SDL_Rect &WorldRect) {m_WorldRect = WorldRect;}
+
 	private:
 		SDL_Surface * m_pView;
 		Uint8 *m_pKeystate;	//arraay mit aktuellem Tastaturstatus
 		std::string m_DebugValue;
 		SDL_Rect m_ViewRect; //the rect that is shown
-		SDL_Rect m_ScreenRect;
+		SDL_Rect m_ScreenRect;//Size of the screen
+		SDL_Rect m_WorldRect;
+
+
 };
 
 #endif

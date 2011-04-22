@@ -126,7 +126,9 @@ void CWorm::ProcessView() {
 	FloatRect WormRect = getRect();
 	SDL_Rect ViewRect  = g_pFramework->getViewRect();
 
+
 	if (static_cast<int>(WormRect.x) > ViewRect.x+600) {
+		g_pFramework->showDebugValue("WormX:%f, ViewX+600:%i", WormRect.x, ViewRect.x+600);
 		//move View rect that worm is at 300
 		ViewRect.x = static_cast<int>(WormRect.x) - 600;
 	}
@@ -134,8 +136,8 @@ void CWorm::ProcessView() {
 	if (static_cast<int>(WormRect.x) < ViewRect.x + 400)
 		ViewRect.x = static_cast<int>(WormRect.x) - 400;
 
-	if (ViewRect.x + ViewRect.w > g_pFramework->getWorld()->w)
-		ViewRect.x = g_pFramework->getWorld()->w - ViewRect.w;
+	if (ViewRect.x + ViewRect.w > g_pFramework->getWorldRect().w)
+		ViewRect.x = g_pFramework->getView()->w - ViewRect.w;
 
 	if (ViewRect.x < 0)
 		ViewRect.x = 0;
