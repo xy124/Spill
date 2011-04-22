@@ -72,25 +72,40 @@ void CSprite::SetPos(float fXPos, float fYPos) {
 }
 
 void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
-	SDL_BlitSurface(m_pImage, NULL, m_pScreen, &m_Rect);
+	//Render just if Rects are colliding:
+	SDL_Rect rect = m_Rect;
+	SDL_Rect viewrect = g_pFramework->getViewRect();
+	if (g_pFramework->RectInView(rect)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
+		rect.x -= viewrect.x;//calculate x in View!
+		SDL_BlitSurface(m_pImage, NULL, m_pScreen, &rect);
+	}
+
+
 	//Parameter NULL da kein ausschnitt aus Sprite sondern gesamtes Sprite
 }
 
 void CSprite::Render(float fFrameNumber) { //aktuellen Frame reinrendern..
-	//MBE: man könnte auch mit SDL_SetClipRect arbeiten
-	//file:///D:/Daten/Programmierung/SDL-1.2.13_MINGW/docs/html/sdlsetcliprect.html
-	//spalte berechnen
-	int column = static_cast<int>(fFrameNumber)%m_NumFramesX;//Spalte
+	//Render just if Rects are colliding:
+	SDL_Rect rect = m_Rect; //Rect auf screen
+	SDL_Rect viewrect = g_pFramework->getViewRect();
+	if (g_pFramework->RectInView(rect)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
+		rect.x -= viewrect.x;//calculate x in View!
 
-	int row = static_cast<int>(fFrameNumber)/m_NumFramesX;//Zeile
+		//MBE: man könnte auch mit SDL_SetClipRect arbeiten
+		//file:///D:/Daten/Programmierung/SDL-1.2.13_MINGW/docs/html/sdlsetcliprect.html
+		//spalte berechnen
+		int column = static_cast<int>(fFrameNumber)%m_NumFramesX;//Spalte
 
-	//Rect berechnen:
-	m_FrameRect.x = column * m_FrameWidth;
-	m_FrameRect.y = row * m_FrameHeight;
+		int row = static_cast<int>(fFrameNumber)/m_NumFramesX;//Zeile
 
-	//Ausschnitt rendern
-	//HINT:!! if Sprite is animated m_Rect hast not the whole Height/width, just the height/width of one frame!!!
-	SDL_BlitSurface(m_pImage, &m_FrameRect, m_pScreen, &m_Rect); //von dem lettzterem Rect werden nur die x-Ywerte �bernommen!!!
+		//Rect berechnen:
+		m_FrameRect.x = column * m_FrameWidth;
+		m_FrameRect.y = row * m_FrameHeight;
+
+		//Ausschnitt rendern
+		//HINT:!! if Sprite is animated m_Rect hast not the whole Height/width, just the height/width of one frame!!!
+		SDL_BlitSurface(m_pImage, &m_FrameRect, m_pScreen, &rect); //von dem lettzterem Rect werden nur die x-Ywerte �bernommen!!!
+	}
 }
 
 CSprite::CSprite(const std::string sBlockFilename) {

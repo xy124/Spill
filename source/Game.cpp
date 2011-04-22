@@ -54,7 +54,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	}
 
 	//build a wall
-	for (int y = 0; y < m_GBHeight-5; y++) {
+	for (int y = 2; y < m_GBHeight-2; y++) {
 		CBlockKoord pos(22,y);
 		BuildBlock(pos, CBlock::SHOOTING, NOBODY, NOBODY);
 	}
@@ -147,7 +147,7 @@ void CGame::run() {
 		g_pLogfile->fTextout("<br />Section6: %f ms", time);
 		time = SDL_GetTicks();
 
-		g_pFramework->BlitView();
+		//g_pFramework->BlitView();
 		time = SDL_GetTicks() - time;
 		g_pLogfile->fTextout("<br />Section7: %f ms", time);
 

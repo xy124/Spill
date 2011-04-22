@@ -12,6 +12,7 @@
 #include "Block.hpp"
 #include "Collision.hpp"
 #include "Singleton.hpp"
+#include <SDL.h>
 
 #define g_pPhysics CPhysics::get()
 

@@ -124,8 +124,8 @@ bool CFramework::KeyDown(int Key_ID) {
 
 
 void CFramework::Clear() {//Augabe: Buffer l�schen
-	SDL_FillRect (m_pWorld, NULL, SDL_MapRGB(m_pWorld->format, 0, 255, 255));
-	//SDL_FillRect(m_pView, NULL, SDL_MapRGB(m_pView->format, 128,128,128));
+	//SDL_FillRect (m_pWorld, NULL, SDL_MapRGB(m_pWorld->format, 0, 255, 255));
+	SDL_FillRect(m_pView, NULL, SDL_MapRGB(m_pView->format, 128,128,128));
 	//fill Black
 }
 
@@ -166,6 +166,13 @@ void CFramework::TextOut(std::string Text, CVec Where) {
 void CFramework::BlitView() {//TODO brauchen wir noch flip wenn wir eh mit 2 views arbeiten???
 	if (SDL_BlitSurface(m_pWorld, &m_ViewRect, m_pView, NULL)==0)
 		g_pLogfile->Textout("yes");
+}
+
+bool CFramework::RectInView(SDL_Rect rect) {
+	//überprüft ob sich zwei rects schneiden!
+	return ( (rect.y < m_ViewRect.y+m_ViewRect.h) && (rect.y+rect.h > m_ViewRect.y)
+			&& (rect.x < m_ViewRect.x+m_ViewRect.w) && (rect.x+rect.w > m_ViewRect.x) );
+
 }
 
 
