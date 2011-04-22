@@ -124,7 +124,7 @@ void CGame::run() {
 		i = m_vWorms.begin(); //hier für spieler 1
 		(*i)->ProcessView();
 
-		//g_pFramework->showDebugValue("Fps: %f", 1/(g_pTimer->getElapsed()) );
+		g_pFramework->showDebugValue("Fps: %f", 1/(g_pTimer->getElapsed()) );
 
 		g_pFramework->RenderDebugText();
 

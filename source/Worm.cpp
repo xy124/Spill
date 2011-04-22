@@ -128,7 +128,6 @@ void CWorm::ProcessView() {
 
 
 	if (static_cast<int>(WormRect.x) > ViewRect.x+400) {
-		g_pFramework->showDebugValue("WormX:%f, ViewX+600:%i", WormRect.x, ViewRect.x+600);
 		//move View rect that worm is at 300
 		ViewRect.x = static_cast<int>(WormRect.x) - 400;
 	}
