@@ -124,8 +124,8 @@ bool CFramework::KeyDown(int Key_ID) {
 
 
 void CFramework::Clear() {//Augabe: Buffer l�schen
-	SDL_FillRect (m_pWorld, NULL, SDL_MapRGB(m_pWorld->format, 255, 255, 255));
-	SDL_FillRect(m_pView, NULL, SDL_MapRGB(m_pView->format, 128,128,128));
+	SDL_FillRect (m_pWorld, NULL, SDL_MapRGB(m_pWorld->format, 0, 255, 255));
+	//SDL_FillRect(m_pView, NULL, SDL_MapRGB(m_pView->format, 128,128,128));
 	//fill Black
 }
 

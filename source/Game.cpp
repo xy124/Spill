@@ -100,7 +100,7 @@ void CGame::run() {
 		float time;
 		time = SDL_GetTicks();
 		//nimmt unwesentliche Zeit von 1ms:
-		//g_pFramework->Clear(); //Clear current surface
+		g_pFramework->Clear(); //Clear current surface
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
 
@@ -164,9 +164,9 @@ void CGame::renderGameboard() {//TODO: Performance, nur blöcke laden, die auch 
 
 	for (it= s; it!=e; ++it) {//alle Bl�cke rendern!
 		CBlockKoord pos = it->first;
-		startWatch();
+		//startWatch();
 		it->second->render(pos);
-		stopWatch("Watch");
+		//stopWatch("Watch");
 	}
 
 }
