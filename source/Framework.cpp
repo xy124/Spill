@@ -16,7 +16,6 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	}
 
 	//Fullscreen/Windowmode???
-	m_pWorld = NULL;
 
 	if (bFullscreen) {
 		m_pView = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
@@ -63,43 +62,10 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	return (true);
 }
 
-bool CFramework::InitWorld(int WorldWidth, int WorldHeight, int ColorDepth) {
-
-	/*m_pWorldw = ScreenWidth;
-	m_pWorldh = ScreenHeight;*/
-	//SDL_Surface()
-	//m_pWorld;// = new SDL_Surface()
-
-
-	Uint32 rmask, gmask, bmask, amask;
-
-	    /* SDL interprets each pixel as a 32-bit number, so our masks must depend
-	       on the endianness (byte order) of the machine */
-	#if SDL_BYTEORDER == SDL_BIG_ENDIAN //HINT: AUF 16BIT anpassen!!!!!
-	    rmask = 0xf000;
-	    gmask = 0x0f00;
-	    bmask = 0x00f0;
-	    amask = 0x000f;
-	#else
-	    rmask = 0x000f;
-	    gmask = 0x00f0;
-	    bmask = 0x0f00;
-	    amask = 0xf000;
-	#endif
-	m_pWorld = SDL_CreateRGBSurface(SDL_HWSURFACE, WorldWidth, WorldHeight, ColorDepth,
-			rmask, gmask, bmask, amask );
-
-	SDL_DisplayFormat(m_pWorld);
-
-	g_pLogfile->fTextout(RED, "Init m_pWorld, w:%i, h:%i Adress:%i", m_pWorld->w, m_pWorld->h, m_pWorld);
-	return (m_pWorld != NULL);
-}
-
 void CFramework::Quit() {
 	SFont_FreeFont(pGameFont);
 //MBE SDL_FreeSurface
 	SDL_FreeSurface(m_pView);
-	SDL_FreeSurface(m_pWorld);
 	SDL_Quit();
 }
 
@@ -124,15 +90,13 @@ bool CFramework::KeyDown(int Key_ID) {
 
 
 void CFramework::Clear() {//Augabe: Buffer l�schen
-	//SDL_FillRect (m_pWorld, NULL, SDL_MapRGB(m_pWorld->format, 0, 255, 255));
-	SDL_FillRect(m_pView, NULL, SDL_MapRGB(m_pView->format, 128,128,128));
+	SDL_FillRect(m_pView, NULL, SDL_MapRGB(m_pView->format, 0,255,255));
 	//fill Black
 }
 
 void CFramework::Flip() {//surface umschalten, flippen
 	//SDL_
 	SDL_Flip(m_pView);
-	//SDL_Flip(m_pWorld); //hat ja kein doublebuffer...
 }
 
 void CFramework::showDebugValue(const string Text, ...) {
@@ -154,18 +118,13 @@ void CFramework::showDebugValue(const string Text, ...) {
 }
 
 void CFramework::TextOut(std::string Text, int x, int y) {
-	SFont_Write(m_pWorld, pGameFont, x, y, Text.c_str());
+	SFont_Write(m_pView, pGameFont, x, y, Text.c_str());
 }
 void CFramework::TextOut(std::string Text, CVec Where) {
 	int xx = static_cast<int>(Where.x);
 	int yy = static_cast<int>(Where.y);
 
-	SFont_Write(m_pWorld, pGameFont, xx, yy, Text.c_str());
-}
-
-void CFramework::BlitView() {//TODO brauchen wir noch flip wenn wir eh mit 2 views arbeiten???
-	if (SDL_BlitSurface(m_pWorld, &m_ViewRect, m_pView, NULL)==0)
-		g_pLogfile->Textout("yes");
+	SFont_Write(m_pView, pGameFont, xx, yy, Text.c_str());
 }
 
 bool CFramework::RectInView(SDL_Rect rect) {
