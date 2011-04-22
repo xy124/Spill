@@ -1,7 +1,7 @@
 #include "Block.hpp"
 
 
-const int CBlock::BlockCosts[5]     = BLOCKCOSTS;//TODO
+const int CBlock::BlockCosts[5]    	  = BLOCKCOSTS;//TODO
 const float CBlock::BlockBouncingX[5] = BLOCKBOUNCING_X;
 const float CBlock::BlockBouncingY[5] = BLOCKBOUNCING_Y;
 CSprite * CBlock::m_pBlockSprites[5];

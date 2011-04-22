@@ -131,16 +131,21 @@ void CWorm::ProcessBuilding() {
 		pos.x += (m_bOrientation==ORIGHT ? 1 : 0); //Orientation
 		CBlock* miningBlock = m_pGame->getBlock(pos);
 		if (miningBlock->getBlockType() != CBlock::AIR) {
-			if (m_pGame->BuildBlock(pos, CBlock::AIR, m_WormID, m_TeamID)) {
-				m_Money += CBlock::BlockCosts[miningBlock->getBlockType()];
+			int newMoney = m_Money + CBlock::BlockCosts[miningBlock->getBlockType()]; //da blocktype sich dann ja ändert... bei buildblock
+			if (m_pGame->BuildBlock(pos, CBlock::AIR, m_WormID, m_TeamID)) { //block konnte gebaut werden!:
+				m_Money = newMoney;
 				m_Points++;
+				g_pLogfile->fTextout(BLUE, false, "Mined Block for %iEur", CBlock::BlockCosts[miningBlock->getBlockType()]);
 			}
 		}
 	}//Keydown
 
-	if ( (g_pFramework->KeyDown(SDLK_GREATER)) && (m_bNextBTypeKeyLock == false) ) {//FIXME right key???
+	if ( (g_pFramework->KeyDown(SDLK_LSHIFT)) && (m_bNextBTypeKeyLock == false) ) {//FIXME right key???
 		m_selectedBType = CBlock::nextBlockType(m_selectedBType);//MBE überschlag
+		m_bNextBTypeKeyLock = true;
 	}
+	if (!g_pFramework->KeyDown(SDLK_LSHIFT))
+		m_bNextBTypeKeyLock = false;
 
 
 }

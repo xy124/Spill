@@ -10,6 +10,9 @@
 
 
 //TODO als const-singleton???
+//FIXME: alle Prameter klein beginnen!!!
+//FIXME Parameter mehr als Referenz machen!!!
+//s. icqchatg albert 22.04.2011
 
 
 //Game.hpp:
