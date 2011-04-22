@@ -139,7 +139,7 @@ void CWorm::ProcessBuilding() {
 	}//Keydown
 
 	if ( (g_pFramework->KeyDown(SDLK_GREATER)) && (m_bNextBTypeKeyLock == false) ) {//FIXME right key???
-		m_selectedBType++;//MBE überschlag
+		m_selectedBType = CBlock::nextBlockType(m_selectedBType);//MBE überschlag
 	}
 
 
