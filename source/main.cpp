@@ -36,4 +36,5 @@ int main (int argc, char *argv[]) {
 	CHighscorelist::del();
 	CLogfile::del();
 	return 0;
+	//TODO crashes on closing
 }

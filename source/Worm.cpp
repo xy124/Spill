@@ -149,7 +149,10 @@ void CWorm::ProcessBuilding() {
 	if (!g_pFramework->KeyDown(SDLK_LSHIFT))
 		m_bNextBTypeKeyLock = false;
 
-	if ( g_pFramework->KeyDown(SDLK_LCTRL) ) {
+	if ( (g_pFramework->KeyDown(SDLK_LCTRL))
+			&& (m_selectedBType != CBlock::AIR)//Build Air has no sense...
+			&& (m_Money >= CBlock::BlockCosts[m_selectedBType]) //player has enough money
+			) {
 		//get field next to worm
 		CBlockKoord pos = CVec(getRect()).toBlockKoord();
 		if (m_bOrientation == ORIGHT)
@@ -157,6 +160,16 @@ void CWorm::ProcessBuilding() {
 		else
 			pos.x--;
 		//is field free???
+		CBlock* buildingBlock = m_pGame->getBlock(pos);
+		if (buildingBlock != NULL) {//TODO: collission
+			if (m_pGame->BuildBlock(pos, m_selectedBType, m_WormID, m_TeamID)) {
+				g_pLogfile->Textout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType));
+				m_Money -= CBlock::BlockCosts[m_selectedBType];
+				m_Points++;
+			}
+
+
+		}
 
 	}
 

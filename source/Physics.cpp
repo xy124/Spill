@@ -143,7 +143,7 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 	result.bIsCollision = false;
 	result.BlockType = CBlock::AIR;
 
-	CVec vecs[6];
+	CVec vecs[6];//TODO eigentlich reichen jez 4 Punke, da Worm kleiner Block!!
 
 	vecs[0] = CVec (FR);
 	vecs[1] = CVec (FR.x+FR.w, FR.y);
