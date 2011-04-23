@@ -40,6 +40,8 @@ void CSprite::Load(const string sFilename) { //L�d nicht animiertes sprite
 		exit(1);
 	}
 
+	SDL_DisplayFormat(m_pImage);
+
 	//Rect initialisieren
 	m_Rect.x = 0;
 	m_Rect.y = 0;
