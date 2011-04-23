@@ -129,15 +129,17 @@ void CWorm::ProcessBuilding() {
 		CBlockKoord pos = CVec(getRect()).toBlockKoord();
 		pos.y++; //Block UNDER worm
 		pos.x += (m_bOrientation==ORIGHT ? 1 : 0); //Orientation
-		CBlock* miningBlock = m_pGame->getBlock(pos);
-		if (miningBlock->getBlockType() != CBlock::AIR) {
-			int newMoney = m_Money + CBlock::BlockCosts[miningBlock->getBlockType()]; //da blocktype sich dann ja ändert... bei buildblock
-			if (m_pGame->BuildBlock(pos, CBlock::AIR, m_WormID, m_TeamID)) { //block konnte gebaut werden!:
-				m_Money = newMoney;
-				m_Points++;
-				g_pLogfile->fTextout(BLUE, false, "Mined Block for %iEur", CBlock::BlockCosts[miningBlock->getBlockType()]);
+		CBlock* miningBlock = m_pGame->getBlock(pos);//returns NULL if for example out of Gameboard
+		if (miningBlock != NULL) {
+			if (miningBlock->getBlockType() != CBlock::AIR) {
+				int newMoney = m_Money + CBlock::BlockCosts[miningBlock->getBlockType()]; //da blocktype sich dann ja ändert... bei buildblock
+				if (m_pGame->BuildBlock(pos, CBlock::AIR, m_WormID, m_TeamID)) { //block konnte gebaut werden!:
+					m_Money = newMoney;
+					m_Points++;
+					g_pLogfile->fTextout(BLUE, false, "Mined Block");
+				}
 			}
-		}
+		} else g_pLogfile->Textout("<br /> Couldn't mine Block because miningBlock == NULL");
 	}//Keydown
 
 	if ( (g_pFramework->KeyDown(SDLK_LSHIFT)) && (m_bNextBTypeKeyLock == false) ) {//FIXME right key???
