@@ -38,6 +38,7 @@ class CWorm : public CPhysicalObject {
 		bool m_Alive;
 		bool m_isWalking;
 		bool m_bJumpKeyLock;
+		bool m_bBuildKeyLock;
 		bool m_bOrientation;
 		S_Collision m_lastCollisionY;
 

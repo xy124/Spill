@@ -83,9 +83,6 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
 
 
-
-
-
 	CBlock::InitBlockSprites();
 
 	m_bIsRunning = true;
@@ -121,7 +118,7 @@ void CGame::run() {
 		i = m_vWorms.begin(); //hier für spieler 1
 		(*i)->ProcessView();
 
-		g_pFramework->showDebugValue("Fps: %f", 1/(g_pTimer->getElapsed()) );
+		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
 		g_pFramework->RenderDebugText();
 

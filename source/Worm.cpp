@@ -31,6 +31,9 @@ void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	m_Energy = MAXENERGY;
 	setCanMove(true);
 	
+	m_bJumpKeyLock = false;
+	m_bBuildKeyLock = false;
+
 	m_bNextBTypeKeyLock = false;
 	m_selectedBType = CBlock::AIR;
 
@@ -126,9 +129,10 @@ void CWorm::ProcessBuilding() {
 
 	if (g_pFramework->KeyDown(SDLK_DOWN)) {
 		//get Block under Worm!
-		CBlockKoord pos = CVec(getRect()).toBlockKoord();
-		pos.y++; //Block UNDER worm
-		pos.x += (m_bOrientation==ORIGHT ? 1 : 0); //Orientation
+		CVec vec(getRect());
+		vec.x += getRect().w/2;//Block UNDER worm
+		CBlockKoord pos = vec.toBlockKoord();
+		pos.y++;//Block UNDER worm
 		CBlock* miningBlock = m_pGame->getBlock(pos);//returns NULL if for example out of Gameboard
 		if (miningBlock != NULL) {
 			if (miningBlock->getBlockType() != CBlock::AIR) {
@@ -150,28 +154,34 @@ void CWorm::ProcessBuilding() {
 		m_bNextBTypeKeyLock = false;
 
 	if ( (g_pFramework->KeyDown(SDLK_LCTRL))
+			&& (m_bBuildKeyLock == false)
 			&& (m_selectedBType != CBlock::AIR)//Build Air has no sense...
 			&& (m_Money >= CBlock::BlockCosts[m_selectedBType]) //player has enough money
 			) {
+		m_bBuildKeyLock = true;
 		//get field next to worm
-		CBlockKoord pos = CVec(getRect()).toBlockKoord();
+		CVec vec(getRect());
 		if (m_bOrientation == ORIGHT)
-			pos.x++;
+			vec.x += (getRect().w + BLOCKSIZE);//next block
 		else
-			pos.x--;
+			vec.x -= BLOCKSIZE;
+
+		CBlockKoord pos = vec.toBlockKoord();
+
 		//is field free???
 		CBlock* buildingBlock = m_pGame->getBlock(pos);
 		if (buildingBlock != NULL) {//TODO: collission
 			if (m_pGame->BuildBlock(pos, m_selectedBType, m_WormID, m_TeamID)) {
-				g_pLogfile->Textout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType));
+				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType)+" Costs:%i", CBlock::BlockCosts[m_selectedBType]);
 				m_Money -= CBlock::BlockCosts[m_selectedBType];
 				m_Points++;
 			}
 
-
 		}
 
 	}
+	if (!g_pFramework->KeyDown(SDLK_LCTRL))
+			m_bBuildKeyLock = false;
 
 
 }
@@ -219,7 +229,7 @@ CWorm::~CWorm() {
 		delete (m_pWormSprite);
 	}
 	m_pWormSprite = NULL;
-	CLogfile::get()->fTextout("Deleted Worm; ID:%i<br />",m_WormID);
+	CLogfile::get()->fTextout("<br />Deleted Worm; ID:%i",m_WormID);
 }
 
 string CWorm::getWormColorString() {
