@@ -149,13 +149,13 @@ void CFramework::TextOut(std::string &text, CVec &where, int ViewPort) {
 
 bool CFramework::RectInView(SDL_Rect rect, int viewPort) {
 	//überprüft ob sich zwei rects schneiden!
-	SDL_Rect ViewRect = ViewPorts.at(viewPort).m_View;
+	const SDL_Rect &ViewRect = ViewPorts.at(viewPort).m_View;
 	return ( (rect.y < ViewRect.y+ViewRect.h) && (rect.y+rect.h > ViewRect.y)
 			&& (rect.x < ViewRect.x+ViewRect.w) && (rect.x+rect.w > ViewRect.x) );
 }
 
 bool CFramework::RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &iter) {
-	SDL_Rect ViewRect = iter->m_View;
+	const SDL_Rect &ViewRect = iter->m_View;
 	return ( (rect.y < ViewRect.y+ViewRect.h) && (rect.y+rect.h > ViewRect.y)
 			&& (rect.x < ViewRect.x+ViewRect.w) && (rect.x+rect.w > ViewRect.x) );
 }
