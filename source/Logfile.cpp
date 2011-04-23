@@ -94,7 +94,7 @@ void CLogfile::WriteTopic (const std::string &sTopic, int HeadingSize) {//macht 
 }
 
 void CLogfile::Textout(const std::string &sText) {
-	fprintf(m_Logfile, "%s", sText.c_str()); //schreibt den Text in die logfile
+	fprintf(m_Logfile, "%s\n", sText.c_str()); //schreibt den Text in die logfile
 	fflush(m_Logfile); //erzwingt das schreiben aller ncoh ausstehenden daten, wenns programm abst�rtzt wei� man wo...
 	cout << htmlToSimpleOut(sText) << flush;
 }
