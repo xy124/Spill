@@ -20,7 +20,7 @@ class CSprite {
 		void SetPos		(float fXPos, float fYPos);
 		void SetPos		(const CVec &newPos);
 		void Render		();
-		void Render		(float fFrameNumber);
+		void Render		(float fFrameNumber, bool bFlipped);
 		SDL_Rect GetRect() {return m_Rect;}
 	
 	private:

@@ -88,12 +88,11 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 	//Parameter NULL da kein ausschnitt aus Sprite sondern gesamtes Sprite
 }
 
-void CSprite::Render(float fFrameNumber) { //aktuellen Frame reinrendern..
+void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame reinrendern..
 	//Render just if Rects are colliding:
-	SDL_Rect rect = m_Rect; //Rect auf screen
-	SDL_Rect viewrect = g_pFramework->getViewRect();
+	SDL_Rect rect = m_Rect; //where to draw it
 	if (g_pFramework->RectInView(rect)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
-		rect.x -= viewrect.x;//calculate x in View!
+		rect.x -= g_pFramework->getViewRect().x;//calculate x in View!
 
 		//MBE: man könnte auch mit SDL_SetClipRect arbeiten
 		//file:///D:/Daten/Programmierung/SDL-1.2.13_MINGW/docs/html/sdlsetcliprect.html
@@ -107,8 +106,25 @@ void CSprite::Render(float fFrameNumber) { //aktuellen Frame reinrendern..
 		m_FrameRect.y = row * m_FrameHeight;
 
 		//Ausschnitt rendern
-		//HINT:!! if Sprite is animated m_Rect hast not the whole Height/width, just the height/width of one frame!!!
-		SDL_BlitSurface(m_pImage, &m_FrameRect, m_pScreen, &rect); //von dem lettzterem Rect werden nur die x-Ywerte �bernommen!!!
+		//HINT:!! if Sprite is animated m_Rect has not the whole Height/width, just the height/width of one frame!!!
+		if (bFlipped) {
+			SDL_Rect spriteLine; //Line in Sprite
+			spriteLine = m_FrameRect;
+			spriteLine.w = 1; //Line!
+
+			SDL_Rect worldLine; //Line in World
+			worldLine = rect;
+			worldLine.w = 1; //Line!
+
+			worldLine.x += rect.w; //worldline fängt rechts an!
+			while (spriteLine.x<m_FrameRect.x+m_FrameWidth) {//TODO: < or <= framwidth???
+				spriteLine.x++;
+				worldLine.x--;
+				SDL_BlitSurface(m_pImage, &spriteLine, m_pScreen, &worldLine );
+			}
+		} else {
+			SDL_BlitSurface(m_pImage, &m_FrameRect, m_pScreen, &rect); //von dem lettzterem Rect werden nur die x-Ywerte �bernommen!!!
+		}
 	}
 }
 

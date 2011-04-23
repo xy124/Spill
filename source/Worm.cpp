@@ -80,7 +80,7 @@ void CWorm::reset() { //HINT: resettet nicht die Position
 void CWorm::render() {
 	CVec newWormPos = CVec(getRect());
 	m_pWormSprite->SetPos( newWormPos );
-	m_pWormSprite->Render(m_fAnimphase);
+	m_pWormSprite->Render(m_fAnimphase, m_bOrientation);
 }
 
 void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
