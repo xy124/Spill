@@ -91,8 +91,6 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 		}
 	}
 
-
-
 	//Parameter NULL da kein ausschnitt aus Sprite sondern gesamtes Sprite
 }
 

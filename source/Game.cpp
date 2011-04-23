@@ -103,7 +103,6 @@ void CGame::run() {
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
 
-
 		//Move Worms, slow them down and so on...
 		g_pPhysics->doPhysics();//schnell!!
 
@@ -114,12 +113,12 @@ void CGame::run() {
 		vector<CWorm*>::iterator i;
 		for (i = m_vWorms.begin(); i<m_vWorms.end(); i++) {
 			(*i)->update();
+			(*i)->ProcessView();
 			(*i)->render();
 		}
 
-		//TODO: je nach spieler...
-		i = m_vWorms.begin(); //hier für spieler 1
-		(*i)->ProcessView();
+
+		g_pFramework->drawViewPortFrames();
 
 		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
@@ -133,10 +132,7 @@ void CGame::run() {
 void CGame::renderGameboard() {//TODO: Performance, nur blöcke laden, die auch im Bild sind!
 
 	map<CBlockKoord, CBlock*>::iterator it, s, e;
-	s = m_Gameboard.begin();//TODO bringt das was???
-	e = m_Gameboard.end();
-
-	for (it=s; it!=e; ++it) {//alle Bl�cke rendern!
+	for (it=m_Gameboard.begin(); it!=m_Gameboard.end(); ++it) {//alle Bl�cke rendern!
 		CBlockKoord pos = it->first;
 		//startWatch();
 		it->second->render(pos);

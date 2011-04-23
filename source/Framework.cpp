@@ -18,14 +18,14 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	//Fullscreen/Windowmode???
 
 	if (bFullscreen) {
-		m_pView = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
+		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
 										SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 	} else {
-		m_pView = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
+		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
 										SDL_HWSURFACE | SDL_DOUBLEBUF);
 	}
 
-	if (m_pView == NULL) {
+	if (m_pScreen == NULL) {
 		string describtion ("Videomodus konnte nicht gesetzt werden");
 		describtion = describtion + SDL_GetError();
 
@@ -85,7 +85,7 @@ bool CFramework::InitViewPorts(int Amount) {
 void CFramework::Quit() {
 	SFont_FreeFont(pGameFont);
 //MBE SDL_FreeSurface
-	SDL_FreeSurface(m_pView);
+	SDL_FreeSurface(m_pScreen);
 	SDL_Quit();
 }
 
@@ -110,13 +110,13 @@ bool CFramework::KeyDown(int Key_ID) {
 
 
 void CFramework::Clear() {//Augabe: Buffer l�schen
-	SDL_FillRect(m_pView, NULL, SDL_MapRGB(m_pView->format, 0,255,255));
+	SDL_FillRect(m_pScreen, NULL, SDL_MapRGB(m_pScreen->format, 0,255,255));
 	//fill Black
 }
 
 void CFramework::Flip() {//surface umschalten, flippen
 	//SDL_
-	SDL_Flip(m_pView);
+	SDL_Flip(m_pScreen);
 }
 
 void CFramework::showDebugValue(const string &sText, ...) {
@@ -138,13 +138,13 @@ void CFramework::showDebugValue(const string &sText, ...) {
 }
 
 void CFramework::TextOut(std::string &text, int x, int y, int ViewPort) {
-	SFont_Write(m_pView, pGameFont, x, y, text.c_str());
+	SFont_Write(m_pScreen, pGameFont, x, y, text.c_str());
 }
 void CFramework::TextOut(std::string &text, CVec &where, int ViewPort) {
 	int xx = static_cast<int>(where.x);
 	int yy = static_cast<int>(where.y);
 
-	SFont_Write(m_pView, pGameFont, xx, yy, text.c_str());
+	SFont_Write(m_pScreen, pGameFont, xx, yy, text.c_str());
 }
 
 bool CFramework::RectInView(SDL_Rect rect, int viewPort) {
@@ -158,6 +158,19 @@ bool CFramework::RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &it
 	SDL_Rect ViewRect = iter->m_View;
 	return ( (rect.y < ViewRect.y+ViewRect.h) && (rect.y+rect.h > ViewRect.y)
 			&& (rect.x < ViewRect.x+ViewRect.w) && (rect.x+rect.w > ViewRect.x) );
+}
+
+void CFramework::drawViewPortFrames() {
+	vector<S_ViewPort>::iterator it;
+	SDL_Rect border;
+	border.y = 0;
+	border.w = 12;
+	border.h = m_ScreenRect.h;
+	it = ViewPorts.begin();//start with second ViewPort
+	for (++it; it != ViewPorts.end(); ++it) {
+		border.x = it->m_ScreenPosition.x-6;
+		SDL_FillRect(m_pScreen, &border, SDL_MapRGB(m_pScreen->format, 128, 0, 0));
+	}
 }
 
 
