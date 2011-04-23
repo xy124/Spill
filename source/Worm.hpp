@@ -30,6 +30,7 @@ class CWorm : public CPhysicalObject {
 		CGame* m_pGame;
 
 		int m_WormID;
+		int m_ViewPort;
 		WORMCOLORS m_Color;
 		int m_TeamID;
 		int m_Energy;
@@ -68,6 +69,10 @@ class CWorm : public CPhysicalObject {
 		bool isAlive();
 		void ProcessView();
 		~CWorm();
+
+		void setViewPort(int Viewport) {
+			m_ViewPort = Viewport;
+		}
 
 		int getWormID()
 		{

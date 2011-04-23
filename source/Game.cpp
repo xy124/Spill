@@ -9,9 +9,12 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 		CLogfile::get()->Textout("Can't Create so many Players, will create 4<br />");
 	}
 
+	g_pFramework->InitViewPorts(2); //TODO so viele wie mitspieler
+
 	for (int i=1; i<=AmountOfPlayers; i++) {//w�rmer auff�llen
 		CWorm* pWorm = new CWorm(this);
 		pWorm->init(i, 40.0f, 40.0f, CWorm::WC_RED); //wir machen alle Würmer rot....
+		pWorm->setViewPort(i-1);
 		m_vWorms.push_back(pWorm); //MBE: evtl Teams
 	}
 	m_WormAmount = AmountOfPlayers;

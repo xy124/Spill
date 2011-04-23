@@ -38,11 +38,8 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 
 	m_ScreenRect.x = 0;
 	m_ScreenRect.y = 0;
-	m_ScreenRect.w = ScreenWidth;
-	m_ScreenRect.h = ScreenHeight;
-
-	m_ViewRect.w = ScreenWidth;
-	m_ViewRect.h = ScreenHeight;
+	m_ScreenRect.w = 0;
+	m_ScreenRect.h = 0;
 
 
 	m_WorldRect.x = 0;
@@ -68,6 +65,23 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	return (true);
 }
 
+bool CFramework::InitViewPorts(int Amount) {
+	S_ViewPort vp;
+	vp.m_View.x = 0;//init coords on world
+	vp.m_View.y = 0;
+	vp.m_View.w = static_cast<int>(m_ScreenRect.w/Amount);
+	vp.m_View.h = m_ScreenRect.h;
+
+	//init position on screen:
+	vp.m_ScreenPosition = vp.m_View;
+	for (int i=0; i<Amount; i++) {
+		vp.m_ScreenPosition.x = i*vp.m_View.w;
+		ViewPorts.push_back(vp);
+	}
+	g_pLogfile->fTextout("<br />Successfull created %i Viewport(s)", Amount);
+	return true;
+}
+
 void CFramework::Quit() {
 	SFont_FreeFont(pGameFont);
 //MBE SDL_FreeSurface
@@ -86,7 +100,7 @@ void CFramework::Update() {
 void CFramework::RenderDebugText() {
 	//DebugText:
 	if (m_DebugValue != "") {
-		TextOut(m_DebugValue, 0,50);
+		TextOut(m_DebugValue, 0, 50, 0);
 	}
 }
 
@@ -105,17 +119,17 @@ void CFramework::Flip() {//surface umschalten, flippen
 	SDL_Flip(m_pView);
 }
 
-void CFramework::showDebugValue(const string Text, ...) {
+void CFramework::showDebugValue(const string &sText, ...) {
 	char buffer[MAX_BUFFER];
 	va_list pArgList;	//hierrein hauts jetzt die �bergebenen parameter!
 
-	if (Text.length()+1>MAX_BUFFER) {
+	if (sText.length()+1>MAX_BUFFER) {
 		g_pLogfile->FunctionResult("showDebugValue", L_FAIL, "*Text > MAX_BUFFER!");
 		return;
 	}
 
-	va_start (pArgList, Text); //std::string aus Argumenten erstellen!
-	vsprintf(buffer, Text.c_str(), pArgList);
+	va_start (pArgList, sText); //std::string aus Argumenten erstellen!
+	vsprintf(buffer, sText.c_str(), pArgList);
 	va_end (pArgList);
 
 
@@ -123,21 +137,27 @@ void CFramework::showDebugValue(const string Text, ...) {
 	m_DebugValue = buffer;
 }
 
-void CFramework::TextOut(std::string &text, int x, int y) {
+void CFramework::TextOut(std::string &text, int x, int y, int ViewPort) {
 	SFont_Write(m_pView, pGameFont, x, y, text.c_str());
 }
-void CFramework::TextOut(std::string &text, CVec &where) {
+void CFramework::TextOut(std::string &text, CVec &where, int ViewPort) {
 	int xx = static_cast<int>(where.x);
 	int yy = static_cast<int>(where.y);
 
 	SFont_Write(m_pView, pGameFont, xx, yy, text.c_str());
 }
 
-bool CFramework::RectInView(SDL_Rect rect) {
+bool CFramework::RectInView(SDL_Rect rect, int viewPort) {
 	//überprüft ob sich zwei rects schneiden!
-	return ( (rect.y < m_ViewRect.y+m_ViewRect.h) && (rect.y+rect.h > m_ViewRect.y)
-			&& (rect.x < m_ViewRect.x+m_ViewRect.w) && (rect.x+rect.w > m_ViewRect.x) );
+	SDL_Rect ViewRect = ViewPorts.at(viewPort).m_View;
+	return ( (rect.y < ViewRect.y+ViewRect.h) && (rect.y+rect.h > ViewRect.y)
+			&& (rect.x < ViewRect.x+ViewRect.w) && (rect.x+rect.w > ViewRect.x) );
+}
 
+bool CFramework::RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &iter) {
+	SDL_Rect ViewRect = iter->m_View;
+	return ( (rect.y < ViewRect.y+ViewRect.h) && (rect.y+rect.h > ViewRect.y)
+			&& (rect.x < ViewRect.x+ViewRect.w) && (rect.x+rect.w > ViewRect.x) );
 }
 
 

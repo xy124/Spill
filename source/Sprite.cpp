@@ -78,11 +78,17 @@ void CSprite::SetPos(float fXPos, float fYPos) {
 void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 	//Render just if Rects are colliding:
 	SDL_Rect rect = m_Rect;
-	SDL_Rect viewrect = g_pFramework->getViewRect();
-	if (g_pFramework->RectInView(rect)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
-		rect.x -= viewrect.x;//calculate x in View!
-		SDL_BlitSurface(m_pImage, NULL, m_pScreen, &rect);
+
+	vector<S_ViewPort>::iterator it;
+	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
+		SDL_Rect viewrect = it->m_View;
+		if (g_pFramework->RectInView(rect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
+			rect.x -= viewrect.x;//calculate x in View!
+			rect.x += it->m_ScreenPosition.x;
+			SDL_BlitSurface(m_pImage, NULL, m_pScreen, &rect);
+		}
 	}
+
 
 
 	//Parameter NULL da kein ausschnitt aus Sprite sondern gesamtes Sprite
@@ -91,41 +97,46 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame reinrendern..
 	//Render just if Rects are colliding:
 	SDL_Rect rect = m_Rect; //where to draw it
-	if (g_pFramework->RectInView(rect)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
-		rect.x -= g_pFramework->getViewRect().x;//calculate x in View!
+	vector<S_ViewPort>::iterator it;
+	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
+		SDL_Rect viewrect = it->m_View;
+		if (g_pFramework->RectInView(rect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
+			rect.x -= viewrect.x;//calculate x in View!
+			rect.x += it->m_ScreenPosition.x;
 
-		//MBE: man könnte auch mit SDL_SetClipRect arbeiten
-		//file:///D:/Daten/Programmierung/SDL-1.2.13_MINGW/docs/html/sdlsetcliprect.html
-		//spalte berechnen
-		int column = static_cast<int>(fFrameNumber)%m_NumFramesX;//Spalte
+			//MBE: man könnte auch mit SDL_SetClipRect arbeiten
+			//file:///D:/Daten/Programmierung/SDL-1.2.13_MINGW/docs/html/sdlsetcliprect.html
+			//spalte berechnen
+			int column = static_cast<int>(fFrameNumber)%m_NumFramesX;//Spalte
 
-		int row = static_cast<int>(fFrameNumber)/m_NumFramesX;//Zeile
+			int row = static_cast<int>(fFrameNumber)/m_NumFramesX;//Zeile
 
-		//Rect berechnen:
-		m_FrameRect.x = column * m_FrameWidth;
-		m_FrameRect.y = row * m_FrameHeight;
+			//Rect berechnen:
+			m_FrameRect.x = column * m_FrameWidth;
+			m_FrameRect.y = row * m_FrameHeight;
 
-		//Ausschnitt rendern
-		//HINT:!! if Sprite is animated m_Rect has not the whole Height/width, just the height/width of one frame!!!
-		if (bFlipped) {
-			SDL_Rect spriteLine; //Line in Sprite
-			spriteLine = m_FrameRect;
-			spriteLine.w = 1; //Line!
+			//Ausschnitt rendern
+			//HINT:!! if Sprite is animated m_Rect has not the whole Height/width, just the height/width of one frame!!!
+			if (bFlipped) {
+				SDL_Rect spriteLine; //Line in Sprite
+				spriteLine = m_FrameRect;
+				spriteLine.w = 1; //Line!
 
-			SDL_Rect worldLine; //Line in World
-			worldLine = rect;
-			worldLine.w = 1; //Line!
+				SDL_Rect worldLine; //Line in World
+				worldLine = rect;
+				worldLine.w = 1; //Line!
 
-			worldLine.x += rect.w; //worldline fängt rechts an!
-			while (spriteLine.x<m_FrameRect.x+m_FrameWidth) {//TODO: < or <= framwidth???
-				spriteLine.x++;
-				worldLine.x--;
-				SDL_BlitSurface(m_pImage, &spriteLine, m_pScreen, &worldLine );
+				worldLine.x += rect.w; //worldline fängt rechts an!
+				while (spriteLine.x<m_FrameRect.x+m_FrameWidth) {//TODO: < or <= framwidth???
+					spriteLine.x++;
+					worldLine.x--;
+					SDL_BlitSurface(m_pImage, &spriteLine, m_pScreen, &worldLine );
+				}
+			} else {
+				SDL_BlitSurface(m_pImage, &m_FrameRect, m_pScreen, &rect); //von dem lettzterem Rect werden nur die x-Ywerte �bernommen!!!
 			}
-		} else {
-			SDL_BlitSurface(m_pImage, &m_FrameRect, m_pScreen, &rect); //von dem lettzterem Rect werden nur die x-Ywerte �bernommen!!!
 		}
-	}
+	}//For viewports
 }
 
 CSprite::CSprite(const std::string sBlockFilename) {

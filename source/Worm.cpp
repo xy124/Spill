@@ -1,5 +1,6 @@
 #include "Worm.hpp"
 #include <map>
+#include "Framework.hpp"
 
 using namespace std;
 
@@ -194,7 +195,7 @@ void CWorm::ProcessAnim() {
 
 void CWorm::ProcessView() {
 	FloatRect WormRect = getRect();
-	SDL_Rect ViewRect  = g_pFramework->getViewRect();
+	SDL_Rect ViewRect  = g_pFramework->ViewPorts.at(m_ViewPort).m_View;//MBE at nimmt performance raus!
 
 
 	if (static_cast<int>(WormRect.x) > ViewRect.x+400) {
@@ -211,14 +212,13 @@ void CWorm::ProcessView() {
 	if (ViewRect.x < 0)
 		ViewRect.x = 0;
 
-	g_pFramework->setViewRect(ViewRect);
+	g_pFramework->ViewPorts[m_ViewPort].m_View = ViewRect;//TODO per at????
 
 	char buffer[1024];
 	sprintf(buffer, "Money: %iEur,   Points: %i,   Energy: %i/%i",m_Money, m_Points, m_Energy, MAXENERGY);
 
 	string s = "::"+CBlock::BlockTypeString(m_selectedBType)+"::"+buffer;
-
-	g_pFramework->TextOut(s, 0, 0);
+	g_pFramework->TextOut(s, 0, 0, m_ViewPort);
 }
 
 CWorm::~CWorm() {

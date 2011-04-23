@@ -11,13 +11,23 @@
 #include "stdarg.h"
 #include "consts.hpp"
 #include "Vec.hpp"
+#include <vector>
 
 #define g_pFramework CFramework::get()
 
+struct S_ViewPort {
+	SDL_Rect m_View;
+	SDL_Rect m_ScreenPosition;
+};
+
 class CFramework : public TSingleton<CFramework> {
 	public:
+		std::vector<S_ViewPort> ViewPorts;
+
 		bool Init(int ScreenWidth, int ScreenHeight,
 					int ColorDepth, bool bFullscreen);
+		bool InitViewPorts(int Amount);
+
 		void Quit();
 		void Update();
 		void Clear();
@@ -27,16 +37,14 @@ class CFramework : public TSingleton<CFramework> {
 
 		SFont_Font * pGameFont;
 
-		void TextOut(std::string &text, int x, int y);
-		void TextOut(std::string &text, CVec &where);
+		void TextOut(std::string &text, int x, int y, int ViewPort);
+		void TextOut(std::string &text, CVec &where, int ViewPort);
 
-		void showDebugValue(const std::string Text, ...);
+		void showDebugValue(const std::string &sText, ...);
 		void RenderDebugText();
 
-		void setViewRect(SDL_Rect &viewRect) {m_ViewRect = viewRect;}
-		SDL_Rect& getViewRect() {return m_ViewRect;}
-
-		bool RectInView(SDL_Rect rect);
+		bool RectInView(SDL_Rect rect, int viewPort);
+		bool RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &iter);
 
 		SDL_Rect getWorldRect() {return m_WorldRect;}
 		void setWorldRect(SDL_Rect &WorldRect) {m_WorldRect = WorldRect;}
@@ -45,9 +53,8 @@ class CFramework : public TSingleton<CFramework> {
 		SDL_Surface * m_pView;
 		Uint8 *m_pKeystate;	//arraay mit aktuellem Tastaturstatus
 		std::string m_DebugValue;
-		SDL_Rect m_ViewRect; //the rect that is shown
-		SDL_Rect m_ScreenRect;//Size of the screen
-		SDL_Rect m_WorldRect;
+		SDL_Rect m_ScreenRect;//Size of whole the screen
+		SDL_Rect m_WorldRect;//Rect of whole world!
 
 
 };
