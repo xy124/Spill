@@ -149,6 +149,17 @@ void CWorm::ProcessBuilding() {
 	if (!g_pFramework->KeyDown(SDLK_LSHIFT))
 		m_bNextBTypeKeyLock = false;
 
+	if ( g_pFramework->KeyDown(SDLK_LCTRL) ) {
+		//get field next to worm
+		CBlockKoord pos = CVec(getRect()).toBlockKoord();
+		if (m_bOrientation == ORIGHT)
+			pos.x++;
+		else
+			pos.x--;
+		//is field free???
+
+	}
+
 
 }
 
