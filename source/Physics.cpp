@@ -3,7 +3,6 @@
 using namespace std;
 
 bool CPhysics::doPhysics() {
-	//Hint: Nur hier sollte der Timer eingesetzt werden!!! und bei animphasen!!
 	vector<CWorm*>::iterator i;
 	for (i = m_pGame->m_vWorms.begin(); i!=m_pGame->m_vWorms.end(); ++i) {
 		if ( !((*i)->getCanMove() && (*i)->isAlive()) )
@@ -118,15 +117,12 @@ bool CPhysics::doPhysics() {
 }
 
 CBlock::BlockType CPhysics::getBlockType(CVec &vec) {
-	CBlockKoord blockKoord;
-	blockKoord = vec.toBlockKoord();
-	std::map<CBlockKoord,CBlock*>::iterator it;
-	it = m_pGame->m_Gameboard.find(blockKoord);
-	if (it != m_pGame->m_Gameboard.end()) { //vec existiert tats�chlich!
-		CBlock::BlockType res = it->second->getBlockType();
-		return res;
-	}
-	return CBlock::NORMAL;
+	CBlock* b;
+	b= m_pGame->getBlock(vec.toBlockKoord());
+	if (b != NULL) //vec existiert tats�chlich!
+		return b->getBlockType();
+	else
+		return CBlock::NORMAL;
 }
 
 bool CPhysics::rectCollision(const FloatRect &FR1, const FloatRect &FR2) { //überprüft ob sich zwei rects schneiden!
@@ -135,6 +131,8 @@ bool CPhysics::rectCollision(const FloatRect &FR1, const FloatRect &FR2) { //üb
 }
 
 S_Collision CPhysics::getCollision(const FloatRect &FR) {
+#define CHECKPOINTS 4//jez reichen 4 Punke, da Worm kleiner Block!!
+
 	//TODO USE RECTCOLLISION!!!
 	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
 	S_Collision result;//init Result:
@@ -143,16 +141,16 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 	result.bIsCollision = false;
 	result.BlockType = CBlock::AIR;
 
-	CVec vecs[6];//TODO eigentlich reichen jez 4 Punke, da Worm kleiner Block!!
+	CVec vecs[CHECKPOINTS];
 
 	vecs[0] = CVec (FR);
 	vecs[1] = CVec (FR.x+FR.w, FR.y);
 	vecs[2] = CVec (FR.x, FR.y+FR.h);
 	vecs[3] = CVec (FR.x+FR.w, FR.y+FR.h);
-	vecs[4] = CVec (FR.x+FR.w/2, FR.y);
-	vecs[5] = CVec (FR.x+FR.w/2, FR.y+FR.h);
+	/*vecs[4] = CVec (FR.x+FR.w/2, FR.y);
+	vecs[5] = CVec (FR.x+FR.w/2, FR.y+FR.h);*/
 
-	for (int i=0; i<6; i++) {
+	for (int i=0; i<CHECKPOINTS; i++) {
 		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i]);
 		if (curType != CBlock::AIR)
 			result.bIsCollision = true;

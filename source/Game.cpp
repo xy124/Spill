@@ -133,7 +133,7 @@ void CGame::renderGameboard() {//TODO: Performance, nur blöcke laden, die auch 
 	s = m_Gameboard.begin();//TODO bringt das was???
 	e = m_Gameboard.end();
 
-	for (it= s; it!=e; ++it) {//alle Bl�cke rendern!
+	for (it=s; it!=e; ++it) {//alle Bl�cke rendern!
 		CBlockKoord pos = it->first;
 		//startWatch();
 		it->second->render(pos);
@@ -189,7 +189,7 @@ void CGame::quit() {
 	CLogfile::get()->Textout("</ br>quitted CGame");
 }
 
-CBlock* CGame::getBlock(CBlockKoord Where) { //TODO use that in physics blocktypeget
+CBlock* CGame::getBlock(CBlockKoord Where) {
 	map<CBlockKoord, CBlock*>::iterator it;
 	it = m_Gameboard.find(Where);
 	if (it != m_Gameboard.end()) {

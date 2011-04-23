@@ -89,7 +89,6 @@ void CWorm::render() {
 void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
 	CVec newDir = getDir();
 	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump() && !m_bJumpKeyLock) { //Jump!
-		//setCanJump(false); //TODO überflüssig da in physic eh immer erstmal false
 		m_bJumpKeyLock = true;
 
 		if (m_lastCollisionY.BlockType == CBlock::JUMPBOARD)
@@ -170,7 +169,7 @@ void CWorm::ProcessBuilding() {
 
 		//is field free???
 		CBlock* buildingBlock = m_pGame->getBlock(pos);
-		if (buildingBlock != NULL) {//TODO: collission
+		if (buildingBlock != NULL) {
 			if (m_pGame->BuildBlock(pos, m_selectedBType, m_WormID, m_TeamID)) {
 				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType)+" Costs:%i", CBlock::BlockCosts[m_selectedBType]);
 				m_Money -= CBlock::BlockCosts[m_selectedBType];
@@ -187,8 +186,6 @@ void CWorm::ProcessBuilding() {
 }
 
 void CWorm::ProcessAnim() {
-	//TODO! Nicht immer nur die selbe animation
-	//FIXME think of Orientation
 	if (m_isWalking)
 		m_fAnimphase += 10.0f*g_pTimer->getElapsed();
 	if (m_fAnimphase >= 3.0f)
