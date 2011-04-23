@@ -117,7 +117,7 @@ bool CPhysics::doPhysics() {
 	return true;
 }
 
-CBlock::BlockType CPhysics::getBlockType(CVec vec) {
+CBlock::BlockType CPhysics::getBlockType(CVec &vec) {
 	CBlockKoord blockKoord;
 	blockKoord = vec.toBlockKoord();
 	std::map<CBlockKoord,CBlock*>::iterator it;

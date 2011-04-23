@@ -29,7 +29,7 @@ class CPhysics : public TSingleton<CPhysics>
 		static const float Gravity = GRAVITY;			//Makes objects fall down
 		static const float Friction = FRICTION; //Reibung
 		S_Collision getCollision(const FloatRect &FR);//MBE eigentlich const was....
-		CBlock::BlockType getBlockType(CVec vec);
+		CBlock::BlockType getBlockType(CVec &vec);
 		bool rectCollision(const FloatRect &FR1, const FloatRect &FR2);
 
 		static float Abs(float f) {

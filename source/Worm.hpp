@@ -136,7 +136,7 @@ class CWorm : public CPhysicalObject {
 
 
 		S_Collision getLastCollisionY() const;
-		void setLastCollisionY(S_Collision m_lastCollisionY);
+		void setLastCollisionY(S_Collision &m_lastCollisionY);
 
 		
 };

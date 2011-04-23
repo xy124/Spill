@@ -5,7 +5,7 @@
 using namespace std;
 
 void CHighscorelist::LoadFromFile(const char * sFilename) {
-	ifstream Input(filename, ios::binary);
+	ifstream Input(sFilename, ios::binary);
 	if (Input == NULL) {
 		CLogfile::get()->FunctionResult("CHighscorelist::LoadFromFile", L_OK, "could not open inputstream, Highscorelist is empty.");
 		return;
@@ -15,7 +15,7 @@ void CHighscorelist::LoadFromFile(const char * sFilename) {
 }
 
 void CHighscorelist::SaveToFile(const char * sFilename) {
-	ofstream Output(filename, ios::binary);
+	ofstream Output(sFilename, ios::binary);
 	if (Output == NULL) {
 		CLogfile::get()->FunctionResult("CHighscorelist::SaveToFile", L_FAIL, "could not open outputstream. Can't Save Hioghscore!");
 		return;

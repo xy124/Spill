@@ -30,7 +30,7 @@ class CVec { //real Koords in Pixels!
 					x = fr.x;
 					y = fr.y;
 		}
-		CVec(const CBlockKoord blockKoord) {
+		CVec(const CBlockKoord &blockKoord) {
 			x = BLOCKSIZE*blockKoord.x;
 			y = BLOCKSIZE*blockKoord.y;
 		}

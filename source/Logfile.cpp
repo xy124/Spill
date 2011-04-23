@@ -13,7 +13,7 @@ CLogfile::~CLogfile() {//logfileendeschreiben und schlie�en
 }
 
 void CLogfile::CreateLogfile(const char *sLogName) {
-	m_Logfile = fopen(LogName, "w");
+	m_Logfile = fopen(sLogName, "w");
 	if (m_Logfile == NULL) {//TODO werden FILES wirklich NULL wenn sie nciht erstellt wurden? ich hoffe schon!
 		printf("could not open/create Logfile");
 		return ;
@@ -33,7 +33,7 @@ void CLogfile::CreateLogfile(const char *sLogName) {
 
 	//Logfile schlie�en und mit append wieder �ffnen
 	fclose (m_Logfile);
-	m_Logfile = fopen (LogName, "a");
+	m_Logfile = fopen (sLogName, "a");
 	if (m_Logfile == NULL) {
 		printf("could not open Logfile");
 		return ;
@@ -89,18 +89,18 @@ static std::string htmlToSimpleOut(const std::string& s) {
 
 void CLogfile::WriteTopic (const std::string &sTopic, int HeadingSize) {//macht ne �berschrift
 	fTextout("<h%i>",HeadingSize);
-	Textout(Topic);
+	Textout(sTopic);
 	fTextout("</h%i>",HeadingSize);
 }
 
 void CLogfile::Textout(const std::string &sText) {
-	fprintf(m_Logfile, "%s", Text.c_str()); //schreibt den Text in die logfile
+	fprintf(m_Logfile, "%s", sText.c_str()); //schreibt den Text in die logfile
 	fflush(m_Logfile); //erzwingt das schreiben aller ncoh ausstehenden daten, wenns programm abst�rtzt wei� man wo...
-	cout << htmlToSimpleOut(Text) << flush;
+	cout << htmlToSimpleOut(sText) << flush;
 }
 
 void CLogfile::Textout(int Color, const std::string &sText) {
-	Textout(Color, false, Text); //Trick 17, man beachte das false
+	Textout(Color, false, sText); //Trick 17, man beachte das false
 }
 
 void CLogfile::Textout(int Color, bool List, const std::string &sText) {
@@ -119,7 +119,7 @@ void CLogfile::Textout(int Color, bool List, const std::string &sText) {
 			Textout("<div>"); break;
 	};
 	if (List) Textout("<li>");
-	Textout(Text);	
+	Textout(sText);
 	if (List) Textout("</li>");
 	Textout("</div>");
 	if (!List) Textout("<br />");
@@ -129,13 +129,13 @@ void CLogfile::fTextout(const std::string &sText, ...) {
 	char buffer[MAX_BUFFER];
 	va_list pArgList;	//hierrein hauts jetzt die �bergebenen parameter!
 
-	if (Text.length()+1>MAX_BUFFER) {
+	if (sText.length()+1>MAX_BUFFER) {
 		FunctionResult("fTextout", L_FAIL, "*Text > MAX_BUFFER!");
 		return;
 	}
 	
-	va_start (pArgList, Text); //std::string aus Argumenten erstellen!
-	vsprintf(buffer, Text.c_str(), pArgList);
+	va_start (pArgList, sText); //std::string aus Argumenten erstellen!
+	vsprintf(buffer, sText.c_str(), pArgList);
 	va_end (pArgList);
 
 
@@ -147,13 +147,13 @@ void CLogfile::fTextout(int Color, const std::string &sText, ...) {
 	char buffer[MAX_BUFFER];
 	va_list pArgList;	//hierrein hauts jetzt die �bergebenen parameter!
 
-	if (Text.length()+1>MAX_BUFFER) {
+	if (sText.length()+1>MAX_BUFFER) {
 		FunctionResult("fTextout", L_FAIL, "*Text > MAX_BUFFER!");
 		return;
 	}
 	
-	va_start (pArgList, Text); //std::string aus Argumenten erstellen!
-	vsprintf(buffer, Text.c_str(), pArgList);
+	va_start (pArgList, sText); //std::string aus Argumenten erstellen!
+	vsprintf(buffer, sText.c_str(), pArgList);
 	va_end (pArgList);
 
 
@@ -164,14 +164,14 @@ void CLogfile::fTextout(int Color, const std::string &sText, ...) {
 void CLogfile::fTextout(int Color, bool List, const std::string &sText, ...) {
 	char buffer[MAX_BUFFER];
 	va_list pArgList;	//hierrein hauts jetzt die �bergebenen parameter!
-	fTextout("sizeof=%i",sizeof(Text));
-	if (sizeof(Text)>MAX_BUFFER) {
+	fTextout("sizeof=%i",sizeof(sText));
+	if (sizeof(sText)>MAX_BUFFER) {
 		FunctionResult("fTextout", L_FAIL, "*Text > MAX_BUFFER!");
 		return;
 	}
 	
-	va_start (pArgList, Text); //std::string aus Argumenten erstellen!
-	vsprintf(buffer, Text.c_str(), pArgList);
+	va_start (pArgList, sText); //std::string aus Argumenten erstellen!
+	vsprintf(buffer, sText.c_str(), pArgList);
 	va_end (pArgList);
 
 
@@ -180,7 +180,7 @@ void CLogfile::fTextout(int Color, bool List, const std::string &sText, ...) {
 }
 
 void CLogfile::FunctionResult(const std::string &sName, bool Result) {
-	FunctionResult(Name, Result, "-/-");
+	FunctionResult(sName, Result, "-/-");
 }
 
 void CLogfile::FunctionResult(const std::string &sName, bool Result, const std::string &sDescribtionText) {
@@ -190,10 +190,10 @@ void CLogfile::FunctionResult(const std::string &sName, bool Result, const std::
 	else
 		Textout("<table bgcolor=red>");
 	Textout("<tr><td>");
-	Textout(Name);
+	Textout(sName);
 	Textout("</td><td>");
 	Textout( (Result == L_OK ? "OK" : "ERROR") );
 	Textout("</td><td>");
-	Textout(DescribtionText);
+	Textout(sDescribtionText);
 	Textout("</td></tr></table>");
 }

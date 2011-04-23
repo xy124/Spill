@@ -65,7 +65,7 @@ S_Collision CWorm::getLastCollisionY() const
     return m_lastCollisionY;
 }
 
-void CWorm::setLastCollisionY(S_Collision m_lastCollisionY)
+void CWorm::setLastCollisionY(S_Collision &m_lastCollisionY)
 {
     this->m_lastCollisionY = m_lastCollisionY;
 }

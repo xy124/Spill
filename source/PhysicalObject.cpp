@@ -37,7 +37,7 @@ void CPhysicalObject::setCanMove(bool bCanMove)
     this->m_bCanMove = bCanMove;
 }
 
-void CPhysicalObject::setDir(CVec dir)
+void CPhysicalObject::setDir(CVec dir)//nicht per reference!!
 {
     this->m_dir = dir;
 }
@@ -47,7 +47,7 @@ void CPhysicalObject::setIsSolid(bool bIsSolid)
     this->m_bIsSolid = bIsSolid;
 }
 
-void CPhysicalObject::setRect(FloatRect rect)
+void CPhysicalObject::setRect(FloatRect &rect)
 {
     this->m_rect = rect;
 }
