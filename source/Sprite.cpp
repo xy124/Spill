@@ -92,9 +92,10 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 				SDL_Rect FrameRect; //extrem schwer zu spiegeln...
 				FrameRect = rect;
 				FrameRect.x = it->m_ScreenPosition.x - rect.x;
-				FrameRect.y = 0;//TODO
+				FrameRect.y = 0;//TODO left border doesn't work -_-
 				FrameRect.w -= FrameRect.x;
 				rect.x = it->m_ScreenPosition.x;
+				rect.w = FrameRect.w;
 				SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &rect);
 			} if (rect.x+rect.w > it->m_ScreenPosition.x+it->m_ScreenPosition.w) {
 				SDL_Rect FrameRect; //extrem schwer zu spiegeln...
