@@ -62,7 +62,10 @@ static std::string htmlToSimpleOut(const std::string& s) {
 				else if(tag == "a" || tag == "/a") {}
 				else if(tag == "/td") ret += " | ";
 				else if(tag == "/tr") ret += "\n";
+				else if(tag == "li") ret += "* ";
+				else if(tag == "/li") ret += "\n";
 				else if(tag == "/table") {}
+				else if(tag == "/body") ret += "\n";
 				tag = "";
 				state = 0;
 			}
