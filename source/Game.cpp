@@ -186,8 +186,10 @@ void CGame::quit() {
 			mit->second = NULL;
 		}
 	}
+	m_Gameboard.clear();
 
 	CBlock::FreeBlockSprites();
+	CLogfile::get()->Textout("</ br>quitted CGame");
 }
 
 CBlock* CGame::getBlock(CBlockKoord Where) { //TODO use that in physics blocktypeget
@@ -208,10 +210,7 @@ bool CGame::BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID,
 	} else return false;
 }
 
-CGame::~CGame() {
-	//nichts :P
-	CLogfile::get()->Textout("Destroyed CGame </ br>");
-}
+CGame::~CGame() {}
 
 int CGame::getGBHeight() const
 {
