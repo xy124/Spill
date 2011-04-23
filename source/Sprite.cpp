@@ -87,7 +87,25 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 		if (g_pFramework->RectInView(rect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
 			rect.x -= viewrect.x;//calculate x in View!
 			rect.x += it->m_ScreenPosition.x;
-			SDL_BlitSurface(m_pImage, NULL, m_pScreen, &rect);
+			//wenn Kante rausragt renderbereich einschränken,  TODO: auch für Render animation einschränken!
+			if (rect.x < it->m_ScreenPosition.x) {
+				SDL_Rect FrameRect; //extrem schwer zu spiegeln...
+				FrameRect = rect;
+				FrameRect.x = it->m_ScreenPosition.x - rect.x;
+				FrameRect.y = 0;//TODO
+				FrameRect.w -= FrameRect.x;
+				rect.x = it->m_ScreenPosition.x;
+				SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &rect);
+			} if (rect.x+rect.w > it->m_ScreenPosition.x+it->m_ScreenPosition.w) {
+				SDL_Rect FrameRect; //extrem schwer zu spiegeln...
+				FrameRect = rect;
+				FrameRect.x = 0;
+				FrameRect.y = 0;
+				FrameRect.w = (it->m_ScreenPosition.x+it->m_ScreenPosition.w-rect.x);
+				SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &rect);
+
+			} else
+				SDL_BlitSurface(m_pImage, NULL, m_pScreen, &rect);
 		}
 	}
 
