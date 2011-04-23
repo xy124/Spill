@@ -96,10 +96,12 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 
 void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame reinrendern..
 	//Render just if Rects are colliding:
-	SDL_Rect rect = m_Rect; //where to draw it
+	SDL_Rect rect;
+	SDL_Rect viewrect;
 	vector<S_ViewPort>::iterator it;
 	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		SDL_Rect viewrect = it->m_View;
+		rect = m_Rect; //where to draw it
+		viewrect = it->m_View;
 		if (g_pFramework->RectInView(rect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
 			rect.x -= viewrect.x;//calculate x in View!
 			rect.x += it->m_ScreenPosition.x;

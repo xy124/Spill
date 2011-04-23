@@ -38,8 +38,8 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 
 	m_ScreenRect.x = 0;
 	m_ScreenRect.y = 0;
-	m_ScreenRect.w = 0;
-	m_ScreenRect.h = 0;
+	m_ScreenRect.w = ScreenWidth;
+	m_ScreenRect.h = ScreenHeight;
 
 
 	m_WorldRect.x = 0;

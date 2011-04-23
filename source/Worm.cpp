@@ -197,18 +197,22 @@ void CWorm::ProcessView() {
 	FloatRect WormRect = getRect();
 	SDL_Rect ViewRect  = g_pFramework->ViewPorts.at(m_ViewPort).m_View;//MBE at nimmt performance raus!
 
+	const int scrollForeward = static_cast<int>(ViewRect.w/2)+100;
+	const int scrollBackward = static_cast<int>(ViewRect.w/2)-150;
 
-	if (static_cast<int>(WormRect.x) > ViewRect.x+400) {
+	if (static_cast<int>(WormRect.x) > ViewRect.x+scrollForeward) {
 		//move View rect that worm is at 300
-		ViewRect.x = static_cast<int>(WormRect.x) - 400;
+		ViewRect.x = static_cast<int>(WormRect.x) - scrollForeward;
 	}
 
-	if (static_cast<int>(WormRect.x) < ViewRect.x + 250)
-		ViewRect.x = static_cast<int>(WormRect.x) - 250;
+	if (static_cast<int>(WormRect.x) < ViewRect.x + scrollBackward)
+		ViewRect.x = static_cast<int>(WormRect.x) - scrollBackward;
 
+	//handle right Border of World
 	if (ViewRect.x + ViewRect.w > g_pFramework->getWorldRect().w)
 		ViewRect.x = g_pFramework->getWorldRect().w - ViewRect.w;
 
+	//handle left Border of World
 	if (ViewRect.x < 0)
 		ViewRect.x = 0;
 
