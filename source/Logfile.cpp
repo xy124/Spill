@@ -7,12 +7,12 @@ using namespace std;
 
 CLogfile::CLogfile() {} //juhu ein leerer constructor!
 
-CLogfile::~CLogfile() {//logfileendeschreiben und schließen
+CLogfile::~CLogfile() {//logfileendeschreiben und schlieï¿½en
 	Textout("<br /><br />end of Logfile</body></html>");
 	fclose(m_Logfile);
 }
 
-void CLogfile::CreateLogfile(const char *LogName) {
+void CLogfile::CreateLogfile(const char *sLogName) {
 	m_Logfile = fopen(LogName, "w");
 	if (m_Logfile == NULL) {//TODO werden FILES wirklich NULL wenn sie nciht erstellt wurden? ich hoffe schon!
 		printf("could not open/create Logfile");
@@ -31,7 +31,7 @@ void CLogfile::CreateLogfile(const char *LogName) {
 	Textout("<a href='mailto:qcd@gmx.net?subject=Logfile'>");
 	Textout("Send mail to me!</a><br />");
 
-	//Logfile schließen und mit append wieder öffnen
+	//Logfile schlieï¿½en und mit append wieder ï¿½ffnen
 	fclose (m_Logfile);
 	m_Logfile = fopen (LogName, "a");
 	if (m_Logfile == NULL) {
@@ -87,23 +87,23 @@ static std::string htmlToSimpleOut(const std::string& s) {
 	return ret;
 }
 
-void CLogfile::WriteTopic (const std::string Topic, int HeadingSize) {//macht ne überschrift
+void CLogfile::WriteTopic (const std::string &sTopic, int HeadingSize) {//macht ne ï¿½berschrift
 	fTextout("<h%i>",HeadingSize);
 	Textout(Topic);
 	fTextout("</h%i>",HeadingSize);
 }
 
-void CLogfile::Textout(const std::string Text) {
+void CLogfile::Textout(const std::string &sText) {
 	fprintf(m_Logfile, "%s", Text.c_str()); //schreibt den Text in die logfile
-	fflush(m_Logfile); //erzwingt das schreiben aller ncoh ausstehenden daten, wenns programm abstürtzt weiß man wo...
+	fflush(m_Logfile); //erzwingt das schreiben aller ncoh ausstehenden daten, wenns programm abstï¿½rtzt weiï¿½ man wo...
 	cout << htmlToSimpleOut(Text) << flush;
 }
 
-void CLogfile::Textout(int Color, const std::string Text) {
+void CLogfile::Textout(int Color, const std::string &sText) {
 	Textout(Color, false, Text); //Trick 17, man beachte das false
 }
 
-void CLogfile::Textout(int Color, bool List, const std::string Text) {	
+void CLogfile::Textout(int Color, bool List, const std::string &sText) {
 	switch (Color) {
 		case BLACK:
 			Textout("<div style='color: black'>"); break;
@@ -125,9 +125,9 @@ void CLogfile::Textout(int Color, bool List, const std::string Text) {
 	if (!List) Textout("<br />");
 }
 
-void CLogfile::fTextout(const std::string Text, ...) {
+void CLogfile::fTextout(const std::string &sText, ...) {
 	char buffer[MAX_BUFFER];
-	va_list pArgList;	//hierrein hauts jetzt die übergebenen parameter!
+	va_list pArgList;	//hierrein hauts jetzt die ï¿½bergebenen parameter!
 
 	if (Text.length()+1>MAX_BUFFER) {
 		FunctionResult("fTextout", L_FAIL, "*Text > MAX_BUFFER!");
@@ -143,9 +143,9 @@ void CLogfile::fTextout(const std::string Text, ...) {
 	Textout(buffer);
 }
 
-void CLogfile::fTextout(int Color, const std::string Text, ...) {
+void CLogfile::fTextout(int Color, const std::string &sText, ...) {
 	char buffer[MAX_BUFFER];
-	va_list pArgList;	//hierrein hauts jetzt die übergebenen parameter!
+	va_list pArgList;	//hierrein hauts jetzt die ï¿½bergebenen parameter!
 
 	if (Text.length()+1>MAX_BUFFER) {
 		FunctionResult("fTextout", L_FAIL, "*Text > MAX_BUFFER!");
@@ -161,9 +161,9 @@ void CLogfile::fTextout(int Color, const std::string Text, ...) {
 	Textout(Color, buffer);	
 }
 
-void CLogfile::fTextout(int Color, bool List, const std::string Text, ...) {
+void CLogfile::fTextout(int Color, bool List, const std::string &sText, ...) {
 	char buffer[MAX_BUFFER];
-	va_list pArgList;	//hierrein hauts jetzt die übergebenen parameter!
+	va_list pArgList;	//hierrein hauts jetzt die ï¿½bergebenen parameter!
 	fTextout("sizeof=%i",sizeof(Text));
 	if (sizeof(Text)>MAX_BUFFER) {
 		FunctionResult("fTextout", L_FAIL, "*Text > MAX_BUFFER!");
@@ -179,11 +179,11 @@ void CLogfile::fTextout(int Color, bool List, const std::string Text, ...) {
 	Textout(Color, List, buffer);
 }
 
-void CLogfile::FunctionResult(const std::string Name, bool Result) {
+void CLogfile::FunctionResult(const std::string &sName, bool Result) {
 	FunctionResult(Name, Result, "-/-");
 }
 
-void CLogfile::FunctionResult(const std::string Name, bool Result, const std::string DescribtionText) {
+void CLogfile::FunctionResult(const std::string &sName, bool Result, const std::string &sDescribtionText) {
 	
 	if (Result == L_OK)
 		Textout("<table bgcolor=green>");

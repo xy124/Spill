@@ -13,19 +13,19 @@ class CBlockKoord {
 			x = X;
 			y = Y;
 		}
-		CBlockKoord (FloatRect &FR) {
-			x = static_cast<int>(FR.x/BLOCKSIZE);
-			y = static_cast<int>(FR.y/BLOCKSIZE);
+		CBlockKoord (FloatRect &fr) {
+			x = static_cast<int>(fr.x/BLOCKSIZE);
+			y = static_cast<int>(fr.y/BLOCKSIZE);
 		}
 		~CBlockKoord() {};
 
 		
 //wozu ist nur das zweite const in der folgenden zeile???
-		bool operator < (const CBlockKoord &right) const { //da immer gilt: left.operator<(right)
-			if (y  == right.y)//wenn gleichen y-Wert entscheide nach xwert
-				return (x < right.x);
+		bool operator < (const CBlockKoord &rhs) const { //da immer gilt: left.operator<(right)
+			if (y  == rhs.y)//wenn gleichen y-Wert entscheide nach xwert
+				return (x < rhs.x);
 			else //sonst entscheide nach y-Wert :) - danke Albert
-				return (y < right.y);
+				return (y < rhs.y);
 		};
 
 		CBlockKoord operator + (const CBlockKoord &rhs) {//rhs=right hand side

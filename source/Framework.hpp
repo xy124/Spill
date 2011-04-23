@@ -27,13 +27,13 @@ class CFramework : public TSingleton<CFramework> {
 
 		SFont_Font * pGameFont;
 
-		void TextOut(std::string Text, int x, int y);
-		void TextOut(std::string Text, CVec Where);
+		void TextOut(std::string &text, int x, int y);
+		void TextOut(std::string &text, CVec &where);
 
 		void showDebugValue(const std::string Text, ...);
 		void RenderDebugText();
 
-		void setViewRect(SDL_Rect &ViewRect) {m_ViewRect = ViewRect;}
+		void setViewRect(SDL_Rect &viewRect) {m_ViewRect = viewRect;}
 		SDL_Rect& getViewRect() {return m_ViewRect;}
 
 		bool RectInView(SDL_Rect rect);

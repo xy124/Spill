@@ -31,6 +31,8 @@ void CSprite::Load(const string sFilename) { //L�d nicht animiertes sprite
 		string describtion("Error while Loading "+sFilename);
 		describtion = describtion + SDL_GetError();
 		g_pLogfile->FunctionResult("CSprite::Load", L_FAIL, describtion);
+
+
 		//�Framework herunterfahren
 		g_pFramework->Quit();
 
@@ -47,7 +49,7 @@ void CSprite::Load(const string sFilename) { //L�d nicht animiertes sprite
 }
 
 void CSprite::Load(const string sFilename, int NumFrames, int FrameWidth, int FrameHeight) { //L�d animierte Frames
-	Load(sFilename); //animierte Bmp laden!
+	Load(sFilename); //load animated bmp!
 
 	//Rect f�r Animationsphase initialisieren, x&y kommt sp�ter :)
 	m_NumFrames = NumFrames;

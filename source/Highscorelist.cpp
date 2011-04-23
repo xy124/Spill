@@ -1,20 +1,20 @@
 #include "Highscorelist.hpp"
 #define HIGHSCORESIZE 15
-//die besten 15 sind in der Highscoreliste aufgeführt
+//die besten 15 sind in der Highscoreliste aufgefï¿½hrt
 
 using namespace std;
 
-void CHighscorelist::LoadFromFile(const char * filename) {
+void CHighscorelist::LoadFromFile(const char * sFilename) {
 	ifstream Input(filename, ios::binary);
 	if (Input == NULL) {
 		CLogfile::get()->FunctionResult("CHighscorelist::LoadFromFile", L_OK, "could not open inputstream, Highscorelist is empty.");
 		return;
 	}
-	Input.read((char *) &m_map, sizeof(multimap<int, string>));//hoffen wir mal dass das geht, weil multimaps ja je nach inhalt unterschiedlich groß sein dürften. notfalls muss man die multimap erst in nen array werfen und dann mit ner schleife wieder in die map werfen....
+	Input.read((char *) &m_map, sizeof(multimap<int, string>));//hoffen wir mal dass das geht, weil multimaps ja je nach inhalt unterschiedlich groï¿½ sein dï¿½rften. notfalls muss man die multimap erst in nen array werfen und dann mit ner schleife wieder in die map werfen....
 	Input.close();
 }
 
-void CHighscorelist::SaveToFile(const char * filename) {
+void CHighscorelist::SaveToFile(const char * sFilename) {
 	ofstream Output(filename, ios::binary);
 	if (Output == NULL) {
 		CLogfile::get()->FunctionResult("CHighscorelist::SaveToFile", L_FAIL, "could not open outputstream. Can't Save Hioghscore!");
@@ -40,8 +40,8 @@ bool CHighscorelist::isHighscore(CWorm &worm) {
 
 	i = m_map.find(smallest); //item mit dem kleinsten wert raussuchen
 
-	if ((i->first < points) || (m_map.size() < HIGHSCORESIZE)) { //hinzufügen, evtl. nach namen Fragen		
-		if (i->first < points) { //"i" rauslöschen
+	if ((i->first < points) || (m_map.size() < HIGHSCORESIZE)) { //hinzufï¿½gen, evtl. nach namen Fragen		
+		if (i->first < points) { //"i" rauslï¿½schen
 			m_map.erase(i);
 		}
 		m_map.insert(make_pair(points, worm.getName()));
@@ -51,7 +51,7 @@ bool CHighscorelist::isHighscore(CWorm &worm) {
 }
 
 CHighscorelist::~CHighscorelist() {
-	//Highscorelist wird gelöscht
+	//Highscorelist wird gelï¿½scht
 	m_map.clear();
 }
 

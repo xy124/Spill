@@ -52,8 +52,8 @@ void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	setDir(CVec(0,0));
 
 	m_lastCollisionY.BlockType = CBlock::AIR;
-	m_lastCollisionY.BouncingFactorX = 0.0f;
-	m_lastCollisionY.BouncingFactorY = 0.0f;
+	m_lastCollisionY.fBouncingFactorX = 0.0f;
+	m_lastCollisionY.fBouncingFactorY = 0.0f;
 	m_lastCollisionY.bIsCollision = false;
 
 	m_Alive = true;

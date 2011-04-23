@@ -26,16 +26,16 @@ class CLogfile : public TSingleton<CLogfile> {
 	public:
 		CLogfile();
 		~CLogfile();
-		void CreateLogfile	(const char *LogName);
-		void WriteTopic		(const std::string Topic, int HeadingSize);
-		void Textout		(const std::string Text); //der ursprung allen übels :P gibt Text ohne Umbruchaus!!!! evtl. privaten....
-		void Textout		(int Color, const std::string Text);
-		void Textout		(int Color, bool List, const std::string Text);
-		void fTextout		(const std::string Text, ...);// zum ausgeben von Variablen
-		void fTextout		(int Color, const std::string Text, ...);
-		void fTextout		(int Color, bool List, const std::string Text, ...);
-		void FunctionResult	(const std::string Name, bool Result);
-		void FunctionResult	(const std::string Name, bool Result, const std::string DescribtionText);
+		void CreateLogfile	(const char *sLogName);
+		void WriteTopic		(const std::string &sTopic, int HeadingSize);
+		void Textout		(const std::string &sText); //der ursprung allen übels :P gibt Text ohne Umbruchaus!!!! evtl. privaten....
+		void Textout		(int Color, const std::string &sText);
+		void Textout		(int Color, bool List, const std::string &sText);
+		void fTextout		(const std::string &sText, ...);// zum ausgeben von Variablen
+		void fTextout		(int Color, const std::string &sText, ...);
+		void fTextout		(int Color, bool List, const std::string &sText, ...);
+		void FunctionResult	(const std::string &sName, bool Result);
+		void FunctionResult	(const std::string &sName, bool Result, const std::string &sDescribtionText);
 
 	private:
 		FILE *m_Logfile;

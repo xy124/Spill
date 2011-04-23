@@ -14,8 +14,8 @@ struct S_Collision {
 	bool bIsCollision;
 	CBlock::BlockType BlockType; //the one with the Biggest Index.
 
-	float BouncingFactorX; //the biggest bouncing factor is taken here!
-	float BouncingFactorY;
+	float fBouncingFactorX; //the biggest bouncing factor is taken here!
+	float fBouncingFactorY;
 };
 
 

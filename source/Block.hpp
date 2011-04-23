@@ -17,8 +17,8 @@ class CBlock { //I don't want to vererben the
 					JUMPBOARD,
 					INVISIBLE
 		};
-		static BlockType nextBlockType(BlockType Now);
-		static std::string BlockTypeString(BlockType BT);
+		static BlockType nextBlockType(BlockType now);
+		static std::string BlockTypeString(BlockType bt);
 
 
 		CBlock() {}; //MBE

@@ -37,9 +37,9 @@ void CBlock::render(CBlockKoord &MyBlockPos) {
 	}
 }
 
-std::string CBlock::BlockTypeString(CBlock::BlockType BT) {
+std::string CBlock::BlockTypeString(CBlock::BlockType bt) {
 	std::string s;
-	switch (BT) {
+	switch (bt) {
 		case (CBlock::AIR): 		s="AIR"; 		break;
 		case (CBlock::INVISIBLE): 	s="INVISIBLE"; 	break;
 		case (CBlock::JUMPBOARD): 	s="JUMPBOARD"; 	break;
@@ -50,9 +50,9 @@ std::string CBlock::BlockTypeString(CBlock::BlockType BT) {
 	return s;
 }
 
-CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType Now) {
+CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType now) {
 	CBlock::BlockType s;
-	switch (Now) {
+	switch (now) {
 		case (CBlock::AIR): 		s=CBlock::INVISIBLE; 	break;
 		case (CBlock::INVISIBLE): 	s=CBlock::JUMPBOARD; 	break;
 		case (CBlock::JUMPBOARD): 	s=CBlock::NORMAL; 		break;

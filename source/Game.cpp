@@ -39,9 +39,8 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	g_pLogfile->Textout("Created Gameboard <br />");
 
 	
-	//map<CKoord, CBlock*>::iterator it; den brauch ma hier ncih
 	pair<CBlockKoord, CBlock*> Gamefield;
-	for (int x=0; x<m_GBWidth; x++) {	//Das gesamte Gameboard zu Luft machen
+	for (int x=0; x<m_GBWidth; x++) {	//fill the whole Gameboard with air
 		for (int y=0; y<m_GBHeight; y++) {	
 			CBlockKoord pos(x,y);						
 			Gamefield = make_pair( pos, new CBlock(CBlock::AIR));

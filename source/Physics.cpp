@@ -76,7 +76,7 @@ bool CPhysics::doPhysics() {
 		XCollision = getCollision(FR);
 		if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
 			FR.x -= dir.x*g_pTimer->getElapsed(); //dann x-Rutschen wieder r�ckg�ngig machen
-			dir.x *= (-1 * XCollision.BouncingFactorX);
+			dir.x *= (-1 * XCollision.fBouncingFactorX);
 		}
 
 		////////////////////
@@ -90,7 +90,7 @@ bool CPhysics::doPhysics() {
 			//JumpingBoard...
 			//getBouncingfactor from Blocktype
 			FR.y -= dir.y*g_pTimer->getElapsed(); //dann y-Rutschen wieder r�ckg�ngig machen
-			dir.y *= (-1 * YCollision.BouncingFactorY);//neues Y
+			dir.y *= (-1 * YCollision.fBouncingFactorY);//neues Y
 			if ((Abs(dir.y) < 10.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
 				(*i)->setCanJump(true);
 			}
@@ -138,8 +138,8 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 	//TODO USE RECTCOLLISION!!!
 	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
 	S_Collision result;//init Result:
-	result.BouncingFactorX = 0.0f;
-	result.BouncingFactorY = 0.0f;
+	result.fBouncingFactorX = 0.0f;
+	result.fBouncingFactorY = 0.0f;
 	result.bIsCollision = false;
 	result.BlockType = CBlock::AIR;
 
@@ -156,10 +156,10 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i]);
 		if (curType != CBlock::AIR)
 			result.bIsCollision = true;
-		if (CBlock::BlockBouncingX[curType] > result.BouncingFactorX)
-			result.BouncingFactorX = CBlock::BlockBouncingX[curType];
-		if (CBlock::BlockBouncingY[curType] > result.BouncingFactorY)
-			result.BouncingFactorY = CBlock::BlockBouncingY[curType];
+		if (CBlock::BlockBouncingX[curType] > result.fBouncingFactorX)
+			result.fBouncingFactorX = CBlock::BlockBouncingX[curType];
+		if (CBlock::BlockBouncingY[curType] > result.fBouncingFactorY)
+			result.fBouncingFactorY = CBlock::BlockBouncingY[curType];
 		if (curType > result.BlockType) {
 			result.BlockType = curType;
 		}

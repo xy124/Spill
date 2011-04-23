@@ -36,8 +36,8 @@ class CGame
 		std::vector<CWorm*> m_vWorms;
 		std::map<CBlockKoord,CBlock*> m_Gameboard;
 		CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight);
-		void save(const char *Filename);
-		void load(const char *Filename);
+		void save(const char *sFilename);
+		void load(const char *sFilename);
 		void run();
 		void quit();
 		~CGame();

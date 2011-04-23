@@ -123,14 +123,14 @@ void CFramework::showDebugValue(const string Text, ...) {
 	m_DebugValue = buffer;
 }
 
-void CFramework::TextOut(std::string Text, int x, int y) {
-	SFont_Write(m_pView, pGameFont, x, y, Text.c_str());
+void CFramework::TextOut(std::string &text, int x, int y) {
+	SFont_Write(m_pView, pGameFont, x, y, text.c_str());
 }
-void CFramework::TextOut(std::string Text, CVec Where) {
-	int xx = static_cast<int>(Where.x);
-	int yy = static_cast<int>(Where.y);
+void CFramework::TextOut(std::string &text, CVec &where) {
+	int xx = static_cast<int>(where.x);
+	int yy = static_cast<int>(where.y);
 
-	SFont_Write(m_pView, pGameFont, xx, yy, Text.c_str());
+	SFont_Write(m_pView, pGameFont, xx, yy, text.c_str());
 }
 
 bool CFramework::RectInView(SDL_Rect rect) {

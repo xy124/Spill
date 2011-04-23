@@ -13,8 +13,8 @@ class CHighscorelist : public TSingleton<CHighscorelist> {
 		//				<Punkte, Name>
 		std::multimap<int, std::string> m_map;
 	public:		
-		void SaveToFile(const char * filename);
-		void LoadFromFile(const char * filename);
+		void SaveToFile(const char * sFilename);
+		void LoadFromFile(const char * sFilename);
 		void show(); //TODO!
 		bool isHighscore(CWorm &worm);
 		~CHighscorelist();
