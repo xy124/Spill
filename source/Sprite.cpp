@@ -77,11 +77,13 @@ void CSprite::SetPos(float fXPos, float fYPos) {
 
 void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 	//Render just if Rects are colliding:
-	SDL_Rect rect = m_Rect;
+	SDL_Rect rect;
+	SDL_Rect viewrect;
 
 	vector<S_ViewPort>::iterator it;
 	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		SDL_Rect viewrect = it->m_View;
+		rect = m_Rect;
+		viewrect = it->m_View;
 		if (g_pFramework->RectInView(rect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
 			rect.x -= viewrect.x;//calculate x in View!
 			rect.x += it->m_ScreenPosition.x;
