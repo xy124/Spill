@@ -5,7 +5,7 @@
  *      Author: Sebastian
  */
 
-#include "CBackGround.hpp"
+#include "BackGround.hpp"
 
 using namespace std;
 

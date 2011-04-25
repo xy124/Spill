@@ -13,7 +13,7 @@
 
 #include "consts.hpp"
 
-#include "CBackGround.hpp"
+#include "BackGround.hpp"
 
 #include <vector>
 

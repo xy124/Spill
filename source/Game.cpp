@@ -103,7 +103,7 @@ void CGame::run() {
 
 		//nimmt unwesentliche Zeit von 1ms:
 		//g_pFramework->Clear(); //Clear current surface
-		m_pBackGround->render();
+		m_pBackGround->render();//TODO: nimmt haufenweise zeit
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
 

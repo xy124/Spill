@@ -77,40 +77,42 @@ void CSprite::SetPos(float fXPos, float fYPos) {
 
 void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 	//Render just if Rects are colliding:
-	SDL_Rect rect;
-	SDL_Rect viewrect;
+	const SDL_Rect SpriteRect = m_Rect;//Position auf gesamter world
+	SDL_Rect PositionRect;
+	SDL_Rect FrameRect; //rect describes the shown part of the sprite
 
 	vector<S_ViewPort>::iterator it;
 	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		rect = m_Rect;//Position auf gesamter world
-		viewrect = it->m_View;//vuiewRect auf gesamter world
-		if (g_pFramework->RectInView(rect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
-			rect.x -= viewrect.x;
-			rect.x += it->m_ScreenPosition.x;//x in screen
-			//wenn Kante rausragt renderbereich einschränken,  TODO: auch für Render animation einschränken!
-			if (rect.x < it->m_ScreenPosition.x) {
-				SDL_Rect FrameRect; //extrem schwer zu spiegeln...
-				FrameRect = rect;
-				FrameRect.x = it->m_ScreenPosition.x - rect.x;
-				FrameRect.y = 0;//TODO left border doesn't work -_-
-				FrameRect.w -= FrameRect.x;
-				rect.x = it->m_ScreenPosition.x;
-				rect.w = FrameRect.w;
-				SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &rect);
-			} else if (rect.x+rect.w > it->m_ScreenPosition.x+it->m_ScreenPosition.w) {
-				SDL_Rect FrameRect; //extrem schwer zu spiegeln...
-				FrameRect = rect;
-				FrameRect.x = 0;
-				FrameRect.y = 0;
-				FrameRect.w = (it->m_ScreenPosition.x+it->m_ScreenPosition.w-rect.x);
-				SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &rect);
+		const SDL_Rect ViewRect = it->m_View;//viewRect auf gesamter world
+		if (g_pFramework->RectInView(SpriteRect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
+			FrameRect.x = 0;
+			FrameRect.y = 0;
+			FrameRect.w = SpriteRect.w;
+			FrameRect.h = SpriteRect.h;
 
-			} else
-				SDL_BlitSurface(m_pImage, NULL, m_pScreen, &rect);
+			PositionRect = SpriteRect;
+
+			PositionRect.x = SpriteRect.x - ViewRect.x;
+
+			if (SpriteRect.x < ViewRect.x) { //Left edge out of View
+				FrameRect.x = ViewRect.x - SpriteRect.x;
+				FrameRect.w = SpriteRect.w - FrameRect.x;
+				PositionRect.x = 0;
+			}
+
+			if (SpriteRect.x+SpriteRect.w > ViewRect.x+ViewRect.w) { //Right edge out of View
+				FrameRect.w = FrameRect.w - (SpriteRect.x+SpriteRect.w - (ViewRect.x+ViewRect.w));
+				//Breite    = Breite      - überragende länge
+			}
+
+
+			// handle viewport
+			PositionRect.x += it->m_ScreenPosition.x;
+			SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &PositionRect);
+
 		}
-	}
 
-	//Parameter NULL da kein ausschnitt aus Sprite sondern gesamtes Sprite
+	}
 }
 
 void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame reinrendern..
