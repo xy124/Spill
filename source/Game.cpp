@@ -31,13 +31,10 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 	} else
 		m_GBHeight = GameBoardHeight;
 
-	//SetWorldrect in Framework
-	//MBE: worldrect as an member of Game would be perhaps better
-	SDL_Rect worldrect;
-	worldrect = g_pFramework->getWorldRect();
-	worldrect.w = m_GBWidth  * BLOCKSIZE;
-	worldrect.h = m_GBHeight * BLOCKSIZE;
-	g_pFramework->setWorldRect(worldrect);
+	m_WorldRect.x = 0;
+	m_WorldRect.y = 0;
+	m_WorldRect.w = m_GBWidth  * BLOCKSIZE;
+	m_WorldRect.h = m_GBHeight * BLOCKSIZE;
 
 	g_pLogfile->Textout("Created Gameboard <br />");
 
@@ -54,6 +51,21 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 	}
 	g_pLogfile->Textout("Gameboard filled with NULL... <br />");
 	//TODO: load World...
+	//or Take DebugWorld:
+	creatDebugGameBoard();
+
+
+	CBlock::InitBlockSprites();
+
+	m_bIsRunning = true;
+	g_pLogfile->Textout(RED, true, "End Of CGame::CGame");
+
+	m_pBackGround = new CBackGround();
+	m_pBackGround->init(GameBoardWidth * BLOCKSIZE);
+
+}
+
+void CGame::creatDebugGameBoard() {
 	//ok infact might be good to generate an sensfull empty World at first:
 	//with a GROUND!
 	for (int x = 0; x < m_GBWidth; x++) {
@@ -85,16 +97,9 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 	pos.y = 10;
 	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
 
-
-	CBlock::InitBlockSprites();
-
-	m_bIsRunning = true;
-	g_pLogfile->Textout(RED, true, "End Of CGame::CGame");
-
-	m_pBackGround = new CBackGround();
-	m_pBackGround->init(GameBoardWidth * BLOCKSIZE);
-
 }
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////
 void CGame::run() {

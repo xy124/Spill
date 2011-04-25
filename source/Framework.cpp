@@ -43,11 +43,6 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	m_ScreenRect.h = ScreenHeight;
 
 
-	m_WorldRect.x = 0;
-	m_WorldRect.y = 0;
-	m_WorldRect.w = 0;//Are set in CGame again
-	m_WorldRect.h = 0;
-
 	//Tastenstatusarray ZEIGER belegen
 
 	m_pKeystate = SDL_GetKeyState(NULL);

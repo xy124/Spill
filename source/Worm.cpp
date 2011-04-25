@@ -146,7 +146,7 @@ void CWorm::ProcessBuilding() {
 		} else g_pLogfile->Textout("<br /> Couldn't mine Block because miningBlock == NULL");
 	}//Keydown
 
-	if ( (g_pFramework->KeyDown(SDLK_LSHIFT)) && (m_bNextBTypeKeyLock == false) ) {//FIXME right key???
+	if ( (g_pFramework->KeyDown(SDLK_LSHIFT)) && (m_bNextBTypeKeyLock == false) ) {
 		m_selectedBType = CBlock::nextBlockType(m_selectedBType);//MBE überschlag
 		m_bNextBTypeKeyLock = true;
 	}
@@ -209,8 +209,8 @@ void CWorm::ProcessView() {
 		ViewRect.x = static_cast<int>(WormRect.x) - scrollBackward;
 
 	//handle right Border of World
-	if (ViewRect.x + ViewRect.w > g_pFramework->getWorldRect().w)
-		ViewRect.x = g_pFramework->getWorldRect().w - ViewRect.w;
+	if (ViewRect.x + ViewRect.w > m_pGame->getWorldRect().w)
+		ViewRect.x = m_pGame->getWorldRect().w - ViewRect.w;
 
 	//handle left Border of World
 	if (ViewRect.x < 0)

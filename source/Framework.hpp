@@ -48,16 +48,12 @@ class CFramework : public TSingleton<CFramework> {
 		bool RectInView(SDL_Rect rect, int viewPort);
 		bool RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &iter);
 
-		SDL_Rect getWorldRect() {return m_WorldRect;}
-		void setWorldRect(SDL_Rect &WorldRect) {m_WorldRect = WorldRect;}
-
 	private:
 		SDL_Surface * m_pScreen;
 
 		Uint8 *m_pKeystate;	//arraay mit aktuellem Tastaturstatus
 		std::string m_DebugValue;
 		SDL_Rect m_ScreenRect;//Size of whole the screen
-		SDL_Rect m_WorldRect;//Rect of whole world!
 
 
 };

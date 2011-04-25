@@ -38,7 +38,13 @@ class CGame
 
 		CBackGround * m_pBackGround;
 
+		SDL_Rect m_WorldRect;
+
+		void creatDebugGameBoard();
+
 	public:
+		SDL_Rect getWorldRect() {return m_WorldRect;}
+		void setWorldRect(SDL_Rect &WorldRect) {m_WorldRect = WorldRect;}
 
 		std::vector<CWorm*> m_vWorms;
 		std::map<CBlockKoord,CBlock*> m_Gameboard;
