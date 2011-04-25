@@ -99,7 +99,8 @@ void CGame::run() {
 		//Play!
 
 		//nimmt unwesentliche Zeit von 1ms:
-		g_pFramework->Clear(); //Clear current surface
+		//g_pFramework->Clear(); //Clear current surface
+		g_pFramework->renderBackGround();
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
 

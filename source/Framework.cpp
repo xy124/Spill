@@ -36,6 +36,13 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 		return (false);
 	}
 
+	string fn = _DIRDATA_+"/P1050738.bmp";
+	m_pBackGround = SDL_LoadBMP(fn.c_str());
+	if (m_pBackGround == NULL) {
+		g_pLogfile->FunctionResult("CFramework::Init", L_FAIL, "Couldn't load BackGround image P1050738.bmp"  );
+	}
+	SDL_DisplayFormat(m_pBackGround);
+
 	m_ScreenRect.x = 0;
 	m_ScreenRect.y = 0;
 	m_ScreenRect.w = ScreenWidth;
@@ -171,6 +178,19 @@ void CFramework::drawViewPortFrames() {
 		border.x = it->m_ScreenPosition.x-6;
 		SDL_FillRect(m_pScreen, &border, SDL_MapRGB(m_pScreen->format, 128, 0, 0));
 	}
+}
+
+void CFramework::renderBackGround() {
+	vector<S_ViewPort>::iterator it;
+	SDL_Rect rect;
+	for (it = ViewPorts.begin(); it != ViewPorts.end(); ++it) {
+		rect = it->m_View;
+		rect.x = rect.x % (m_pBackGround->w);
+		SDL_BlitSurface(m_pBackGround, &rect, m_pScreen, &(it->m_ScreenPosition) );
+		//TODO: render screen a second time if bigger
+		//FIXME: better: Screen as list of sprites! --> vector
+	}
+
 }
 
 

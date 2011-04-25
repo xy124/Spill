@@ -8,12 +8,20 @@ CSprite * CBlock::m_pBlockSprites[5];
 
 //DECLARATION: static CSprite * m_pBlockSprites[5];
 void CBlock::InitBlockSprites() {
+	//Fixme set better alphacolor for blocks!!! edit bmps!!!!
+	//FIXME better blocks!!!
 	//CBlock::m_pBlockSprites[5] = { //darf nciht const sein da ja ->render und so davon aufgerufen wird!
 	m_pBlockSprites[0] = new CSprite(_DIRDATA_+"/BlockAir.bmp");
 	m_pBlockSprites[1] = new CSprite(_DIRDATA_+"/BlockNormal.bmp");
 	m_pBlockSprites[2] = new CSprite(_DIRDATA_+"/BlockShooting.bmp");
 	m_pBlockSprites[3] = new CSprite(_DIRDATA_+"/BlockJumpboard.bmp");
 	m_pBlockSprites[4] = new CSprite(_DIRDATA_+"/BlockInvisible.bmp");
+
+	m_pBlockSprites[0]->SetColorKey(0, 255, 255);
+	m_pBlockSprites[1]->SetColorKey(0, 255, 255);
+	m_pBlockSprites[2]->SetColorKey(0, 255, 255);
+	m_pBlockSprites[3]->SetColorKey(0, 255, 255);
+	m_pBlockSprites[4]->SetColorKey(0, 255, 255);
 }
 
 void CBlock::FreeBlockSprites() {
