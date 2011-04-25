@@ -13,7 +13,7 @@ int main (int argc, char *argv[]) {
 	CHighscorelist::get()->LoadFromFile(HIGHSCOREFILE);
 	//TODO: show menu
 
-	if (g_pFramework->Init(800, 600, 16, false) == false)
+	if (g_pFramework->Init(800, 600, 24, false) == false)
 		return (0); //Fehler werden schon in Framework selbst abgehandelt!
 	SDL_WM_SetCaption("Spill", "Spill");
 
