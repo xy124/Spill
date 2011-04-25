@@ -29,6 +29,7 @@ If you use SDL_CreateRGBSurface:
 	the masks have to be set for 16 bit : to 0xf000 and so on!!!
 	see documentation!!!
 	
+Please do all pictures with 24 Bit!!!!!
 			
 			
 		  
