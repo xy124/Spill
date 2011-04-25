@@ -82,11 +82,11 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 
 	vector<S_ViewPort>::iterator it;
 	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		rect = m_Rect;
-		viewrect = it->m_View;
+		rect = m_Rect;//Position auf gesamter world
+		viewrect = it->m_View;//vuiewRect auf gesamter world
 		if (g_pFramework->RectInView(rect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
-			rect.x -= viewrect.x;//calculate x in View!
-			rect.x += it->m_ScreenPosition.x;
+			rect.x -= viewrect.x;
+			rect.x += it->m_ScreenPosition.x;//x in screen
 			//wenn Kante rausragt renderbereich einschränken,  TODO: auch für Render animation einschränken!
 			if (rect.x < it->m_ScreenPosition.x) {
 				SDL_Rect FrameRect; //extrem schwer zu spiegeln...
@@ -97,7 +97,7 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 				rect.x = it->m_ScreenPosition.x;
 				rect.w = FrameRect.w;
 				SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &rect);
-			} if (rect.x+rect.w > it->m_ScreenPosition.x+it->m_ScreenPosition.w) {
+			} else if (rect.x+rect.w > it->m_ScreenPosition.x+it->m_ScreenPosition.w) {
 				SDL_Rect FrameRect; //extrem schwer zu spiegeln...
 				FrameRect = rect;
 				FrameRect.x = 0;
