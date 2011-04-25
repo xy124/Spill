@@ -13,6 +13,10 @@
 
 #include "consts.hpp"
 
+#include "CBackGround.hpp"
+
+#include <vector>
+
 class CWorm;
 class CPhysics;
 
@@ -29,7 +33,10 @@ class CGame
 		bool m_bIsRunning;
 
 		void renderGameboard();
+
 		void ProcessEvents();
+
+		CBackGround * m_pBackGround;
 
 	public:
 

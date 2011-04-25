@@ -2,7 +2,7 @@
 
 using namespace std;
 
-CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
+CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TODO: cut in more functions!
 
 	if (AmountOfPlayers > 4) {
 		AmountOfPlayers = 4;
@@ -91,6 +91,9 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {
 	m_bIsRunning = true;
 	g_pLogfile->Textout(RED, true, "End Of CGame::CGame");
 
+	m_pBackGround = new CBackGround();
+	m_pBackGround->init(GameBoardWidth * BLOCKSIZE);
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -100,7 +103,7 @@ void CGame::run() {
 
 		//nimmt unwesentliche Zeit von 1ms:
 		//g_pFramework->Clear(); //Clear current surface
-		g_pFramework->renderBackGround();
+		m_pBackGround->render();
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
 
@@ -186,7 +189,10 @@ void CGame::quit() {
 	m_Gameboard.clear();
 
 	CBlock::FreeBlockSprites();
+	m_pBackGround->quit();
 	CLogfile::get()->Textout("</ br>quitted CGame");
+
+
 }
 
 CBlock* CGame::getBlock(CBlockKoord Where) {
@@ -228,4 +234,3 @@ void CGame::setGBWidth(int m_GBWidth)
 {
     this->m_GBWidth = m_GBWidth;
 }
-
