@@ -3,12 +3,16 @@
 using namespace std;
 
 bool CPhysics::doPhysics() {
-	vector<CWorm*>::iterator i;
-	for (i = m_pGame->m_vWorms.begin(); i!=m_pGame->m_vWorms.end(); ++i) {
-		if ( !((*i)->getCanMove() && (*i)->isAlive()) )
+	vector<CWorm*>::iterator it;
+	for (it = m_pGame->m_vWorms.begin(); it!=m_pGame->m_vWorms.end(); ++it) {
+		if ( !((*it)->getCanMove() && (*it)->isAlive()) )
 			break; //auf zum n�chsten Wurm!
-		FloatRect FR = (*i)->getRect(); //rect of worm
-		CVec dir = (*i)->getDir(); //dir of Worm
+
+		float timeElapsed = g_pTimer->getElapsed();
+		if (timeElapsed == 0.0f)
+			break; //macht keinen Sinn....
+		FloatRect FR = (*it)->getRect(); //rect of worm
+		CVec dir = (*it)->getDir(); //dir of Worm
 
 		//CBlockKoord BC = CBlockKoord(FR);
 		//g_pFramework->showDebugValue("WormBlockKoord %i, %i", BC.x, BC.y);
@@ -24,94 +28,65 @@ bool CPhysics::doPhysics() {
 		//--> h�ngt also von pcspeed ab!!!
 
 
-		//Kollission durch x-Verschiebung??
-		/*float deltaX = dir.x*g_pTimer->getElapsed();
-		if (deltaX > BLOCKSIZE) { //per while alle möglichen blockschritte durchgehen
-			float newX = FR.x;
-			while (IdeltaX < deltaX) {
-				FR.x += IdeltaX;
-				if (isCollision(FR, Game)) {
-					//Verschiebung erstmal rückgängig machen
-					FR.x -= IdeltaX;
-					//bis zur letztenblockgrenze zurückschieben
-					if (IdeltaX > 0) { //rechtsverschiebung also nach links zurückschieben
-						CBlockKoord CollisionBlockX = CVec(FR.x + FR.w, 0).toBlockKoord();//!y-Value doesn't matter!!!!
-						FR.x = CVec(CollisionBlockX).x-FR.w -1; //-1 damit nicht gleich wieder kollission
-					} else if (deltaX < 0) {
-						CBlockKoord CollisionBlockX = CVec(FR.x, 0).toBlockKoord();
-						CollisionBlockX.x += 1; //ein block weiter rechts
-						FR.x = CVec(CollisionBlockX).x +1;
-					}
-				}
-
-				IdeltaX += BLOCKSIZE;
-			}*/
-
-/*
-		} else {
-			FR.x += deltaX;
-			if (isCollision(FR, Game)) {
-				//Verschiebung erstmal rückgängig machen
-				FR.x -= deltaX;
-				//bis zur letztenblockgrenze zurückschieben
-				if (deltaX > 0) { //rechtsverschiebung also nach links zurückschieben
-					CBlockKoord CollisionBlockX = CVec(FR.x + FR.w, 0).toBlockKoord();//!y-Value doesn't matter!!!!
-					FR.x = CVec(CollisionBlockX).x-FR.w -1; //-1 damit nicht gleich wieder kollission
-				} else if (deltaX < 0) {
-					CBlockKoord CollisionBlockX = CVec(FR.x, 0).toBlockKoord();
-					CollisionBlockX.x += 1; //ein block weiter rechts
-					FR.x = CVec(CollisionBlockX).x +1;
-				}
-
-				dir.x *= (-1 * BouncingFactor);
-			}
-
-		}*/
-
-		////////////////////
-		//X-Collisions:
-		FR.x += dir.x*g_pTimer->getElapsed();
-		S_Collision XCollision;
-		XCollision = getCollision(FR);
-		if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
-			FR.x -= dir.x*g_pTimer->getElapsed(); //dann x-Rutschen wieder r�ckg�ngig machen
-			dir.x *= (-1 * XCollision.fBouncingFactorX);
+		float time = timeElapsed;
+		int i;//Anzahl der Kleinschritte herrausbekommen:
+		for (i = 1; dir.quad_abs()*time > BLOCKSIZE*BLOCKSIZE; i++) {
+			time = timeElapsed/i;
 		}
 
-		////////////////////
-		//Y-Collisions:
-		(*i)->setCanJump(false); //kann auf jeden erstmal nciht springen
-		//Kollission durch y-Verschiebung??
-		FR.y += dir.y*g_pTimer->getElapsed();
-		S_Collision YCollision;
-		YCollision = getCollision(FR);
-		if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
-			//JumpingBoard...
-			//getBouncingfactor from Blocktype
-			FR.y -= dir.y*g_pTimer->getElapsed(); //dann y-Rutschen wieder r�ckg�ngig machen
-			dir.y *= (-1 * YCollision.fBouncingFactorY);//neues Y
-			if ((Abs(dir.y) < 10.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
-				(*i)->setCanJump(true);
+		bool bNoCollision = true;
+
+		g_pFramework->showDebugValue("i:%i",i);
+
+		for (i = 1; (i*time <= timeElapsed)
+					&& (bNoCollision); i++) {
+			////////////////////
+			//X-Collisions:
+			FR.x += dir.x*time;
+			S_Collision XCollision;
+			XCollision = getCollision(FR);
+			if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
+				FR.x -= dir.x*time; //dann x-Rutschen wieder r�ckg�ngig machen
+				dir.x *= (-1 * XCollision.fBouncingFactorX);
+				bNoCollision = false;//braucht nicht weiter zu machen
 			}
-		}
 
-		//TODO: falls es noch andere solid-physicalobjets gibt, diese berücksichtigen!!!
+			////////////////////
+			//Y-Collisions:
+			(*it)->setCanJump(false); //kann auf jeden erstmal nciht springen
+			//Kollission durch y-Verschiebung??
+			FR.y += dir.y*time;
+			S_Collision YCollision;
+			YCollision = getCollision(FR);
+			if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
+				//JumpingBoard...
+				//getBouncingfactor from Blocktype
+				FR.y -= dir.y*time; //dann y-Rutschen wieder r�ckg�ngig machen
+				dir.y *= (-1 * YCollision.fBouncingFactorY);//neues Y
+				if ((Abs(dir.y) < 10.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
+					(*it)->setCanJump(true);
+				}
+				bNoCollision = false;
+			}
 
-		//Wenn keine kollission dann Verschieben !...^^
+			//TODO: falls es noch andere solid-physicalobjets gibt, diese berücksichtigen!!!
 
-		//HINT:Reibung://Flugreibung ist Sinnlos!
-		dir.x *= (Friction ) ; //TODO TimeElapsed einrechnen!
+			//Wenn keine kollission dann Verschieben !...^^
+
+			//HINT:Reibung://Flugreibung ist Sinnlos!
+			dir.x *= (Friction ) ; //TODO TimeElapsed einrechnen!
 
 
-		if (FR.x < 0.0f) FR.x = 0.0f; //man kann nicht aus dem linken bildschirm fallen!!
-		(*i)->setDir(dir);
-		(*i)->setRect(FR);
+			if (FR.x < 0.0f) FR.x = 0.0f; //man kann nicht aus dem linken bildschirm fallen!!
+			(*it)->setDir(dir);
+			(*it)->setRect(FR);
 
-		//gegebenenfalls neue collision setzen
-		if (YCollision.BlockType != CBlock::AIR)
-			(*i)->setLastCollisionY(YCollision);
+			//gegebenenfalls neue collision setzen
+			if (YCollision.BlockType != CBlock::AIR)
+				(*it)->setLastCollisionY(YCollision);
 
-	}
+		}//für jeden SChritt...
+	}//FÜPR JEDEN WURM
 
 	return true;
 }

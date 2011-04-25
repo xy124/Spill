@@ -129,7 +129,7 @@ void CGame::run() {
 
 		g_pFramework->drawViewPortFrames();
 
-		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
+		//g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
 		g_pFramework->RenderDebugText();
 

@@ -53,6 +53,10 @@ class CVec { //real Koords in Pixels!
 			return result;
 		}
 
+		float quad_abs() {//Quadrat des Betrags (da ich nciht weiß wie wurzeln geht)
+			return (x*x+y*y);
+		}
+
 };
 
 #endif
