@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "Settings.hpp"
 
 using namespace std;
 
@@ -14,6 +15,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 	for (int i=1; i<=AmountOfPlayers; i++) {//w�rmer auff�llen
 		CWorm* pWorm = new CWorm(this);
 		pWorm->init(i, 40.0f, 40.0f, CWorm::WC_RED); //wir machen alle Würmer rot....
+		pWorm->setName(g_pSettings->WormSet[i].name);
 		pWorm->setViewPort(i-1);
 		m_vWorms.push_back(pWorm); //MBE: evtl Teams
 	}

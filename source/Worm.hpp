@@ -135,12 +135,6 @@ class CWorm : public CPhysicalObject {
 		}
 
 
-		void setName(bool Alive)
-		{
-			m_Alive = Alive;
-		}
-
-
 		S_Collision getLastCollisionY() const;
 		void setLastCollisionY(S_Collision &m_lastCollisionY);
 

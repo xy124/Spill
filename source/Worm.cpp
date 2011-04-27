@@ -21,7 +21,7 @@ void CWorm::init(int WormID, WORMCOLORS WC){
 	init(WormID, 0, 0, WC);
 }
 
-
+//TODO: Worm enthält wormsetobjekt!! aus settings
 void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	m_WormID = WormID;
 	m_TeamID = 0; //MBE
@@ -88,8 +88,9 @@ void CWorm::render() {
 }
 
 void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
+	//FIXME use keys from settings!!!
 	CVec newDir = getDir();
-	if (g_pFramework->KeyDown(SDLK_UP) && getCanJump() && !m_bJumpKeyLock) { //Jump!
+	if (g_pFramework->KeyDown(SDLK_DOWN) && getCanJump() && !m_bJumpKeyLock) { //Jump!
 		m_bJumpKeyLock = true;
 
 		if (m_lastCollisionY.BlockType == CBlock::JUMPBOARD)

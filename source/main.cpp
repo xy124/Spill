@@ -2,6 +2,7 @@
 #include "Logfile.hpp"
 #include "Highscorelist.hpp"
 #include "Framework.hpp"
+#include "Settings.hpp"
 
 #define HIGHSCOREFILE "highscore.hsc"
 
@@ -17,6 +18,8 @@ int main (int argc, char *argv[]) {
 		return (0); //Fehler werden schon in Framework selbst abgehandelt!
 	SDL_WM_SetCaption("Spill", "Spill");
 
+	g_pSettings->LoadFromFile("Settings.s");
+
 	//TODO: Start game selected in Menu!
 	CGame game(1,100,20); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap w�re per new)
 	//^^ergibt nur 1 bildschirmvoll, da 40*BlockSize=800 und co...
@@ -26,6 +29,8 @@ int main (int argc, char *argv[]) {
 	game.run();
 
 	game.quit();
+
+	g_pSettings->SaveToFile("Settings.s");
 
 	g_pPhysics->del();
 
