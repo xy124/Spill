@@ -55,16 +55,14 @@ std::string CBlock::BlockTypeString(CBlock::BlockType bt) {
 	return s;
 }
 
-CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType now) {
+CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType now) {//you can't select air!!!
 	CBlock::BlockType s;
 	switch (now) {
-		case (CBlock::AIR): 		s=CBlock::INVISIBLE; 	break;
-		case (CBlock::INVISIBLE): 	s=CBlock::JUMPBOARD; 	break;
 		case (CBlock::JUMPBOARD): 	s=CBlock::NORMAL; 		break;
 		case (CBlock::NORMAL): 		s=CBlock::SHOOTING; 	break;
-		case (CBlock::SHOOTING): 	s=CBlock::AIR;			break;
-		default: 					s=CBlock::AIR; 			break;
+		case (CBlock::SHOOTING): 	s=CBlock::INVISIBLE;	break;
+		case (CBlock::INVISIBLE): 	s=CBlock::JUMPBOARD; 	break;
+		default: 					s=CBlock::NORMAL;		break;
 	}
 	return s;
-
 }

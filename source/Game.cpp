@@ -12,11 +12,11 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 
 	g_pFramework->InitViewPorts(2); //TODO so viele wie mitspieler
 
-	for (int i=1; i<=AmountOfPlayers; i++) {//w�rmer auff�llen
+	for (int i=0; i<AmountOfPlayers; i++) {//w�rmer auff�llen
 		CWorm* pWorm = new CWorm(this);
 		pWorm->init(i, 40.0f, 40.0f, CWorm::WC_RED); //wir machen alle Würmer rot....
 		pWorm->setName(g_pSettings->WormSet[i].name);
-		pWorm->setViewPort(i-1);
+		pWorm->setViewPort(i);
 		m_vWorms.push_back(pWorm); //MBE: evtl Teams
 	}
 	m_WormAmount = AmountOfPlayers;

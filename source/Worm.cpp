@@ -36,7 +36,7 @@ void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	m_bBuildKeyLock = false;
 
 	m_bNextBTypeKeyLock = false;
-	m_selectedBType = CBlock::AIR;
+	m_selectedBType = CBlock::NORMAL;
 
 	m_bOrientation = ORIGHT;
 
