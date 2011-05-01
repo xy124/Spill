@@ -51,7 +51,7 @@ class CVec { //real Koords in Pixels!
 			y -= rhs.y;
 		}
 
-		CBlockKoord toBlockKoord() {
+		CBlockKoord toBlockKoord() {//MBE as reference????? see to blockrect too!!
 			int xx = static_cast<int>(x/(BLOCKSIZE));
 			int yy = static_cast<int>(y/(BLOCKSIZE));
 			CBlockKoord result(xx, yy);
@@ -60,6 +60,15 @@ class CVec { //real Koords in Pixels!
 
 		float quad_abs() {//Quadrat des Betrags (da ich nciht weiß wie wurzeln geht)
 			return (x*x+y*y);
+		}
+
+		FloatRect toBlockFloatRect() {
+			FloatRect res;
+			res.x = x;
+			res.y = y;
+			res.w = static_cast<float>(BLOCKSIZE);
+			res.h = static_cast<float>(BLOCKSIZE);
+			return res;
 		}
 
 };

@@ -174,6 +174,7 @@ void CFramework::drawViewPortFrames() {
 void CFramework::drawLine(CVec v1, CVec v2, int r, int g, int b) {
 	//FIXME: Fightanimatuion
 	//FIXME draw just if on viewport, draw on right viewPort!
+	//fixme BUILD BLOCKS OVER OTHER PLAYERS
 	lineRGBA(m_pScreen, v1.x, v1.y, v2.x, v2.y, r, g, b, 0); //TODO Alphavalue 0 ok???
 }
 

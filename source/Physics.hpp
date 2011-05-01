@@ -37,8 +37,10 @@ class CPhysics : public TSingleton<CPhysics>
 		}
 
 	public:
-		void init(CGame * Game);
+		void init(CGame * game);
 		bool doPhysics(); //changes X, Y, of Worms and other objects!, when no collision
+
+		bool isEmpty(CBlockKoord &bc);
 
 };
 #endif

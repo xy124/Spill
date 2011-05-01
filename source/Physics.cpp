@@ -110,15 +110,7 @@ bool CPhysics::rectCollision(const FloatRect &FR1, const FloatRect &FR2) { //üb
 }
 
 S_Collision CPhysics::getCollision(const FloatRect &FR) {
-#define CHECKPOINTS 4//jez reichen 4 Punke, da Worm kleiner Block!!
-
-	//TODO USE RECTCOLLISION!!!
-	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
-	S_Collision result;//init Result:
-	result.fBouncingFactorX = 0.0f;
-	result.fBouncingFactorY = 0.0f;
-	result.bIsCollision = false;
-	result.BlockType = CBlock::AIR;
+	#define CHECKPOINTS 4//jez reichen 4 Punke, da Worm kleiner Block!!
 
 	CVec vecs[CHECKPOINTS];
 
@@ -128,6 +120,17 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 	vecs[3] = CVec (FR.x+FR.w, FR.y+FR.h);
 	/*vecs[4] = CVec (FR.x+FR.w/2, FR.y);
 	vecs[5] = CVec (FR.x+FR.w/2, FR.y+FR.h);*/
+
+
+	//TODO USE RECTCOLLISION!!!
+	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
+	S_Collision result;//init Result:
+	result.fBouncingFactorX = 0.0f;
+	result.fBouncingFactorY = 0.0f;
+	result.bIsCollision = false;
+	result.BlockType = CBlock::AIR;
+
+
 
 	for (int i=0; i<CHECKPOINTS; i++) {
 		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i]);
@@ -146,9 +149,22 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 	return result;
 }
 
-void CPhysics::init(CGame * Game) {
-	m_pGame = Game;
+void CPhysics::init(CGame * game) {
+	m_pGame = game;
 }
 
+bool CPhysics::isEmpty(CBlockKoord &bc) {
+	//tests whether no other Worm is on the Field!
+	vector<CWorm*>::iterator it;
+	for (it = m_pGame->m_vWorms.begin(); it != m_pGame->m_vWorms.end(); ++it) {
+		CVec vec(bc);
+		FloatRect blockRect = vec.toBlockFloatRect();
+
+		FloatRect wormRect = (*it)->getRect();
+		if (rectCollision(blockRect, wormRect)==true)//verdaaaaammmmmtes ; war hier!!!
+			return false;
+	}
+	return true;
+}
 
 

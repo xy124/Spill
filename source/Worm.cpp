@@ -178,7 +178,9 @@ void CWorm::ProcessBuilding() {
 
 		//is field free???
 		CBlock* buildingBlock = m_pGame->getBlock(pos);
-		if (buildingBlock != NULL) {
+		if ( (buildingBlock != NULL)
+				&& (buildingBlock->getBlockType() == CBlock::AIR)
+				&& (g_pPhysics->isEmpty(pos)) ) {
 			if (m_pGame->BuildBlock(pos, m_selectedBType, m_WormID, m_TeamID)) {
 				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType)+" Costs:%i", CBlock::BlockCosts[m_selectedBType]);
 				m_Money -= CBlock::BlockCosts[m_selectedBType];
