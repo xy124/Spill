@@ -34,7 +34,7 @@ class CWorm : public CPhysicalObject {
 		int m_ViewPort;
 		WORMCOLORS m_Color;
 		int m_TeamID;
-		float m_Energy;
+		float m_Energy;//energy as float for blocks that might steal energy per second.
 		int m_Money;
 		int m_Points;		
 		bool m_Alive;

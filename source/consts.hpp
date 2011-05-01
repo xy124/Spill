@@ -27,7 +27,8 @@
 #define WORMJUMPSPEED_Y -500.0f
 #define WORMMAXSPEED_X 175.0f
 #define WORMACCELERATION 100.0f
-#define LOADINGTIME 7.0f //it takes seven secs for reloading Blockactions
+#define LOADINGTIME 2.0f //it takes seven secs for reloading Blockactions
+//forDebugreasons^^
 //Orientation:
 #define OLEFT true
 #define ORIGHT false
@@ -45,8 +46,8 @@
 #define BLOCKBOUNCING_X 	{0.3f,  0.3f,    0.0f,     0.9f,     0.3f}//Bouncingfactors...
 #define BLOCKBOUNCING_Y 	{0.3f,  0.3f,    0.0f,     0.9f,     0.3f}//Bouncingfactors...
 
-#define QUADSHOOTINGBLOCKRANGE 400
-#define SHOOTINGBLOCKDAMAGEPERSECOND 20
+#define QUADSHOOTINGBLOCKRANGE 10000
+#define SHOOTINGBLOCKDAMAGE 20
 
 
 

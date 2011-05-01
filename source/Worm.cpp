@@ -234,9 +234,9 @@ void CWorm::ProcessView() {
 	s = "::"+CBlock::BlockTypeString(m_selectedBType)+"::";
 	g_pFramework->TextOut(s, 0, 15, m_ViewPort);
 
-	int BlockEnergyState = static_cast<int>((g_pTimer->now()-m_fLastActionTime)/LOADINGTIME);
-	if (BlockEnergyState > 1) BlockEnergyState = 1;
-	sprintf(buffer, "BlockEnergy: %i %%", BlockEnergyState*100);
+	int BlockEnergyState = static_cast<int>(100*(g_pTimer->now()-m_fLastActionTime)/LOADINGTIME);
+	if (BlockEnergyState > 100) BlockEnergyState = 100;
+	sprintf(buffer, "BlockEnergy: %i %%", BlockEnergyState);
 	s = buffer;
 	g_pFramework->TextOut(s, 0, 30, m_ViewPort);
 }
@@ -299,6 +299,8 @@ void CWorm::ProcessBlockActions() {
 		vector<CWorm*>::iterator wIt;
 		CVec worm, block;
 
+		m_fLastActionTime = g_pTimer->now();
+
 		//FIXME: handle this with a special vector that contains Pointers to all blocks build by worm!!!
 		for (mIt = m_pGame->m_Gameboard.begin(); mIt != m_pGame->m_Gameboard.end(); ++mIt) {
 			if (mIt->second->getBuilderID() == m_WormID) {
@@ -312,9 +314,10 @@ void CWorm::ProcessBlockActions() {
 							worm -= block;
 							if (worm.quad_abs()<QUADSHOOTINGBLOCKRANGE) {
 								float e;
-								e = (*wIt)->getEnergy()-g_pTimer->getElapsed()*SHOOTINGBLOCKDAMAGEPERSECOND;
+								e = (*wIt)->getEnergy()-SHOOTINGBLOCKDAMAGE;
 								(*wIt)->setEnergy(e);
 								//FIXME: drawAttackAnimation
+								//FIXME: diffrent colors for blocks built by diffrent teams!
 
 							}
 
