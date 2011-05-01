@@ -227,7 +227,7 @@ void CWorm::ProcessView() {
 	g_pFramework->ViewPorts[m_ViewPort].m_View = ViewRect;//MBE per at????
 
 	char buffer[1024];
-	sprintf(buffer, "Money: %iEur, Points: %i, Energy: %i/%i",m_Money, m_Points, m_Energy, MAXENERGY);
+	sprintf(buffer, "Money: %iEur, Points: %i, Energy: %.0f/%.0f",m_Money, m_Points, m_Energy, MAXENERGY);
 	string s = buffer;
 	g_pFramework->TextOut(s, 0, 0, m_ViewPort);
 
@@ -281,6 +281,8 @@ void CWorm::update() {
 
 	ProcessBuilding();
 
+	ProcessBlockActions();
+
 	ProcessAnim();
 
 	//Physics happens in do physics!
@@ -297,14 +299,24 @@ void CWorm::ProcessBlockActions() {
 		vector<CWorm*>::iterator wIt;
 		CVec worm, block;
 
+		//FIXME: handle this with a special vector that contains Pointers to all blocks build by worm!!!
 		for (mIt = m_pGame->m_Gameboard.begin(); mIt != m_pGame->m_Gameboard.end(); ++mIt) {
 			if (mIt->second->getBuilderID() == m_WormID) {
 				//Process actions for that block...
-				if (mIt->second->getBlockType() = CBlock::SHOOTING) {
+				if (mIt->second->getBlockType() == CBlock::SHOOTING) {
 					for (wIt = m_pGame->m_vWorms.begin(); wIt != m_pGame->m_vWorms.end(); ++wIt) {
 						//damage all near worms!!;
 						if ((*wIt)->getTeamID() != m_TeamID) { //opponent!!!
-							worm = (*wIt)->getRect();
+							worm  = (*wIt)->getRect();
+							block = CVec(mIt->first);
+							worm -= block;
+							if (worm.quad_abs()<QUADSHOOTINGBLOCKRANGE) {
+								float e;
+								e = (*wIt)->getEnergy()-g_pTimer->getElapsed()*SHOOTINGBLOCKDAMAGEPERSECOND;
+								(*wIt)->setEnergy(e);
+								//FIXME: drawAttackAnimation
+
+							}
 
 						}
 						//TODO: worms have to die if hp<0!

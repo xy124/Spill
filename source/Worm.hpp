@@ -34,7 +34,7 @@ class CWorm : public CPhysicalObject {
 		int m_ViewPort;
 		WORMCOLORS m_Color;
 		int m_TeamID;
-		int m_Energy;
+		float m_Energy;
 		int m_Money;
 		int m_Points;		
 		bool m_Alive;
@@ -125,12 +125,12 @@ class CWorm : public CPhysicalObject {
 			m_Money = Money;
 		}
 
-		int getEnergy()
+		float getEnergy()
 		{
 			return m_Energy;
 		}
 
-		void setEnergy(int Energy)
+		void setEnergy(float Energy)
 		{
 			m_Energy = Energy;
 		}

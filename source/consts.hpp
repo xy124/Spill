@@ -23,7 +23,7 @@
 
 
 //Worm.hpp:
-#define MAXENERGY 100
+#define MAXENERGY 100.0f
 #define WORMJUMPSPEED_Y -500.0f
 #define WORMMAXSPEED_X 175.0f
 #define WORMACCELERATION 100.0f
@@ -46,6 +46,7 @@
 #define BLOCKBOUNCING_Y 	{0.3f,  0.3f,    0.0f,     0.9f,     0.3f}//Bouncingfactors...
 
 #define QUADSHOOTINGBLOCKRANGE 400
+#define SHOOTINGBLOCKDAMAGEPERSECOND 20
 
 
 

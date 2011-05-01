@@ -46,6 +46,11 @@ class CVec { //real Koords in Pixels!
 			return CVec(x-rhs.x, y-rhs.y);
 		}
 
+		void operator -= (const CVec &rhs) {
+			x -= rhs.x;
+			y -= rhs.y;
+		}
+
 		CBlockKoord toBlockKoord() {
 			int xx = static_cast<int>(x/(BLOCKSIZE));
 			int yy = static_cast<int>(y/(BLOCKSIZE));
