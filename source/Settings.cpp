@@ -19,6 +19,7 @@ CSettings::CSettings() {
 	WormSet[0].KeyRight 			= SDLK_d;
 	WormSet[0].KeySelectBlockType 	= SDLK_LSHIFT;
 	WormSet[0].KeyBuild 			= SDLK_LCTRL;
+	WormSet[0].KeyBlockActions		= SDLK_TAB;
 
 	WormSet[0].name 				= "Player0";
 
@@ -33,6 +34,7 @@ CSettings::CSettings() {
 	WormSet[1].KeyRight 			= SDLK_RIGHT;
 	WormSet[1].KeySelectBlockType 	= SDLK_RSHIFT;
 	WormSet[1].KeyBuild 			= SDLK_RCTRL;
+	WormSet[1].KeyBlockActions		= SDLK_RETURN;
 
 	WormSet[1].name 				= "John";
 }

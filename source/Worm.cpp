@@ -32,6 +32,8 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_Money = 0;
 	m_Points = 0;
 	m_Energy = MAXENERGY;
+	m_fLastActionTime = 0.0f;
+
 	setCanMove(true);
 	
 	m_bJumpKeyLock = false;
@@ -140,7 +142,7 @@ void CWorm::ProcessBuilding() {
 		CBlock* miningBlock = m_pGame->getBlock(pos);//returns NULL if for example out of Gameboard
 		if (miningBlock != NULL) {
 			int miningBlockTeamID = miningBlock->getTeamID();
-			if ( ((miningBlockTeamID == NOBODY) || (miningBlockTeamID == m_TeamID))//you can't mine other teamsl blocks
+			if ( ((miningBlockTeamID == NOBODY) || (miningBlockTeamID == m_TeamID))//you can't mine other teams blocks
 					&& (miningBlock->getBlockType() != CBlock::AIR) ){
 				int newMoney = m_Money + CBlock::BlockCosts[miningBlock->getBlockType()]; //da blocktype sich dann ja ändert... bei buildblock
 				if (m_pGame->BuildBlock(pos, CBlock::AIR, m_WormID, m_TeamID)) { //block konnte gebaut werden!:
@@ -225,10 +227,18 @@ void CWorm::ProcessView() {
 	g_pFramework->ViewPorts[m_ViewPort].m_View = ViewRect;//MBE per at????
 
 	char buffer[1024];
-	sprintf(buffer, "Money: %iEur,   Points: %i,   Energy: %i/%i",m_Money, m_Points, m_Energy, MAXENERGY);
-
-	string s = "::"+CBlock::BlockTypeString(m_selectedBType)+"::"+buffer;
+	sprintf(buffer, "Money: %iEur, Points: %i, Energy: %i/%i",m_Money, m_Points, m_Energy, MAXENERGY);
+	string s = buffer;
 	g_pFramework->TextOut(s, 0, 0, m_ViewPort);
+
+	s = "::"+CBlock::BlockTypeString(m_selectedBType)+"::";
+	g_pFramework->TextOut(s, 0, 15, m_ViewPort);
+
+	int BlockEnergyState = static_cast<int>((g_pTimer->now()-m_fLastActionTime)/LOADINGTIME);
+	if (BlockEnergyState > 1) BlockEnergyState = 1;
+	sprintf(buffer, "BlockEnergy: %i %%", BlockEnergyState*100);
+	s = buffer;
+	g_pFramework->TextOut(s, 0, 30, m_ViewPort);
 }
 
 CWorm::~CWorm() {
@@ -278,4 +288,34 @@ void CWorm::update() {
 
 bool CWorm::isAlive() {
 	return m_Alive;
+}
+
+void CWorm::ProcessBlockActions() {
+	bool canDoBlockAction = (g_pTimer->now()-m_fLastActionTime > LOADINGTIME);
+	if (g_pFramework->KeyDown(m_pSettings->KeyBlockActions) && canDoBlockAction) {
+		map<CBlockKoord, CBlock*>::iterator mIt;
+		vector<CWorm*>::iterator wIt;
+		CVec worm, block;
+
+		for (mIt = m_pGame->m_Gameboard.begin(); mIt != m_pGame->m_Gameboard.end(); ++mIt) {
+			if (mIt->second->getBuilderID() == m_WormID) {
+				//Process actions for that block...
+				if (mIt->second->getBlockType() = CBlock::SHOOTING) {
+					for (wIt = m_pGame->m_vWorms.begin(); wIt != m_pGame->m_vWorms.end(); ++wIt) {
+						//damage all near worms!!;
+						if ((*wIt)->getTeamID() != m_TeamID) { //opponent!!!
+							worm = (*wIt)->getRect();
+
+						}
+						//TODO: worms have to die if hp<0!
+
+					}
+				}//Shooting
+			}//Worm built block
+
+
+		}//for all Blocks
+
+	}
+
 }

@@ -45,6 +45,8 @@ class CWorm : public CPhysicalObject {
 		S_Collision m_lastCollisionY;
 		S_WormSettings * m_pSettings;
 
+		float m_fLastActionTime;
+
 
 		bool m_bNextBTypeKeyLock;
 		CBlock::BlockType m_selectedBType;
@@ -59,6 +61,7 @@ class CWorm : public CPhysicalObject {
 		void ProcessMoving();
 		void ProcessBuilding();
 		void ProcessAnim();
+		void ProcessBlockActions();
 
 	public:
 		CWorm(CGame *pGame);
@@ -75,6 +78,11 @@ class CWorm : public CPhysicalObject {
 
 		void setViewPort(int Viewport) {
 			m_ViewPort = Viewport;
+		}
+
+		int getTeamID()
+		{
+			return m_TeamID;
 		}
 
 		int getWormID()

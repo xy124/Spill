@@ -20,6 +20,7 @@ struct S_WormSettings {
 	SDLKey KeyMine;
 	SDLKey KeySelectBlockType;
 	SDLKey KeyBuild;
+	SDLKey KeyBlockActions;//that key will let all blocks do their actions, shooting...
 
 	std::string name;
 };

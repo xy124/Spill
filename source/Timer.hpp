@@ -12,7 +12,8 @@ class CTimer : public TSingleton<CTimer> {
 
 		//die einzige Variable die nach au�en kommt:
 		float getElapsed() {return m_fElapsed;}//YesYes... here you can shit on the second ; after }
-	
+		inline float now() {return (SDL_GetTicks()/1000.0f);}
+
 	private:
 		float m_fElapsed; //vergangene zeit seit letztem Frame
 		float m_fCurTime; //Aktuelle Zeit
