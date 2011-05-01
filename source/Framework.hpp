@@ -13,6 +13,8 @@
 #include "Vec.hpp"
 #include <vector>
 
+#include "SDLgfx/SDL_gfxPrimitives.h"
+
 #define g_pFramework CFramework::get()
 
 struct S_ViewPort {
@@ -47,6 +49,8 @@ class CFramework : public TSingleton<CFramework> {
 
 		bool RectInView(SDL_Rect rect, int viewPort);
 		bool RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &iter);
+
+		void drawLine(CVec v1, CVec v2, int r, int g, int b);
 
 	private:
 		SDL_Surface * m_pScreen;

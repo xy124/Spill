@@ -316,7 +316,8 @@ void CWorm::ProcessBlockActions() {
 								float e;
 								e = (*wIt)->getEnergy()-SHOOTINGBLOCKDAMAGE;
 								(*wIt)->setEnergy(e);
-								//FIXME: drawAttackAnimation
+								//DrawAttackAnimation
+
 								//FIXME: diffrent colors for blocks built by diffrent teams!
 
 							}
