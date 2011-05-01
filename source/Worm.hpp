@@ -64,7 +64,7 @@ class CWorm : public CPhysicalObject {
 		CWorm(CGame *pGame);
 		void init(int WormID);
 		void init(int WormID, float X, float Y);
-		void init(int WormID, float X, float Y, WORMCOLORS WC);
+		void init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC);
 		void init(int WormID, WORMCOLORS WC);
 		void render();
 		void update();

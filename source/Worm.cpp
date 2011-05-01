@@ -10,21 +10,23 @@ CWorm::CWorm(CGame *pGame) {
 	m_pSettings = NULL;
 }
 
+//FIXME: verschiedenfarbige Würmer
+
 void CWorm::init(int WormID) {
-	init(WormID, 0, 0, WC_RED);
+	init(WormID, WormID, 0, 0, WC_RED);
 }
 
 void CWorm::init(int WormID, float X, float Y) {
-	init(WormID, X, Y, WC_RED);
+	init(WormID, WormID, X, Y, WC_RED);
 }
 
 void CWorm::init(int WormID, WORMCOLORS WC){
-	init(WormID, 0, 0, WC);
+	init(WormID, WormID, 0, 0, WC);
 }
 
-void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
+void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_WormID = WormID;
-	m_TeamID = 0; //MBE
+	m_TeamID = TeamID;
 	setCanJump(false);
 	m_Color = WC;
 	m_Money = 0;
@@ -137,7 +139,9 @@ void CWorm::ProcessBuilding() {
 		pos.y++;//Block UNDER worm
 		CBlock* miningBlock = m_pGame->getBlock(pos);//returns NULL if for example out of Gameboard
 		if (miningBlock != NULL) {
-			if (miningBlock->getBlockType() != CBlock::AIR) {
+			int miningBlockTeamID = miningBlock->getTeamID();
+			if ( ((miningBlockTeamID == NOBODY) || (miningBlockTeamID == m_TeamID))//you can't mine other teamsl blocks
+					&& (miningBlock->getBlockType() != CBlock::AIR) ){
 				int newMoney = m_Money + CBlock::BlockCosts[miningBlock->getBlockType()]; //da blocktype sich dann ja ändert... bei buildblock
 				if (m_pGame->BuildBlock(pos, CBlock::AIR, m_WormID, m_TeamID)) { //block konnte gebaut werden!:
 					m_Money = newMoney;
