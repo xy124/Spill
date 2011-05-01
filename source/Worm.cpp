@@ -7,6 +7,7 @@ using namespace std;
 CWorm::CWorm(CGame *pGame) {
 	m_pWormSprite = NULL;
 	m_pGame = pGame;
+	m_pSettings = NULL;
 }
 
 void CWorm::init(int WormID) {
@@ -21,7 +22,6 @@ void CWorm::init(int WormID, WORMCOLORS WC){
 	init(WormID, 0, 0, WC);
 }
 
-//TODO: Worm enthält wormsetobjekt!! aus settings
 void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 	m_WormID = WormID;
 	m_TeamID = 0; //MBE
@@ -62,6 +62,8 @@ void CWorm::init(int WormID, float X, float Y, WORMCOLORS WC) {
 
 	m_Alive = true;
 	CLogfile::get()->fTextout("New Worm; ID:%i<br />",m_WormID);
+
+	m_pSettings = &(g_pSettings->WormSet[m_WormID]);
 }
 
 S_Collision CWorm::getLastCollisionY() const
@@ -87,10 +89,9 @@ void CWorm::render() {
 	m_pWormSprite->Render(m_fAnimphase, m_bOrientation);
 }
 
-void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tasten nutzen!!!
-	//FIXME use keys from settings!!!
+void CWorm::ProcessMoving() {
 	CVec newDir = getDir();
-	if (g_pFramework->KeyDown(SDLK_DOWN) && getCanJump() && !m_bJumpKeyLock) { //Jump!
+	if (g_pFramework->KeyDown(m_pSettings->KeyJump) && getCanJump() && !m_bJumpKeyLock) { //Jump!
 		m_bJumpKeyLock = true;
 
 		if (m_lastCollisionY.BlockType == CBlock::JUMPBOARD)
@@ -99,18 +100,18 @@ void CWorm::ProcessMoving() {//FIXME nicht alle W�rmer d�rfen die selben Tas
 			newDir.y = WORMJUMPSPEED_Y;
 	}
 
-	if (!g_pFramework->KeyDown(SDLK_UP))
+	if (!g_pFramework->KeyDown(m_pSettings->KeyJump))
 		m_bJumpKeyLock = false;
 
 
 	m_isWalking = false;
 	//Left or Right!!
-	if (g_pFramework->KeyDown(SDLK_LEFT) == true) {
+	if (g_pFramework->KeyDown(m_pSettings->KeyLeft) == true) {
 		newDir.x += -WORMACCELERATION;
 		m_isWalking = true;
 		m_bOrientation = OLEFT;
 		if (newDir.x < -WORMMAXSPEED_X) newDir.x = -WORMMAXSPEED_X;
-	} else if (g_pFramework->KeyDown(SDLK_RIGHT) == true ) {
+	} else if (g_pFramework->KeyDown(m_pSettings->KeyRight) == true ) {
 		newDir.x += +WORMACCELERATION;
 		m_isWalking = true;
 		m_bOrientation = ORIGHT;
@@ -128,7 +129,7 @@ void CWorm::ProcessBuilding() {
 	 * Shift:	SelectBuildBlockType
 	 */
 
-	if (g_pFramework->KeyDown(SDLK_DOWN)) {
+	if (g_pFramework->KeyDown(m_pSettings->KeyMine)) {
 		//get Block under Worm!
 		CVec vec(getRect());
 		vec.x += getRect().w/2;//Block UNDER worm
@@ -147,14 +148,14 @@ void CWorm::ProcessBuilding() {
 		} else g_pLogfile->Textout("<br /> Couldn't mine Block because miningBlock == NULL");
 	}//Keydown
 
-	if ( (g_pFramework->KeyDown(SDLK_LSHIFT)) && (m_bNextBTypeKeyLock == false) ) {
+	if ( (g_pFramework->KeyDown(m_pSettings->KeySelectBlockType)) && (m_bNextBTypeKeyLock == false) ) {
 		m_selectedBType = CBlock::nextBlockType(m_selectedBType);//MBE überschlag
 		m_bNextBTypeKeyLock = true;
 	}
-	if (!g_pFramework->KeyDown(SDLK_LSHIFT))
+	if (!g_pFramework->KeyDown(m_pSettings->KeySelectBlockType))
 		m_bNextBTypeKeyLock = false;
 
-	if ( (g_pFramework->KeyDown(SDLK_LCTRL))
+	if ( (g_pFramework->KeyDown(m_pSettings->KeyBuild))
 			&& (m_bBuildKeyLock == false)
 			&& (m_selectedBType != CBlock::AIR)//Build Air has no sense...
 			&& (m_Money >= CBlock::BlockCosts[m_selectedBType]) //player has enough money
@@ -181,7 +182,7 @@ void CWorm::ProcessBuilding() {
 		}
 
 	}
-	if (!g_pFramework->KeyDown(SDLK_LCTRL))
+	if (!g_pFramework->KeyDown(m_pSettings->KeyBuild))
 			m_bBuildKeyLock = false;
 
 
@@ -217,7 +218,7 @@ void CWorm::ProcessView() {
 	if (ViewRect.x < 0)
 		ViewRect.x = 0;
 
-	g_pFramework->ViewPorts[m_ViewPort].m_View = ViewRect;//TODO per at????
+	g_pFramework->ViewPorts[m_ViewPort].m_View = ViewRect;//MBE per at????
 
 	char buffer[1024];
 	sprintf(buffer, "Money: %iEur,   Points: %i,   Energy: %i/%i",m_Money, m_Points, m_Energy, MAXENERGY);
@@ -231,6 +232,10 @@ CWorm::~CWorm() {
 		delete (m_pWormSprite);
 	}
 	m_pWormSprite = NULL;
+	m_pGame = NULL;
+	m_pSettings = NULL;
+
+
 	CLogfile::get()->fTextout("<br />Deleted Worm; ID:%i",m_WormID);
 }
 

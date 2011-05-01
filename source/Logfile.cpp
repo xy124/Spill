@@ -14,7 +14,7 @@ CLogfile::~CLogfile() {//logfileendeschreiben und schlie�en
 
 void CLogfile::CreateLogfile(const char *sLogName) {
 	m_Logfile = fopen(sLogName, "w");
-	if (m_Logfile == NULL) {//TODO werden FILES wirklich NULL wenn sie nciht erstellt wurden? ich hoffe schon!
+	if (m_Logfile == NULL) {
 		printf("could not open/create Logfile");
 		return ;
 	}

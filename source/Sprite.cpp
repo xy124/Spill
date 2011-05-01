@@ -150,7 +150,7 @@ void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame rein
 				worldLine.w = 1; //Line!
 
 				worldLine.x += rect.w; //worldline fängt rechts an!
-				while (spriteLine.x<m_FrameRect.x+m_FrameWidth) {//TODO: < or <= framwidth???
+				while (spriteLine.x<m_FrameRect.x+m_FrameWidth) {//MBE: < or <= framwidth???
 					spriteLine.x++;
 					worldLine.x--;
 					SDL_BlitSurface(m_pImage, &spriteLine, m_pScreen, &worldLine );

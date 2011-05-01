@@ -59,16 +59,14 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 
 	CBlock::InitBlockSprites();
 
-	m_bIsRunning = true;
-	g_pLogfile->Textout(RED, true, "End Of CGame::CGame");
-
 	m_pBackGround = new CBackGround();
 	m_pBackGround->init(GameBoardWidth * BLOCKSIZE);
 
+	m_bIsRunning = true;
+	g_pLogfile->Textout(RED, true, "Constructed CGame");
 }
 
-void CGame::creatDebugGameBoard() {
-	//ok infact might be good to generate an sensfull empty World at first:
+void CGame::creatDebugGameBoard() {//creates World for debugging
 	//with a GROUND!
 	for (int x = 0; x < m_GBWidth; x++) {
 		CBlockKoord pos(x,18);
@@ -110,7 +108,7 @@ void CGame::run() {
 
 		//nimmt unwesentliche Zeit von 1ms:
 		//g_pFramework->Clear(); //Clear current surface
-		m_pBackGround->render();//TODO: nimmt haufenweise zeit
+		m_pBackGround->render();
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
 
@@ -140,8 +138,7 @@ void CGame::run() {
 }
 ////////////////////////////////////////////////////////////////////////////////////
 
-void CGame::renderGameboard() {//TODO: Performance, nur blöcke laden, die auch im Bild sind!
-
+void CGame::renderGameboard() {
 	map<CBlockKoord, CBlock*>::iterator it, s, e;
 	for (it=m_Gameboard.begin(); it!=m_Gameboard.end(); ++it) {//alle Bl�cke rendern!
 		CBlockKoord pos = it->first;
@@ -149,7 +146,6 @@ void CGame::renderGameboard() {//TODO: Performance, nur blöcke laden, die auch 
 		it->second->render(pos);
 		//stopWatch("Watch");
 	}
-
 }
 
 void CGame::ProcessEvents() {

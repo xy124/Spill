@@ -10,13 +10,13 @@ class CTimer : public TSingleton<CTimer> {
 		CTimer(void);
 		void Update();
 
-		//die einzige Variable die nach außen kommt:
+		//die einzige Variable die nach auï¿½en kommt:
 		float getElapsed() {return m_fElapsed;}//YesYes... here you can shit on the second ; after }
 	
 	private:
 		float m_fElapsed; //vergangene zeit seit letztem Frame
 		float m_fCurTime; //Aktuelle Zeit
-		float m_fLastTime; //Zeit des letzten frame in s - son mist ich schreib das dann in TODO!!! ms um ;)  - vielleicht
+		float m_fLastTime; //Zeit des letzten frame in s
 };
 
 #endif

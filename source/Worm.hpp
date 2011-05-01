@@ -10,6 +10,7 @@
 #include "consts.hpp"
 #include "Collision.hpp"
 #include "Game.hpp"
+#include "Settings.hpp"
 
 #include "Block.hpp"
 
@@ -42,6 +43,8 @@ class CWorm : public CPhysicalObject {
 		bool m_bBuildKeyLock;
 		bool m_bOrientation;
 		S_Collision m_lastCollisionY;
+		S_WormSettings * m_pSettings;
+
 
 		bool m_bNextBTypeKeyLock;
 		CBlock::BlockType m_selectedBType;
