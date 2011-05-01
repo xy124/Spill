@@ -51,7 +51,7 @@ void CSettings::SaveToFile(std::string sFilename) {
 
 
 void CSettings::LoadFromFile(std::string sFilename) {
-	oifstream Input (sFilename.c_str(), ios::binary);
+	ifstream Input (sFilename.c_str(), ios::binary);
 	if (Input == NULL) {
 		g_pLogfile->FunctionResult("CSettings::LoadFromFile",L_FAIL, "Couldn't load " + sFilename);
 		return;
