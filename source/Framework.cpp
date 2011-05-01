@@ -49,9 +49,9 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	
 	//Init SFont
 	g_pLogfile->Textout("did sth.");
-	string s = _DIRDATA_; s+="/24P_Copperplate_Blue.bmp";
+	string s = _DIRDATA_; s+="/24P_Copperplate_Bluesmall.bmp";
 	g_pLogfile->Textout("<br />"+s);
-	SDL_Surface * pFontImage = SDL_LoadBMP((_DIRDATA_+"/24P_Copperplate_Blue.bmp").c_str());
+	SDL_Surface * pFontImage = SDL_LoadBMP((_DIRDATA_+"/24P_Copperplate_Blue_small.bmp").c_str());
 	SDL_SetColorKey(pFontImage, SDL_SRCCOLORKEY, SDL_MapRGB(pFontImage->format, 0, 0, 0)); //COLORKEY Black!
 	pGameFont = SFont_InitFont(pFontImage);
 
@@ -134,13 +134,15 @@ void CFramework::showDebugValue(const string &sText, ...) {
 }
 
 void CFramework::TextOut(std::string &text, int x, int y, int ViewPort) {
-	SFont_Write(m_pScreen, pGameFont, x, y, text.c_str());
+	SFont_Write(m_pScreen, pGameFont,
+			x+ViewPorts.at(ViewPort).m_ScreenPosition.x, y, text.c_str());
 }
 void CFramework::TextOut(std::string &text, CVec &where, int ViewPort) {
 	int xx = static_cast<int>(where.x);
 	int yy = static_cast<int>(where.y);
 
-	SFont_Write(m_pScreen, pGameFont, xx, yy, text.c_str());
+	SFont_Write(m_pScreen, pGameFont,
+			xx+ViewPorts.at(ViewPort).m_ScreenPosition.x, yy, text.c_str());
 }
 
 bool CFramework::RectInView(SDL_Rect rect, int viewPort) {

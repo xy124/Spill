@@ -21,7 +21,7 @@ int main (int argc, char *argv[]) {
 	g_pSettings->LoadFromFile("Settings.s");
 
 	//TODO: Start game selected in Menu!
-	CGame game(1,100,20); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap w�re per new)
+	CGame game(2,100,20); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap w�re per new)
 	//^^ergibt nur 1 bildschirmvoll, da 40*BlockSize=800 und co...
 
 	g_pPhysics->init(&game);

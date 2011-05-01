@@ -10,7 +10,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 		CLogfile::get()->Textout("Can't Create so many Players, will create 4<br />");
 	}
 
-	g_pFramework->InitViewPorts(2); //TODO so viele wie mitspieler
+	g_pFramework->InitViewPorts(AmountOfPlayers);
 
 	for (int i=0; i<AmountOfPlayers; i++) {//w�rmer auff�llen
 		CWorm* pWorm = new CWorm(this);
@@ -118,16 +118,15 @@ void CGame::run() {
 		//render gameboard before you render worms xD
 		renderGameboard();
 
+		g_pFramework->drawViewPortFrames();
+
 		//Draw Worms and react on keys...
 		vector<CWorm*>::iterator i;
-		for (i = m_vWorms.begin(); i<m_vWorms.end(); i++) {
+		for (i = m_vWorms.begin(); i!=m_vWorms.end(); i++) {
 			(*i)->update();
 			(*i)->ProcessView();
 			(*i)->render();
 		}
-
-
-		g_pFramework->drawViewPortFrames();
 
 		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 

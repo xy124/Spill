@@ -1,7 +1,7 @@
 /*
  * Settings.cpp
  *
- *  Created on: 27.04.2011
+ *  Created on: 27.14.2111
  *      Author: Sebastian
  */
 
@@ -13,25 +13,28 @@
 using namespace std;
 
 CSettings::CSettings() {
-	WormSet[0].KeyJump 				= SDLK_UP;
-	WormSet[0].KeyLeft	 			= SDLK_LEFT;
-	WormSet[0].KeyMine 				= SDLK_DOWN;
-	WormSet[0].KeyRight 			= SDLK_RIGHT;
-	WormSet[0].KeySelectBlockType 	= SDLK_RSHIFT;
-	WormSet[0].KeyBuild 			= SDLK_RCTRL;
+	WormSet[0].KeyJump 				= SDLK_w;
+	WormSet[0].KeyLeft	 			= SDLK_a;
+	WormSet[0].KeyMine 				= SDLK_s;
+	WormSet[0].KeyRight 			= SDLK_d;
+	WormSet[0].KeySelectBlockType 	= SDLK_LSHIFT;
+	WormSet[0].KeyBuild 			= SDLK_LCTRL;
 
-	WormSet[0].name 				= "John";
+	WormSet[0].name 				= "Player0";
 
 
+	//////////////////////////////
+	//Second Player
+	//////////////////////////////
 
-	WormSet[1].KeyJump 				= SDLK_w;
-	WormSet[1].KeyLeft	 			= SDLK_a;
-	WormSet[1].KeyMine 				= SDLK_s;
-	WormSet[1].KeyRight 			= SDLK_d;
-	WormSet[1].KeySelectBlockType 	= SDLK_LSHIFT;
-	WormSet[1].KeyBuild 			= SDLK_LCTRL;
+	WormSet[1].KeyJump 				= SDLK_UP;
+	WormSet[1].KeyLeft	 			= SDLK_LEFT;
+	WormSet[1].KeyMine 				= SDLK_DOWN;
+	WormSet[1].KeyRight 			= SDLK_RIGHT;
+	WormSet[1].KeySelectBlockType 	= SDLK_RSHIFT;
+	WormSet[1].KeyBuild 			= SDLK_RCTRL;
 
-	WormSet[1].name 				= "Player2";
+	WormSet[1].name 				= "John";
 }
 
 CSettings::~CSettings() {
