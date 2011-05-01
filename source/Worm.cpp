@@ -319,6 +319,14 @@ void CWorm::ProcessBlockActions() {
 								e = (*wIt)->getEnergy()-SHOOTINGBLOCKDAMAGE;
 								(*wIt)->setEnergy(e);
 								//DrawAttackAnimation
+								//get midWorm, midBlock
+								worm.x += 0.5f*WORMWIDTH/2;
+								worm.y += 0.5f*WORMHEIGHT/2;
+								block.x += BLOCKSIZE/2;
+								block.y += BLOCKSIZE/2;
+								//FIXME drawLineForLongerTime
+								g_pFramework->drawLine(worm,block, 255, 0, 0);
+
 
 								//FIXME: diffrent colors for blocks built by diffrent teams!
 

@@ -23,6 +23,8 @@
 
 
 //Worm.hpp:
+#define WORMWIDTH 25
+#define WORMHEIGHT 18
 #define MAXENERGY 100.0f
 #define WORMJUMPSPEED_Y -500.0f
 #define WORMMAXSPEED_X 175.0f
