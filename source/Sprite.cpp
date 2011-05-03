@@ -1,6 +1,6 @@
 #include "Sprite.hpp"
 
-#include "SDLgfx/SDL_imageFilter.h"
+//#include "SDLgfx/SDL_imageFilter.h"
 
 using namespace std;
 
@@ -52,19 +52,19 @@ void CSprite::Load(const string sFilename, bool isBackGround ) { //L�d nicht a
 
 		SDL_DisplayFormat(cpImage);
 
-		SDL_LockSurface(cpImage);//hoffe man kann so die adresse einer referenz erhalten!!!
+		//SDL_LockSurface(cpImage);//hoffe man kann so die adresse einer referenz erhalten!!!
 
 		//Pixel manipulieren!
-		int res = SDL_imageFilterAddByte(
+		/*int res = SDL_imageFilterAddByte(
 				(unsigned char *)cpImage->pixels,
 				(unsigned char *)cpImage->pixels,
 				(cpImage->pitch * cpImage->h),
 				(unsigned char)(i*change));
 		if (res != 0) {
 			g_pLogfile->FunctionResult("CSPrite::Load", L_FAIL, SDL_GetError());
-		}
+		}*/
 
-		SDL_UnlockSurface(cpImage);
+		//SDL_UnlockSurface(cpImage);
 
 		int r,g,b;
 		//ColorKeyBerechnen:
