@@ -35,10 +35,11 @@ CBlock::CBlock(BlockType BT) {
 }
 
 void CBlock::render(CBlockKoord &MyBlockPos) {
+	//FIXME: different colors for blocks built by different teams!
 	CVec vec(MyBlockPos);
 	if (this->m_BlockType != CBlock::AIR) {
 		CBlock::m_pBlockSprites[this->m_BlockType]->SetPos(vec);
-		CBlock::m_pBlockSprites[this->m_BlockType]->Render();
+		CBlock::m_pBlockSprites[this->m_BlockType]->Render(this->m_TeamID);
 	}
 }
 

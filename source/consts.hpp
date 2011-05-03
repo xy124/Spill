@@ -69,4 +69,10 @@
 
 
 
+//Sprite:
+#define MAXCOLORID 4
+
+
+
+
 #endif /* CONSTS_HPP_ */

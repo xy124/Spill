@@ -304,6 +304,7 @@ void CWorm::ProcessBlockActions() {
 		m_fLastActionTime = g_pTimer->now();
 
 		//FIXME: handle this with a special vector that contains Pointers to all blocks build by worm!!!
+		//^^but that would take more RAM....
 		for (mIt = m_pGame->m_Gameboard.begin(); mIt != m_pGame->m_Gameboard.end(); ++mIt) {
 			if (mIt->second->getBuilderID() == m_WormID) {
 				//Process actions for that block...
@@ -326,9 +327,6 @@ void CWorm::ProcessBlockActions() {
 								block.y += BLOCKSIZE/2;
 								//FIXME drawLineForLongerTime
 								g_pFramework->drawLine(worm,block, 255, 0, 0);
-
-
-								//FIXME: diffrent colors for blocks built by diffrent teams!
 
 							}
 

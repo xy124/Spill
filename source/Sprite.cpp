@@ -1,5 +1,7 @@
 #include "Sprite.hpp"
 
+#include "SDLgfx/SDL_imageFilter.h"
+
 using namespace std;
 
 CSprite::CSprite(void) {
@@ -16,37 +18,57 @@ CSprite::CSprite(void) {
 
 CSprite::~CSprite(void) {
 	
-	if (m_pImage != NULL)
-		SDL_FreeSurface(m_pImage); //Surface freigeben, nicht per delete!!
+	if (m_pImages.at(m_ColorID) != NULL)
+		SDL_FreeSurface(m_pImages.at(m_ColorID)); //Surface freigeben, nicht per delete!!
 	else
 		g_pLogfile->Textout("<br />Error on freeing Image!<br />");
 	
 }
 
 void CSprite::Load(const string sFilename) { //L�d nicht animiertes sprite
-	m_pImage = SDL_LoadBMP(sFilename.c_str());
 
-	//pr�fen ob alles glattging
-	if (m_pImage == NULL) {
-		string describtion("Error while Loading "+sFilename);
-		describtion = describtion + SDL_GetError();
-		g_pLogfile->FunctionResult("CSprite::Load", L_FAIL, describtion);
+	m_ColorID = 0;
+
+	for (int i = 0; i < MAXCOLORID; i++) {//Einzelne bilder erstellen.
+		SDL_Surface * cpImage;
+		cpImage = m_pImages.at(i);
+		cpImage = SDL_LoadBMP(sFilename.c_str());
+
+		//pr�fen ob alles glattging
+		if (cpImage == NULL) {
+			string describtion("Error while Loading "+sFilename);
+			describtion = describtion + SDL_GetError();
+			g_pLogfile->FunctionResult("CSprite::Load", L_FAIL, describtion);
 
 
-		//�Framework herunterfahren
-		g_pFramework->Quit();
+			//�Framework herunterfahren
+			g_pFramework->Quit();
 
-		//gesamtes Spiel beenden
-		exit(1);
+			//gesamtes Spiel beenden
+			exit(1);
+		}
+
+		SDL_DisplayFormat(cpImage);
+
+		SDL_LockSurface(cpImage);//hoffe man kann so die adresse einer referenz erhalten!!!
+
+		//Pixel manipulieren!
+		SDL_imageFilterAddByte(
+				(unsigned char *)cpImage->pixels,
+				(unsigned char *)cpImage->pixels,
+				static_cast<char>(cpImage->pitch * cpImage->h),
+				static_cast<char>(i*25));
+
+		SDL_UnlockSurface(cpImage);
+
+		cpImage = NULL;
 	}
-
-	SDL_DisplayFormat(m_pImage);
 
 	//Rect initialisieren
 	m_Rect.x = 0;
 	m_Rect.y = 0;
-	m_Rect.w = m_pImage->w;
-	m_Rect.h = m_pImage->h;
+	m_Rect.w = m_pImages.at(m_ColorID)->w;
+	m_Rect.h = m_pImages.at(m_ColorID)->h;
 
 }
 
@@ -63,11 +85,11 @@ void CSprite::Load(const string sFilename, int NumFrames, int FrameWidth, int Fr
 	m_Rect.w = FrameWidth;
 	m_Rect.h = FrameHeight;
 
-	m_NumFramesX = m_pImage->w / m_FrameWidth;
+	m_NumFramesX = m_pImages.at(m_ColorID)->w / m_FrameWidth;
 }
 
 void CSprite::SetColorKey(int R, int G, int B) {//Colorkey = Transparentfarbe einstellen!
-	SDL_SetColorKey(m_pImage, SDL_SRCCOLORKEY, SDL_MapRGB(m_pImage->format, R, G, B));
+	SDL_SetColorKey(m_pImages.at(m_ColorID), SDL_SRCCOLORKEY, SDL_MapRGB(m_pImages.at(m_ColorID)->format, R, G, B));
 }
 
 void CSprite::SetPos(float fXPos, float fYPos) {
@@ -107,7 +129,7 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 
 			// handle viewport
 			PositionRect.x += it->m_ScreenPosition.x;
-			SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &PositionRect);
+			SDL_BlitSurface(m_pImages.at(m_ColorID), &FrameRect, m_pScreen, &PositionRect);
 
 		}
 
@@ -161,7 +183,7 @@ void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame rein
 					if ((worldLine.x > it->m_ScreenPosition.x)
 							&& (worldLine.x < it->m_ScreenPosition.x+it->m_ScreenPosition.w))
 						//Render line JUST if on screen!
-					SDL_BlitSurface(m_pImage, &spriteLine, m_pScreen, &worldLine );
+					SDL_BlitSurface(m_pImages.at(m_ColorID), &spriteLine, m_pScreen, &worldLine );
 				}
 			} else {
 
@@ -181,10 +203,19 @@ void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame rein
 
 				// handle viewports-X
 				PositionRect.x += it->m_ScreenPosition.x;
-				SDL_BlitSurface(m_pImage, &FrameRect, m_pScreen, &PositionRect);
+				SDL_BlitSurface(m_pImages.at(m_ColorID), &FrameRect, m_pScreen, &PositionRect);
 			}//not flipped
 		}
 	}//For viewports
+}
+
+
+
+void CSprite::Render(int colorID) {//gesamtes Sprite auf Bildschirm rendern
+	m_ColorID = colorID;
+	if (colorID > MAXCOLORID)
+		m_ColorID = 0;
+	Render();
 }
 
 CSprite::CSprite(const std::string sBlockFilename) {
