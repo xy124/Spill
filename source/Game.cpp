@@ -1,6 +1,8 @@
 #include "Game.hpp"
 #include "Settings.hpp"
 
+#include "Performancecheck.hpp"
+
 using namespace std;
 
 CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TODO: cut in more functions!
@@ -110,18 +112,26 @@ void CGame::run() {
 
 		//nimmt unwesentliche Zeit von 1ms:
 		//g_pFramework->Clear(); //Clear current surface
+		startWatch();
 		m_pBackGround->render();
+		stopWatch("rendered back");
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
 
+
+		startWatch();
 		//Move Worms, slow them down and so on...
 		g_pPhysics->doPhysics();//schnell!!
+		stopWatch("doPhysics");
 
+		startWatch();
 		//render gameboard before you render worms xD
 		renderGameboard();
+		stopWatch("renderGameBoard");
 
 
 
+		startWatch();
 		//Draw Worms and react on keys...
 		vector<CWorm*>::iterator i;
 		for (i = m_vWorms.begin(); i!=m_vWorms.end(); i++) {
@@ -129,6 +139,7 @@ void CGame::run() {
 			(*i)->ProcessView();
 			(*i)->render();
 		}
+		stopWatch("draw worms");
 
 		g_pFramework->renderViewPortFrames();
 

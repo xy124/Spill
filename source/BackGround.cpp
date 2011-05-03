@@ -12,7 +12,7 @@ using namespace std;
 
 void CBackGround::init(int gameWidth) {
 	m_pBackGroundSprite = new CSprite;
-	m_pBackGroundSprite->Load(_DIRDATA_+"/P1050738.bmp");
+	m_pBackGroundSprite->Load(_DIRDATA_+"/P1050738.bmp", true);
 
 
 
@@ -35,7 +35,7 @@ void CBackGround::render() {
 	vector<SDL_Rect>::iterator it;
 	for (it = m_vPositions.begin(); it != m_vPositions.end(); ++it) {
 		m_pBackGroundSprite->SetPos(it->x, it->y);
-		m_pBackGroundSprite->Render();
+		m_pBackGroundSprite->Render(0);
 	}
 }
 

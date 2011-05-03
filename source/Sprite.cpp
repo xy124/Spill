@@ -25,13 +25,14 @@ CSprite::~CSprite(void) {
 	
 }
 
-void CSprite::Load(const string sFilename) { //L�d nicht animiertes sprite
+void CSprite::Load(const string sFilename, bool isBackGround ) { //L�d nicht animiertes sprite
 
 	m_ColorID = 0;
 
 	const int change = 45;
 
-	for (int i = 0; i < MAXCOLORID; i++) {//Einzelne bilder erstellen.
+	int max = (isBackGround ? 1 : MAXCOLORID);
+	for (int i = 0; i < max; i++) {//Einzelne bilder erstellen.
 		SDL_Surface * cpImage;
 		cpImage = SDL_LoadBMP(sFilename.c_str());
 
