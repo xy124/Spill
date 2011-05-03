@@ -39,7 +39,7 @@ class CFramework : public TSingleton<CFramework> {
 
 		SFont_Font * pGameFont;
 
-		void drawViewPortFrames();
+		void renderViewPortFrames();
 
 		void TextOut(std::string &text, int x, int y, int ViewPort);
 		void TextOut(std::string &text, CVec &where, int ViewPort);

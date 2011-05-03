@@ -160,7 +160,7 @@ bool CFramework::RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &it
 			&& (rect.x < ViewRect.x+ViewRect.w) && (rect.x+rect.w > ViewRect.x) );
 }
 
-void CFramework::drawViewPortFrames() {
+void CFramework::renderViewPortFrames() {
 	vector<S_ViewPort>::iterator it;
 	SDL_Rect border;
 	border.y = 0;
@@ -168,7 +168,7 @@ void CFramework::drawViewPortFrames() {
 	border.h = m_ScreenRect.h;
 	it = ViewPorts.begin();//start with second ViewPort
 	for (++it; it != ViewPorts.end(); ++it) {
-		border.x = it->m_ScreenPosition.x-6;
+		border.x = it->m_ScreenPosition.x-VIEWPORTFRAMEWIDTH;
 		SDL_FillRect(m_pScreen, &border, SDL_MapRGB(m_pScreen->format, 128, 0, 0));
 	}
 }
