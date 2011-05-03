@@ -76,7 +76,6 @@ void CSprite::SetPos(float fXPos, float fYPos) {
 }
 
 void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
-	//Render just if Rects are colliding:
 	const SDL_Rect SpriteRect = m_Rect;//Position auf gesamter world
 	SDL_Rect PositionRect;//Position relativ zu Viewport
 	SDL_Rect FrameRect; //rect describes the shown part of the sprite
@@ -116,16 +115,21 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 }
 
 void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame reinrendern..
-	//Render just if Rects are colliding:
-	SDL_Rect SpriteRect;//rect of SpritePosition in World
-	SDL_Rect ViewRect;//rect of View in World
+
+
+	SDL_Rect PositionRect;//Position relativ zu Viewport
+	const SDL_Rect SpriteRect = m_Rect;
+
+
 	vector<S_ViewPort>::iterator it;
 	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		SpriteRect = m_Rect; //where to draw it
-		ViewRect = it->m_View;
+		const SDL_Rect ViewRect = it->m_View;//viewRect auf gesamter world
+
+		//Render just if Rects are colliding:
 		if (g_pFramework->RectInView(SpriteRect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
-			SpriteRect.x -= ViewRect.x;//calculate x in View!
-			SpriteRect.x += it->m_ScreenPosition.x;
+			PositionRect = SpriteRect; //damit erstmal w,h und y stimmen.
+
+			PositionRect.x = SpriteRect.x - ViewRect.x;
 
 			//MBE: man könnte auch mit SDL_SetClipRect arbeiten
 			//file:///D:/Daten/Programmierung/SDL-1.2.13_MINGW/docs/html/sdlsetcliprect.html
@@ -146,10 +150,11 @@ void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame rein
 				spriteLine.w = 1; //Line!
 
 				SDL_Rect worldLine; //Line in World
-				worldLine = SpriteRect;
+				worldLine = PositionRect;
+				worldLine.x += it->m_ScreenPosition.x;
 				worldLine.w = 1; //Line!
 
-				worldLine.x += SpriteRect.w; //worldline fängt rechts an!
+				worldLine.x += m_FrameWidth; //worldline fängt rechts an!
 				while (spriteLine.x<m_FrameRect.x+m_FrameWidth) {//MBE: < or <= framwidth???
 					spriteLine.x++;
 					worldLine.x--;
@@ -159,8 +164,7 @@ void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame rein
 					SDL_BlitSurface(m_pImage, &spriteLine, m_pScreen, &worldLine );
 				}
 			} else {
-				SDL_Rect PositionRect;//Position relativ zu Viewport
-				PositionRect = SpriteRect;//damit erstmal w,h und y stimmen.
+
 				//TODO: maybe we can do this test also for anim so that only once this test is done in render -animated
 				SDL_Rect FrameRect = m_FrameRect;//rect of the final part of the sprite that will be rendered if not flipped
 				if (SpriteRect.x < ViewRect.x) { //Left edge out of View
@@ -169,12 +173,10 @@ void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame rein
 					PositionRect.x = 0;
 				}
 
-				if (SpriteRect.x+SpriteRect.w > ViewRect.x+ViewRect.w) { //Right edge out of View
+				if (SpriteRect.x+m_FrameRect.w > ViewRect.x+ViewRect.w) { //Right edge out of View
 					FrameRect.w = FrameRect.w - (SpriteRect.x+SpriteRect.w - (ViewRect.x+ViewRect.w));
 					//Breite    = Breite      - überragende länge
 				}
-
-				g_pFramework->showDebugValue("FrameRect.w%i",FrameRect.w);
 
 
 				// handle viewports-X
