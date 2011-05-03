@@ -106,6 +106,7 @@ void CGame::creatDebugGameBoard() {//creates World for debugging
 void CGame::run() {
 	while (m_bIsRunning) {
 		//Play!
+		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
 		//nimmt unwesentliche Zeit von 1ms:
 		//g_pFramework->Clear(); //Clear current surface
@@ -130,8 +131,6 @@ void CGame::run() {
 		}
 
 		g_pFramework->renderViewPortFrames();
-
-		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
 		g_pFramework->RenderDebugText();
 
