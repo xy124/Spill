@@ -71,6 +71,10 @@
 
 //Sprite:
 #define MAXCOLORID 4
+//StandardColorKey
+#define COLORKEYR 0
+#define COLORKEYG 255
+#define COLORKEYB 255
 
 
 

@@ -13,12 +13,6 @@ void CBlock::InitBlockSprites() {
 	m_pBlockSprites[2] = new CSprite(_DIRDATA_+"/BlockShooting.bmp");
 	m_pBlockSprites[3] = new CSprite(_DIRDATA_+"/BlockJumpboard.bmp");
 	m_pBlockSprites[4] = new CSprite(_DIRDATA_+"/BlockInvisible.bmp");
-
-	m_pBlockSprites[0]->SetColorKey(0, 255, 255);
-	m_pBlockSprites[1]->SetColorKey(0, 255, 255);
-	m_pBlockSprites[2]->SetColorKey(0, 255, 255);
-	m_pBlockSprites[3]->SetColorKey(0, 255, 255);
-	m_pBlockSprites[4]->SetColorKey(0, 255, 255);
 }
 
 void CBlock::FreeBlockSprites() {

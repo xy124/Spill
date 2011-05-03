@@ -50,7 +50,6 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	//m_pWormSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 21, 32, 17);
 	//New animation: //braucht auch anpassung in Animate!
 	m_pWormSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 3 , 25, 18);
-	m_pWormSprite->SetColorKey(255, 0, 255);
 	m_fAnimphase = 0.0f;
 	m_isWalking = false;
 

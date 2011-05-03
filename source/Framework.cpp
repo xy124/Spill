@@ -52,7 +52,8 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	string s = _DIRDATA_; s+="/24P_Copperplate_Bluesmall.bmp";
 	g_pLogfile->Textout("<br />"+s);
 	SDL_Surface * pFontImage = SDL_LoadBMP((_DIRDATA_+"/24P_Copperplate_Blue_small.bmp").c_str());
-	SDL_SetColorKey(pFontImage, SDL_SRCCOLORKEY, SDL_MapRGB(pFontImage->format, 0, 0, 0)); //COLORKEY Black!
+	//SDL_SetColorKey(pFontImage, SDL_SRCCOLORKEY, SDL_MapRGB(pFontImage->format, 0, 0, 0)); //COLORKEY Black!
+	//^^why should we need a color key here???
 	pGameFont = SFont_InitFont(pFontImage);
 
 	//Init Debugvalue

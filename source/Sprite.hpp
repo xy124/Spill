@@ -15,7 +15,6 @@ class CSprite {
 		~CSprite		(void);
 
 		CSprite(const std::string sBlockFilename); //even fills the Sprite with the fitting Image
-		//TODO ^^Standardcolorkey
 
 		void Load		(const std::string sFilename);
 		void Load		(const std::string sFilename, int NumFrames, int FrameWidth, int FrameHeight);
