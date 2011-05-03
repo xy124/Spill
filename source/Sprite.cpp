@@ -151,7 +151,8 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 	}
 }
 
-void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame reinrendern..
+void CSprite::Render(float fFrameNumber, bool bFlipped, int colorID) { //aktuellen Frame reinrendern..
+	setColorID(colorID);
 
 
 	SDL_Rect PositionRect;//Position relativ zu Viewport
@@ -227,10 +228,14 @@ void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame rein
 
 
 void CSprite::Render(int colorID) {//gesamtes Sprite auf Bildschirm rendern
+	setColorID(colorID);
+	Render();
+}
+
+void CSprite::setColorID(int colorID) {
 	m_ColorID = colorID;
 	if (colorID > MAXCOLORID)
 		m_ColorID = 0;
-	Render();
 }
 
 CSprite::CSprite(const std::string sBlockFilename) {

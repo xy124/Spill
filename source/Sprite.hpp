@@ -23,7 +23,7 @@ class CSprite {
 		void SetPos		(const CVec &newPos);
 		void Render		(int colorID);
 		void Render		();
-		void Render		(float fFrameNumber, bool bFlipped);
+		void Render		(float fFrameNumber, bool bFlipped, int colorID);
 		SDL_Rect GetRect() {return m_Rect;}//returns the Rect where the sprite is situated on World
 	
 	private:
@@ -35,7 +35,9 @@ class CSprite {
 		int m_FrameWidth;		//Breite einer Animationsphase
 		int m_FrameHeight;		//H�he einer Animationsphase
 		int m_NumFramesX;			//Woe voe�e Anim-Phasen in X-Richtung ?
-		int m_ColorID;
+
+		void setColorID(int colorID);
+		int m_ColorID;//current colorset
 
 };
 

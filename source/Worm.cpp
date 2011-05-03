@@ -10,8 +10,6 @@ CWorm::CWorm(CGame *pGame) {
 	m_pSettings = NULL;
 }
 
-//FIXME: verschiedenfarbige Würmer
-
 void CWorm::init(int WormID) {
 	init(WormID, WormID, 0, 0, WC_RED);
 }
@@ -88,8 +86,8 @@ void CWorm::reset() { //HINT: resettet nicht die Position
 
 void CWorm::render() {
 	CVec newWormPos = CVec(getRect());
-	m_pWormSprite->SetPos( newWormPos );
-	m_pWormSprite->Render(m_fAnimphase, m_bOrientation);
+	m_pWormSprite->SetPos( newWormPos);
+	m_pWormSprite->Render(m_fAnimphase, m_bOrientation, m_TeamID);
 }
 
 void CWorm::ProcessMoving() {
