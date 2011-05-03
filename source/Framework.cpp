@@ -15,14 +15,27 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 		return (false);
 	}
 
+	//OpenGL
+	int a = ColorDepth/3;
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,	a);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,	a);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,	a);//a=8 for 24 bit...
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+	//SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,	1);//FIXME: ALphaBlending!!
+	//TODO: other GL-Settings???
+
+
+
+
 	//Fullscreen/Windowmode???
 
 	if (bFullscreen) {
-		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
-										SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
+		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, 0,
+						SDL_FULLSCREEN | SDL_HWSURFACE | SDL_OPENGL); //open gl sets colordepth
 	} else {
 		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
-										SDL_HWSURFACE | SDL_DOUBLEBUF);
+										SDL_HWSURFACE | SDL_OPENGL);//SDL_DOUBLEBUF ist automatisch...
 	}
 
 	if (m_pScreen == NULL) {
@@ -35,6 +48,34 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 
 		return (false);
 	}
+
+
+	//sets the gl koords to sdl koords...
+	  glViewport(0, 0,               // coordinates of the
+									 // lower left hand corner
+									 // of the window which we
+									 // will change in the
+									 // glOrtho() call.
+				 m_pScreen->w,          // Set the logical width
+				 m_pScreen->h);         // and height of the
+									 // window to match the
+									 // actual width and
+									 // height as measured in
+									 // pixels.
+
+	  // Set the coordinate system for the window moving (0,0)
+	  // to the upper left hand corner of the window.
+	  glOrtho(0.0,                   // left edge is zero
+			  (GLdouble)m_pScreen->w,   // right edge is width
+			  (GLdouble)m_pScreen->h,   // bottom edge is height
+			  0.0f,                   // top edge is zero
+			  0.0f, 1.0f);             // near and far clipping
+									 // planes.
+
+	  // Set the clear color to black.
+	  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+
 
 
 	m_ScreenRect.x = 0;
@@ -114,8 +155,7 @@ void CFramework::Clear() {//Augabe: Buffer l�schen
 }
 
 void CFramework::Flip() {//surface umschalten, flippen
-	//SDL_
-	SDL_Flip(m_pScreen);
+	SDL_GL_SwapBuffers();
 }
 
 void CFramework::showDebugValue(const string &sText, ...) {
@@ -175,11 +215,12 @@ void CFramework::renderViewPortFrames() {
 }
 
 void CFramework::drawLine(CVec v1, CVec v2, int r, int g, int b) {
+	g_pLogfile->Textout("Drawline = todo, use opengl functions!");
 	//FIXME: Fightanimatuion
 	//FIXME draw just if viewable on viewport
 	vector<S_ViewPort>::iterator it;
 	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		lineRGBA(m_pScreen, v1.x-it->m_ScreenPosition.x, v1.y, v2.x-it->m_ScreenPosition.x, v2.y, r, g, b, 255); //TODO Alphavalue 0 ok???
+		//lineRGBA(m_pScreen, v1.x-it->m_ScreenPosition.x, v1.y, v2.x-it->m_ScreenPosition.x, v2.y, r, g, b, 255); //TODO Alphavalue 0 ok???
 	}
 }
 
