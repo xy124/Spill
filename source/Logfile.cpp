@@ -44,7 +44,7 @@ static std::string htmlToSimpleOut(const std::string& s) {
 	std::string ret;
 	std::string tag;
 	ret.reserve(s.size());
-	int state = 0;
+	static int state = 0;
 	for(size_t i = 0; i < s.size(); ++i) {
 		char c = s[i];
 		if(state == 0) {
