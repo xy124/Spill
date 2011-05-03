@@ -65,11 +65,16 @@ void CSprite::Load(const string sFilename) { //L�d nicht animiertes sprite
 
 		SDL_UnlockSurface(cpImage);
 
-		SDL_SetColorKey(cpImage, SDL_SRCCOLORKEY, SDL_MapRGB(cpImage->format,
-				COLORKEYR+i*change,
-				COLORKEYG+i*change,
-				COLORKEYB+i*change
-				) );
+		int r,g,b;
+		//ColorKeyBerechnen:
+		r = COLORKEYR + i*change;
+		if (r > 255)  r = 255;
+		g = COLORKEYG + i*change;
+		if (g > 255)  g = 255;
+		b= COLORKEYB + i*change;
+		if (b > 255)  b = 255;
+
+		SDL_SetColorKey(cpImage, SDL_SRCCOLORKEY, SDL_MapRGB(cpImage->format, r, g, b) );
 
 		m_pImages.push_back(cpImage);
 
@@ -101,10 +106,10 @@ void CSprite::Load(const string sFilename, int NumFrames, int FrameWidth, int Fr
 	m_NumFramesX = m_pImages.at(m_ColorID)->w / m_FrameWidth;
 }
 
-void CSprite::SetColorKey(int R, int G, int B) {//Colorkey = Transparentfarbe einstellen!
-	for (int i = 0; i < MAXCOLORID; i++) {
-		SDL_SetColorKey(m_pImages.at(i), SDL_SRCCOLORKEY, SDL_MapRGB(m_pImages.at(i)->format, R, G, B));
-	}
+void CSprite::SetColorKey(int R, int G, int B, int colorID) {//Colorkey = Transparentfarbe einstellen!
+	SDL_SetColorKey(m_pImages.at(colorID), SDL_SRCCOLORKEY,
+			SDL_MapRGB(m_pImages.at(colorID)->format, R, G, B));
+
 }
 
 void CSprite::SetPos(float fXPos, float fYPos) {

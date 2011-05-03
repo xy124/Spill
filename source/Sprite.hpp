@@ -18,7 +18,7 @@ class CSprite {
 
 		void Load		(const std::string sFilename);
 		void Load		(const std::string sFilename, int NumFrames, int FrameWidth, int FrameHeight);
-		void SetColorKey(int R, int G, int B);// beim Render transparente Farbe
+		void SetColorKey(int R, int G, int B, int colorID);// beim Render transparente Farbe
 		void SetPos		(float fXPos, float fYPos);
 		void SetPos		(const CVec &newPos);
 		void Render		(int colorID);
