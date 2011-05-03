@@ -53,7 +53,7 @@ function srccompile() {
 
 typeset -A Lflags
 Lflags[.]="-lz"
-[ "$(uname)" = "Darwin" ] && Lflags[.]+=" -framework SDL -framework Cocoa"
+[ "$(uname)" = "Darwin" ] && Lflags[.]+=" -framework SDL -framework Cocoa -framework OpenGL"
 
 # $1 - c/cpp-file
 # will link all the $OBJS together
