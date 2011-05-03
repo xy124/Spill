@@ -65,13 +65,15 @@ bool CFramework::InitViewPorts(int Amount) {
 	S_ViewPort vp;
 	vp.m_View.x = 0;//init coords on world
 	vp.m_View.y = 0;
-	vp.m_View.w = static_cast<int>(m_ScreenRect.w/Amount);
+	vp.m_View.w = static_cast<int>((m_ScreenRect.w-(Amount-1)*VIEWPORTFRAMEWIDTH)/Amount);
+	g_pLogfile->fTextout("<br />Viewportwidth = %i", vp.m_View.w);
 	vp.m_View.h = m_ScreenRect.h;
 
 	//init position on screen:
 	vp.m_ScreenPosition = vp.m_View;
 	for (int i=0; i<Amount; i++) {
-		vp.m_ScreenPosition.x = i*vp.m_View.w;
+		vp.m_ScreenPosition.x = i*(vp.m_View.w+VIEWPORTFRAMEWIDTH);
+		g_pLogfile->fTextout(GREEN,"<br />Viewport%i .x = %i", i, vp.m_ScreenPosition.x);
 		ViewPorts.push_back(vp);
 	}
 	g_pLogfile->fTextout("<br />Successfull created %i Viewport(s)", Amount);
@@ -162,7 +164,7 @@ void CFramework::drawViewPortFrames() {
 	vector<S_ViewPort>::iterator it;
 	SDL_Rect border;
 	border.y = 0;
-	border.w = 12;
+	border.w = VIEWPORTFRAMEWIDTH;
 	border.h = m_ScreenRect.h;
 	it = ViewPorts.begin();//start with second ViewPort
 	for (++it; it != ViewPorts.end(); ++it) {

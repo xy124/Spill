@@ -64,4 +64,9 @@
 
 
 
+//Framework:
+#define VIEWPORTFRAMEWIDTH 12
+
+
+
 #endif /* CONSTS_HPP_ */

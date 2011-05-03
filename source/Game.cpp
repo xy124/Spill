@@ -119,7 +119,7 @@ void CGame::run() {
 		//render gameboard before you render worms xD
 		renderGameboard();
 
-		g_pFramework->drawViewPortFrames();
+
 
 		//Draw Worms and react on keys...
 		vector<CWorm*>::iterator i;
@@ -128,6 +128,8 @@ void CGame::run() {
 			(*i)->ProcessView();
 			(*i)->render();
 		}
+
+		g_pFramework->drawViewPortFrames();
 
 		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 

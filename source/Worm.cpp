@@ -65,7 +65,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_lastCollisionY.bIsCollision = false;
 
 	m_Alive = true;
-	CLogfile::get()->fTextout("New Worm; ID:%i<br />",m_WormID);
+	CLogfile::get()->fTextout("<br />New Worm. ID:%i",m_WormID);
 
 	m_pSettings = &(g_pSettings->WormSet[m_WormID]);
 }

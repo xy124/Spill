@@ -153,6 +153,7 @@ void CSprite::Render(float fFrameNumber, bool bFlipped) { //aktuellen Frame rein
 				while (spriteLine.x<m_FrameRect.x+m_FrameWidth) {//MBE: < or <= framwidth???
 					spriteLine.x++;
 					worldLine.x--;
+					if ((worldLine.x > it->m_ScreenPosition.x) && (worldLine.x < it->m_ScreenPosition.x+it->m_ScreenPosition.w))//Render line Just if on screen!
 					SDL_BlitSurface(m_pImage, &spriteLine, m_pScreen, &worldLine );
 				}
 			} else {
