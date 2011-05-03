@@ -146,6 +146,8 @@ void CGame::run() {
 		g_pFramework->RenderDebugText();
 
 		g_pFramework->Flip();
+
+		g_pLogfile->Textout("\n");
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
