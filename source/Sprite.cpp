@@ -31,7 +31,6 @@ void CSprite::Load(const string sFilename) { //L�d nicht animiertes sprite
 
 	for (int i = 0; i < MAXCOLORID; i++) {//Einzelne bilder erstellen.
 		SDL_Surface * cpImage;
-		cpImage = m_pImages.at(i);
 		cpImage = SDL_LoadBMP(sFilename.c_str());
 
 		//pr�fen ob alles glattging
@@ -53,15 +52,21 @@ void CSprite::Load(const string sFilename) { //L�d nicht animiertes sprite
 		SDL_LockSurface(cpImage);//hoffe man kann so die adresse einer referenz erhalten!!!
 
 		//Pixel manipulieren!
-		SDL_imageFilterAddByte(
+		int res = SDL_imageFilterAddByte(
 				(unsigned char *)cpImage->pixels,
 				(unsigned char *)cpImage->pixels,
-				static_cast<char>(cpImage->pitch * cpImage->h),
-				static_cast<char>(i*25));
+				(cpImage->pitch * cpImage->h),
+				(unsigned char)(i*45));
+		if (res != 0) {
+			g_pLogfile->FunctionResult("CSPrite::Load", L_FAIL, SDL_GetError());
+		}
 
 		SDL_UnlockSurface(cpImage);
 
+		m_pImages.push_back(cpImage);
+
 		cpImage = NULL;
+		//FIXME PERFORMANCE!!!
 	}
 
 	//Rect initialisieren

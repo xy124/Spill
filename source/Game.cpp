@@ -144,7 +144,11 @@ void CGame::renderGameboard() {
 	for (it=m_Gameboard.begin(); it!=m_Gameboard.end(); ++it) {//alle Bl�cke rendern!
 		CBlockKoord pos = it->first;
 		//startWatch();
-		it->second->render(pos);
+		try {
+			it->second->render(pos);
+		} catch (exception &e) {
+			g_pLogfile->fTextout(RED,"Error on creating gameboard: %s", e.what());
+		}
 		//stopWatch("Watch");
 	}
 }
