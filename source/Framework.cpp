@@ -16,10 +16,11 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	}
 
 	//OpenGL
-	int a = ColorDepth/3;
+	/*int a = ColorDepth/3;
+	a=8;//TODO stupid <-
 	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,	a);
 	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,	a);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,	a);//a=8 for 24 bit...
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,	a);//a=8 for 24 bit...*/
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	//SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,	1);//FIXME: ALphaBlending!!
