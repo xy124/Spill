@@ -38,6 +38,28 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 										SDL_HWSURFACE | SDL_OPENGL);//SDL_DOUBLEBUF ist automatisch...
 	}
 
+
+	//other ogl settings
+	//copied from: http://gpwiki.org/index.php/SDL:Tutorials:Using_SDL_with_OpenGL
+	glEnable( GL_TEXTURE_2D );
+
+	glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
+
+	glViewport( 0, 0, 800, 600 );
+
+	glClear( GL_COLOR_BUFFER_BIT );
+
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity();
+
+	glOrtho(0.0f, 800, 600, 0.0f, -1.0f, 1.0f);
+
+	glMatrixMode( GL_MODELVIEW );
+	glLoadIdentity();
+
+
+
+
 	if (m_pScreen == NULL) {
 		string describtion ("Videomodus konnte nicht gesetzt werden");
 		describtion = describtion + SDL_GetError();
