@@ -111,13 +111,13 @@ void CGame::run() {
 		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
 		//nimmt unwesentliche Zeit von 1ms:
-		//g_pFramework->Clear(); //Clear current surface
+		g_pFramework->Clear(); //Clear current surface
 		startWatch();
-		m_pBackGround->render();
+		//m_pBackGround->render();FIXME uncomment when rendering works!
 		stopWatch("rendered back");
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
-
+/*
 
 		startWatch();
 		//Move Worms, slow them down and so on...
@@ -144,8 +144,19 @@ void CGame::run() {
 		g_pFramework->renderViewPortFrames();
 
 		g_pFramework->RenderDebugText();
+*/
+		//Lösch mich:
+		//ok lass uns mal die ogl testen...
+		    glLoadIdentity();
 
-		g_pFramework->Flip();
+		    glBegin(GL_QUADS);
+		        glColor3f(1, 0, 0); glVertex3f(0, 0, 0);
+		        glColor3f(1, 1, 0); glVertex3f(100, 0, 0);
+		        glColor3f(1, 0, 1); glVertex3f(100, 100, 0);
+		        glColor3f(1, 1, 1); glVertex3f(0, 100, 0);
+		    glEnd();
+
+		    SDL_GL_SwapBuffers();
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
