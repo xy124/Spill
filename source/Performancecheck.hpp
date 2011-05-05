@@ -21,7 +21,7 @@ void startWatch() {
 		lalalaTIME = SDL_GetTicks();
 	#endif
 }
-void stopWatch(char name[]) {
+void stopWatch(const char * name) {
 	#ifdef ac
 		lalalaTIME = SDL_GetTicks()-lalalaTIME;
 		//g_pLogfile->fTextout(" %s : %f", name, lalalaTIME);

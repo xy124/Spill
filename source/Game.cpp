@@ -107,6 +107,8 @@ void CGame::creatDebugGameBoard() {//creates World for debugging
 ///////////////////////////////////////////////////////////////////////////////////
 void CGame::run() {
 	while (m_bIsRunning) {
+		SDL_Delay(20);
+
 		//Play!
 		//g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
