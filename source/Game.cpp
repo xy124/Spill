@@ -107,20 +107,17 @@ void CGame::creatDebugGameBoard() {//creates World for debugging
 ///////////////////////////////////////////////////////////////////////////////////
 void CGame::run() {
 	while (m_bIsRunning) {
-		SDL_Delay(20);
-
 		//Play!
-		//g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
+		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
 		//nimmt unwesentliche Zeit von 1ms:
-
+		//g_pFramework->Clear(); //Clear current surface
 		startWatch();
-
-		//m_pBackGround->render();FIXME uncomment when rendering works!
+		m_pBackGround->render();
 		stopWatch("rendered back");
 		g_pFramework->Update();//Update Timer and Framework!
 		ProcessEvents();//react on escape for close...
-/*
+
 
 		startWatch();
 		//Move Worms, slow them down and so on...
@@ -147,20 +144,8 @@ void CGame::run() {
 		g_pFramework->renderViewPortFrames();
 
 		g_pFramework->RenderDebugText();
-*/
-		g_pFramework->Clear(); //Clear current surface
-		//Lösch mich:
-		//ok lass uns mal die ogl testen...
-		    glLoadIdentity();
 
-		    glBegin(GL_QUADS);
-		        glColor3f(1, 0, 0); glVertex3f(0, 0, 0);
-		        glColor3f(1, 1, 0); glVertex3f(100, 0, 0);
-		        glColor3f(1, 0, 1); glVertex3f(100, 100, 0);
-		        glColor3f(1, 1, 1); glVertex3f(0, 100, 0);
-		    glEnd();
-
-		    SDL_GL_SwapBuffers();
+		g_pFramework->Flip();
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////

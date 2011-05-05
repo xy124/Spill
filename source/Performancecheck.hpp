@@ -13,22 +13,13 @@
 #include <string>
 using namespace std;
 
-//#define ac//Switch<----
-
 float lalalaTIME;
 void startWatch() {
-	#ifdef ac //Debug ist eine vorgefertigte Definition
-		lalalaTIME = SDL_GetTicks();
-	#endif
+	lalalaTIME = SDL_GetTicks();
 }
-void stopWatch(const char * name) {
-	#ifdef ac
-		lalalaTIME = SDL_GetTicks()-lalalaTIME;
-		//g_pLogfile->fTextout(" %s : %f", name, lalalaTIME);
-		//for excell:
-		g_pLogfile->fTextout("%f;", lalalaTIME);
-	#endif
-
+void stopWatch(char name[]) {
+	lalalaTIME = SDL_GetTicks()-lalalaTIME;
+	g_pLogfile->fTextout("<br> %s : %f", name, lalalaTIME);
 }
 
 #endif /* PERFORMANCECHECK_HPP_ */
