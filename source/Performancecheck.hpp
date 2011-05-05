@@ -17,7 +17,7 @@ float lalalaTIME;
 void startWatch() {
 	lalalaTIME = SDL_GetTicks();
 }
-void stopWatch(const char * name) {
+void stopWatch(char name[]) {
 	lalalaTIME = SDL_GetTicks()-lalalaTIME;
 	g_pLogfile->fTextout("<br> %s : %f", name, lalalaTIME);
 }
