@@ -110,7 +110,7 @@ void CGame::run() {
 		//Play!
 		SDL_Delay(10);
 
-		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
+		//g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
 		//nimmt unwesentliche Zeit von 1ms:
 		//g_pFramework->Clear(); //Clear current surface
@@ -146,6 +146,8 @@ void CGame::run() {
 		g_pFramework->renderViewPortFrames();
 
 		g_pFramework->RenderDebugText();
+
+		renderAttackAnimations();
 
 		g_pFramework->Flip();
 	}
@@ -190,6 +192,7 @@ void CGame::quit() {
 	//DeleteWorms
 	//free Gameboard
 	//free Blockimages!
+	//TODO: free Attackanimations
 
 	vector<CWorm*>::iterator wit;
 	for (wit = m_vWorms.begin(); wit!=m_vWorms.end(); wit++) {
@@ -232,6 +235,23 @@ bool CGame::BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID,
 		pBlock->setTeamID(TeamID);
 		return true;
 	} else return false;
+}
+
+void CGame::renderAttackAnimations() {
+	list<CAttackAnimation*>::iterator it;
+	for (it = m_AttackAnimations.begin(); it != m_AttackAnimations.end(); ++it ) {
+		if ((*it)->isAlive()) {
+			(*it)->render();
+		} else {
+			(*it)->quit();
+			delete(*it);
+			(*it) = NULL;
+			m_AttackAnimations.erase(it);
+			if (m_AttackAnimations.empty())
+				return;
+			it--;
+		}
+	}
 }
 
 CGame::~CGame() {}

@@ -258,12 +258,10 @@ void CFramework::renderViewPortFrames() {
 }
 
 void CFramework::drawLine(CVec v1, CVec v2, int r, int g, int b) {
-	g_pLogfile->Textout("Drawline = todo, use opengl functions!");
-	//FIXME: Fightanimatuion
 	//FIXME draw just if viewable on viewport
 	vector<S_ViewPort>::iterator it;
 	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		//lineRGBA(m_pScreen, v1.x-it->m_ScreenPosition.x, v1.y, v2.x-it->m_ScreenPosition.x, v2.y, r, g, b, 255); //TODO Alphavalue 0 ok???
+		lineRGBA(m_pScreen, v1.x+it->m_ScreenPosition.x, v1.y, v2.x+it->m_ScreenPosition.x, v2.y, r, g, b, 255);
 	}
 }
 
