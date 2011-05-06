@@ -10,6 +10,9 @@
 
 #include "AttackAnimation.hpp"
 #include "../Vec.hpp"
+#include "../Worm.hpp"
+
+class CWorm;
 
 class CAA_Laser: public CAttackAnimation {
 private:
@@ -18,10 +21,10 @@ private:
 	int m_bValue;
 
 	CVec m_From;
-	CVec m_To;
+	CWorm * m_pTo;
 
 public:
-	virtual void init(float liveTime, CVec &from, CVec &to, int r, int g, int b);
+	virtual void init(float liveTime, CVec &from, CWorm * pTo, int r, int g, int b);
 	virtual void render();
 	virtual void quit();
 	~CAA_Laser() {};

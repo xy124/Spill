@@ -9,18 +9,21 @@
 #include "../Logfile.hpp"
 #include "../Framework.hpp"
 
-void CAA_Laser::init(float liveTime, CVec &from, CVec &to, int r, int g, int b) {
+void CAA_Laser::init(float liveTime, CVec &from, CWorm * pTo, int r, int g, int b) {
 	initKillTime(liveTime);
 	m_rValue = r;
 	m_gValue = g;
 	m_bValue = b;
 
 	m_From = from;
-	m_To = to;
+	m_pTo = pTo;
 }
 
 void CAA_Laser::render() {
-	g_pFramework->drawLine(m_From, m_To, m_rValue, m_gValue, m_bValue);
+	CVec to(m_pTo->getRect());
+	to.x += WORMWIDTH/2;
+	to.y += WORMHEIGHT/2;
+	g_pFramework->drawLine(m_From, to, m_rValue, m_gValue, m_bValue);
 }
 
 void CAA_Laser::quit() {
