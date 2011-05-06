@@ -38,15 +38,16 @@
 
 
 //BLock.hpp:
+#define BLOCKAMOUNT 6
 #define BLOCKSIZE 30
 /*
  * IMPORTANT: 	if you change amount of blocktypes also change
  * 				CBlock::BlockTypeString and CBlock::nextBlockType(BlockType Now)
  */
-							//AIR,NORMAL,SHOOTING,JUMPBOARD,INVISIBLE
-#define BLOCKCOSTS 			{0   ,     5,      40,       10,       10}
-#define BLOCKBOUNCING_X 	{0.3f,  0.3f,    0.0f,     0.9f,     0.3f}//Bouncingfactors...
-#define BLOCKBOUNCING_Y 	{0.3f,  0.3f,    0.0f,     0.9f,     0.3f}//Bouncingfactors...
+							//AIR,NORMAL,SHOOTING,JUMPBOARD,INVISIBLE,CANNON
+#define BLOCKCOSTS 			{0   ,     5,      40,       10,       10,   100}
+#define BLOCKBOUNCING_X 	{0.3f,  0.3f,    0.0f,     0.9f,     0.3f,  0.3f}//Bouncingfactors...
+#define BLOCKBOUNCING_Y 	{0.3f,  0.3f,    0.0f,     0.9f,     0.3f,  0.3f}//Bouncingfactors...
 
 #define QUADSHOOTINGBLOCKRANGE 10000
 #define SHOOTINGBLOCKDAMAGE 20

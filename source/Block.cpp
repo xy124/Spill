@@ -1,10 +1,10 @@
 #include "Block.hpp"
 
 
-const int CBlock::BlockCosts[5]    	  = BLOCKCOSTS;//TODO
-const float CBlock::BlockBouncingX[5] = BLOCKBOUNCING_X;
-const float CBlock::BlockBouncingY[5] = BLOCKBOUNCING_Y;
-CSprite * CBlock::m_pBlockSprites[5];
+const int CBlock::BlockCosts[BLOCKAMOUNT]    	= BLOCKCOSTS;//TODO
+const float CBlock::BlockBouncingX[BLOCKAMOUNT] = BLOCKBOUNCING_X;
+const float CBlock::BlockBouncingY[BLOCKAMOUNT] = BLOCKBOUNCING_Y;
+CSprite * CBlock::m_pBlockSprites[BLOCKAMOUNT];
 
 //DECLARATION: static CSprite * m_pBlockSprites[5];
 void CBlock::InitBlockSprites() {
@@ -13,6 +13,8 @@ void CBlock::InitBlockSprites() {
 	m_pBlockSprites[2] = new CSprite(_DIRDATA_+"/BlockShooting.bmp");
 	m_pBlockSprites[3] = new CSprite(_DIRDATA_+"/BlockJumpboard.bmp");
 	m_pBlockSprites[4] = new CSprite(_DIRDATA_+"/BlockInvisible.bmp");
+	m_pBlockSprites[5] = new CSprite(_DIRDATA_+"/BlockCannon.bmp");
+
 }
 
 void CBlock::FreeBlockSprites() {
@@ -44,6 +46,7 @@ std::string CBlock::BlockTypeString(CBlock::BlockType bt) {
 		case (CBlock::JUMPBOARD): 	s="JUMPBOARD"; 	break;
 		case (CBlock::NORMAL): 		s="NORMAL"; 	break;
 		case (CBlock::SHOOTING): 	s="SHOOTING";	break;
+		case (CBlock::CANNON): 		s="CANNON";	break;
 		default: 					s="None"; 		break;
 	}
 	return s;
@@ -55,7 +58,8 @@ CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType now) {//you can't sele
 		case (CBlock::JUMPBOARD): 	s=CBlock::NORMAL; 		break;
 		case (CBlock::NORMAL): 		s=CBlock::SHOOTING; 	break;
 		case (CBlock::SHOOTING): 	s=CBlock::INVISIBLE;	break;
-		case (CBlock::INVISIBLE): 	s=CBlock::JUMPBOARD; 	break;
+		case (CBlock::INVISIBLE): 	s=CBlock::CANNON;	 	break;
+		case (CBlock::CANNON):	 	s=CBlock::JUMPBOARD; 	break;
 		default: 					s=CBlock::NORMAL;		break;
 	}
 	return s;

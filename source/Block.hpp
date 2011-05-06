@@ -15,7 +15,8 @@ class CBlock { //I don't want to vererben the
 					NORMAL,
 					SHOOTING,
 					JUMPBOARD,
-					INVISIBLE
+					INVISIBLE,
+					CANNON
 		};
 		static BlockType nextBlockType(BlockType now);
 		static std::string BlockTypeString(BlockType bt);
@@ -37,12 +38,12 @@ class CBlock { //I don't want to vererben the
 		BlockType getBlockType() {return m_BlockType;};
 		void setBlockType(BlockType BlockType) {m_BlockType = BlockType;};
 
-		static const int BlockCosts[5]; //The index is a Blocktype!
-		static const float BlockBouncingX[5];
-		static const float BlockBouncingY[5];
+		static const int BlockCosts[BLOCKAMOUNT]; //The index is a Blocktype!
+		static const float BlockBouncingX[BLOCKAMOUNT];
+		static const float BlockBouncingY[BLOCKAMOUNT];
 
 		static const int BlockSize = BLOCKSIZE;
-		static CSprite * m_pBlockSprites[5];
+		static CSprite * m_pBlockSprites[BLOCKAMOUNT];
 		static void InitBlockSprites();
 		static void FreeBlockSprites();
 	private:
