@@ -50,7 +50,7 @@ class CFramework : public TSingleton<CFramework> {
 		bool RectInView(SDL_Rect rect, int viewPort);
 		bool RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &iter);
 
-		void drawLine(CVec v1, CVec v2, int r, int g, int b);
+		void drawLine(CVec v1, CVec v2, int r, int g, int b, bool doOnViewCheck = true);//on viewcheck überprüft nur die endpunkte!!!!
 
 	private:
 		SDL_Surface * m_pScreen;

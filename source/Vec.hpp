@@ -71,6 +71,12 @@ class CVec { //real Koords in Pixels!
 			return res;
 		}
 
+		bool inRect(SDL_Rect &SR) {
+			return ((SR.x < x) && (x < SR.x+SR.w) &&
+					(SR.y < y) && (y < SR.y+SR.h)
+					);
+		}
+
 };
 
 #endif
