@@ -25,6 +25,7 @@ private:
 
 public:
 	virtual void init(float liveTime, CVec &from, CWorm * pTo, int r, int g, int b);
+	virtual void update();
 	virtual void render();
 	virtual void quit();
 	~CAA_Laser() {};

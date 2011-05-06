@@ -19,6 +19,7 @@ public:
 	bool isAlive();
 
 	virtual void render() {};
+	virtual void update() {};
 	virtual void quit() {};
 
 	virtual ~CAttackAnimation() {};

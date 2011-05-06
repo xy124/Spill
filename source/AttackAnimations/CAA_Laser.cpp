@@ -29,3 +29,14 @@ void CAA_Laser::render() {
 void CAA_Laser::quit() {
 	g_pLogfile->Textout("</br>quit Laser");
 }
+
+void CAA_Laser::update() {
+	//new lasercolor
+	m_gValue += 2;
+	m_bValue += 2;
+	if (m_gValue > 50) {
+		m_gValue = 0;
+		m_bValue = 0;
+
+	}
+}

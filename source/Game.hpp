@@ -45,7 +45,7 @@ class CGame
 
 		void creatDebugGameBoard();
 
-		void renderAttackAnimations();
+		void updateRenderAttackAnimations();
 
 	public:
 		SDL_Rect getWorldRect() {return m_WorldRect;}

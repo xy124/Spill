@@ -2,6 +2,7 @@
 #include "Settings.hpp"
 
 #include "Performancecheck.hpp"
+#include "AttackAnimations/CAA_CannonBall.hpp"
 
 using namespace std;
 
@@ -64,6 +65,14 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 
 	m_pBackGround = new CBackGround();
 	m_pBackGround->init(GameBoardWidth * BLOCKSIZE);
+
+
+	//TODO: do it in extra Function:
+	CSprite * pCannonball;
+	pCannonball->Load(_DIRDATA_+"/CannonBall.bmp");
+	CAA_CannonBall::setSprite(pCannonball);
+	pCannonball = NULL;
+
 
 	m_bIsRunning = true;
 	g_pLogfile->Textout(RED, true, "Constructed CGame");
@@ -147,7 +156,7 @@ void CGame::run() {
 
 		g_pFramework->RenderDebugText();
 
-		renderAttackAnimations();
+		updateRenderAttackAnimations();
 
 		g_pFramework->Flip();
 	}
@@ -237,11 +246,12 @@ bool CGame::BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID,
 	} else return false;
 }
 
-void CGame::renderAttackAnimations() {
+void CGame::updateRenderAttackAnimations() {
 	list<CAttackAnimation*>::iterator it;
 	for (it = m_AttackAnimations.begin(); it != m_AttackAnimations.end(); ++it ) {
 		if ((*it)->isAlive()) {
 			(*it)->render();
+			(*it)->update();
 		} else {
 			(*it)->quit();
 			delete(*it);

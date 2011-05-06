@@ -4,6 +4,7 @@
 
 #include "AttackAnimations/AttackAnimation.hpp"
 #include "AttackAnimations/CAA_Laser.hpp"
+#include "AttackAnimations/CAA_CannonBall.hpp"
 
 using namespace std;
 
@@ -335,6 +336,26 @@ void CWorm::ProcessBlockActions() {
 
 					}
 				}//Shooting
+				if (mIt->second->getBlockType() == CBlock::CANNON) {
+					float minDist=0.0f;//MBE: hope thats beig enoough
+					CWorm * pMinDistWorm;
+					//findNearest opponent Worm:
+					for (wIt = m_pGame->m_vWorms.begin(); wIt != m_pGame->m_vWorms.end(); ++wIt) {
+						if ((*wIt)->getTeamID() != m_TeamID) { //opponent!!!
+							dist  = (*wIt)->getRect();
+							block = CVec(mIt->first);
+							dist -= block;
+							if (dist.quad_abs()<minDist || minDist == 0.0f) {
+								pMinDistWorm = (*wIt); //aktueller wurm am nächsten...
+							}
+						}
+					}
+					//set nearest worm as aim!!;
+					CAA_CannonBall pCannonBall = new CAA_CannonBall();
+					pCannonBall.init(block, pMinDistWorm, m_TeamID);
+
+				}//Cannon
+
 			}//Worm built block
 
 

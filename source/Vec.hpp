@@ -46,6 +46,10 @@ class CVec { //real Koords in Pixels!
 			return CVec(x-rhs.x, y-rhs.y);
 		}
 
+		CVec operator / (const float &rhs) {
+			return CVec(x/rhs, y/rhs);
+		}
+
 		void operator -= (const CVec &rhs) {
 			x -= rhs.x;
 			y -= rhs.y;
@@ -75,6 +79,13 @@ class CVec { //real Koords in Pixels!
 			return ((SR.x < x) && (x < SR.x+SR.w) &&
 					(SR.y < y) && (y < SR.y+SR.h)
 					);
+		}
+
+		SDL_Rect toSDLRect() {//Warning: sets only x and y!
+			SDL_Rect result;
+			result.x = static_cast<int>(x);
+			result.y = static_cast<int>(y);
+			return result;
 		}
 
 };
