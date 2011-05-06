@@ -14,14 +14,14 @@ class CAttackAnimation : public CPhysicalObject {
 private:
 	float m_fKillTime;//when to destroy it
 public:
-	virtual void init(float liveTime);//HINT: make sure that all subclasses call this!
+	void initKillTime(float liveTime);//HINT: make sure that all subclasses call this!
 
 	bool isAlive();
 
-	virtual void render();
-	virtual void quit();
+	virtual void render() {};
+	virtual void quit() {};
 
-	virtual ~AttackAnimation();
+	virtual ~CAttackAnimation() {};
 };
 
 #endif /* ATTACKANIMATION_HPP_ */

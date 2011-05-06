@@ -2,6 +2,9 @@
 #include <map>
 #include "Framework.hpp"
 
+#include "AttackAnimations/AttackAnimation.hpp"
+#include "AttackAnimations/CAA_Laser.hpp"
+
 using namespace std;
 
 CWorm::CWorm(CGame *pGame) {
@@ -27,7 +30,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_TeamID = TeamID;
 	setCanJump(false);
 	m_Color = WC;
-	m_Money = 0;
+	m_Money = 40;//ForDebugReasons MBE
 	m_Points = 0;
 	m_Energy = MAXENERGY;
 	m_fLastActionTime = 0.0f;
@@ -322,8 +325,9 @@ void CWorm::ProcessBlockActions() {
 								worm.y += 0.5f*WORMHEIGHT/2;
 								block.x += BLOCKSIZE/2;
 								block.y += BLOCKSIZE/2;
-								//FIXME drawLineForLongerTime
-								g_pFramework->drawLine(worm,block, 255, 0, 0);
+								CAA_Laser * pLaser = new CAA_Laser();
+								pLaser->init(1.5f, worm, block, 255, 0, 0);
+								m_pGame->m_AttackAnimations.push_back(pLaser);
 
 							}
 

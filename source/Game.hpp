@@ -16,6 +16,9 @@
 #include "BackGround.hpp"
 
 #include <vector>
+#include <list>
+
+#include "AttackAnimations/AttackAnimation.hpp"
 
 class CWorm;
 class CPhysics;
@@ -42,10 +45,14 @@ class CGame
 
 		void creatDebugGameBoard();
 
+		void renderAttackAnimations();
+
 	public:
 		SDL_Rect getWorldRect() {return m_WorldRect;}
 		void setWorldRect(SDL_Rect &WorldRect) {m_WorldRect = WorldRect;}
 
+
+		std::list<CAttackAnimation*> m_AttackAnimations;
 		std::vector<CWorm*> m_vWorms;
 		std::map<CBlockKoord,CBlock*> m_Gameboard;
 		CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight);

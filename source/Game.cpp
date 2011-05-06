@@ -147,9 +147,9 @@ void CGame::run() {
 
 		g_pFramework->RenderDebugText();
 
-		g_pFramework->Flip();
+		renderAttackAnimations();
 
-		g_pLogfile->Textout("\n");
+		g_pFramework->Flip();
 	}
 }
 ////////////////////////////////////////////////////////////////////////////////////
@@ -192,6 +192,7 @@ void CGame::quit() {
 	//DeleteWorms
 	//free Gameboard
 	//free Blockimages!
+	//TODO: free Attackanimations
 
 	vector<CWorm*>::iterator wit;
 	for (wit = m_vWorms.begin(); wit!=m_vWorms.end(); wit++) {
@@ -234,6 +235,22 @@ bool CGame::BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID,
 		pBlock->setTeamID(TeamID);
 		return true;
 	} else return false;
+}
+
+void CGame::renderAttackAnimations() {
+	list<CAttackAnimation*>::iterator it;
+	for (it = m_AttackAnimations.begin(); it != m_AttackAnimations.end(); ++it ) {
+		if ((*it)->isAlive()) {
+			(*it)->render();
+		} else {
+			(*it)->quit();
+			delete(*it);
+			(*it) = NULL;
+			m_AttackAnimations.erase(it);
+			if (m_AttackAnimations.empty())
+				return;
+		}
+	}
 }
 
 CGame::~CGame() {}

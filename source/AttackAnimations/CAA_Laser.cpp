@@ -10,7 +10,7 @@
 #include "../Framework.hpp"
 
 void CAA_Laser::init(float liveTime, CVec &from, CVec &to, int r, int g, int b) {
-	init(liveTime);
+	initKillTime(liveTime);
 	m_rValue = r;
 	m_gValue = g;
 	m_bValue = b;
@@ -24,9 +24,5 @@ void CAA_Laser::render() {
 }
 
 void CAA_Laser::quit() {
-	g_pLogfile->Textout("</br>quited Laser");
-}
-
-CAA_Laser::~CAA_Laser() {
-	// TODO Auto-generated destructor stub
+	g_pLogfile->Textout("</br>quit Laser");
 }

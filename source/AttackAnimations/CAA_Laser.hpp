@@ -21,13 +21,15 @@ private:
 	CVec m_To;
 
 public:
-	void init(float liveTime, CVec &from, CVec &to, int r, int g, int b);
+	virtual void init(float liveTime, CVec &from, CVec &to, int r, int g, int b);
+	virtual void render();
+	virtual void quit();
+	~CAA_Laser() {};
 	//HINT: its kind of senseless that also lasers are physical objects...
 
 
 
 
-	virtual ~CAA_Laser();
 };
 
 #endif /* CAA_LASER_H_ */
