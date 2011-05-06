@@ -6,7 +6,6 @@
 #include "Logfile.hpp"
 #include <string>
 #include <SDL.h>
-#include "SDL_opengl.h"
 
 #include "SFont/SFont.h"
 #include "stdarg.h"
@@ -14,8 +13,7 @@
 #include "Vec.hpp"
 #include <vector>
 
-//#include "SDLgfx/SDL_gfxPrimitives.h"
-//FIXME ^^senseless since opengl because open gl has its own line drawing routine
+#include "SDLgfx/SDL_gfxPrimitives.h"
 
 #define g_pFramework CFramework::get()
 

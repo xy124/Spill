@@ -1,4 +1,4 @@
-﻿#include "Framework.hpp"
+#include "Framework.hpp"
 
 using namespace std;
 
@@ -15,71 +15,15 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 		return (false);
 	}
 
-
 	//Fullscreen/Windowmode???
 
-	//OpenGL
-	/*int a = ColorDepth/3;
-	a=8;//TODO stupid <-
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,	a);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,	a);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,	a);//a=8 for 24 bit...*/
-	//SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-	//SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,	1);//FIXME: ALphaBlending!!
-	//TODO: other GL-Settings???
-	//maybe these settings from http://www.sdltutorials.com/sdl-opengl-tutorial-basics/ works...
-	SDL_GL_SetAttribute(SDL_GL_RED_SIZE,        8);
-	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE,      8);
-	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE,       8);
-	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE,      8);
-
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,      16);
-	SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE,     32);
-
-	SDL_GL_SetAttribute(SDL_GL_ACCUM_RED_SIZE,  8);
-	SDL_GL_SetAttribute(SDL_GL_ACCUM_GREEN_SIZE,    8);
-	SDL_GL_SetAttribute(SDL_GL_ACCUM_BLUE_SIZE, 8);
-	SDL_GL_SetAttribute(SDL_GL_ACCUM_ALPHA_SIZE,    8);
-
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS,  1);
-	SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES,  2);
-
-
 	if (bFullscreen) {
-		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, 0,
-				SDL_GL_DOUBLEBUFFER | SDL_FULLSCREEN | SDL_HWSURFACE | SDL_OPENGL); //open gl sets colordepth
+		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
+										SDL_HWSURFACE | SDL_DOUBLEBUF | SDL_FULLSCREEN);
 	} else {
 		m_pScreen = SDL_SetVideoMode (ScreenWidth, ScreenHeight, ColorDepth,
-				SDL_GL_DOUBLEBUFFER | SDL_HWSURFACE | SDL_OPENGL);//SDL_DOUBLEBUF ist automatisch...
+										SDL_HWSURFACE | SDL_DOUBLEBUF);
 	}
-
-
-
-
-
-
-
-
-	//other ogl settings
-	//copied from: http://gpwiki.org/index.php/SDL:Tutorials:Using_SDL_with_OpenGL
-	glEnable( GL_TEXTURE_2D );
-
-	glClearColor( 1.0f, 1.0f, 1.0f, 0.0f );//change that!
-	//red is 1.0f, 0.0f, 0.0f, 0.0f
-	  glViewport(0, 0, 800, 600);
-
-	    glMatrixMode(GL_PROJECTION);
-	    glLoadIdentity();
-
-	    glOrtho(0, 800, 600, 0, 1, -1);
-
-	    glMatrixMode(GL_MODELVIEW);
-
-	    glEnable(GL_TEXTURE_2D);
-
-	    glLoadIdentity();
-
 
 	if (m_pScreen == NULL) {
 		string describtion ("Videomodus konnte nicht gesetzt werden");
@@ -91,34 +35,6 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 
 		return (false);
 	}
-
-
-	//sets the gl koords to sdl koords...
-	  glViewport(0, 0,               // coordinates of the
-									 // lower left hand corner
-									 // of the window which we
-									 // will change in the
-									 // glOrtho() call.
-				 m_pScreen->w,          // Set the logical width
-				 m_pScreen->h);         // and height of the
-									 // window to match the
-									 // actual width and
-									 // height as measured in
-									 // pixels.
-
-	  // Set the coordinate system for the window moving (0,0)
-	  // to the upper left hand corner of the window.
-	  glOrtho(0.0,                   // left edge is zero
-			  (GLdouble)m_pScreen->w,   // right edge is width
-			  (GLdouble)m_pScreen->h,   // bottom edge is height
-			  0.0f,                   // top edge is zero
-			  0.0f, 1.0f);             // near and far clipping
-									 // planes.
-
-	  // Set the clear color to black.
-	  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-
 
 
 	m_ScreenRect.x = 0;
@@ -168,8 +84,7 @@ bool CFramework::InitViewPorts(int Amount) {
 void CFramework::Quit() {
 	SFont_FreeFont(pGameFont);
 //MBE SDL_FreeSurface
-	if (m_pScreen != NULL)
-		SDL_FreeSurface(m_pScreen);
+	SDL_FreeSurface(m_pScreen);
 	SDL_Quit();
 }
 
@@ -193,12 +108,14 @@ bool CFramework::KeyDown(int Key_ID) {
 }
 
 
-void CFramework::Clear() {//Aufgabe: Buffer löschen
-	 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+void CFramework::Clear() {//Augabe: Buffer l�schen
+	SDL_FillRect(m_pScreen, NULL, SDL_MapRGB(m_pScreen->format, 0,255,255));
+	//fill Black
 }
 
 void CFramework::Flip() {//surface umschalten, flippen
-	SDL_GL_SwapBuffers();
+	//SDL_
+	SDL_Flip(m_pScreen);
 }
 
 void CFramework::showDebugValue(const string &sText, ...) {

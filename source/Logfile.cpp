@@ -44,26 +44,14 @@ static std::string htmlToSimpleOut(const std::string& s) {
 	std::string ret;
 	std::string tag;
 	ret.reserve(s.size());
-	static int state = 0;
+	int state = 0;
 	for(size_t i = 0; i < s.size(); ++i) {
 		char c = s[i];
 		if(state == 0) {
-		defaultState:
 			if(c == '<') state = 1;
-			else if(c == 10 || c == 13 || c == ' ' || c == '\t') {
-				ret += ' ';
-				state = 3;
-			}
 			else ret += c;
 		}
-		else if(state == 3) { // normal (like 0) but right after space
-			if(c == 10 || c == 13 || c == ' ' || c == '\t') {}
-			else {
-				state = 0;
-				goto defaultState;
-			}
-		}
-		else if(state == 1) { // tag just started
+		else if(state == 1) {
 			if(c == '>') {
 			finishTag:
 				if(tag == "br" || tag == "br/") ret += '\n';
@@ -93,7 +81,7 @@ static std::string htmlToSimpleOut(const std::string& s) {
 			}
 			else tag += c;
 		}
-		else if(state == 2) { // tag continued after '/' or ' '
+		else if(state == 2) {
 		tagContinued:
 			if(c == '/') tag += "/";
 			else if(c == '>') goto finishTag;

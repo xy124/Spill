@@ -18,6 +18,7 @@ class CSprite {
 
 		void Load		(const std::string sFilename, bool isBackGround = false);
 		void Load		(const std::string sFilename, int NumFrames, int FrameWidth, int FrameHeight);
+		void SetColorKey(int R, int G, int B, int colorID);// beim Render transparente Farbe
 		void SetPos		(float fXPos, float fYPos);
 		void SetPos		(const CVec &newPos);
 		void Render		(int colorID);
@@ -26,8 +27,8 @@ class CSprite {
 		SDL_Rect GetRect() {return m_Rect;}//returns the Rect where the sprite is situated on World
 	
 	private:
-		SDL_Surface *m_pScreen;	//Zeiger auf Screen des Frameworks
-		std::vector<GLuint> m_Textures;	//Die eigentlichen Bilder des Sprites in 4 Farben
+		SDL_Surface *m_pScreen;	//Zeiger auf Screen des Framworks
+		std::vector<SDL_Surface*> m_pImages;	//Die eigentlichen Bilder des Sprites in 4 Farben
 		SDL_Rect m_Rect;		//Rect des Sprites, enth�lt gr��e und position auf Welt wo gerendert wird
 		SDL_Rect m_FrameRect;	//Ausschnitt f�r Animationsphase, ausschnitt aus Image der gerendert wird
 		int m_NumFrames;		//Anzahl der Animationsphasen
@@ -35,9 +36,8 @@ class CSprite {
 		int m_FrameHeight;		//H�he einer Animationsphase
 		int m_NumFramesX;			//Woe voe�e Anim-Phasen in X-Richtung ?
 
-		int m_ColorID;//current colorset
-
 		void setColorID(int colorID);
+		int m_ColorID;//current colorset
 
 };
 
