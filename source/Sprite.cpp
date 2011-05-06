@@ -80,7 +80,6 @@ void CSprite::Load(const string sFilename, bool isBackGround ) { //L�d nicht a
 		m_pImages.push_back(cpImage);
 
 		cpImage = NULL;
-		//FIXME PERFORMANCE!!!
 	}
 
 	//Rect initialisieren
