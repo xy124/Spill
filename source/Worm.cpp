@@ -31,7 +31,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_TeamID = TeamID;
 	setCanJump(false);
 	m_Color = WC;
-	m_Money = 40;//ForDebugReasons MBE
+	m_Money = 140;//ForDebugReasons MBE
 	m_Points = 0;
 	m_Energy = MAXENERGY;
 	m_fLastActionTime = 0.0f;
@@ -337,7 +337,7 @@ void CWorm::ProcessBlockActions() {
 					}
 				}//Shooting
 				if (mIt->second->getBlockType() == CBlock::CANNON) {
-					float minDist=0.0f;//MBE: hope thats beig enoough
+					float minDist=0.01f;//MBE: hope thats beig enoough
 					CWorm * pMinDistWorm;
 					//findNearest opponent Worm:
 					for (wIt = m_pGame->m_vWorms.begin(); wIt != m_pGame->m_vWorms.end(); ++wIt) {
@@ -345,14 +345,16 @@ void CWorm::ProcessBlockActions() {
 							dist  = (*wIt)->getRect();
 							block = CVec(mIt->first);
 							dist -= block;
-							if (dist.quad_abs()<minDist || minDist == 0.0f) {
+							if (dist.quad_abs()<minDist || minDist <= 0.1f) {
 								pMinDistWorm = (*wIt); //aktueller wurm am nächsten...
+								g_pFramework->showDebugValue("aim:%s",(*wIt)->getName());
+
 							}
 						}
 					}
 					//set nearest worm as aim!!;
-					CAA_CannonBall pCannonBall = new CAA_CannonBall();
-					pCannonBall.init(block, pMinDistWorm, m_TeamID);
+					CAA_CannonBall * pCannonBall = new CAA_CannonBall();
+					pCannonBall->init(block, pMinDistWorm, m_TeamID);
 
 				}//Cannon
 

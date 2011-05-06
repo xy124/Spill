@@ -55,6 +55,11 @@ class CVec { //real Koords in Pixels!
 			y -= rhs.y;
 		}
 
+		void operator += (const CVec &rhs) {
+			x += rhs.x;
+			y += rhs.y;
+		}
+
 		CBlockKoord toBlockKoord() {//MBE as reference????? see to blockrect too!!
 			int xx = static_cast<int>(x/(BLOCKSIZE));
 			int yy = static_cast<int>(y/(BLOCKSIZE));
@@ -81,10 +86,10 @@ class CVec { //real Koords in Pixels!
 					);
 		}
 
-		SDL_Rect toSDLRect() {//Warning: sets only x and y!
-			SDL_Rect result;
-			result.x = static_cast<int>(x);
-			result.y = static_cast<int>(y);
+		FloatRect toFloatRect() {//Warning: sets only x and y!
+			FloatRect result;
+			result.x = x;
+			result.y = y;
 			return result;
 		}
 

@@ -9,7 +9,7 @@
 #define CAA_CANNONBALL_H_
 
 #include "AttackAnimation.hpp"
-#include "../Sprite.hpp";
+#include "../Sprite.hpp"
 #include "../Worm.hpp"
 
 class CWorm;
@@ -22,11 +22,12 @@ private:
 public:
 	static void setSprite(CSprite * pSprite);
 
-	CAA_CannonBall();
+	CAA_CannonBall() {};
 
 	void render();
 	void quit();
 	void init(CVec StartPos, CWorm * pAimWorm, int TeamID);
+	void update();
 
 	~CAA_CannonBall() {};
 

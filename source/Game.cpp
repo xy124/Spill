@@ -68,7 +68,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 
 
 	//TODO: do it in extra Function:
-	CSprite * pCannonball;
+	CSprite * pCannonball = new CSprite();
 	pCannonball->Load(_DIRDATA_+"/CannonBall.bmp");
 	CAA_CannonBall::setSprite(pCannonball);
 	pCannonball = NULL;

@@ -7,6 +7,7 @@
 
 #include "CAA_CannonBall.hpp"
 
+CSprite * CAA_CannonBall::m_pSprite;
 
 void CAA_CannonBall::setSprite(CSprite * pSprite) {
 	CAA_CannonBall::m_pSprite = pSprite;
@@ -37,6 +38,7 @@ void CAA_CannonBall::quit() {
 
 void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID) {
 	initKillTime(3.0f);
-	SDL_Rect r = StartPos.toSDlRect;
+	FloatRect fr = StartPos.toFloatRect();
+	setRect(fr);
 	m_TeamID = TeamID;
 }
