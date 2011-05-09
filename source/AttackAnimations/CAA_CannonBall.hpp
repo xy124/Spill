@@ -22,12 +22,10 @@ private:
 public:
 	static void setSprite(CSprite * pSprite);
 
-	CAA_CannonBall() {};
-
-	void render();
-	void quit();
-	void init(CVec StartPos, CWorm * pAimWorm, int TeamID);
-	void update();
+	virtual void render();
+	virtual void quit();
+	virtual void init(CVec StartPos, CWorm * pAimWorm, int TeamID);
+	virtual void update();
 
 	~CAA_CannonBall() {};
 
