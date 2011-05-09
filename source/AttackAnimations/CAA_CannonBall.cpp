@@ -37,7 +37,7 @@ void CAA_CannonBall::quit() {
 }
 
 void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID) {
-	initKillTime(3.0f);
+	initKillTime(5.0f);
 	FloatRect fr = StartPos.toFloatRect();
 	setRect(fr);
 	m_TeamID = TeamID;
