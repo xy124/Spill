@@ -27,7 +27,9 @@ void CAA_CannonBall::update() {
 	CVec dir;
 	dir = CVec(m_pAimWorm->getRect());
 	dir -= BallPos;
-	dir = dir / 10.0f;
+	dir = dir * 3.0f;
+	setDir(dir);
+
 
 	if (g_pPhysics->rectCollision(m_pAimWorm->getRect(), r)) {
 		//wurm abziehen, Cannonbal zerstören

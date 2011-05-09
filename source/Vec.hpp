@@ -46,6 +46,10 @@ class CVec { //real Koords in Pixels!
 			return CVec(x-rhs.x, y-rhs.y);
 		}
 
+		CVec operator * (const float &rhs) {
+			return CVec(x*rhs, y*rhs);
+		}
+
 		CVec operator / (const float &rhs) {
 			return CVec(x/rhs, y/rhs);
 		}
