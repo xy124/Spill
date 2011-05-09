@@ -111,7 +111,7 @@ void CGame::run() {
 		//Play!
 		SDL_Delay(10);
 
-		//g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
+		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
 		//nimmt unwesentliche Zeit von 1ms:
 		//g_pFramework->Clear(); //Clear current surface
