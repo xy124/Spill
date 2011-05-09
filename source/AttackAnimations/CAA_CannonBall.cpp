@@ -30,8 +30,6 @@ void CAA_CannonBall::update() {
 
 	BallPos += dir;
 
-	g_pFramework->showDebugValue("r w:%f, h:%f",r.w, r.h);
-
 	r = BallPos.toFloatRect(r);
 	setRect(r);
 

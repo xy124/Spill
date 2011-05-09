@@ -6,6 +6,10 @@ using namespace std;
 
 void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 	//FIxme! use it for worms tooo!!!
+
+	if (! it->getCanMove())
+		return;
+
 	S_Collision YCollision;
 	S_Collision XCollision;
 
@@ -16,8 +20,6 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 	CVec dir = it->getDir(); //dir of PO
 	XCollision.bIsCollision = false;
 	YCollision.bIsCollision = false;
-
-
 
 	float time = timeElapsed;
 	int i;//Anzahl der Kleinschritte herrausbekommen:
@@ -51,6 +53,9 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 			FR.y += dir.y*time;
 			YCollision = getCollision(FR);
 			if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
+				g_pFramework->showDebugValue("rect w:%f, h:%f",FR.w, FR.h);
+				//FIXME don't work for cannonball!!!
+				//even don't tested with worms!
 				//JumpingBoard...
 				//getBouncingfactor from Blocktype
 				FR.y -= dir.y*time; //dann y-Rutschen wieder r�ckg�ngig machen
@@ -84,6 +89,10 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 	if (YCollision.BlockType != CBlock::AIR)
 		it->setLastCollisionY(YCollision);
 }
+
+
+
+
 
 bool CPhysics::doPhysics() {
 	//TODO: falls es noch andere solid-physicalobjets gibt, diese berücksichtigen!!!

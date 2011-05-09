@@ -17,6 +17,8 @@ void CAA_Laser::init(float liveTime, CVec &from, CWorm * pTo, int r, int g, int 
 
 	m_From = from;
 	m_pTo = pTo;
+
+	setCanMove(false);// damit keine physics gemacht werden!
 }
 
 void CAA_Laser::render() {
