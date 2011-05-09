@@ -73,7 +73,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 	CAA_CannonBall::setSprite(pCannonball);
 	pCannonball = NULL;
 	CSprite * pExplosion1 = new CSprite();
-	pExplosion1->Load(_DIRDATA_+"/Explosion1.bmp");
+	pExplosion1->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
 	CAA_Explosion1::setSprite(pExplosion1);
 	pExplosion1 = NULL;
 

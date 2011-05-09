@@ -11,19 +11,20 @@
 #include "AttackAnimation.hpp"
 #include "../Sprite.hpp"
 #include "../Vec.hpp"
+#include "../Worm.hpp"
 
 class CAA_Explosion1: public CAttackAnimation {
 private:
 	static CSprite * m_pSprite;
 	float m_fAnimPhase;
-	CVec m_where;
+	CWorm * m_pAimedWorm;
 
 public:
 	static void setSprite(CSprite * pSprite) {
 		CAA_Explosion1::m_pSprite = pSprite;
 	}
 
-	virtual void init(CVec &where);
+	virtual void init(CWorm * pAimedWorm);
 	virtual void render();
 	virtual void update();
 	virtual void quit() {};

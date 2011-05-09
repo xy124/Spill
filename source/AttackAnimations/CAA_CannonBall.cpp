@@ -44,12 +44,9 @@ void CAA_CannonBall::update() {
 		//Make Explosion!! MBE: better with functionpointer????
 		CAA_Explosion1 * pExplosion1;
 		pExplosion1 = new CAA_Explosion1();
-		pExplosion1->init(BallPos);
-
+		pExplosion1->init(m_pAimWorm);
 		m_pAttackAnimations->push_back(pExplosion1);
-
 		pExplosion1 = NULL;
-
 
 	}
 

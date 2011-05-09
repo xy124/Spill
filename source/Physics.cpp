@@ -30,10 +30,6 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 	////////////////////
 	//X/Y-Collisions:
 	for (i = 1; (i*time <= timeElapsed); i++) {
-
-		if (it->getIsSolid())
-			g_pFramework->showDebugValue("dir x:%f, y:%f",dir.x, dir.y);
-
 		if (!XCollision.bIsCollision) {
 			FR.x += dir.x*time;
 			XCollision = getCollision(FR);
