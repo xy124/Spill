@@ -59,6 +59,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 
 	FloatRect FR;
 	FR = m_pWormSprite->GetRect();
+	FR.x += 100.0f * WormID;
 	setRect(FR);
 	setDir(CVec(0,0));
 
@@ -126,7 +127,6 @@ void CWorm::ProcessMoving() {
 }
 
 void CWorm::ProcessBuilding() {
-	//TODO!!+Processweapons!!! for attacks of othe blocks!
 	/*
 	 * KeyDown:	MineBlock
 	 * STRG:	BuildBlock
@@ -155,7 +155,7 @@ void CWorm::ProcessBuilding() {
 	}//Keydown
 
 	if ( (g_pFramework->KeyDown(m_pSettings->KeySelectBlockType)) && (m_bNextBTypeKeyLock == false) ) {
-		m_selectedBType = CBlock::nextBlockType(m_selectedBType);//MBE überschlag
+		m_selectedBType = CBlock::nextBlockType(m_selectedBType);
 		m_bNextBTypeKeyLock = true;
 	}
 	if (!g_pFramework->KeyDown(m_pSettings->KeySelectBlockType))

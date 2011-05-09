@@ -5,7 +5,6 @@
 using namespace std;
 
 void CPhysics::doPhysicsFor(CPhysicalObject * it) {
-	//FIxme! use it for worms tooo!!!
 
 	if (! it->getCanMove())
 		return;
@@ -51,8 +50,6 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 			FR.y += dir.y*time;
 			YCollision = getCollision(FR);
 			if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
-				//FIXME don't work for cannonball!!!
-				//even don't tested with worms!
 				//JumpingBoard...
 				//getBouncingfactor from Blocktype
 				FR.y -= dir.y*time; //dann y-Rutschen wieder r�ckg�ngig machen

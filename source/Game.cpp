@@ -21,7 +21,7 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 		//MBE WormID=TeamID
 		pWorm->setName(g_pSettings->WormSet[i].name);
 		pWorm->setViewPort(i);
-		m_vWorms.push_back(pWorm); //MBE: evtl Teams
+		m_vWorms.push_back(pWorm);
 	}
 	m_WormAmount = AmountOfPlayers;
 
@@ -65,18 +65,6 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 
 	m_pBackGround = new CBackGround();
 	m_pBackGround->init(GameBoardWidth * BLOCKSIZE);
-
-
-	//TODO: do it in extra Function:
-	CSprite * pCannonball = new CSprite();
-	pCannonball->Load(_DIRDATA_+"/CannonBall.bmp");
-	CAA_CannonBall::setSprite(pCannonball);
-	pCannonball = NULL;
-	CSprite * pExplosion1 = new CSprite();
-	pExplosion1->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
-	CAA_Explosion1::setSprite(pExplosion1);
-	pExplosion1 = NULL;
-
 
 	m_bIsRunning = true;
 	g_pLogfile->Textout(RED, true, "Constructed CGame");
@@ -205,7 +193,6 @@ void CGame::quit() {
 	//DeleteWorms
 	//free Gameboard
 	//free Blockimages!
-	//TODO: free Attackanimations
 
 	vector<CWorm*>::iterator wit;
 	for (wit = m_vWorms.begin(); wit!=m_vWorms.end(); wit++) {
@@ -266,6 +253,8 @@ void CGame::updateRenderAttackAnimations() {
 		}
 	}
 }
+
+
 
 CGame::~CGame() {}
 

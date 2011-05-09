@@ -22,7 +22,7 @@ class CBlock { //I don't want to vererben the
 		static std::string BlockTypeString(BlockType bt);
 
 
-		CBlock() {}; //MBE
+		CBlock() {};
 		CBlock(BlockType BT);
 		~CBlock() {};
 

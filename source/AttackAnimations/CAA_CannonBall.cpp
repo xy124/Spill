@@ -49,8 +49,6 @@ void CAA_CannonBall::update() {
 		pExplosion1 = NULL;
 
 	}
-
-	//FIXME use as physical object!
 }
 
 void CAA_CannonBall::quit() {
@@ -63,7 +61,7 @@ void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID,
 	FloatRect fr = StartPos.toFloatRect();
 	fr.w = m_pSprite->GetRect().w;
 	fr.h = m_pSprite->GetRect().h;
-	fr.y -= (BLOCKSIZE+10.0f); //über der kanone starten!TODO
+	fr.y -= (BLOCKSIZE+1.0f); //über der kanone starten!
 	setRect(fr);
 	m_TeamID = TeamID;
 	m_pAimWorm = pAimWorm;

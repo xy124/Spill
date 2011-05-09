@@ -29,6 +29,7 @@ class CFramework : public TSingleton<CFramework> {
 		bool Init(int ScreenWidth, int ScreenHeight,
 					int ColorDepth, bool bFullscreen);
 		bool InitViewPorts(int Amount);
+		void InitAttackAnmimations();
 
 		void Quit();
 		void Update();

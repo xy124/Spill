@@ -1,4 +1,7 @@
 #include "Framework.hpp"
+#include "Sprite.hpp"
+#include "AttackAnimations/CAA_Explosion1.hpp"
+//MBE: make overview about includes!
 
 using namespace std;
 
@@ -85,6 +88,7 @@ void CFramework::Quit() {
 	SFont_FreeFont(pGameFont);
 //MBE SDL_FreeSurface
 	SDL_FreeSurface(m_pScreen);
+	//TODO: free Attackanimations!?! free background!?! but i think the SDL does that automatically!
 	SDL_Quit();
 }
 
@@ -188,4 +192,15 @@ void CFramework::drawLine(CVec v1, CVec v2, int r, int g, int b, bool doOnViewCh
 	}
 }
 
+
+void CFramework::InitAttackAnmimations() {
+	CSprite * pCannonball = new CSprite();
+	pCannonball->Load(_DIRDATA_+"/CannonBall.bmp");
+	CAA_CannonBall::setSprite(pCannonball);
+	pCannonball = NULL;
+	CSprite * pExplosion1 = new CSprite();
+	pExplosion1->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
+	CAA_Explosion1::setSprite(pExplosion1);
+		pExplosion1 = NULL;
+}
 
