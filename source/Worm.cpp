@@ -55,6 +55,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_pWormSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 3 , 25, 18);
 	m_fAnimphase = 0.0f;
 	m_isWalking = false;
+	setIsSolid(false);
 
 	FloatRect FR;
 	FR = m_pWormSprite->GetRect();
@@ -74,6 +75,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	CLogfile::get()->fTextout("<br />New Worm. ID:%i",m_WormID);
 
 	m_pSettings = &(g_pSettings->WormSet[m_WormID]);
+
 }
 
 void CWorm::reset() { //HINT: resettet nicht die Position
@@ -344,8 +346,6 @@ void CWorm::ProcessBlockActions() {
 							dist -= block;
 							if (dist.quad_abs()<minDist || minDist <= 0.1f) {
 								pMinDistWorm = (*wIt); //aktueller wurm am nächsten...
-								g_pFramework->showDebugValue((*wIt)->getName());
-
 							}
 						}
 					}

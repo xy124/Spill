@@ -31,6 +31,8 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 	//X/Y-Collisions:
 	for (i = 1; (i*time <= timeElapsed); i++) {
 
+		if (it->getIsSolid())
+			g_pFramework->showDebugValue("dir x:%f, y:%f",dir.x, dir.y);
 
 		if (!XCollision.bIsCollision) {
 			FR.x += dir.x*time;
@@ -53,7 +55,6 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 			FR.y += dir.y*time;
 			YCollision = getCollision(FR);
 			if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
-				g_pFramework->showDebugValue("rect w:%f, h:%f",FR.w, FR.h);
 				//FIXME don't work for cannonball!!!
 				//even don't tested with worms!
 				//JumpingBoard...
@@ -96,85 +97,12 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 
 bool CPhysics::doPhysics() {
 	//TODO: falls es noch andere solid-physicalobjets gibt, diese berücksichtigen!!!
-	S_Collision YCollision;
-	S_Collision XCollision;
 
 	vector<CWorm*>::iterator it;
 	for (it = m_pGame->m_vWorms.begin(); it!=m_pGame->m_vWorms.end(); ++it) {
 		if ( !((*it)->getCanMove() && (*it)->isAlive()) )
 			break; //auf zum n�chsten Wurm!
-
-		float timeElapsed = g_pTimer->getElapsed();
-		if (timeElapsed == 0.0f)
-			break; //macht keinen Sinn....
-		FloatRect FR = (*it)->getRect(); //rect of worm
-		CVec dir = (*it)->getDir(); //dir of Worm
-		XCollision.bIsCollision = false;
-		YCollision.bIsCollision = false;
-
-		//CBlockKoord BC = CBlockKoord(FR);
-		//g_pFramework->showDebugValue("WormBlockKoord %i, %i", BC.x, BC.y);
-
-
-		float time = timeElapsed;
-		int i;//Anzahl der Kleinschritte herrausbekommen:
-		for (i = 1; dir.quad_abs()*time > BLOCKSIZE*BLOCKSIZE; i++) {
-			time = timeElapsed/i;
-		}
-
-		//g_pFramework->showDebugValue("i:%i, dir.x %.0f, dir.y %.0f",i, dir.x, dir.y);
-
-
-
-		////////////////////
-		//X-Collisions:
-		for (i = 1; (i*time <= timeElapsed)
-					&& (!XCollision.bIsCollision); i++) {
-			FR.x += dir.x*time;
-			XCollision = getCollision(FR);
-			if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
-				FR.x -= dir.x*time; //dann x-Rutschen wieder r�ckg�ngig machen
-				dir.x *= (-1 * XCollision.fBouncingFactorX);
-			}
-		}
-		//wenn keine x-Kollission:
-		//HINT:Reibung://Flugreibung ist Sinnlos!
-		if (!XCollision.bIsCollision)
-			dir.x *= (Friction ) ; //TODO TimeElapsed einrechnen!
-
-		////////////////////
-		//Y-Collisions:
-		for (i = 1; (i*time <= timeElapsed)
-					&& (!YCollision.bIsCollision); i++) {
-			//Fallbeschleunigung dazu!
-			//HINT: Fallkurve hängt von getTimeelapsed ab!! evtl mit s=g/2t² arbeieten
-			dir.y += Gravity*time; //graviy muss nach unten zeigen...
-
-			(*it)->setCanJump(false); //kann auf jeden erstmal nciht springen
-			//Kollission durch y-Verschiebung??
-			FR.y += dir.y*time;
-			YCollision = getCollision(FR);
-			if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
-				//JumpingBoard...
-				//getBouncingfactor from Blocktype
-				FR.y -= dir.y*time; //dann y-Rutschen wieder r�ckg�ngig machen
-				dir.y *= (-1 * YCollision.fBouncingFactorY);//neues Y
-				if ((Abs(dir.y) < 10.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
-					(*it)->setCanJump(true);
-				}
-			}
-		}//für jeden SChritt...
-
-		if (FR.x < 0.0f) FR.x = 0.0f; //man kann nicht aus dem linken bildschirm fallen!!
-
-
-		//Wenn keine kollission dann Verschieben !...^^
-		(*it)->setDir(dir);
-		(*it)->setRect(FR);
-
-		//gegebenenfalls neue collision setzen
-		if (YCollision.BlockType != CBlock::AIR)
-			(*it)->setLastCollisionY(YCollision);
+		doPhysicsFor((*it));
 
 
 	}//FÜPR JEDEN WURM

@@ -20,6 +20,7 @@ void CAA_CannonBall::render() {
 	m_pSprite->Render(m_TeamID);
 }
 
+
 void CAA_CannonBall::update() {
 	FloatRect r = getRect();
 	CVec BallPos(r);
@@ -27,11 +28,6 @@ void CAA_CannonBall::update() {
 	dir = CVec(m_pAimWorm->getRect());
 	dir -= BallPos;
 	dir = dir / 10.0f;
-
-	BallPos += dir;
-
-	r = BallPos.toFloatRect(r);
-	setRect(r);
 
 	if (g_pPhysics->rectCollision(m_pAimWorm->getRect(), r)) {
 		//wurm abziehen, Cannonbal zerstören
@@ -53,10 +49,10 @@ void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID) {
 	FloatRect fr = StartPos.toFloatRect();
 	fr.w = m_pSprite->GetRect().w;
 	fr.h = m_pSprite->GetRect().h;
+	fr.y -= (BLOCKSIZE+10.0f); //über der kanone starten!TODO
 	setRect(fr);
 	m_TeamID = TeamID;
 	m_pAimWorm = pAimWorm;
 	setIsSolid(true);
 	setCanMove(true);
-
 }
