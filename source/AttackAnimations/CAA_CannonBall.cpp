@@ -30,6 +30,7 @@ void CAA_CannonBall::update() {
 
 	BallPos += dir;
 
+	g_pFramework->showDebugValue("r w:%f, h:%f",r.w, r.h);
 
 	r = BallPos.toFloatRect(r);
 	setRect(r);
@@ -53,7 +54,7 @@ void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID) {
 	initKillTime(5.0f);
 	FloatRect fr = StartPos.toFloatRect();
 	fr.w = m_pSprite->GetRect().w;
-	fr.w = m_pSprite->GetRect().h;
+	fr.h = m_pSprite->GetRect().h;
 	setRect(fr);
 	m_TeamID = TeamID;
 	m_pAimWorm = pAimWorm;

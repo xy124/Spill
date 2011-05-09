@@ -25,50 +25,55 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 		time = timeElapsed/i;
 	}
 
-	//g_pFramework->showDebugValue("i:%i, dir.x %.0f, dir.y %.0f",i, dir.x, dir.y);
-
-
-
 	////////////////////
-	//X-Collisions:
-	for (i = 1; (i*time <= timeElapsed)
-				&& (!XCollision.bIsCollision); i++) {
-		FR.x += dir.x*time;
-		XCollision = getCollision(FR);
-		if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
-			FR.x -= dir.x*time; //dann x-Rutschen wieder r�ckg�ngig machen
-			dir.x *= (-1 * XCollision.fBouncingFactorX);
+	//X/Y-Collisions:
+	for (i = 1; (i*time <= timeElapsed); i++) {
+
+
+		if (!XCollision.bIsCollision) {
+			FR.x += dir.x*time;
+			XCollision = getCollision(FR);
+			if (XCollision.bIsCollision) { //kollission durch x-Rutschen?
+				FR.x -= dir.x*time; //dann x-Rutschen wieder r�ckg�ngig machen
+				dir.x *= (-1 * XCollision.fBouncingFactorX);
+			}
 		}
-	}
+
+		if (!YCollision.bIsCollision) {
+			//yes all physicall objects fall!
+			//Fallbeschleunigung dazu!
+			//HINT: Fallkurve hängt von getTimeelapsed ab!! evtl mit s=g/2t² arbeieten
+			dir.y += Gravity*time; //graviy muss nach unten zeigen...
+
+
+			it->setCanJump(false); //kann auf jeden erstmal nicht springen
+			//Kollission durch y-Verschiebung??
+			FR.y += dir.y*time;
+			YCollision = getCollision(FR);
+			if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
+				//JumpingBoard...
+				//getBouncingfactor from Blocktype
+				FR.y -= dir.y*time; //dann y-Rutschen wieder r�ckg�ngig machen
+				dir.y *= (-1 * YCollision.fBouncingFactorY);//neues Y
+				if ((Abs(dir.y) < 10.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
+					it->setCanJump(true);
+				}
+			}
+
+		}
+
+		if (YCollision.bIsCollision && XCollision.bIsCollision)
+			break;
+
+	}//für jeden SChritt...
 	//wenn keine x-Kollission:
 	//HINT:Reibung://Flugreibung ist Sinnlos!
 	if (!XCollision.bIsCollision)
 		dir.x *= (Friction ) ; //TODO TimeElapsed einrechnen!
 
-	////////////////////
-	//Y-Collisions:
-	for (i = 1; (i*time <= timeElapsed)
-				&& (!YCollision.bIsCollision); i++) {
-		//Fallbeschleunigung dazu!
-		//HINT: Fallkurve hängt von getTimeelapsed ab!! evtl mit s=g/2t² arbeieten
-		dir.y += Gravity*time; //graviy muss nach unten zeigen...
-
-		it->setCanJump(false); //kann auf jeden erstmal nciht springen
-		//Kollission durch y-Verschiebung??
-		FR.y += dir.y*time;
-		YCollision = getCollision(FR);
-		if (YCollision.bIsCollision) { //kollission durch y-Rutschen?
-			//JumpingBoard...
-			//getBouncingfactor from Blocktype
-			FR.y -= dir.y*time; //dann y-Rutschen wieder r�ckg�ngig machen
-			dir.y *= (-1 * YCollision.fBouncingFactorY);//neues Y
-			if ((Abs(dir.y) < 10.0f) || (YCollision.BlockType == CBlock::JUMPBOARD)) {
-				it->setCanJump(true);
-			}
-		}
-	}//für jeden SChritt...
-
 	if (FR.x < 0.0f) FR.x = 0.0f; //man kann nicht aus dem linken bildschirm fallen!!
+	if (FR.y < 0.0f) FR.y = 0.0f; //opben geht das ganze natürlich auch nicht
+
 
 
 	//Wenn keine kollission dann Verschieben !...^^
