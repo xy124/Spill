@@ -30,13 +30,13 @@ class CPhysics : public TSingleton<CPhysics>
 		static const float Friction = FRICTION; //Reibung
 		S_Collision getCollision(const FloatRect &FR);//MBE eigentlich const was....
 		CBlock::BlockType getBlockType(CVec &vec);
-		bool rectCollision(const FloatRect &FR1, const FloatRect &FR2);
 
 		static float Abs(float f) {
 			return (f>=0 ? f : -f);
 		}
 
 	public:
+		bool rectCollision(const FloatRect &FR1, const FloatRect &FR2);
 		void init(CGame * game);
 		bool doPhysics(); //changes X, Y, of Worms and other objects!, when no collision
 

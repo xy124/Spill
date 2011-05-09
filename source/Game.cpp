@@ -247,18 +247,17 @@ bool CGame::BuildBlock(CBlockKoord Where, CBlock::BlockType Type, int BuilderID,
 
 void CGame::updateRenderAttackAnimations() {
 	list<CAttackAnimation*>::iterator it;
-	for (it = m_AttackAnimations.begin(); it != m_AttackAnimations.end(); ++it ) {
+	for (it = m_AttackAnimations.begin(); it != m_AttackAnimations.end(); /*it wird gesonderd behandelt wegen erase!*/) {
 		if ((*it)->isAlive()) {
-			(*it)->render();
 			(*it)->update();
+			(*it)->render();
+			++it;
 		} else {
 			(*it)->quit();
 			delete(*it);
 			(*it) = NULL;
-			m_AttackAnimations.erase(it);
-			if (m_AttackAnimations.empty())
-				return;
-			it--;
+			it = m_AttackAnimations.erase(it);//it auf nächstes setzen!
+
 		}
 	}
 }

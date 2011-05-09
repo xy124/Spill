@@ -37,6 +37,5 @@ void CAA_Laser::update() {
 	if (m_gValue > 50) {
 		m_gValue = 0;
 		m_bValue = 0;
-
 	}
 }

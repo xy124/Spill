@@ -86,11 +86,10 @@ class CVec { //real Koords in Pixels!
 					);
 		}
 
-		FloatRect toFloatRect() {//Warning: sets only x and y!
-			FloatRect result;
-			result.x = x;
-			result.y = y;
-			return result;
+		FloatRect toFloatRect(FloatRect old = FloatRect()) {//Warning: sets only x and y!
+			old.x = x;
+			old.y = y;
+			return old;
 		}
 
 };

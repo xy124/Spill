@@ -20,7 +20,7 @@ private:
 	int m_TeamID;
 	CWorm * m_pAimWorm;
 public:
-	static void setSprite(CSprite * pSprite);
+
 
 	virtual void render();
 	virtual void quit();
@@ -28,6 +28,8 @@ public:
 	virtual void update();
 
 	~CAA_CannonBall() {};
+
+	static void setSprite(CSprite * pSprite);
 
 };
 

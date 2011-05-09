@@ -16,6 +16,7 @@ private:
 	float m_fKillTime;//when to destroy it
 public:
 	void initKillTime(float liveTime);//HINT: make sure that all subclasses call this!
+	void setDead();
 
 	bool isAlive();
 
