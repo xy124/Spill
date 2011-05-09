@@ -30,10 +30,6 @@ public:
 	virtual void quit();
 	~CAA_Laser() {};
 	//HINT: its kind of senseless that also lasers are physical objects...
-
-
-
-
 };
 
 #endif /* CAA_LASER_H_ */

@@ -9,6 +9,7 @@
 #define ATTACKANIMATION_HPP_
 
 #include "../PhysicalObject.hpp"
+#include "../Logfile.hpp"
 
 class CAttackAnimation : public CPhysicalObject {
 private:
@@ -18,7 +19,9 @@ public:
 
 	bool isAlive();
 
-	virtual void render() {};
+	virtual void render() {
+		g_pLogfile->Textout("lal");
+	};
 	virtual void update() {};
 	virtual void quit() {};
 

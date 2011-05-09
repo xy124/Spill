@@ -5,10 +5,10 @@
 
 template <class T>
 class TSingleton {
-	protected://die erber dürfens nciht überschreiben
+	protected://die erber dï¿½rfens nciht ï¿½berschreiben
 		static T* m_pSingleton;
 	public:
-		virtual ~TSingleton() {}; //erber überschreibens
+		virtual ~TSingleton() {}; //erber ï¿½berschreibens
 	public:
 		inline static T* get() {
 			if (m_pSingleton == NULL)							

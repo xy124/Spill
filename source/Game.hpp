@@ -19,6 +19,7 @@
 #include <list>
 
 #include "AttackAnimations/AttackAnimation.hpp"
+#include "AttackAnimations/CAA_CannonBall.hpp"
 
 class CWorm;
 class CPhysics;

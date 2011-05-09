@@ -6,6 +6,7 @@
  */
 
 #include "CAA_CannonBall.hpp"
+#include "../Logfile.hpp"
 
 CSprite * CAA_CannonBall::m_pSprite;
 
@@ -16,6 +17,7 @@ void CAA_CannonBall::setSprite(CSprite * pSprite) {
 void CAA_CannonBall::render() {
 	m_pSprite->SetPos(CVec(getRect()));
 	m_pSprite->Render(m_TeamID);
+	g_pLogfile->Textout("<br />rendered cannonBall");
 }
 
 void CAA_CannonBall::update() {
