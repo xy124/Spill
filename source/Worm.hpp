@@ -8,7 +8,6 @@
 #include <SDL.h>
 #include "Logfile.hpp"
 #include "consts.hpp"
-#include "Collision.hpp"
 #include "Game.hpp"
 #include "Settings.hpp"
 
@@ -42,7 +41,7 @@ class CWorm : public CPhysicalObject {
 		bool m_bJumpKeyLock;
 		bool m_bBuildKeyLock;
 		bool m_bOrientation;
-		S_Collision m_lastCollisionY;
+
 		S_WormSettings * m_pSettings;
 
 		float m_fLastActionTime;
@@ -144,10 +143,6 @@ class CWorm : public CPhysicalObject {
 		{
 			m_Name = Name;
 		}
-
-
-		S_Collision getLastCollisionY() const;
-		void setLastCollisionY(S_Collision &m_lastCollisionY);
 
 		
 };

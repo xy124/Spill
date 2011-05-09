@@ -5,6 +5,7 @@
 #include "AttackAnimations/AttackAnimation.hpp"
 #include "AttackAnimations/CAA_Laser.hpp"
 #include "AttackAnimations/CAA_CannonBall.hpp"
+#include "Collision.hpp"
 
 using namespace std;
 
@@ -60,25 +61,19 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	setRect(FR);
 	setDir(CVec(0,0));
 
-	m_lastCollisionY.BlockType = CBlock::AIR;
-	m_lastCollisionY.fBouncingFactorX = 0.0f;
-	m_lastCollisionY.fBouncingFactorY = 0.0f;
-	m_lastCollisionY.bIsCollision = false;
+	S_Collision lastCollisionY = getLastCollisionY();
+
+	lastCollisionY.BlockType = CBlock::AIR;
+	lastCollisionY.fBouncingFactorX = 0.0f;
+	lastCollisionY.fBouncingFactorY = 0.0f;
+	lastCollisionY.bIsCollision = false;
+
+	setLastCollisionY(lastCollisionY);
 
 	m_Alive = true;
 	CLogfile::get()->fTextout("<br />New Worm. ID:%i",m_WormID);
 
 	m_pSettings = &(g_pSettings->WormSet[m_WormID]);
-}
-
-S_Collision CWorm::getLastCollisionY() const
-{
-    return m_lastCollisionY;
-}
-
-void CWorm::setLastCollisionY(S_Collision &m_lastCollisionY)
-{
-    this->m_lastCollisionY = m_lastCollisionY;
 }
 
 void CWorm::reset() { //HINT: resettet nicht die Position
@@ -99,7 +94,9 @@ void CWorm::ProcessMoving() {
 	if (g_pFramework->KeyDown(m_pSettings->KeyJump) && getCanJump() && !m_bJumpKeyLock) { //Jump!
 		m_bJumpKeyLock = true;
 
-		if (m_lastCollisionY.BlockType == CBlock::JUMPBOARD)
+		S_Collision lastCollisionY = getLastCollisionY();
+
+		if (lastCollisionY.BlockType == CBlock::JUMPBOARD)
 			newDir.y = 1.25f*WORMJUMPSPEED_Y;
 		else
 			newDir.y = WORMJUMPSPEED_Y;

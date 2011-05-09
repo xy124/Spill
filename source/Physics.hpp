@@ -13,6 +13,7 @@
 #include "Collision.hpp"
 #include "Singleton.hpp"
 #include <SDL.h>
+#include "PhysicalObject.hpp"
 
 #define g_pPhysics CPhysics::get()
 
@@ -34,6 +35,8 @@ class CPhysics : public TSingleton<CPhysics>
 		static float Abs(float f) {
 			return (f>=0 ? f : -f);
 		}
+
+		void doPhysicsFor(CPhysicalObject * it);
 
 	public:
 		bool rectCollision(const FloatRect &FR1, const FloatRect &FR2);

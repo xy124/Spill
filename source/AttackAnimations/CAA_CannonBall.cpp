@@ -57,4 +57,7 @@ void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID) {
 	setRect(fr);
 	m_TeamID = TeamID;
 	m_pAimWorm = pAimWorm;
+	setIsSolid(true);
+	setCanMove(true);
+
 }

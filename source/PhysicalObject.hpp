@@ -9,6 +9,7 @@
 #define PHYSICALOBJECT_HPP_
 #include "Vec.hpp"
 #include "FloatRect.hpp"
+#include "Collision.hpp"
 
 class CPhysicalObject { //HINT: diese klasse nicht instanzieren!!!!!! nur vererben!!!
 	//HINT: Blocks sind keine PhysicalObjects!!!!!
@@ -18,6 +19,8 @@ class CPhysicalObject { //HINT: diese klasse nicht instanzieren!!!!!! nur vererb
 		bool m_bIsSolid; //z.B. f�r Blocks w�re true, f�r w�rmer aber z.B. false. zwei IsSolid=false objecte k�nnen durcheinander gehen.
 		bool m_bCanJump; // nur wenn auf dem Boden ist!
 		CVec m_dir; //direction, MovingVector per second!!!
+
+		S_Collision m_lastCollisionY;
 	public: //HINT: wir machen das jez mal �bern Stack... wat solls
 		CPhysicalObject() {};
 		virtual ~CPhysicalObject() {};
@@ -32,6 +35,9 @@ class CPhysicalObject { //HINT: diese klasse nicht instanzieren!!!!!! nur vererb
 		void setIsSolid(bool bIsSolid);
 		void setRect(FloatRect &rect);
 		void setCanJump(bool bCanJump);
+		S_Collision getLastCollisionY();
+		void setLastCollisionY(S_Collision &m_lastCollisionY);
+
 };
 
 

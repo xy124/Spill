@@ -57,3 +57,13 @@ void CPhysicalObject::setCanJump(bool bCanJump)
 	m_bCanJump = bCanJump;
 }
 
+S_Collision CPhysicalObject::getLastCollisionY()
+{
+    return m_lastCollisionY;
+}
+
+void CPhysicalObject::setLastCollisionY(S_Collision &m_lastCollisionY)
+{
+    this->m_lastCollisionY = m_lastCollisionY;
+}
+
