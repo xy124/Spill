@@ -71,7 +71,10 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 		dir.x *= (Friction ) ; //TODO TimeElapsed einrechnen!
 
 	if (FR.x < 0.0f) FR.x = 0.0f; //man kann nicht aus dem linken bildschirm fallen!!
-	if (FR.y < 0.0f) FR.y = 0.0f; //opben geht das ganze natürlich auch nicht
+	if (FR.y < 0.0f) {//opben geht das ganze natürlich auch nicht
+		FR.y = 0.0f;
+		dir.y = 0.0f;
+	}//MBE Performance: allways 0.0f if its float! with .0f!!!
 
 
 
