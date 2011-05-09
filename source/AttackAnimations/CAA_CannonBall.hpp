@@ -11,6 +11,7 @@
 #include "AttackAnimation.hpp"
 #include "../Sprite.hpp"
 #include "../Worm.hpp"
+#include <list>
 
 class CWorm;
 
@@ -19,12 +20,15 @@ private:
 	static CSprite * m_pSprite;
 	int m_TeamID;
 	CWorm * m_pAimWorm;
+
+	std::list<CAttackAnimation*> * m_pAttackAnimations;
 public:
 
 
 	virtual void render();
 	virtual void quit();
-	virtual void init(CVec StartPos, CWorm * pAimWorm, int TeamID);
+	virtual void init(CVec StartPos, CWorm * pAimWorm, int TeamID,
+			std::list<CAttackAnimation*> * pAttackAnimations);
 	virtual void update();
 
 	~CAA_CannonBall() {};

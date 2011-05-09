@@ -2,6 +2,7 @@
 #include "Settings.hpp"
 
 #include "Performancecheck.hpp"
+#include "AttackAnimations/CAA_Explosion1.hpp"
 
 using namespace std;
 
@@ -71,6 +72,10 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 	pCannonball->Load(_DIRDATA_+"/CannonBall.bmp");
 	CAA_CannonBall::setSprite(pCannonball);
 	pCannonball = NULL;
+	CSprite * pExplosion1 = new CSprite();
+	pExplosion1->Load(_DIRDATA_+"/Explosion1.bmp");
+	CAA_Explosion1::setSprite(pExplosion1);
+	pExplosion1 = NULL;
 
 
 	m_bIsRunning = true;

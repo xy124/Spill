@@ -8,8 +8,12 @@
 #include "CAA_CannonBall.hpp"
 #include "../Logfile.hpp"
 #include "../Physics.hpp"
+#include "CAA_Explosion1.hpp"
+
 
 CSprite * CAA_CannonBall::m_pSprite;
+
+using namespace std;
 
 void CAA_CannonBall::setSprite(CSprite * pSprite) {
 	CAA_CannonBall::m_pSprite = pSprite;
@@ -37,16 +41,27 @@ void CAA_CannonBall::update() {
 		E -= 40.0f;
 		m_pAimWorm->setEnergy(E);
 		this->setDead();
+		//Make Explosion!! MBE: better with functionpointer????
+		CAA_Explosion1 * pExplosion1;
+		pExplosion1 = new CAA_Explosion1();
+		pExplosion1->init(BallPos);
+
+		m_pAttackAnimations->push_back(pExplosion1);
+
+		pExplosion1 = NULL;
+
+
 	}
 
 	//FIXME use as physical object!
 }
 
 void CAA_CannonBall::quit() {
-//nothing
+	m_pAimWorm = NULL;//eigentlich senseless!
 }
 
-void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID) {
+void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID,
+		list<CAttackAnimation*> * pAttackAnimations) {
 	initKillTime(5.0f);
 	FloatRect fr = StartPos.toFloatRect();
 	fr.w = m_pSprite->GetRect().w;
@@ -57,4 +72,6 @@ void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID) {
 	m_pAimWorm = pAimWorm;
 	setIsSolid(true);
 	setCanMove(true);
+
+	m_pAttackAnimations = pAttackAnimations;
 }

@@ -351,7 +351,7 @@ void CWorm::ProcessBlockActions() {
 					}
 					//set nearest worm as aim!!;
 					CAA_CannonBall * pCannonBall = new CAA_CannonBall();
-					pCannonBall->init(block, pMinDistWorm, m_TeamID);
+					pCannonBall->init(block, pMinDistWorm, m_TeamID, &(m_pGame->m_AttackAnimations));
 					m_pGame->m_AttackAnimations.push_back(pCannonBall);
 
 					pMinDistWorm = NULL;
