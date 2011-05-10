@@ -3,6 +3,8 @@
 #include "AttackAnimations/CAA_Explosion1.hpp"
 //MBE: make overview about includes!
 
+//TODO: ITEMS ;)
+
 using namespace std;
 
 bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bFullscreen) {
