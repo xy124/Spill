@@ -7,6 +7,7 @@
 
 #include "MenuSystem.hpp"
 #include "../Framework.hpp"
+#include "../Game.hpp"
 
 //TODO really need the following 2 lines?
 #include <string>
@@ -20,12 +21,25 @@ void CMenuSystem::ProcessSelection(int messageID) {
 	switch (messageID) {
 	case ENTRY_START: {
 
+		g_pFramework->DestroyViewPorts();
+		//TODO ist das gut so das sopiel in ein anderes Object, das menu auszulagern oder lieber per Singleton?
+		CGame game(2,100,20); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap w�re per new)
+		//^^ergibt nur 1 bildschirmvoll, da 40*BlockSize=800 und co...
+
+		g_pPhysics->init(&game);
+
+		game.run();
+
+		game.quit();
+		g_pFramework->DestroyViewPorts();
+		g_pFramework->InitViewPorts(1);
+
 	} break;
 	case ENTRY_OPTIONS: {
-		//FIXME showoptions!
+		//m_bIsAlive = false;
 	} break;
 	case ENTRY_QUIT: {
-		//m_bIsAlive = false;
+		m_bIsAlive = false;
 	} break;
 	default: //nothing
 		break;
@@ -42,12 +56,18 @@ void CMenuSystem::init() {
 	m_mainMenu.addItem("Quit",		ENTRY_QUIT);
 
 	m_pCurrentMenu = &m_mainMenu;
+	g_pFramework->InitViewPorts(1); //init Viewport for Menusystem!
+
 	m_bIsAlive = true;
 }
-
+//TODO make alive if player enters menu in game!
 void CMenuSystem::run() {
 	while (m_bIsAlive) {
 		SDL_Delay(10);
+		if (g_pFramework->ProcessEvents() == ESCAPED) {//react on escape for close...
+			m_bIsAlive = false;
+		}
+
 		g_pFramework->Update();
 		g_pFramework->Clear();
 
@@ -60,4 +80,5 @@ void CMenuSystem::run() {
 
 void CMenuSystem::quit() {
 	m_mainMenu.quit();
+	g_pFramework->DestroyViewPorts();
 }

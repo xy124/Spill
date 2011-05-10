@@ -38,8 +38,6 @@ class CGame
 
 		void renderGameboard();
 
-		void ProcessEvents();
-
 		CBackGround * m_pBackGround;
 
 		SDL_Rect m_WorldRect;

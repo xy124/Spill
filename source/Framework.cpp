@@ -84,7 +84,12 @@ bool CFramework::InitViewPorts(int Amount) {
 	return true;
 }
 
+void CFramework::DestroyViewPorts() {
+	ViewPorts.clear(); //HINT: thatn should be ok without memory leaks!
+}
+
 void CFramework::Quit() {
+	DestroyViewPorts();
 	SFont_FreeFont(pGameFont);
 //MBE SDL_FreeSurface
 	SDL_FreeSurface(m_pScreen);
@@ -202,5 +207,27 @@ void CFramework::InitAttackAnmimations() {
 	pExplosion1->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
 	CAA_Explosion1::setSprite(pExplosion1);
 		pExplosion1 = NULL;
+}
+
+int CFramework::ProcessEvents() {
+	int result = 0;
+	SDL_Event event;
+	if (SDL_PollEvent(&event)) {
+		switch (event.type) {
+			case (SDL_QUIT): {
+				result = ESCAPED;
+			} break;
+			case (SDL_KEYDOWN): {
+				switch (event.key.keysym.sym) {
+					case (SDLK_ESCAPE): {
+						result = ESCAPED;
+					} break;
+					default: //nothing
+						break;
+				} //switch event.key.keysym.sym
+			} break;
+		} //Switch event.type
+	} //if
+	return result;
 }
 

@@ -24,15 +24,18 @@ struct S_ViewPort {
 
 class CFramework : public TSingleton<CFramework> {
 	public:
+
 		std::vector<S_ViewPort> ViewPorts;
 
 		bool Init(int ScreenWidth, int ScreenHeight,
 					int ColorDepth, bool bFullscreen);
 		bool InitViewPorts(int Amount);
+		void DestroyViewPorts();
 		void InitAttackAnmimations();
 
 		void Quit();
 		void Update();
+		int ProcessEvents();//Processes Events for closing and so on!
 		void Clear();
 		void Flip();
 		bool KeyDown (int Key_ID);

@@ -109,7 +109,7 @@ void CGame::creatDebugGameBoard() {//creates World for debugging
 void CGame::run() {
 	while (m_bIsRunning) {
 		//Play!
-		SDL_Delay(10);
+		SDL_Delay(5);
 
 		g_pFramework->showDebugValue("Fps: %.1f", 1/(g_pTimer->getElapsed()) );
 
@@ -119,7 +119,9 @@ void CGame::run() {
 		m_pBackGround->render();
 		stopWatch("rendered back");
 		g_pFramework->Update();//Update Timer and Framework!
-		ProcessEvents();//react on escape for close...
+		if (g_pFramework->ProcessEvents() == ESCAPED) {//react on escape for close...
+			m_bIsRunning = false;
+		}
 
 
 		startWatch();
@@ -167,26 +169,6 @@ void CGame::renderGameboard() {
 		}
 		//stopWatch("Watch");
 	}
-}
-
-void CGame::ProcessEvents() {
-	SDL_Event event;
-	if (SDL_PollEvent(&event)) {
-		switch (event.type) {
-			case (SDL_QUIT): {
-				m_bIsRunning = false;
-			} break;
-			case (SDL_KEYDOWN): {
-				switch (event.key.keysym.sym) {
-					case (SDLK_ESCAPE): {
-						m_bIsRunning = false;
-					} break;
-					default: //nothing
-						break;
-				} //switch event.key.keysym.sym
-			} break;
-		} //Switch event.type
-	} //if
 }
 
 void CGame::quit() {

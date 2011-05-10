@@ -67,6 +67,7 @@
 
 //Framework:
 #define VIEWPORTFRAMEWIDTH 12
+#define ESCAPED 1 //is sent when ProcessEvents recognized that the game is escaped
 
 
 
