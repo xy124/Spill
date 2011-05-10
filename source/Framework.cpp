@@ -59,6 +59,9 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	//^^why should we need a color key here???
 	pGameFont = SFont_InitFont(pFontImage);
 
+	//init AttackAnimations
+	InitAttackAnmimations();
+
 	//Init Debugvalue
 	m_DebugValue = "";
 

@@ -23,14 +23,17 @@ void CMenuSystem::ProcessSelection(int messageID) {
 
 		g_pFramework->DestroyViewPorts();
 		//TODO ist das gut so das sopiel in ein anderes Object, das menu auszulagern oder lieber per Singleton?
-		CGame game(2,100,20); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap w�re per new)
+		CGame * pGame;
+		pGame = new CGame(2,100,20); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap w�re per new)
 		//^^ergibt nur 1 bildschirmvoll, da 40*BlockSize=800 und co...
 
-		g_pPhysics->init(&game);
+		g_pPhysics->init(pGame);
 
-		game.run();
+		pGame->run();
 
-		game.quit();
+		pGame->quit();
+
+		delete(pGame);
 		g_pFramework->DestroyViewPorts();
 		g_pFramework->InitViewPorts(1);
 
