@@ -37,9 +37,8 @@ void CAA_CannonBall::update() {
 
 	if (g_pPhysics->rectCollision(m_pAimWorm->getRect(), r)) {
 		//wurm abziehen, Cannonbal zerstören
-		float E = m_pAimWorm->getEnergy();
-		E -= 40.0f;
-		m_pAimWorm->setEnergy(E);
+		m_pAimWorm->changeEnergyBy(-40.0f);
+		m_pOwnerWorm->changePointsBy(40);
 		this->setDead();
 		//Make Explosion!! MBE: better with functionpointer????
 		CAA_Explosion1 * pExplosion1;
@@ -55,7 +54,7 @@ void CAA_CannonBall::quit() {
 	m_pAimWorm = NULL;//eigentlich senseless!
 }
 
-void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID,
+void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm, int TeamID,
 	list<CAttackAnimation*> * pAttackAnimations) {
 	initKillTime(5.0f);
 	FloatRect fr = StartPos.toFloatRect();
@@ -65,6 +64,7 @@ void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, int TeamID,
 	setRect(fr);
 	m_TeamID = TeamID;
 	m_pAimWorm = pAimWorm;
+	m_pOwnerWorm = pOwnerWorm;
 	setIsSolid(true);
 	setCanMove(true);
 

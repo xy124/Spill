@@ -20,6 +20,7 @@ private:
 	static CSprite * m_pSprite;
 	int m_TeamID;
 	CWorm * m_pAimWorm;
+	CWorm * m_pOwnerWorm;
 
 	std::list<CAttackAnimation*> * m_pAttackAnimations;
 public:
@@ -27,7 +28,7 @@ public:
 
 	virtual void render();
 	virtual void quit();
-	virtual void init(CVec StartPos, CWorm * pAimWorm, int TeamID,
+	virtual void init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm, int TeamID,
 			std::list<CAttackAnimation*> * pAttackAnimations);
 	virtual void update();
 

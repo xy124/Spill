@@ -20,6 +20,7 @@ class CGame;
 
 class CWorm : public CPhysicalObject {
 	public:
+	//FIXME use WormColors!
 		enum WORMCOLORS {
 				WC_RED,
 				WC_BLUE,
@@ -142,6 +143,18 @@ class CWorm : public CPhysicalObject {
 		void setName(std::string Name)
 		{
 			m_Name = Name;
+		}
+
+		void changeEnergyBy(float v) {
+			m_Energy += v;
+		}
+
+		void changePointsBy(int v) {
+			m_Points += v;
+		}
+
+		void changeMoneyBy(int v) {
+			m_Money += v;
 		}
 
 		
