@@ -4,6 +4,8 @@
 #include "Framework.hpp"
 #include "Settings.hpp"
 
+#include "Menu/MenuSystem.hpp"
+
 #define HIGHSCOREFILE "highscore.hsc"
 
 #include <SDL.h>
@@ -19,6 +21,11 @@ int main (int argc, char *argv[]) {
 	SDL_WM_SetCaption("Spill", "Spill");
 
 	g_pSettings->LoadFromFile("Settings.s");
+
+	CMenuSystem MenuSystem;
+	MenuSystem.init();
+	MenuSystem.run();
+	MenuSystem.quit();
 
 	//TODO: Start game selected in Menu!
 	//HINT: game in stack... thats a good way???

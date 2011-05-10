@@ -9,22 +9,28 @@
 #define MENUSYSTEM_HPP_
 
 #include "Menu.hpp"
+#include "../Singleton.hpp"
 
-class CMenuSystem {
+class CMenuSystem : public TSingleton<CMenuSystem>{
 private:
 	CMenu * m_pCurrentMenu;
 
 	CMenu m_mainMenu;
 
-	void ProcesSelection(int messageID);
+	bool m_bIsAlive;
 
-	bool bIsAlive;
+
 public:
+
+	void ProcessSelection(int messageID);
+
 	CMenuSystem() {};
 	void init();
 	void run();
 	void quit();
 	virtual ~CMenuSystem() {};
 };
+
+#define g_pMenuSystem CMenuSystem::get()
 
 #endif /* MENUSYSTEM_HPP_ */

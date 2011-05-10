@@ -21,18 +21,17 @@ private:
 	std::vector<S_MenuItem> m_Items;
 	std::vector<S_MenuItem>::iterator m_selectedItem;
 
-	void (*m_pProcessSelection) (int messageID);
 	void ProcessKeys();
 
 	bool m_bKeyLock;
 public:
-	CMenu();
-	void init(std::string heading, void (*pProcessSelection) (int messageID));
+	CMenu() {};
+	void init(std::string heading);
 	void render();
 	void update();
 	void addItem(std::string name, int messageID);
 	void quit();
-	virtual ~CMenu();
+	virtual ~CMenu() {};
 };
 
 #endif /* MENU_HPP_ */
