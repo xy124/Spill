@@ -8,7 +8,7 @@ How to get this project compiling with eclipse - MingW:
 		mingw32
 		SDLmain
 		SDL
-	-if the Debugger cancels because he cant do "gdc --version"
+	-if the Debugger cancels because it can't do "gdc --version"
 		go in debugConfigurations and give him the full path to gdc.exe
 			(like C:\Programme\eclipse\mingw\bin\gdb.exe)
 			
@@ -29,7 +29,7 @@ If you use SDL_CreateRGBSurface:
 	the masks have to be set for 16 bit : to 0xf000 and so on!!!
 	see documentation!!!
 	
-Please do all pictures with 24 Bit!!!!!
+Please set all pictures to 24 Bit!!!!!
 			
 			
 		  

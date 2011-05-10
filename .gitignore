@@ -5,9 +5,15 @@
 /Debug
 /Debug_CompileFull
 /SDL_gfx-2.0.22
+/aedGUI-0.1.8a
+/Release
+/.settings
 
 Thumbs.db
 
 Logfile.html
 highscore.hsc
 Settings.s
+
+copy src to msvc.cmd
+get src from msvc.cmd
