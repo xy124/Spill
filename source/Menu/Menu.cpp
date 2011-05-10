@@ -23,6 +23,7 @@ void CMenu::addItem(string name, int messageID) {
 	item.m_MessageID = messageID;
 	item.m_Name = name;
 	m_Items.push_back(item);
+	m_selectedItem = m_Items.begin();
 }
 
 void CMenu::render() {

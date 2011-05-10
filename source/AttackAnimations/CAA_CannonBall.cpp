@@ -39,6 +39,7 @@ void CAA_CannonBall::update() {
 		//wurm abziehen, Cannonbal zerstören
 		m_pAimWorm->changeEnergyBy(-40.0f);
 		m_pOwnerWorm->changePointsBy(40);
+		m_pOwnerWorm->changeMoneyBy(1);
 		this->setDead();
 		//Make Explosion!! MBE: better with functionpointer????
 		CAA_Explosion1 * pExplosion1;

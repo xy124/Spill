@@ -327,7 +327,9 @@ void CWorm::ProcessBlockActions() {
 								CAA_Laser * pLaser = new CAA_Laser();
 								pLaser->init(1.5f, block, (*wIt), 255, 0, 0);
 								m_pGame->m_AttackAnimations.push_back(pLaser);
-
+								//earn points!
+								changePointsBy(10);
+								changeMoneyBy(5);
 							}
 
 						}
@@ -351,7 +353,8 @@ void CWorm::ProcessBlockActions() {
 					}
 					//set nearest worm as aim!!;
 					CAA_CannonBall * pCannonBall = new CAA_CannonBall();
-					pCannonBall->init(block, pMinDistWorm, m_TeamID, &(m_pGame->m_AttackAnimations));
+					pCannonBall->init(block, pMinDistWorm, this, m_TeamID,
+							&(m_pGame->m_AttackAnimations));
 					m_pGame->m_AttackAnimations.push_back(pCannonBall);
 
 					pMinDistWorm = NULL;

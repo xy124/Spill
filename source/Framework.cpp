@@ -189,14 +189,13 @@ void CFramework::renderViewPortFrames() {
 void CFramework::drawLine(CVec v1, CVec v2, int r, int g, int b, bool doOnViewCheck) {
 	vector<S_ViewPort>::iterator it;
 	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		if (doOnViewCheck) {
-			if ((v1.inRect(it->m_View)==false) && (v1.inRect(it->m_View)==false))
-				break;//corners aren't in that viewport...!
-		}
+		if ( (doOnViewCheck == false) ||
+				((v1.inRect(it->m_View)) && (v2.inRect(it->m_View))) )  {
 		lineRGBA(m_pScreen,
 				v1.x + (it->m_ScreenPosition.x) - (it->m_View.x), v1.y,
 				v2.x + (it->m_ScreenPosition.x) - (it->m_View.x), v2.y,
 				r, g, b, 255);
+		}
 	}
 }
 
