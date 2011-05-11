@@ -36,7 +36,8 @@ void CMenu::render() {
 	int y = 50 + 14;
 	for (it = m_Items.begin(); it !=  m_Items.end(); ++it) {
 		y += 18;
-		g_pFramework->TextOut(it->m_Name, 70, y, 0);
+		g_pFramework->TextOut(it->m_Name,  70, y, 0);
+		g_pFramework->TextOut(it->m_Text, 500, y, 0);
 		if (it == m_selectedItem) { //draw line under it!
 			g_pFramework->drawLine(CVec(0, y+17), CVec(800,y+17), 0, 255, 0, false);
 			//MBE draws line just on viewport!
@@ -49,6 +50,28 @@ void CMenu::quit() {
 }
 
 void CMenu::update() {
+	if (m_selectedItem->m_EntryType == CMenu::TEXTBOX) {
+		//put incoming letterkeys in m_text!
+		if (g_pFramework->KeyDown(SDLK_BACKSPACE)) //delete last letter FIXME!
+			m_selectedItem->m_Text.at(m_selectedItem->m_Text.length()-1);
+		SDL_Event event;
+		if (SDL_PollEvent(&event)) { //TODO hoffe das geht so das wir das jez in einer gameschleife im prinzip 2x tun!
+			if (event.type == SDL_KEYDOWN) {
+
+				char key = event.key.keysym.sym;
+				if ((97 <= key) && (key <= 122)) { //is letter key!
+					m_selectedItem->m_Text.append(&key);
+				}
+
+
+
+			}
+		} //if
+
+
+	}
+
+
 	if ( (!m_bKeyLock) && (g_pFramework->KeyDown(SDLK_DOWN)) ) {
 		m_selectedItem ++;
 		m_bKeyLock = true;
@@ -86,31 +109,6 @@ void CMenu::update() {
 				&& (g_pFramework->KeyDown(SDLK_UP) 		== false )
 				&& (g_pFramework->KeyDown(SDLK_RETURN) 	== false ) )
 			m_bKeyLock = false;
-
-	if (m_selectedItem->m_EntryType == CMenu::TEXTBOX) {
-		//put incoming letterkeys in m_text!
-		if (g_pFramework->KeyDown(SDLK_BACKSPACE)) //delete last letter FIXME!
-			m_selectedItem->m_Text.at(m_selectedItem->m_Text.length()-1);
-		SDL_Event event;
-		if (SDL_PollEvent(&event)) { //TODO hoffe das geht so das wir das jez in einer gameschleife im prinzip 2x tun!
-			if (event.type == SDL_KEYDOWN) {
-
-				char key = event.key.keysym.sym;
-				if ((97 <= key) && (key <= 122)) { //is letter key!
-					//hoffen wir mal das ascII dasselbe ist!!!
-					m_selectedItem->m_Text.append(&key);
-				}
-
-
-
-			}
-		} //if
-
-
-	}
-
-
-
 }
 
 string CMenu::getItemText() {
