@@ -46,8 +46,6 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_selectedBType = CBlock::NORMAL;
 
 	m_bOrientation = ORIGHT;
-
-	m_Name = ""; //getName(); --> TODO!!! Abfrage per Eingabe vom User!!!!
 	
 	m_pWormSprite = new CSprite();
 	//m_pWormSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 21, 32, 17);
@@ -232,6 +230,7 @@ void CWorm::ProcessView() {
 	sprintf(buffer, "Money: %iEur, Points: %i, Energy: %.0f/%.0f",m_Money, m_Points, m_Energy, MAXENERGY);
 	string s = buffer;
 	g_pFramework->TextOut(s, 0, 0, m_ViewPort);
+	g_pFramework->TextOut(m_pSettings->name, 0, 70, m_ViewPort);
 
 	s = "::"+CBlock::BlockTypeString(m_selectedBType)+"::";
 	g_pFramework->TextOut(s, 0, 15, m_ViewPort);

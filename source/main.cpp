@@ -22,6 +22,8 @@ int main (int argc, char *argv[]) {
 
 	g_pSettings->LoadFromFile("Settings.s");
 
+
+
 	g_pMenuSystem->init();
 	g_pMenuSystem->run();
 	g_pMenuSystem->quit();

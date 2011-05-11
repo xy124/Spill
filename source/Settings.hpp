@@ -30,7 +30,7 @@ struct S_WormSettings {
 class CSettings : public TSingleton<CSettings>{
 public:
 	CSettings();
-	virtual ~CSettings();
+	virtual ~CSettings() {};
 
 	S_WormSettings WormSet[2];
 

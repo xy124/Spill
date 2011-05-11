@@ -4,14 +4,10 @@
  *  Created on: 10.05.2011
  *      Author: Sebastian
  */
-//FIXME: OptionMenu!
 #include "MenuSystem.hpp"
 #include "../Framework.hpp"
 #include "../Game.hpp"
-
-//TODO really need the following 2 lines?
-#include <string>
-using namespace std;
+#include "../Settings.hpp"
 
 #define ENTRY_START		4001
 #define ENTRY_OPTIONS	4002
@@ -28,8 +24,7 @@ void CMenuSystem::ProcessSelection(int messageID) {
 
 		g_pFramework->DestroyViewPorts();
 		//TODO ist das gut so das sopiel in ein anderes Object, das menu auszulagern oder lieber per Singleton?
-		CGame * pGame;
-		pGame = new CGame(2,100,20); //wir erstelllen das spiel im stack, im buch macht ers auch so (im heap w�re per new)
+		CGame * pGame = new CGame(2,100,20); //wir erstelllen das spiel im heap, im buch macht ers im stack (im heap w�re per new)
 		//^^ergibt nur 1 bildschirmvoll, da 40*BlockSize=800 und co...
 
 		g_pPhysics->init(pGame);
@@ -45,6 +40,8 @@ void CMenuSystem::ProcessSelection(int messageID) {
 	} break;
 	case ENTRY_OPTIONS: {
 		m_pCurrentMenu = &m_optionMenu;
+		m_optionMenu.setItemText(ENTRY_TEXTOX_P1, g_pSettings->WormSet[0].name);
+		m_optionMenu.setItemText(ENTRY_TEXTOX_P2, g_pSettings->WormSet[1].name);
 	} break;
 	case ENTRY_TEXTOX_P1: {
 		/*g_pLogfile->fTextout("<br /> player is in optn menu and now p1 name =",
@@ -58,8 +55,9 @@ void CMenuSystem::ProcessSelection(int messageID) {
 		//nothing
 	} break;
 	case ENTRY_BACK: {
-			m_pCurrentMenu = &m_mainMenu;
-			//FIXME: change Game!!!
+		m_pCurrentMenu = &m_mainMenu;
+		g_pSettings->WormSet[0].name = m_optionMenu.getItemText(ENTRY_TEXTOX_P1) ;
+		g_pSettings->WormSet[1].name = m_optionMenu.getItemText(ENTRY_TEXTOX_P2) ;
 	} break;
 	case ENTRY_QUIT: {
 			m_bIsAlive = false;
@@ -75,7 +73,7 @@ void CMenuSystem::ProcessSelection(int messageID) {
 void CMenuSystem::init() {
 	//TODO irwie gehts mit fktzeigern net
 
-	m_mainMenu.init(string("MainMenu"));
+	m_mainMenu.init("MainMenu");
 	m_mainMenu.addItem("Start",		ENTRY_START,	CMenu::BUTTON);
 	m_mainMenu.addItem("Options",	ENTRY_OPTIONS,	CMenu::BUTTON);
 	m_mainMenu.addItem("Quit",		ENTRY_QUIT,		CMenu::BUTTON);
@@ -91,7 +89,7 @@ void CMenuSystem::init() {
 
 	m_bIsAlive = true;
 }
-//TODO make alive if player enters menu in game!
+
 void CMenuSystem::run() {
 	while (m_bIsAlive) {
 		SDL_Delay(10);

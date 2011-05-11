@@ -111,6 +111,24 @@ void CMenu::update() {
 			m_bKeyLock = false;
 }
 
-string CMenu::getItemText() {
+string CMenu::getSelectedItemText() {
 	return m_selectedItem->m_Text;
+}
+
+string CMenu::getItemText(int messageID) {
+	vector<S_MenuItem>::iterator it;
+	for (it = m_Items.begin(); it != m_Items.end(); ++it) {
+		if (it->m_MessageID == messageID)
+			return (it->m_Text);
+	}
+	return "";
+}
+
+void CMenu::setItemText(int messageID, std::string text) {
+	vector<S_MenuItem>::iterator it;
+		for (it = m_Items.begin(); it != m_Items.end(); ++it) {
+			if (it->m_MessageID == messageID)
+				it->m_Text = text;
+				return;
+		}
 }

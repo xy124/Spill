@@ -10,6 +10,7 @@
 
 #include "Menu.hpp"
 #include "../Singleton.hpp"
+#include "../Game.hpp"
 
 class CMenuSystem : public TSingleton<CMenuSystem>{
 private:

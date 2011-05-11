@@ -42,7 +42,8 @@ class CGame
 
 		SDL_Rect m_WorldRect;
 
-		void creatDebugGameBoard();
+		void initWorms(int amount);
+		void createDebugGameBoard();
 
 		void updateRenderAttackAnimations();
 
@@ -54,7 +55,7 @@ class CGame
 		std::list<CAttackAnimation*> m_AttackAnimations;
 		std::vector<CWorm*> m_vWorms;
 		std::map<CBlockKoord,CBlock*> m_Gameboard;
-		CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight);
+		CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight);
 		void save(const char *sFilename);
 		void load(const char *sFilename);
 		void run();

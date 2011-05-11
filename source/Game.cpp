@@ -6,36 +6,29 @@
 
 using namespace std;
 
-CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TODO: cut in more functions!
+CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
+	//TODO: cut in more functions!
 
-	if (AmountOfPlayers > 4) {
-		AmountOfPlayers = 4;
+	if (amountOfPlayers > 4) {
+		amountOfPlayers = 4;
 		CLogfile::get()->Textout("Can't Create so many Players, will create 4<br />");
 	}
 
-	g_pFramework->InitViewPorts(AmountOfPlayers);
+	g_pFramework->InitViewPorts(amountOfPlayers);
 
-	for (int i=0; i<AmountOfPlayers; i++) {//w�rmer auff�llen
-		CWorm* pWorm = new CWorm(this);
-		pWorm->init(i, i, 40.0f, 40.0f, CWorm::WC_RED); //wir machen alle Würmer rot....
-		//MBE WormID=TeamID
-		pWorm->setName(g_pSettings->WormSet[i].name);
-		pWorm->setViewPort(i);
-		m_vWorms.push_back(pWorm);
-	}
-	m_WormAmount = AmountOfPlayers;
+	initWorms(amountOfPlayers);
 
-	if (GameBoardWidth > MAXGAMEBOARDWIDTH) {
+	if (gameBoardWidth > MAXGAMEBOARDWIDTH) {
 		m_GBWidth = MAXGAMEBOARDWIDTH;
 		CLogfile::get()->Textout("Can't Create Gameboard with this WIDTH, will create Gameboard with width MAXGAMEBOARDWIDTH<br />");
 	} else
-		m_GBWidth = GameBoardWidth;
+		m_GBWidth = gameBoardWidth;
 
-	if (GameBoardHeight > MAXGAMEBOARDHEIGHT) {
+	if (gameBoardHeight > MAXGAMEBOARDHEIGHT) {
 		m_GBHeight = MAXGAMEBOARDHEIGHT;
 		CLogfile::get()->Textout("Can't Create Gameboard with this HEIGHT, will create Gameboard with HEIGHT MAXGAMEBOARDHEIGHT<br />");
 	} else
-		m_GBHeight = GameBoardHeight;
+		m_GBHeight = gameBoardHeight;
 
 	m_WorldRect.x = 0;
 	m_WorldRect.y = 0;
@@ -58,19 +51,30 @@ CGame::CGame(int AmountOfPlayers, int GameBoardWidth, int GameBoardHeight) {//TO
 	g_pLogfile->Textout("Gameboard filled with NULL... <br />");
 	//TODO: load World...
 	//or Take DebugWorld:
-	creatDebugGameBoard();
+	createDebugGameBoard();
 
 
 	CBlock::InitBlockSprites();
 
 	m_pBackGround = new CBackGround();
-	m_pBackGround->init(GameBoardWidth * BLOCKSIZE);
+	m_pBackGround->init(gameBoardWidth * BLOCKSIZE);
 
 	m_bIsRunning = true;
 	g_pLogfile->Textout(RED, true, "Constructed CGame");
 }
 
-void CGame::creatDebugGameBoard() {//creates World for debugging
+void CGame::initWorms(int amount) {
+	for (int i=0; i<amount; i++) {//w�rmer auff�llen
+		CWorm* pWorm = new CWorm(this);
+		pWorm->init(i, i, 40.0f, 40.0f, CWorm::WC_RED); //wir machen alle Würmer rot....
+		//MBE WormID=TeamID
+		pWorm->setViewPort(i);
+		m_vWorms.push_back(pWorm);
+	}
+	m_WormAmount = amount;
+}
+
+void CGame::createDebugGameBoard() {//creates World for debugging
 	//with a GROUND!
 	for (int x = 0; x < m_GBWidth; x++) {
 		CBlockKoord pos(x,18);

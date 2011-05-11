@@ -38,7 +38,10 @@ public:
 	void render();
 	void update();
 	void addItem(std::string name, int messageID, EntryType entryType);
-	std::string getItemText(); //gets Text of currently selected item!
+	std::string getSelectedItemText(); //gets Text of currently selected item!
+	std::string getItemText(int messageID);
+	void setItemText(int messageID, std::string text);
+
 	void quit();
 	virtual ~CMenu() {};
 };

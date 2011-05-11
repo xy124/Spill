@@ -39,10 +39,6 @@ CSettings::CSettings() {
 	WormSet[1].name 				= "John";
 }
 
-CSettings::~CSettings() {
-	// TODO Auto-generated destructor stub
-}
-
 void CSettings::SaveToFile(std::string sFilename) {
 	ofstream Output (sFilename.c_str(), ios::binary);
 	if (Output == NULL) {

@@ -51,8 +51,6 @@ class CWorm : public CPhysicalObject {
 		bool m_bNextBTypeKeyLock;
 		CBlock::BlockType m_selectedBType;
 
-		std::string m_Name;
-
 		std::string getWormColorString();
 
 		CSprite * m_pWormSprite;
@@ -137,12 +135,12 @@ class CWorm : public CPhysicalObject {
 
 		std::string getName()
 		{
-			return m_Name;
+			return m_pSettings->name;
 		}
 
 		void setName(std::string Name)
 		{
-			m_Name = Name;
+			m_pSettings->name = Name;
 		}
 
 		void changeEnergyBy(float v) {
