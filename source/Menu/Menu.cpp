@@ -18,10 +18,12 @@ void CMenu::init( std::string heading) {
 	m_bKeyLock = false;
 }
 
-void CMenu::addItem(string name, int messageID) {
+void CMenu::addItem(string name, int messageID, EntryType entryType) {
 	S_MenuItem item;
 	item.m_MessageID = messageID;
 	item.m_Name = name;
+	item.m_EntryType = entryType;
+	item.m_Text = "";
 	m_Items.push_back(item);
 	m_selectedItem = m_Items.begin();
 }
@@ -66,6 +68,14 @@ void CMenu::update() {
 		m_selectedItem = m_Items.begin();
 
 	if ( (!m_bKeyLock) && (g_pFramework->KeyDown(SDLK_RETURN)) ) {
+		//Change Checkboxstate on enter
+		if ( (m_selectedItem->m_EntryType == CMenu::CHECKBOX)){
+			if (m_selectedItem->m_Text == "")
+				m_selectedItem->m_Text = "1";
+			else
+				m_selectedItem->m_Text = "0";
+		}
+
 		//do process!
 		g_pMenuSystem->ProcessSelection(m_selectedItem->m_MessageID);
 		m_bKeyLock = true;
@@ -77,4 +87,32 @@ void CMenu::update() {
 				&& (g_pFramework->KeyDown(SDLK_RETURN) 	== false ) )
 			m_bKeyLock = false;
 
+	if (m_selectedItem->m_EntryType == CMenu::TEXTBOX) {
+		//put incoming letterkeys in m_text!
+		if (g_pFramework->KeyDown(SDLK_BACKSPACE)) //delete last letter FIXME!
+			m_selectedItem->m_Text.at(m_selectedItem->m_Text.length()-1);
+		SDL_Event event;
+		if (SDL_PollEvent(&event)) { //TODO hoffe das geht so das wir das jez in einer gameschleife im prinzip 2x tun!
+			if (event.type == SDL_KEYDOWN) {
+
+				char key = event.key.keysym.sym;
+				if ((97 <= key) && (key <= 122)) { //is letter key!
+					//hoffen wir mal das ascII dasselbe ist!!!
+					m_selectedItem->m_Text.append(&key);
+				}
+
+
+
+			}
+		} //if
+
+
+	}
+
+
+
+}
+
+string CMenu::getItemText() {
+	return m_selectedItem->m_Text;
 }

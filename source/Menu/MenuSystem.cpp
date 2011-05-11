@@ -17,6 +17,11 @@ using namespace std;
 #define ENTRY_OPTIONS	4002
 #define ENTRY_QUIT		4003
 
+#define ENTRY_TEXTOX_P1	5001
+#define ENTRY_TEXTOX_P2	5002
+#define ENTRY_CHECKBOX  5003
+#define ENTRY_BACK		5004
+
 void CMenuSystem::ProcessSelection(int messageID) {
 	switch (messageID) {
 	case ENTRY_START: {
@@ -39,11 +44,28 @@ void CMenuSystem::ProcessSelection(int messageID) {
 
 	} break;
 	case ENTRY_OPTIONS: {
-		//m_bIsAlive = false;
+		m_pCurrentMenu = &m_optionMenu;
+	} break;
+	case ENTRY_TEXTOX_P1: {
+		g_pLogfile->fTextout("<br /> player is in optn menu and now p1 name =",
+				m_optionMenu.getItemText());
+		//nothing
+	} break;
+	case ENTRY_TEXTOX_P2: {
+		//nothing
+	} break;
+	case ENTRY_CHECKBOX: {
+		//nothing
+	} break;
+	case ENTRY_BACK: {
+			m_pCurrentMenu = &m_mainMenu;
+			//FIXME: change Game!!!
 	} break;
 	case ENTRY_QUIT: {
-		m_bIsAlive = false;
+			m_bIsAlive = false;
 	} break;
+
+
 	default: //nothing
 		break;
 	}
@@ -54,9 +76,15 @@ void CMenuSystem::init() {
 	//TODO irwie gehts mit fktzeigern net
 
 	m_mainMenu.init(string("MainMenu"));
-	m_mainMenu.addItem("Start",		ENTRY_START);
-	m_mainMenu.addItem("Options",	ENTRY_OPTIONS);
-	m_mainMenu.addItem("Quit",		ENTRY_QUIT);
+	m_mainMenu.addItem("Start",		ENTRY_START,	CMenu::BUTTON);
+	m_mainMenu.addItem("Options",	ENTRY_OPTIONS,	CMenu::BUTTON);
+	m_mainMenu.addItem("Quit",		ENTRY_QUIT,		CMenu::BUTTON);
+
+	m_optionMenu.init("Options");
+	m_optionMenu.addItem("Name Player one: ",	ENTRY_TEXTOX_P1,	CMenu::TEXTBOX);
+	m_optionMenu.addItem("Name Player two: ",	ENTRY_TEXTOX_P2,	CMenu::TEXTBOX);
+	m_optionMenu.addItem("Senseless Checkbox: ",ENTRY_CHECKBOX,		CMenu::CHECKBOX);
+	m_optionMenu.addItem("Back: ",				ENTRY_BACK,			CMenu::BUTTON);
 
 	m_pCurrentMenu = &m_mainMenu;
 	g_pFramework->InitViewPorts(1); //init Viewport for Menusystem!

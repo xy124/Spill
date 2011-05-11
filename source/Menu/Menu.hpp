@@ -12,11 +12,19 @@
 #include <vector>
 
 class CMenu {
+public:
+	enum EntryType {
+		CHECKBOX,
+		BUTTON,
+		TEXTBOX
+	};
 private:
 	std::string m_Heading;
 	struct S_MenuItem {
 		std::string m_Name;
+		std::string m_Text;//for checkbox "" or "1"
 		int m_MessageID;
+		EntryType m_EntryType;
 	};
 	std::vector<S_MenuItem> m_Items;
 	std::vector<S_MenuItem>::iterator m_selectedItem;
@@ -29,7 +37,8 @@ public:
 	void init(std::string heading);
 	void render();
 	void update();
-	void addItem(std::string name, int messageID);
+	void addItem(std::string name, int messageID, EntryType entryType);
+	std::string getItemText(); //gets Text of currently selected item!
 	void quit();
 	virtual ~CMenu() {};
 };

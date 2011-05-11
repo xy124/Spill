@@ -16,6 +16,7 @@ private:
 	CMenu * m_pCurrentMenu;
 
 	CMenu m_mainMenu;
+	CMenu m_optionMenu;
 
 	bool m_bIsAlive;
 
