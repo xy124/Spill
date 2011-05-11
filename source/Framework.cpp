@@ -67,6 +67,9 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	//Init Debugvalue
 	m_DebugValue = "";
 
+	//no new event abailable
+	m_bIsNewEvent = false;
+
 	return (true);
 }
 
@@ -215,14 +218,18 @@ void CFramework::InitAttackAnmimations() {
 
 int CFramework::ProcessEvents() {
 	int result = 0;
-	SDL_Event event;
-	if (SDL_PollEvent(&event)) {
-		switch (event.type) {
+	if (SDL_PollEvent(&m_lastEvent) == 1)
+		m_bIsNewEvent = true;
+	else
+		m_bIsNewEvent = false;
+
+	if (m_bIsNewEvent) {
+		switch (m_lastEvent.type) {
 			case (SDL_QUIT): {
 				result = ESCAPED;
 			} break;
 			case (SDL_KEYDOWN): {
-				switch (event.key.keysym.sym) {
+				switch (m_lastEvent.key.keysym.sym) {
 					case (SDLK_ESCAPE): {
 						result = ESCAPED;
 					} break;

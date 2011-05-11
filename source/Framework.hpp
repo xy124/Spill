@@ -23,6 +23,16 @@ struct S_ViewPort {
 };
 
 class CFramework : public TSingleton<CFramework> {
+	private:
+		bool m_bIsNewEvent;
+		SDL_Surface * m_pScreen;
+
+		Uint8 *m_pKeystate;	//arraay mit aktuellem Tastaturstatus
+		std::string m_DebugValue;
+		SDL_Rect m_ScreenRect;//Size of whole the screen
+
+		SDL_Event m_lastEvent;
+
 	public:
 
 		std::vector<S_ViewPort> ViewPorts;
@@ -56,13 +66,9 @@ class CFramework : public TSingleton<CFramework> {
 
 		void drawLine(CVec v1, CVec v2, int r, int g, int b, bool doOnViewCheck = true);//on viewcheck überprüft nur die endpunkte!!!!
 
-	private:
-		SDL_Surface * m_pScreen;
-
-		Uint8 *m_pKeystate;	//arraay mit aktuellem Tastaturstatus
-		std::string m_DebugValue;
-		SDL_Rect m_ScreenRect;//Size of whole the screen
-
+		//we need to handle events in this way to be able to use them on different positions in code!
+		SDL_Event getLastEvent() {return m_lastEvent;}
+		bool isNewEvent() {return m_bIsNewEvent;}
 
 };
 

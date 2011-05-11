@@ -12,6 +12,8 @@
 
 using namespace std;
 
+bool CMenu::m_bKeyLock;
+
 void CMenu::init( std::string heading) {
 	m_selectedItem = m_Items.begin();
 	m_Heading = heading;
@@ -29,7 +31,7 @@ void CMenu::addItem(string name, int messageID, EntryType entryType) {
 }
 
 void CMenu::render() {
-	//Draw Heading: MBE: Viewport????!?!!
+	//Draw Heading:
 	g_pFramework->TextOut(m_Heading, 50, 10, 0);
 	//draw items!
 	vector<S_MenuItem>::iterator it;
@@ -40,7 +42,6 @@ void CMenu::render() {
 		g_pFramework->TextOut(it->m_Text, 500, y, 0);
 		if (it == m_selectedItem) { //draw line under it!
 			g_pFramework->drawLine(CVec(0, y+17), CVec(800,y+17), 0, 255, 0, false);
-			//MBE draws line just on viewport!
 		}
 	}
 }
@@ -52,26 +53,23 @@ void CMenu::quit() {
 void CMenu::update() {
 	if (m_selectedItem->m_EntryType == CMenu::TEXTBOX) {
 		//put incoming letterkeys in m_text!
-		if (g_pFramework->KeyDown(SDLK_BACKSPACE)) //delete last letter FIXME!
-			m_selectedItem->m_Text.at(m_selectedItem->m_Text.length()-1);
-		else {
-			SDL_Event event;
-			if (SDL_PollEvent(&event)) { //TODO hoffe das geht so das wir das jez in einer gameschleife im prinzip 2x tun!
+		if ((g_pFramework->KeyDown(SDLK_BACKSPACE))
+				&& ((m_selectedItem->m_Text.length() >= 1))) {
+			m_selectedItem->m_Text.erase(
+					m_selectedItem->m_Text.length()-1, 1);
+		} else {
+			const SDL_Event &event = g_pFramework->getLastEvent();
+			if (g_pFramework->isNewEvent()) {
 				if (event.type == SDL_KEYDOWN) {
-
 					char key = event.key.keysym.sym;
-					if ((97 <= key) && (key <= 122)) { //is letter key!
+					if ((m_selectedItem->m_Text.length() < 36) &&
+							(97 <= key) && (key <= 122)) { //is letter key!
 						m_selectedItem->m_Text.append(&key);
 					}
-
-
-
 				}
-			} //if
+			}
 		}
-
-
-	}
+	} //Textbox
 
 
 	if ( (!m_bKeyLock) && (g_pFramework->KeyDown(SDLK_DOWN)) ) {

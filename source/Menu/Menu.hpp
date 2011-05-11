@@ -31,7 +31,7 @@ private:
 
 	void ProcessKeys();
 
-	bool m_bKeyLock;
+	static bool m_bKeyLock;
 public:
 	CMenu() {};
 	void init(std::string heading);

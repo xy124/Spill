@@ -47,8 +47,8 @@ void CMenuSystem::ProcessSelection(int messageID) {
 		m_pCurrentMenu = &m_optionMenu;
 	} break;
 	case ENTRY_TEXTOX_P1: {
-		g_pLogfile->fTextout("<br /> player is in optn menu and now p1 name =",
-				m_optionMenu.getItemText());
+		/*g_pLogfile->fTextout("<br /> player is in optn menu and now p1 name =",
+				m_optionMenu.getItemText());*/
 		//nothing
 	} break;
 	case ENTRY_TEXTOX_P2: {
