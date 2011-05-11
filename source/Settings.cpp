@@ -21,7 +21,7 @@ CSettings::CSettings() {
 	WormSet[0].KeyBuild 			= SDLK_LCTRL;
 	WormSet[0].KeyBlockActions		= SDLK_TAB;
 
-	WormSet[0].name 				= "Player0";
+	WormSet[0].name 				= "Trottel";
 
 
 	//////////////////////////////
@@ -47,6 +47,7 @@ void CSettings::SaveToFile(std::string sFilename) {
 	}
 	Output.write((char*) this, sizeof(this));
 	Output.close();
+	g_pLogfile->FunctionResult("CSettings::SaveToFile",L_OK, "Successfull saved settings to " + sFilename);
 }
 
 

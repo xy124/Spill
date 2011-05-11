@@ -127,8 +127,9 @@ string CMenu::getItemText(int messageID) {
 void CMenu::setItemText(int messageID, std::string text) {
 	vector<S_MenuItem>::iterator it;
 		for (it = m_Items.begin(); it != m_Items.end(); ++it) {
-			if (it->m_MessageID == messageID)
+			if (it->m_MessageID == messageID) {
 				it->m_Text = text;
 				return;
+			}
 		}
 }
