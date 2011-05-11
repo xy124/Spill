@@ -54,19 +54,21 @@ void CMenu::update() {
 		//put incoming letterkeys in m_text!
 		if (g_pFramework->KeyDown(SDLK_BACKSPACE)) //delete last letter FIXME!
 			m_selectedItem->m_Text.at(m_selectedItem->m_Text.length()-1);
-		SDL_Event event;
-		if (SDL_PollEvent(&event)) { //TODO hoffe das geht so das wir das jez in einer gameschleife im prinzip 2x tun!
-			if (event.type == SDL_KEYDOWN) {
+		else {
+			SDL_Event event;
+			if (SDL_PollEvent(&event)) { //TODO hoffe das geht so das wir das jez in einer gameschleife im prinzip 2x tun!
+				if (event.type == SDL_KEYDOWN) {
 
-				char key = event.key.keysym.sym;
-				if ((97 <= key) && (key <= 122)) { //is letter key!
-					m_selectedItem->m_Text.append(&key);
+					char key = event.key.keysym.sym;
+					if ((97 <= key) && (key <= 122)) { //is letter key!
+						m_selectedItem->m_Text.append(&key);
+					}
+
+
+
 				}
-
-
-
-			}
-		} //if
+			} //if
+		}
 
 
 	}
