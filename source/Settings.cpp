@@ -13,30 +13,30 @@
 using namespace std;
 
 CSettings::CSettings() {
-	WormSet[0].KeyJump 				= SDLK_w;
-	WormSet[0].KeyLeft	 			= SDLK_a;
-	WormSet[0].KeyMine 				= SDLK_s;
-	WormSet[0].KeyRight 			= SDLK_d;
-	WormSet[0].KeySelectBlockType 	= SDLK_LSHIFT;
-	WormSet[0].KeyBuild 			= SDLK_LCTRL;
-	WormSet[0].KeyBlockActions		= SDLK_TAB;
+	s.WormSet[0].KeyJump 				= SDLK_w;
+	s.WormSet[0].KeyLeft	 			= SDLK_a;
+	s.WormSet[0].KeyMine 				= SDLK_s;
+	s.WormSet[0].KeyRight 			= SDLK_d;
+	s.WormSet[0].KeySelectBlockType 	= SDLK_LSHIFT;
+	s.WormSet[0].KeyBuild 			= SDLK_LCTRL;
+	s.WormSet[0].KeyBlockActions		= SDLK_TAB;
 
-	WormSet[0].name 				= "Trottel";
+	s.WormSet[0].name 				= "Trottel";
 
 
 	//////////////////////////////
 	//Second Player
 	//////////////////////////////
 
-	WormSet[1].KeyJump 				= SDLK_UP;
-	WormSet[1].KeyLeft	 			= SDLK_LEFT;
-	WormSet[1].KeyMine 				= SDLK_DOWN;
-	WormSet[1].KeyRight 			= SDLK_RIGHT;
-	WormSet[1].KeySelectBlockType 	= SDLK_RSHIFT;
-	WormSet[1].KeyBuild 			= SDLK_RCTRL;
-	WormSet[1].KeyBlockActions		= SDLK_RETURN;
+	s.WormSet[1].KeyJump 				= SDLK_UP;
+	s.WormSet[1].KeyLeft	 			= SDLK_LEFT;
+	s.WormSet[1].KeyMine 				= SDLK_DOWN;
+	s.WormSet[1].KeyRight 			= SDLK_RIGHT;
+	s.WormSet[1].KeySelectBlockType 	= SDLK_RSHIFT;
+	s.WormSet[1].KeyBuild 			= SDLK_RCTRL;
+	s.WormSet[1].KeyBlockActions		= SDLK_RETURN;
 
-	WormSet[1].name 				= "John";
+	s.WormSet[1].name 				= "John";
 }
 
 void CSettings::SaveToFile(std::string sFilename) {
@@ -45,7 +45,7 @@ void CSettings::SaveToFile(std::string sFilename) {
 		g_pLogfile->FunctionResult("CSettings::SaveToFile",L_FAIL, "Couldn't write " + sFilename);
 		return;
 	}
-	Output.write((char*) this, sizeof(this));
+	Output.write((char*) (&s), sizeof(s));
 	Output.close();
 	g_pLogfile->FunctionResult("CSettings::SaveToFile",L_OK, "Successfull saved settings to " + sFilename);
 }
@@ -58,9 +58,12 @@ void CSettings::LoadFromFile(std::string sFilename) {
 		g_pLogfile->FunctionResult("CSettings::LoadFromFile",L_FAIL, "Couldn't load " + sFilename);
 		return;
 	}
-	Input.read((char*) this, sizeof(this));
+	Input.read((char*) &s, sizeof(s));
 	Input.close();
 	g_pLogfile->FunctionResult("CSettings::LoadFromFile",L_OK, "Successfull loaded settings from " + sFilename);
+	//string ss = s.WormSet[0].name+"Loaded"+s.WormSet[1].name;
+	string ss = "0";
+	g_pLogfile->Textout(ss);
 }
 
 

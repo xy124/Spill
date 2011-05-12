@@ -140,7 +140,7 @@ class CWorm : public CPhysicalObject {
 
 		void setName(std::string Name)
 		{
-			m_pSettings->name = Name;
+			m_pSettings->name = Name.c_str();
 		}
 
 		void changeEnergyBy(float v) {

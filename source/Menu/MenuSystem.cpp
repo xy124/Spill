@@ -40,8 +40,8 @@ void CMenuSystem::ProcessSelection(int messageID) {
 	} break;
 	case ENTRY_OPTIONS: {
 		m_pCurrentMenu = &m_optionMenu;
-		m_optionMenu.setItemText(ENTRY_TEXTOX_P1, g_pSettings->WormSet[0].name);
-		m_optionMenu.setItemText(ENTRY_TEXTOX_P2, g_pSettings->WormSet[1].name);
+		m_optionMenu.setItemText(ENTRY_TEXTOX_P1, g_pSettings->s.WormSet[0].name);
+		m_optionMenu.setItemText(ENTRY_TEXTOX_P2, g_pSettings->s.WormSet[1].name);
 	} break;
 	case ENTRY_TEXTOX_P1: {
 		/*g_pLogfile->fTextout("<br /> player is in optn menu and now p1 name =",
@@ -56,8 +56,8 @@ void CMenuSystem::ProcessSelection(int messageID) {
 	} break;
 	case ENTRY_BACK: {
 		m_pCurrentMenu = &m_mainMenu;
-		g_pSettings->WormSet[0].name = m_optionMenu.getItemText(ENTRY_TEXTOX_P1) ;
-		g_pSettings->WormSet[1].name = m_optionMenu.getItemText(ENTRY_TEXTOX_P2) ;
+		g_pSettings->s.WormSet[0].name = m_optionMenu.getItemText(ENTRY_TEXTOX_P1) ;
+		g_pSettings->s.WormSet[1].name = m_optionMenu.getItemText(ENTRY_TEXTOX_P2) ;
 	} break;
 	case ENTRY_QUIT: {
 			m_bIsAlive = false;

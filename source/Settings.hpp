@@ -25,6 +25,10 @@ struct S_WormSettings {
 	std::string name;
 };
 
+struct S_saveIt {
+	S_WormSettings WormSet[2];
+};
+
 
 #define g_pSettings CSettings::get()
 class CSettings : public TSingleton<CSettings>{
@@ -32,7 +36,10 @@ public:
 	CSettings();
 	virtual ~CSettings() {};
 
-	S_WormSettings WormSet[2];
+	S_saveIt s;
+	//S_s.WormSettings s.WormSet[2];
+
+
 
 	void SaveToFile	(std::string sFilename);
 	void LoadFromFile(std::string sFilename);
