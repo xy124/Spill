@@ -53,7 +53,7 @@ void CMenu::quit() {
 void CMenu::update() {
 	if (m_selectedItem->m_EntryType == CMenu::TEXTBOX) {
 		//put incoming letterkeys in m_text!
-		if ((g_pFramework->KeyDown(SDLK_BACKSPACE))
+		if ((g_pFramework->isNewEvent()) && (g_pFramework->KeyDown(SDLK_BACKSPACE))
 				&& ((m_selectedItem->m_Text.length() >= 1))) {
 			m_selectedItem->m_Text.erase(
 					m_selectedItem->m_Text.length()-1, 1);

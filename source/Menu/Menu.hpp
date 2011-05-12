@@ -32,6 +32,8 @@ private:
 	void ProcessKeys();
 
 	static bool m_bKeyLock;
+	//We don't really need keylock because we use is new event and it's NO new event if a key is holded!
+	//but there are some lines left using it together with g_pFramework->Keydown();
 public:
 	CMenu() {};
 	void init(std::string heading);
