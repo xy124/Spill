@@ -290,8 +290,9 @@ void CFramework::drawTexturedPolygon(
 	Sint16 x[n];
 	for (it = ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
 		//MBE: tests only whether first Vertex on screen:
-		//TODO: maybe per inrect
-		if ((it->m_View.x <= x[0]) && (x[0] <= it->m_View.x+it->m_View.w) ) {
+		//TODO: maybe per inrect, maybve as param two edges.... but hard to render just 1/s Polygn...
+
+		if ((it->m_View.x <= vx[0]) && (vx[0] <= (it->m_View.x+it->m_View.w)) ) {
 			//calculate new x for viewport!
 			for (int i = 0; i<n; i++) {
 				x[i] = vx[i] + (it->m_ScreenPosition.x) - (it->m_View.x);
