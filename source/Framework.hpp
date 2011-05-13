@@ -49,7 +49,7 @@ class CFramework : public TSingleton<CFramework> {
 		void Clear();
 		void Flip();
 		bool KeyDown (int Key_ID);
-		SDL_Surface * getView() {return m_pScreen;}
+		SDL_Surface * getScreen() {return m_pScreen;}
 
 		SFont_Font * pGameFont;
 
@@ -65,6 +65,13 @@ class CFramework : public TSingleton<CFramework> {
 		bool RectInView(SDL_Rect rect, std::vector<S_ViewPort>::iterator &iter);
 
 		void drawLine(CVec v1, CVec v2, int r, int g, int b, bool doOnViewCheck = true);//on viewcheck überprüft nur die endpunkte!!!!
+		void drawFilledPolygon(
+				const Sint16 *  	vx,
+				const Sint16 *  	vy,
+				int  	n,
+				Uint8  	r,
+				Uint8  	g,
+				Uint8  	b);
 
 		//we need to handle events in this way to be able to use them on different positions in code!
 		SDL_Event getLastEvent() {return m_lastEvent;}

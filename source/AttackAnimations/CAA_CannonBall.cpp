@@ -53,6 +53,7 @@ void CAA_CannonBall::update() {
 
 void CAA_CannonBall::quit() {
 	m_pAimWorm = NULL;//eigentlich senseless!
+	m_pOwnerWorm = NULL;
 }
 
 void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm, int TeamID,

@@ -16,12 +16,12 @@ CSettings::CSettings() {
 	s.WormSet[0].KeyJump 				= SDLK_w;
 	s.WormSet[0].KeyLeft	 			= SDLK_a;
 	s.WormSet[0].KeyMine 				= SDLK_s;
-	s.WormSet[0].KeyRight 			= SDLK_d;
+	s.WormSet[0].KeyRight 				= SDLK_d;
 	s.WormSet[0].KeySelectBlockType 	= SDLK_LSHIFT;
-	s.WormSet[0].KeyBuild 			= SDLK_LCTRL;
+	s.WormSet[0].KeyBuild 				= SDLK_LCTRL;
 	s.WormSet[0].KeyBlockActions		= SDLK_TAB;
 
-	s.WormSet[0].name 				= "Trottel";
+	s.WormSet[0].name 					= "Trottel";
 
 
 	//////////////////////////////
@@ -31,12 +31,12 @@ CSettings::CSettings() {
 	s.WormSet[1].KeyJump 				= SDLK_UP;
 	s.WormSet[1].KeyLeft	 			= SDLK_LEFT;
 	s.WormSet[1].KeyMine 				= SDLK_DOWN;
-	s.WormSet[1].KeyRight 			= SDLK_RIGHT;
+	s.WormSet[1].KeyRight 				= SDLK_RIGHT;
 	s.WormSet[1].KeySelectBlockType 	= SDLK_RSHIFT;
-	s.WormSet[1].KeyBuild 			= SDLK_RCTRL;
+	s.WormSet[1].KeyBuild 				= SDLK_RCTRL;
 	s.WormSet[1].KeyBlockActions		= SDLK_RETURN;
 
-	s.WormSet[1].name 				= "John";
+	s.WormSet[1].name 					= "John";
 }
 
 void CSettings::SaveToFile(std::string sFilename) {

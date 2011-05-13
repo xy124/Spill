@@ -5,6 +5,7 @@
 #include "AttackAnimations/AttackAnimation.hpp"
 #include "AttackAnimations/CAA_Laser.hpp"
 #include "AttackAnimations/CAA_CannonBall.hpp"
+#include "AttackAnimations/CAA_Cloud.hpp"
 #include "Collision.hpp"
 
 using namespace std;
@@ -364,6 +365,13 @@ void CWorm::ProcessBlockActions() {
 
 
 		}//for all Blocks
+
+		//TODO: not here: Lightning!
+		CAA_Cloud * pCloud = new CAA_Cloud();
+		pCloud->init(CVec(0,0), this, this, 0);
+		m_pGame->m_AttackAnimations.push_back(pCloud);
+		pCloud = NULL;
+
 
 	}
 

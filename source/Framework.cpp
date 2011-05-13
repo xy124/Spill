@@ -1,6 +1,7 @@
 #include "Framework.hpp"
 #include "Sprite.hpp"
 #include "AttackAnimations/CAA_Explosion1.hpp"
+#include "AttackAnimations/CAA_Cloud.hpp"
 //MBE: make overview about includes!
 
 //TODO: ITEMS ;)
@@ -220,6 +221,11 @@ void CFramework::InitAttackAnmimations() {
 	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp",true);
 	CAA_Cloud::setSprite(pSprite);
 	pSprite = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/lightening.bmp",true);
+	CAA_Cloud::setSprite(pSprite);
+	pSprite = NULL;
 }
 
 int CFramework::ProcessEvents() {
@@ -246,5 +252,25 @@ int CFramework::ProcessEvents() {
 		} //Switch event.type
 	} //if
 	return result;
+}
+
+void CFramework::drawFilledPolygon(
+		const Sint16 *  	vx,
+		const Sint16 *  	vy,
+		int  	n,
+		Uint8  	r,
+		Uint8  	g,
+		Uint8  	b) {
+
+	//TODO: onviewtest
+	vector<S_ViewPort>::iterator it;
+	Sint16 x[n];
+	for (it = ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
+		//calculate new x for viewport!
+		for (int i = 0; i<n; i++) {
+			x[i] = vx[i] + (it->m_ScreenPosition.x) - (it->m_View.x);
+		}
+		filledPolygonRGBA(m_pScreen, x, vy, n, r, g, b, 255);
+	}
 }
 

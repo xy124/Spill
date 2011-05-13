@@ -5,7 +5,7 @@
 using namespace std;
 
 CSprite::CSprite(void) {
-	m_pScreen = g_pFramework->getView(); //zeiger auf screen holen
+	m_pScreen = g_pFramework->getScreen(); //zeiger auf screen holen
 	m_NumFrames = 0;
 	m_FrameWidth = 0;
 	m_FrameHeight = 0;
@@ -245,7 +245,7 @@ void CSprite::setColorID(int colorID) {
 
 CSprite::CSprite(const std::string sBlockFilename) {
 	//CSprite();
-	m_pScreen = g_pFramework->getView();
+	m_pScreen = g_pFramework->getScreen();
 	Load(sBlockFilename);
 }
 

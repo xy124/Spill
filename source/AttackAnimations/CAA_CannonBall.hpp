@@ -1,5 +1,5 @@
 /*
- * CAA_CannonBall.h
+ * CAA_CannonBall.hpp
  *
  *  Created on: 06.05.2011
  *      Author: Sebastian
