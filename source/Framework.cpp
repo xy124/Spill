@@ -289,11 +289,15 @@ void CFramework::drawTexturedPolygon(
 	vector<S_ViewPort>::iterator it;
 	Sint16 x[n];
 	for (it = ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		//calculate new x for viewport!
-		for (int i = 0; i<n; i++) {
-			x[i] = vx[i] + (it->m_ScreenPosition.x) - (it->m_View.x);
+		//MBE: tests only whether first Vertex on screen:
+		//TODO: maybe per inrect
+		if ((it->m_View.x <= x[0]) && (x[0] <= it->m_View.x+it->m_View.w) ) {
+			//calculate new x for viewport!
+			for (int i = 0; i<n; i++) {
+				x[i] = vx[i] + (it->m_ScreenPosition.x) - (it->m_View.x);
+			}
+			texturedPolygon(m_pScreen, x, vy, n, pTexture->getSurface(), x[n]%BLOCKSIZE, 0);
 		}
-		texturedPolygon(m_pScreen, x, vy, n, pTexture->getSurface(), 0, 0);
 	}
 }
 
