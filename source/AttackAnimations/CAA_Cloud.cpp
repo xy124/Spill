@@ -12,6 +12,7 @@
 
 
 CSprite * CAA_Cloud::m_pSprite;
+CTexture * CAA_Cloud::m_pTextureSprite;
 
 using namespace std;
 
@@ -19,8 +20,8 @@ void CAA_Cloud::setSprite(CSprite * pSprite) {
 	CAA_Cloud::m_pSprite = pSprite;
 }
 
-void CAA_Cloud::setTextureSprite(CSprite * pSprite) {
-	CAA_Cloud::m_pTextureSprite = pSprite;
+void CAA_Cloud::setTextureSprite(CTexture * pTexture) {
+	CAA_Cloud::m_pTextureSprite = pTexture;
 }
 
 void CAA_Cloud::render() {
@@ -58,7 +59,7 @@ void CAA_Cloud::render() {
 
 		//als pointer übergeben???
 		//arrays sind also immer zeiger auf den ersten wert... lustig
-		g_pFramework->drawTexturedPolygon(vx, vy, 7, 255, 255, 0, m_pTextureSprite);
+		g_pFramework->drawTexturedPolygon(vx, vy, 7, m_pTextureSprite);
 	}
 
 

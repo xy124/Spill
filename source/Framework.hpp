@@ -15,6 +15,9 @@
 
 #include "SDLgfx/SDL_gfxPrimitives.h"
 
+#include "Texture.hpp"
+
+
 #define g_pFramework CFramework::get()
 
 struct S_ViewPort {
@@ -72,6 +75,11 @@ class CFramework : public TSingleton<CFramework> {
 				Uint8  	r,
 				Uint8  	g,
 				Uint8  	b);
+		void drawTexturedPolygon(
+				const Sint16 *  	vx,
+				const Sint16 *  	vy,
+				int n,
+				CTexture * pTexture);
 
 		//we need to handle events in this way to be able to use them on different positions in code!
 		SDL_Event getLastEvent() {return m_lastEvent;}

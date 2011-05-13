@@ -207,7 +207,9 @@ void CFramework::drawLine(CVec v1, CVec v2, int r, int g, int b, bool doOnViewCh
 
 
 void CFramework::InitAttackAnmimations() {
-	CSprite * pSprite = new CSprite();
+	CSprite * pSprite;
+
+	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
 	CAA_CannonBall::setSprite(pSprite);
 	pSprite = NULL;
@@ -218,14 +220,17 @@ void CFramework::InitAttackAnmimations() {
 	pSprite = NULL;
 
 	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp",true);
+	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp", true);
 	CAA_Cloud::setSprite(pSprite);
 	pSprite = NULL;
 
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/lightening.bmp",true);
-	CAA_Cloud::setSprite(pSprite);
-	pSprite = NULL;
+	CTexture * pTexture;
+
+	pTexture = new CTexture();
+	pTexture->Load(_DIRDATA_+"/lightening.bmp");
+	CAA_Cloud::setTextureSprite(pTexture);
+	pTexture = NULL;
+
 }
 
 int CFramework::ProcessEvents() {
@@ -271,6 +276,24 @@ void CFramework::drawFilledPolygon(
 			x[i] = vx[i] + (it->m_ScreenPosition.x) - (it->m_View.x);
 		}
 		filledPolygonRGBA(m_pScreen, x, vy, n, r, g, b, 255);
+	}
+}
+
+void CFramework::drawTexturedPolygon(
+		const Sint16 *  	vx,
+		const Sint16 *  	vy,
+		int n,
+		CTexture * pTexture) {
+
+	//TODO: onviewtest
+	vector<S_ViewPort>::iterator it;
+	Sint16 x[n];
+	for (it = ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
+		//calculate new x for viewport!
+		for (int i = 0; i<n; i++) {
+			x[i] = vx[i] + (it->m_ScreenPosition.x) - (it->m_View.x);
+		}
+		texturedPolygon(m_pScreen, x, vy, n, pTexture->getSurface(), 0, 0);
 	}
 }
 

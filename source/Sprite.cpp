@@ -17,12 +17,11 @@ CSprite::CSprite(void) {
 }
 
 CSprite::~CSprite(void) {
-	
+	//TODO: alle freigeben!
 	if (m_pImages.at(m_ColorID) != NULL)
 		SDL_FreeSurface(m_pImages.at(m_ColorID)); //Surface freigeben, nicht per delete!!
 	else
 		g_pLogfile->Textout("<br />Error on freeing Image!<br />");
-	
 }
 
 void CSprite::Load(const string sFilename, bool isBackGround ) { //L�d nicht animiertes sprite
@@ -245,6 +244,7 @@ void CSprite::setColorID(int colorID) {
 
 CSprite::CSprite(const std::string sBlockFilename) {
 	//CSprite();
+	//TODO: don't we need standard construcotr here???
 	m_pScreen = g_pFramework->getScreen();
 	Load(sBlockFilename);
 }

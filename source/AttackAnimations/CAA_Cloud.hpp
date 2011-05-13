@@ -10,6 +10,7 @@
 
 #include "AttackAnimation.hpp"
 #include "../Sprite.hpp"
+#include "../Texture.hpp"
 #include "../Worm.hpp"
 
 class CWorm;
@@ -17,7 +18,7 @@ class CWorm;
 class CAA_Cloud: public CAttackAnimation {
 private:
 	static CSprite * m_pSprite;
-	static CSprite * m_pTextureSprite;
+	static CTexture * m_pTextureSprite;
 	int m_TeamID;
 	CWorm * m_pAimWorm;
 	CWorm * m_pOwnerWorm;
@@ -36,7 +37,7 @@ public:
 	~CAA_Cloud() {};
 
 	static void setSprite(CSprite * pSprite);
-	static void setTextureSprite(CSprite * pSprite);
+	static void setTextureSprite(CTexture * pTexture);
 
 };
 
