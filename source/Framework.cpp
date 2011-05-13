@@ -206,14 +206,20 @@ void CFramework::drawLine(CVec v1, CVec v2, int r, int g, int b, bool doOnViewCh
 
 
 void CFramework::InitAttackAnmimations() {
-	CSprite * pCannonball = new CSprite();
-	pCannonball->Load(_DIRDATA_+"/CannonBall.bmp");
-	CAA_CannonBall::setSprite(pCannonball);
-	pCannonball = NULL;
-	CSprite * pExplosion1 = new CSprite();
-	pExplosion1->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
-	CAA_Explosion1::setSprite(pExplosion1);
-		pExplosion1 = NULL;
+	CSprite * pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
+	CAA_CannonBall::setSprite(pSprite);
+	pSprite = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
+	CAA_Explosion1::setSprite(pSprite);
+	pSprite = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp",true);
+	CAA_Cloud::setSprite(pSprite);
+	pSprite = NULL;
 }
 
 int CFramework::ProcessEvents() {

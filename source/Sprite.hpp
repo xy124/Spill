@@ -21,9 +21,9 @@ class CSprite {
 		void SetColorKey(int R, int G, int B, int colorID);// beim Render transparente Farbe
 		void SetPos		(float fXPos, float fYPos);
 		void SetPos		(const CVec &newPos);
-		void Render		(int colorID);
+		void Render		(int colorID = 0);
 		void Render		();
-		void Render		(float fFrameNumber, bool bFlipped, int colorID);
+		void Render		(float fFrameNumber, bool bFlipped, int colorID = 0);
 		SDL_Rect GetRect() {return m_Rect;}//returns the Rect where the sprite is situated on World
 	
 	private:
