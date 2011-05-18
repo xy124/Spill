@@ -13,7 +13,10 @@
 
 #include "Singleton.hpp"
 
+class CSettings;
+
 struct S_WormSettings {
+friend class CSettings;
 	SDLKey KeyJump;
 	SDLKey KeyLeft;
 	SDLKey KeyRight;
@@ -22,7 +25,8 @@ struct S_WormSettings {
 	SDLKey KeyBuild;
 	SDLKey KeyBlockActions;//that key will let all blocks do their actions, shooting...
 
-	std::string name;
+private:
+	char name [30];
 };
 
 struct S_saveIt {
@@ -43,6 +47,9 @@ public:
 
 	void SaveToFile	(std::string sFilename);
 	void LoadFromFile(std::string sFilename);
+
+	const char* getName(int arrayIndex);
+	void setName(int arrayIndex, std::string str);
 
 };
 

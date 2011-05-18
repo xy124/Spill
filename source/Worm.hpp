@@ -135,12 +135,12 @@ class CWorm : public CPhysicalObject {
 
 		std::string getName()
 		{
-			return m_pSettings->name;
+			return g_pSettings->getName(m_WormID);
 		}
 
 		void setName(std::string Name)
 		{
-			m_pSettings->name = Name.c_str();
+			g_pSettings->setName(m_WormID, Name);
 		}
 
 		void changeEnergyBy(float v) {
