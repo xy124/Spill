@@ -132,7 +132,6 @@ void CFramework::DestroyViewPorts() {
 void CFramework::Quit() {
 	DestroyViewPorts();
 	SFont_FreeFont(pGameFont);
-//MBE SDL_FreeSurface
 	SDL_FreeSurface(m_pScreen);
 	//TODO: free Attackanimations!?! free background!?! but i think the SDL does that automatically!
 	SDL_Quit();
@@ -294,7 +293,7 @@ void CFramework::drawTexturedPolygon(
 	Sint16 x[n];
 	for (it = ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
 		//MBE: tests only whether first Vertex on screen:
-		//TODO: maybe per inrect, maybve as param two edges.... but hard to render just 1/s Polygn...
+		//TODO: maybe per inrect, maybe as param two edges.... but hard to render just 1/s Polygn...
 
 		if ((it->m_View.x <= vx[0]) && (vx[0] <= (it->m_View.x+it->m_View.w)) ) {
 			//calculate new x for viewport!

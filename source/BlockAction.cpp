@@ -21,19 +21,14 @@
 using namespace std;
 
 void CBlockAction::action(CGame * pGame, CWorm * pOwner) {
-//TODO fill it
-//FIXME: handle blockactions in diffrent funcs per block
-	//For All Blocks By owner:
-
-	list<CBlockKoord>::iterator blockIt;
-
-
-
+//TODO: handle blockactions in different funcs per block
 
 
 	vector<CWorm*>::iterator wIt;
 	CVec dist, blockPos;
 
+	//For All Blocks By owner:
+	list<CBlockKoord>::iterator blockIt;
 	for (blockIt = pOwner->m_BuiltBlocks.begin();
 			blockIt != pOwner->m_BuiltBlocks.end(); ++blockIt) {
 		//Process actions for that block...

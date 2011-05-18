@@ -15,7 +15,7 @@ class CHighscorelist : public TSingleton<CHighscorelist> {
 	public:		
 		void SaveToFile(const char * sFilename);
 		void LoadFromFile(const char * sFilename);
-		void show(); //TODO! ShowHighscores
+		void show(); //FIXME! HighscoreMenu!
 		bool isHighscore(CWorm &worm);
 		~CHighscorelist();
 };
