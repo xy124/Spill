@@ -76,7 +76,7 @@ class CWorm : public CPhysicalObject {
 		void ProcessView();
 		~CWorm();
 
-		std::list<CBlockKoord*> m_BuiltBlocks;
+		std::list<CBlockKoord> m_BuiltBlocks;
 
 		void setViewPort(int Viewport) {
 			m_ViewPort = Viewport;

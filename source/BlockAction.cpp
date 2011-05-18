@@ -25,7 +25,7 @@ void CBlockAction::action(CGame * pGame, CWorm * pOwner) {
 //FIXME: handle blockactions in diffrent funcs per block
 	//For All Blocks By owner:
 
-	list<CBlockKoord*>::iterator blockIt;
+	list<CBlockKoord>::iterator blockIt;
 
 
 
@@ -37,7 +37,7 @@ void CBlockAction::action(CGame * pGame, CWorm * pOwner) {
 	for (blockIt = pOwner->m_BuiltBlocks.begin();
 			blockIt != pOwner->m_BuiltBlocks.end(); ++blockIt) {
 		//Process actions for that block...
-		CBlock * block = pGame->getBlock(*(*blockIt));
+		CBlock * block = pGame->getBlock((*blockIt));
 
 
 		if (block->getBlockType() == CBlock::SHOOTING) {
@@ -45,7 +45,7 @@ void CBlockAction::action(CGame * pGame, CWorm * pOwner) {
 				//damage all near worms!!;
 				if ((*wIt)->getTeamID() != pOwner->getTeamID()) { //opponent!!!
 					dist = (*wIt)->getRect();
-					blockPos = CVec(*(*blockIt));
+					blockPos = CVec((*blockIt));
 					dist-= blockPos;
 
 					if (dist.quad_abs()<QUADSHOOTINGBLOCKRANGE) {
@@ -77,7 +77,7 @@ void CBlockAction::action(CGame * pGame, CWorm * pOwner) {
 			for (wIt = pGame->m_vWorms.begin(); wIt != pGame->m_vWorms.end(); ++wIt) {
 				if ((*wIt)->getTeamID() != pOwner->getTeamID()) { //opponent!!!
 					dist  = (*wIt)->getRect();
-					blockPos = CVec(*(*blockIt));
+					blockPos = CVec((*blockIt));
 					dist -= blockPos;
 					if (dist.quad_abs()<minDist || minDist <= 0.1f) {
 						pMinDistWorm = (*wIt); //aktueller wurm am nächsten...

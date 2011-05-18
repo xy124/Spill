@@ -25,6 +25,7 @@ struct S_ViewPort {
 	SDL_Rect m_ScreenPosition;
 };
 
+//TODO: maybe i should use the textout from sdlgfx
 class CFramework : public TSingleton<CFramework> {
 	private:
 		bool m_bIsNewEvent;

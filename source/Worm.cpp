@@ -148,9 +148,9 @@ void CWorm::ProcessBuilding() {
 					g_pLogfile->fTextout(BLUE, false, "Mined Block");
 					//delete block from playerlist!
 					if (miningBlockBuilderID != NOBODY) {
-						list<CBlockKoord*>::iterator it;
+						list<CBlockKoord>::iterator it;
 						for (it = m_BuiltBlocks.begin();
-							(it != m_BuiltBlocks.end()) && ((*(*it)) != pos);
+							(it != m_BuiltBlocks.end()) && ((*it) != pos);
 							++it) /*nothing*/;
 						m_BuiltBlocks.erase(it);
 
@@ -190,10 +190,11 @@ void CWorm::ProcessBuilding() {
 				&& (buildingBlock->getBlockType() == CBlock::AIR)
 				&& (g_pPhysics->isEmpty(pos)) ) {
 			if (m_pGame->BuildBlock(pos, m_selectedBType, m_WormID, m_TeamID)) {
-				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType)+" Costs:%i", CBlock::BlockCosts[m_selectedBType]);
 				m_Money -= CBlock::BlockCosts[m_selectedBType];
 				m_Points++;
-				m_BuiltBlocks.push_back(&pos);
+				m_BuiltBlocks.push_back(pos);
+
+				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType)+" Costs:%i", CBlock::BlockCosts[m_selectedBType]);
 			}
 
 		}
@@ -307,7 +308,8 @@ bool CWorm::isAlive() {
 
 void CWorm::ProcessBlockActions() {
 	bool canDoBlockAction = (g_pTimer->now()-m_fLastActionTime > LOADINGTIME);
-	if (g_pFramework->KeyDown(m_pSettings->KeyBlockActions) && canDoBlockAction)
+	if (g_pFramework->KeyDown(m_pSettings->KeyBlockActions) && canDoBlockAction) {
 		m_fLastActionTime = g_pTimer->now();
 		CBlockAction::action(m_pGame, this);
+	}
 }
