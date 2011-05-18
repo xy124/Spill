@@ -28,7 +28,7 @@ public:
 
 	virtual void render();
 	virtual void quit();
-	virtual void init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm, int TeamID,
+	virtual void init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm,
 			std::list<CAttackAnimation*> * pAttackAnimations);
 	virtual void update();
 

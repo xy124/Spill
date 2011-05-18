@@ -13,6 +13,8 @@
 
 #include "Block.hpp"
 
+#include <list>
+
 
 class CGame;
 
@@ -73,6 +75,8 @@ class CWorm : public CPhysicalObject {
 		bool isAlive();
 		void ProcessView();
 		~CWorm();
+
+		std::list<CBlockKoord*> m_BuiltBlocks;
 
 		void setViewPort(int Viewport) {
 			m_ViewPort = Viewport;

@@ -56,7 +56,7 @@ void CAA_CannonBall::quit() {
 	m_pOwnerWorm = NULL;
 }
 
-void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm, int TeamID,
+void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm,
 	list<CAttackAnimation*> * pAttackAnimations) {
 	initKillTime(5.0f);
 	FloatRect fr = StartPos.toFloatRect();
@@ -64,7 +64,7 @@ void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm, i
 	fr.h = m_pSprite->GetRect().h;
 	fr.y -= (BLOCKSIZE+1.0f); //über der kanone starten!
 	setRect(fr);
-	m_TeamID = TeamID;
+	m_TeamID = pOwnerWorm->getTeamID();
 	m_pAimWorm = pAimWorm;
 	m_pOwnerWorm = pOwnerWorm;
 	setIsSolid(true);

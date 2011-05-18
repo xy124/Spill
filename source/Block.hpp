@@ -16,7 +16,8 @@ class CBlock { //I don't want to vererben the
 					SHOOTING,
 					JUMPBOARD,
 					INVISIBLE,
-					CANNON
+					CANNON,
+					CLOUDGEN
 		};
 		static BlockType nextBlockType(BlockType now);
 		static std::string BlockTypeString(BlockType bt);

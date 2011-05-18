@@ -32,6 +32,10 @@ class CBlockKoord {
 			return ((x == rhs.x) && (y == rhs.y));
 		};
 
+		bool operator != (const CBlockKoord &rhs) const {
+			return ((x != rhs.x) || (y != rhs.y));
+		};
+
 		CBlockKoord operator + (const CBlockKoord &rhs) {//rhs=right hand side
 			return CBlockKoord(x+rhs.x, y+rhs.y);
 		};

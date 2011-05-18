@@ -2,11 +2,8 @@
 #include <map>
 #include "Framework.hpp"
 
-#include "AttackAnimations/AttackAnimation.hpp"
-#include "AttackAnimations/CAA_Laser.hpp"
-#include "AttackAnimations/CAA_CannonBall.hpp"
-#include "AttackAnimations/CAA_Cloud.hpp"
 #include "Collision.hpp"
+#include "BlockAction.hpp"
 
 using namespace std;
 
@@ -141,6 +138,7 @@ void CWorm::ProcessBuilding() {
 		CBlock* miningBlock = m_pGame->getBlock(pos);//returns NULL if for example out of Gameboard
 		if (miningBlock != NULL) {
 			int miningBlockTeamID = miningBlock->getTeamID();
+			int miningBlockBuilderID = miningBlock->getBuilderID();
 			if ( ((miningBlockTeamID == NOBODY) || (miningBlockTeamID == m_TeamID))//you can't mine other teams blocks
 					&& (miningBlock->getBlockType() != CBlock::AIR) ){
 				int newMoney = m_Money + CBlock::BlockCosts[miningBlock->getBlockType()]; //da blocktype sich dann ja ändert... bei buildblock
@@ -148,6 +146,17 @@ void CWorm::ProcessBuilding() {
 					m_Money = newMoney;
 					m_Points++;
 					g_pLogfile->fTextout(BLUE, false, "Mined Block");
+					//delete block from playerlist!
+					if (miningBlockBuilderID != NOBODY) {
+						list<CBlockKoord*>::iterator it;
+						for (it = m_BuiltBlocks.begin();
+							(it != m_BuiltBlocks.end()) && ((*(*it)) != pos);
+							++it) /*nothing*/;
+						m_BuiltBlocks.erase(it);
+
+						//m_pGame->m_vWorms.at(miningBlockBuilderID)->m_BuiltBlocks.erase();
+					}
+
 				}
 			}
 		} else g_pLogfile->Textout("<br /> Couldn't mine Block because miningBlock == NULL");
@@ -184,10 +193,11 @@ void CWorm::ProcessBuilding() {
 				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType)+" Costs:%i", CBlock::BlockCosts[m_selectedBType]);
 				m_Money -= CBlock::BlockCosts[m_selectedBType];
 				m_Points++;
+				m_BuiltBlocks.push_back(&pos);
 			}
 
 		}
-
+//FIXME: Key!
 	}
 	if (!g_pFramework->KeyDown(m_pSettings->KeyBuild))
 			m_bBuildKeyLock = false;
@@ -297,83 +307,7 @@ bool CWorm::isAlive() {
 
 void CWorm::ProcessBlockActions() {
 	bool canDoBlockAction = (g_pTimer->now()-m_fLastActionTime > LOADINGTIME);
-	if (g_pFramework->KeyDown(m_pSettings->KeyBlockActions) && canDoBlockAction) {
-		map<CBlockKoord, CBlock*>::iterator mIt;
-		vector<CWorm*>::iterator wIt;
-		CVec dist, block;
-
+	if (g_pFramework->KeyDown(m_pSettings->KeyBlockActions) && canDoBlockAction)
 		m_fLastActionTime = g_pTimer->now();
-
-		//FIXME: handle this with a special vector that contains Pointers to all blocks build by worm!!!
-		//^^but that would take more RAM....
-		for (mIt = m_pGame->m_Gameboard.begin(); mIt != m_pGame->m_Gameboard.end(); ++mIt) {
-			if (mIt->second->getBuilderID() == m_WormID) {
-				//Process actions for that block...
-				if (mIt->second->getBlockType() == CBlock::SHOOTING) {
-					for (wIt = m_pGame->m_vWorms.begin(); wIt != m_pGame->m_vWorms.end(); ++wIt) {
-						//damage all near worms!!;
-						if ((*wIt)->getTeamID() != m_TeamID) { //opponent!!!
-							dist = (*wIt)->getRect();
-							block = CVec(mIt->first);
-							dist-= block;
-
-							if (dist.quad_abs()<QUADSHOOTINGBLOCKRANGE) {
-								float e;
-								e = (*wIt)->getEnergy()-SHOOTINGBLOCKDAMAGE;
-								(*wIt)->setEnergy(e);
-								//DrawAttackAnimation
-								//get midWorm, midBlock
-								block.x += BLOCKSIZE/2;
-								block.y += BLOCKSIZE/2;
-								CAA_Laser * pLaser = new CAA_Laser();
-								pLaser->init(1.5f, block, (*wIt), 255, 0, 0);
-								m_pGame->m_AttackAnimations.push_back(pLaser);
-								//earn points!
-								changePointsBy(10);
-								changeMoneyBy(5);
-							}
-
-						}
-						//TODO: worms have to die if hp<0!
-
-					}
-				}//Shooting
-				if (mIt->second->getBlockType() == CBlock::CANNON) {
-					float minDist=0.01f;//MBE: hope thats beig enoough
-					CWorm * pMinDistWorm = NULL;
-					//findNearest opponent Worm:
-					for (wIt = m_pGame->m_vWorms.begin(); wIt != m_pGame->m_vWorms.end(); ++wIt) {
-						if ((*wIt)->getTeamID() != m_TeamID) { //opponent!!!
-							dist  = (*wIt)->getRect();
-							block = CVec(mIt->first);
-							dist -= block;
-							if (dist.quad_abs()<minDist || minDist <= 0.1f) {
-								pMinDistWorm = (*wIt); //aktueller wurm am nächsten...
-							}
-						}
-					}
-					//set nearest worm as aim!!;
-					CAA_CannonBall * pCannonBall = new CAA_CannonBall();
-					pCannonBall->init(block, pMinDistWorm, this, m_TeamID,
-							&(m_pGame->m_AttackAnimations));
-					m_pGame->m_AttackAnimations.push_back(pCannonBall);
-
-					pMinDistWorm = NULL;
-
-				}//Cannon
-
-			}//Worm built block
-
-
-		}//for all Blocks
-
-		//TODO: not here: Lightning!
-		CAA_Cloud * pCloud = new CAA_Cloud();
-		pCloud->init(CVec(0,0), this, this, 0);
-		m_pGame->m_AttackAnimations.push_back(pCloud);
-		pCloud = NULL;
-
-
-	}
-
+		CBlockAction::action(m_pGame, this);
 }
