@@ -29,7 +29,7 @@ void CIFlag::update() {
 	if (m_pOwner != NULL) { //Move key on worm!
 		FloatRect FR = getRect();
 		FR.x = m_pOwner->getRect().x;
-		FR.y = m_pOwner->getRect().y-FR.h;
+		FR.y = m_pOwner->getRect().y-16;
 		setRect(FR);
 	}
 }
