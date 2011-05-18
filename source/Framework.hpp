@@ -45,7 +45,7 @@ class CFramework : public TSingleton<CFramework> {
 					int ColorDepth, bool bFullscreen);
 		bool InitViewPorts(int Amount);
 		void DestroyViewPorts();
-		void InitAttackAnmimations();
+		void InitItemsAndAttackAnmimations();
 
 		void Quit();
 		void Update();

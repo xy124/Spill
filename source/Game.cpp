@@ -61,6 +61,9 @@ CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 
 	m_bIsRunning = true;
 	g_pLogfile->Textout(RED, true, "Constructed CGame");
+
+	m_pFlag = new CIFlag();
+	m_pFlag->init();
 }
 
 void CGame::initWorms(int amount) {
@@ -150,6 +153,8 @@ void CGame::run() {
 		}
 		stopWatch("draw worms");
 
+		renderItems();
+
 		g_pFramework->renderViewPortFrames();
 
 		g_pFramework->RenderDebugText();
@@ -238,6 +243,12 @@ void CGame::updateRenderAttackAnimations() {
 
 		}
 	}
+}
+
+void CGame::renderItems() {
+//TODO fill it better:
+	m_pFlag->update();
+	m_pFlag->render();
 }
 
 

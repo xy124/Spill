@@ -2,11 +2,43 @@
 #include "Sprite.hpp"
 #include "AttackAnimations/CAA_Explosion1.hpp"
 #include "AttackAnimations/CAA_Cloud.hpp"
+#include "items/IFlag.hpp"
 //MBE: make overview about includes!
 
 //TODO: ITEMS ;)
 
 using namespace std;
+
+void CFramework::InitItemsAndAttackAnmimations() {
+	CSprite * pSprite;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
+	CAA_CannonBall::setSprite(pSprite);
+	pSprite = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
+	CAA_Explosion1::setSprite(pSprite);
+	pSprite = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp", true);
+	CAA_Cloud::setSprite(pSprite);
+	pSprite = NULL;
+
+	CTexture * pTexture;
+
+	pTexture = new CTexture();
+	pTexture->Load(_DIRDATA_+"/lightening.bmp");
+	CAA_Cloud::setTextureSprite(pTexture);
+	pTexture = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/Flag.bmp", true);
+	CIFlag::setSprite(pSprite);
+	pSprite = NULL;
+}
 
 bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bFullscreen) {
 	//alle Systeme die wir brauchen der SDL initialisieren
@@ -63,7 +95,7 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	pGameFont = SFont_InitFont(pFontImage);
 
 	//init AttackAnimations
-	InitAttackAnmimations();
+	InitItemsAndAttackAnmimations();
 
 	//Init Debugvalue
 	m_DebugValue = "";
@@ -203,34 +235,6 @@ void CFramework::drawLine(CVec v1, CVec v2, int r, int g, int b, bool doOnViewCh
 				r, g, b, 255);
 		}
 	}
-}
-
-
-void CFramework::InitAttackAnmimations() {
-	CSprite * pSprite;
-
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
-	CAA_CannonBall::setSprite(pSprite);
-	pSprite = NULL;
-
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
-	CAA_Explosion1::setSprite(pSprite);
-	pSprite = NULL;
-
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp", true);
-	CAA_Cloud::setSprite(pSprite);
-	pSprite = NULL;
-
-	CTexture * pTexture;
-
-	pTexture = new CTexture();
-	pTexture->Load(_DIRDATA_+"/lightening.bmp");
-	CAA_Cloud::setTextureSprite(pTexture);
-	pTexture = NULL;
-
 }
 
 int CFramework::ProcessEvents() {

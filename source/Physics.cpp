@@ -112,6 +112,10 @@ bool CPhysics::doPhysics() {
 		}
 	}
 
+	if (m_pGame->m_pFlag->getCanMove()) {
+		doPhysicsFor(m_pGame->m_pFlag);
+	}
+
 	return true;
 }
 

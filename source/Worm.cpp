@@ -55,7 +55,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 
 	FloatRect FR;
 	FR = m_pWormSprite->GetRect();
-	FR.x += 100.0f * WormID;
+	FR.x = 800.0f * WormID;
 	setRect(FR);
 	setDir(CVec(0,0));
 
@@ -311,5 +311,19 @@ void CWorm::ProcessBlockActions() {
 	if (g_pFramework->KeyDown(m_pSettings->KeyBlockActions) && canDoBlockAction) {
 		m_fLastActionTime = g_pTimer->now();
 		CBlockAction::action(m_pGame, this);
-	}
+		//HINT: Blockaction also drops/takes flag
+		if (m_pGame->m_pFlag->getOwner() == NULL) { //nobody else has got the flag!
+
+			CVec posFlag = CVec(m_pGame->m_pFlag->getRect());
+			CVec dist = CVec(getRect());
+			dist -= posFlag;
+			if (dist.quad_abs() < QUADMAXFLAGDIST) {
+				//take the flag
+				m_pGame->m_pFlag->setPOwner(this);
+			}
+		} else if (m_pGame->m_pFlag->getOwner() == this ) {
+			//drop flag!;
+			m_pGame->m_pFlag->setPOwner(NULL);
+		}//elseif
+	}//can do blockaction
 }

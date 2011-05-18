@@ -1,6 +1,9 @@
 #ifndef _GAME_HPP_
 #define _GAME_HPP_
 
+
+#include "items/IFlag.hpp"
+
 #include "Block.hpp"
 #include "Worm.hpp"
 #include "BlockKoord.hpp"
@@ -21,8 +24,12 @@
 #include "AttackAnimations/AttackAnimation.hpp"
 #include "AttackAnimations/CAA_CannonBall.hpp"
 
+
+
 class CWorm;
 class CPhysics;
+
+//HINT: include is in Game.cpp!
 
 class CGame
 {
@@ -47,7 +54,13 @@ class CGame
 
 		void updateRenderAttackAnimations();
 
+		void renderItems();
+
+
+
 	public:
+		CIFlag * m_pFlag;
+
 		SDL_Rect getWorldRect() {return m_WorldRect;}
 		void setWorldRect(SDL_Rect &WorldRect) {m_WorldRect = WorldRect;}
 
