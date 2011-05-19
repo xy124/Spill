@@ -4,6 +4,8 @@
 #include "Performancecheck.hpp"
 #include "AttackAnimations/CAA_Explosion1.hpp"
 
+#include "items/IMoney.hpp"
+
 using namespace std;
 
 CSprite * CGame::m_pDummyItemIcon;
@@ -66,7 +68,7 @@ CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 
 	CIFlag * pFlag = new CIFlag();//as pointer???
 	pFlag->init();
-	m_Items.push_back(pFlag);
+	m_pItems.push_back(pFlag);
 	pFlag = NULL;
 
 }
@@ -112,6 +114,13 @@ void CGame::createDebugGameBoard() {//creates World for debugging
 	pos.x = 20;
 	pos.y = 10;
 	BuildBlock(pos, CBlock::JUMPBOARD, NOBODY, NOBODY);
+
+	//give him money!
+	CIMoney * pMoney = new CIMoney();
+	pMoney->init();
+	m_pItems.push_back(pMoney);
+	pMoney = NULL;
+
 
 }
 
@@ -215,7 +224,7 @@ void CGame::quit() {
 	//free Items:
 
 	list<CItem*>::iterator Iit;
-	for (Iit = m_Items.begin(); Iit != m_Items.end(); ++Iit) {
+	for (Iit = m_pItems.begin(); Iit != m_pItems.end(); ++Iit) {
 		(*Iit)->update();
 		(*Iit)->render();
 	}
@@ -260,7 +269,7 @@ void CGame::updateRenderAttackAnimations() {
 
 void CGame::updateRenderItems() {
 	list<CItem*>::iterator it;
-	for (it = m_Items.begin(); it != m_Items.end(); /*++ is in other part!*/) {
+	for (it = m_pItems.begin(); it != m_pItems.end(); /*++ is in other part!*/) {
 		if ((*it)->isAlive()) {
 			(*it)->update();
 			(*it)->render();
@@ -269,7 +278,7 @@ void CGame::updateRenderItems() {
 			(*it)->quit();
 			delete(*it);
 			(*it) = NULL;
-			it = m_Items.erase(it);//set it to next one!
+			it = m_pItems.erase(it);//set it to next one!
 		}
 	}
 }

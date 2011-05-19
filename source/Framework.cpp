@@ -59,7 +59,7 @@ void CFramework::InitItemsAndAttackAnmimations() {//MBE: maybe handle this bette
 	pSprite = NULL;
 
 	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/Money.bmp", true, false);
+	pSprite->Load(_DIRDATA_+"/Money.bmp", true);
 	CIMoney::setSprite(pSprite);
 	pSprite = NULL;
 

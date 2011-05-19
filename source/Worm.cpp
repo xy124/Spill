@@ -92,9 +92,15 @@ void CWorm::render() {
 	list<CItem*>::iterator it;
 	int x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x;
 	int y = 100;
-	for (it = m_pItems.begin(); it != m_pItems.end(); ++it) {
-		(*it)->renderIcon(x,y);
-		y += BLOCKSIZE;
+	for (it = m_pItems.begin(); it != m_pItems.end();/**/) {
+		if ((*it)->isAlive())  {//alive
+			(*it)->renderIcon(x,y);
+			y += BLOCKSIZE;
+			++it;
+		} else {
+			it = m_pItems.erase(it);
+			m_SelectedpItem = it;
+		}
 	}
 
 	//render selected Item again!
@@ -338,7 +344,7 @@ void CWorm::ProcessBlockActions() {
 		//for all items in range: pick them up, if no item selected
 		if (m_SelectedpItem == m_pItems.end()) { //pick item up!
 			list<CItem*>::iterator it;
-			for (it = m_pGame->m_Items.begin(); it != m_pGame->m_Items.end(); ++it) {
+			for (it = m_pGame->m_pItems.begin(); it != m_pGame->m_pItems.end(); ++it) {
 				if ((*it)->getOwner() == NULL) { //nobody owns it
 					//calculate distance to item:
 					CVec posItem = CVec((*it)->getRect());
