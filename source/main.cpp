@@ -15,14 +15,14 @@
 int main (int argc, char *argv[]) {
 	CLogfile::get()->CreateLogfile("Logfile.html");
 
-	g_pSpritepool;//init Spritepool, load Sprites!
-
 	CHighscorelist::get()->LoadFromFile(HIGHSCOREFILE);
 	//TODO: show menu
 
 	if (g_pFramework->Init(800, 600, 24, false) == false)
 		return (0); //Fehler werden schon in Framework selbst abgehandelt!
 	SDL_WM_SetCaption("Spill", "Spill");
+
+	g_pSpritepool;//init Spritepool, load Sprites!
 
 	g_pSettings->LoadFromFile("Settings.s");
 
@@ -42,10 +42,10 @@ int main (int argc, char *argv[]) {
 
 	g_pPhysics->del();
 
+	g_pSpritepool->del();
+
 	g_pFramework->Quit();
 	g_pFramework->del();
-
-	g_pSpritepool->del();
 
 	CHighscorelist::get()->SaveToFile(HIGHSCOREFILE);
 	CHighscorelist::del();
