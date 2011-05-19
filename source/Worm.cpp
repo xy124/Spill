@@ -337,15 +337,15 @@ void CWorm::ProcessBlockActions() {
 //HINT: Blockaction also drops/takes item
 		//for all items in range: pick them up, if no item selected
 		if (m_SelectedpItem == m_pItems.end()) { //pick item up!
-			list<CItem>::iterator it;
+			list<CItem*>::iterator it;
 			for (it = m_pGame->m_Items.begin(); it != m_pGame->m_Items.end(); ++it) {
-				if (it->getOwned() == false) { //nobody owns it
+				if ((*it)->getOwned() == false) { //nobody owns it
 					//calculate distance to item:
-					CVec posItem = CVec(it->getRect());
+					CVec posItem = CVec((*it)->getRect());
 					CVec dist = CVec(getRect());
 					dist -= posItem;
 					if (dist.quad_abs() < QUADMAXITEMPICKUPDIST) { //in range...., so its mine now!
-						m_pItems.push_back(&(*it));//TODO hope that works...
+						m_pItems.push_back((*it));//TODO hope that works...
 					}
 				}
 			}
@@ -363,8 +363,6 @@ void CWorm::ProcessNextItemKey() {
 			m_SelectedpItem = m_pItems.begin();
 		else {
 			m_SelectedpItem++;
-			if (m_SelectedpItem == m_pItems.end())
-				m_SelectedpItem = m_pItems.begin();
 		}
 	}
 }

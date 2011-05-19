@@ -113,10 +113,10 @@ bool CPhysics::doPhysics() {
 	}
 
 	//do physics for every item!
-	list<CItem>::iterator Iit;
+	list<CItem*>::iterator Iit;
 	for (Iit = m_pGame->m_Items.begin(); Iit != m_pGame->m_Items.end(); ++Iit) {
-		if (Iit->getCanMove())
-			doPhysicsFor(&(*Iit));//MBE
+		if ((*Iit)->getCanMove())
+			doPhysicsFor((*Iit));//MBE
 	}
 
 	return true;

@@ -21,8 +21,7 @@ private:
 	static CWorm * m_pOwner;
 
 public:
-	//CIFlag() {};
-	//~CIFlag() {};
+	~CIFlag() {};
 
 
 
@@ -30,12 +29,13 @@ public:
 		CIFlag::m_pSprite = pSprite;
 	}
 
-	void init();
-	void render();
+	virtual void init();
+	virtual void render();
 
-	void update();
-	void quit() {};
+	virtual void update();
+	virtual void quit() {};
 
+	//MBE: owner settet???
 	void setPOwner(CWorm *m_pOwner);
 	CWorm * getOwner() {
 		return m_pOwner;

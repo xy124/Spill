@@ -59,7 +59,7 @@ class CGame
 	public:
 		static CSprite * m_pDummyItemIcon;
 
-		std::list<CItem> m_Items;//Worms only get pointers to objects in this item!
+		std::list<CItem*> m_Items;//Worms only get pointers to objects in this item!
 
 		SDL_Rect getWorldRect() {return m_WorldRect;}
 		void setWorldRect(SDL_Rect &WorldRect) {m_WorldRect = WorldRect;}

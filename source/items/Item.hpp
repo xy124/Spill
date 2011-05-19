@@ -16,7 +16,6 @@ private:
 	bool m_bOwned;
 	static CSprite * m_pIcon;
 public:
-	CItem() {};
 	virtual ~CItem() {};
 
 	void init() {m_bOwned = false; setCanMove(false);};

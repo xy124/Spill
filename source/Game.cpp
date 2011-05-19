@@ -64,9 +64,10 @@ CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 	m_bIsRunning = true;
 	g_pLogfile->Textout(RED, true, "Constructed CGame");
 
-	CIFlag flag;//as pointer???
-	flag.init();
-	m_Items.push_back(flag);
+	CIFlag * pFlag = new CIFlag();//as pointer???
+	pFlag->init();
+	m_Items.push_back(pFlag);
+	pFlag = NULL;
 
 }
 
@@ -211,6 +212,14 @@ void CGame::quit() {
 	m_pBackGround->quit();
 	CLogfile::get()->Textout("</ br>quitted CGame");
 
+	//free Items:
+
+	list<CItem*>::iterator Iit;
+	for (Iit = m_Items.begin(); Iit != m_Items.end(); ++Iit) {
+		(*Iit)->update();
+		(*Iit)->render();
+	}
+
 
 }
 
@@ -250,10 +259,10 @@ void CGame::updateRenderAttackAnimations() {
 }
 
 void CGame::updateRenderItems() {
-	list<CItem>::iterator it;
+	list<CItem*>::iterator it;
 	for (it = m_Items.begin(); it != m_Items.end(); ++it) {
-		it->update();
-		it->render();
+		(*it)->update();
+		(*it)->render();
 	}
 }
 
