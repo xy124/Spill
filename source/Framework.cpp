@@ -4,9 +4,7 @@
 #include "AttackAnimations/CAA_Cloud.hpp"
 #include "items/IFlag.hpp"
 #include "items/IMoney.hpp"
-//MBE: make overview about includes!
-
-//TODO: ITEMS ;)
+//MBE: create overview about includes!
 
 using namespace std;
 

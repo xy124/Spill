@@ -30,7 +30,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_TeamID = TeamID;
 	setCanJump(false);
 	m_Color = WC;
-	m_Money = 140;//ForDebugReasons MBE
+	m_Money = 140;//MBE ForDebugReasons
 	m_Points = 0;
 	m_Energy = MAXENERGY;
 	m_fLastActionTime = 0.0f;

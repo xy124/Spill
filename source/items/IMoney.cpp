@@ -32,11 +32,8 @@ void CIMoney::update() {
 }
 
 void CIMoney::init() {
+	this->CItem::init();
 	setIsSolid(true);
-	setCanMove(true);
-	setIsAlive(true);
-	setOwner(NULL);
-	//TODO do these lines with the help of the superclass (item)!
 
 	FloatRect FR;
 	FR.x = m_pSprite->GetRect().x+500;

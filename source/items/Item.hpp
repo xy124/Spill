@@ -22,7 +22,11 @@ private:
 public:
 	virtual ~CItem() {};
 
-	void init() {m_pOwner = NULL; setCanMove(false); m_bIsAlive = true;};
+	void init() {
+		m_pOwner = NULL;
+		setCanMove(true);
+		m_bIsAlive = true;
+	};
 	virtual void use() {};
 	virtual void update() {};
 	virtual void render() {};
@@ -52,5 +56,7 @@ public:
 		return m_bIsAlive;
 	}
 };
+
+//FIXME: SPRITEPOOL!
 
 #endif /* ITEM_HPP_ */

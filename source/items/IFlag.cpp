@@ -13,10 +13,8 @@
 CSprite * CIFlag::m_pSprite;
 
 void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not null... but where to set null?)
+	this->CItem::init();
 	setIsSolid(true);
-	setCanMove(true);
-	setIsAlive(true);
-	setOwner(NULL);
 
 	FloatRect FR;
 	FR.x = m_pSprite->GetRect().x;

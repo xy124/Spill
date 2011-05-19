@@ -21,7 +21,7 @@ class CPhysicalObject { //HINT: diese klasse nicht instanzieren!!!!!! nur vererb
 		CVec m_dir; //direction, MovingVector per second!!!
 
 		S_Collision m_lastCollisionY;
-	public: //HINT: PERFORMANCE?!?!wir machen das jez mal �bern Stack... wat solls
+	public:
 		CPhysicalObject() {};
 		virtual ~CPhysicalObject() {};
 
