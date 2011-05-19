@@ -7,8 +7,6 @@
 
 #include "Item.hpp"
 
-CSprite * CItem::m_pIcon;
-
 void CItem::renderIcon(int x, int y) {
 	m_pIcon->SetPos(x, y);
 	m_pIcon->Render();

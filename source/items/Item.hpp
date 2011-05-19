@@ -16,7 +16,7 @@ class CWorm;
 
 class CItem : public CPhysicalObject {
 private:
-	static CSprite * m_pIcon;
+	CSprite * m_pIcon;
 	CWorm * m_pOwner;
 	bool m_bIsAlive;
 public:
@@ -46,8 +46,8 @@ public:
 
 //FIXME: zauberstab zum unsichtbar machen!
 
-	static void renderIcon(int x, int y);
-	static void setIcon(CSprite * pIcon);
+	void renderIcon(int x, int y);
+	void setIcon(CSprite * pIcon);
 
 	void setIsAlive(bool alive) {
 		m_bIsAlive = alive;

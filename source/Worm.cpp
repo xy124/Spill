@@ -383,7 +383,10 @@ void CWorm::ProcessNextItemKey() {
 }
 
 void CWorm::ProcessUseItemKey() {
-	if (m_SelectedpItem != m_pItems.end()) {
-		(*m_SelectedpItem)->use();
+	if (g_pFramework->isNewEvent() && //Keylog
+				g_pFramework->KeyDown(m_pSettings->KeyUseItem)) {
+		if (m_SelectedpItem != m_pItems.end()) {
+			(*m_SelectedpItem)->use();
+		}
 	}
 }

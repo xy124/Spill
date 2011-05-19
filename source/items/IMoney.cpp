@@ -37,6 +37,9 @@ void CIMoney::init() {
 	this->CItem::init();
 	setIsSolid(true);
 
+	setIcon(g_pSpritepool->at(SPRITE_ICONMONEY));
+	setSprite(g_pSpritepool->at(SPRITE_MONEY));
+
 	FloatRect FR;
 	FR.x = m_pSprite->GetRect().x+500;
 	FR.y = m_pSprite->GetRect().y;
@@ -44,8 +47,7 @@ void CIMoney::init() {
 	FR.h = m_pSprite->GetRect().h;
 	setRect(FR);
 
-	setIcon(g_pSpritepool->at(SPRITE_ICONMONEY));
-	setSprite(g_pSpritepool->at(SPRITE_MONEY));
+
 
 	g_pLogfile->Textout("</ br>inited Money!");
 }
