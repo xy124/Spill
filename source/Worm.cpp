@@ -353,6 +353,7 @@ void CWorm::ProcessBlockActions() {
 
 		} else {//drop item!
 			(*m_SelectedpItem)->setOwner(NULL);
+			m_SelectedpItem = m_pItems.erase(m_SelectedpItem);
 
 		}
 
