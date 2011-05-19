@@ -9,6 +9,7 @@
 #include "../FloatRect.hpp"
 #include "../Worm.hpp"
 #include "../Logfile.hpp"
+#include "../Spritepool.hpp"
 
 CSprite * CIFlag::m_pSprite;
 
@@ -22,6 +23,10 @@ void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not nul
 	FR.w = m_pSprite->GetRect().w;
 	FR.h = m_pSprite->GetRect().h;
 	setRect(FR);
+
+	setIcon(g_pSpritepool->at(SPRITE_ICONFLAG));
+	setSprite(g_pSpritepool->at(SPRITE_FLAG));
+
 
 	g_pLogfile->Textout("</ br>inited Flag!");
 }

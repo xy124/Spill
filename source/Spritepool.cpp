@@ -23,6 +23,7 @@ CSpritepool::CSpritepool() {
 	CSprite * pSprite;
 
 //Cannonball
+//0
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
 	CAA_CannonBall::setSprite(pSprite);
@@ -30,6 +31,7 @@ CSpritepool::CSpritepool() {
 	pSprite = NULL;
 
 //Explosion
+//1
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
 	CAA_Explosion1::setSprite(pSprite);
@@ -37,6 +39,7 @@ CSpritepool::CSpritepool() {
 	pSprite = NULL;
 
 //Cloud
+//2
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp", true);
 	CAA_Cloud::setSprite(pSprite);
@@ -52,12 +55,13 @@ CSpritepool::CSpritepool() {
 	pTexture = NULL;
 
 //Flag:
+//3
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Flag.bmp", true);
 	CIFlag::setSprite(pSprite);
 	m_pSprites.push_back(pSprite);
 	pSprite = NULL;
-
+//4
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/IconFlag.bmp", true, false);
 	CIFlag::setIcon(pSprite);//MBE: static für jedes vererbete neue static??? ich hoffe doch mal!
@@ -65,6 +69,7 @@ CSpritepool::CSpritepool() {
 	pSprite = NULL;
 
 //DummyIcon:
+//5
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true, false);
 	CGame::setDummyItemIcon(pSprite);
@@ -72,12 +77,13 @@ CSpritepool::CSpritepool() {
 	pSprite = NULL;
 
 //Money
+//6
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/IconMoney.bmp", true, false);
 	CIMoney::setIcon(pSprite);
 	m_pSprites.push_back(pSprite);
 	pSprite = NULL;
-
+//7
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Money.bmp", true);
 	CIMoney::setSprite(pSprite);
@@ -98,6 +104,7 @@ CSpritepool::CSpritepool() {
 	g_pLogfile->Textout("<br />Successful loaded Sprites!");
 
 //Worms:
+//8
 	//HINT: Important that worms are the last because they take their animation from back!
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 3 , 25, 18);

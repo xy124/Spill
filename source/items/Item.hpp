@@ -44,6 +44,7 @@ public:
 		return m_pOwner;
 	};
 
+//FIXME: zauberstab zum unsichtbar machen!
 
 	static void renderIcon(int x, int y);
 	static void setIcon(CSprite * pIcon);
@@ -57,6 +58,5 @@ public:
 	}
 };
 
-//FIXME: SPRITEPOOL!
 
 #endif /* ITEM_HPP_ */

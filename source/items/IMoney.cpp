@@ -7,6 +7,8 @@
 
 #include "IMoney.hpp"
 #include "../Worm.hpp"
+#include "../Spritepool.hpp"
+
 
 CSprite * CIMoney::m_pSprite;
 
@@ -41,6 +43,9 @@ void CIMoney::init() {
 	FR.w = m_pSprite->GetRect().w;
 	FR.h = m_pSprite->GetRect().h;
 	setRect(FR);
+
+	setIcon(g_pSpritepool->at(SPRITE_ICONMONEY));
+	setSprite(g_pSpritepool->at(SPRITE_MONEY));
 
 	g_pLogfile->Textout("</ br>inited Money!");
 }
