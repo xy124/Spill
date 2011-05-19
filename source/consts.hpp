@@ -30,7 +30,7 @@
 #define WORMMAXSPEED_X 175.0f
 #define WORMACCELERATION 100.0f
 #define LOADINGTIME 2.0f //it takes seven secs for reloading Blockactions
-#define QUADMAXFLAGDIST 10000
+#define QUADMAXITEMPICKUPDIST 10000
 //forDebugreasons^^
 //Orientation:
 #define OLEFT true

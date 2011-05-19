@@ -6,6 +6,8 @@
 
 using namespace std;
 
+CSprite * CGame::m_pDummyItemIcon;
+
 CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 	//TODO: cut in more functions!
 
@@ -62,8 +64,10 @@ CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 	m_bIsRunning = true;
 	g_pLogfile->Textout(RED, true, "Constructed CGame");
 
-	m_pFlag = new CIFlag();
-	m_pFlag->init();
+	CIFlag flag;//as pointer???
+	flag.init();
+	m_Items.push_back(flag);
+
 }
 
 void CGame::initWorms(int amount) {
@@ -153,7 +157,7 @@ void CGame::run() {
 		}
 		stopWatch("draw worms");
 
-		renderItems();
+		UpdateRenderItems();
 
 		g_pFramework->renderViewPortFrames();
 
@@ -245,10 +249,12 @@ void CGame::updateRenderAttackAnimations() {
 	}
 }
 
-void CGame::renderItems() {
-//TODO fill it better:
-	m_pFlag->update();
-	m_pFlag->render();
+void CGame::UpdateRenderItems() {
+	list<CItem>::iterator it;
+	for (it = m_Items.begin(); it != m_Items.end(); ++it) {
+		it->update();
+		it->render();
+	}
 }
 
 
@@ -273,4 +279,8 @@ void CGame::setGBHeight(int m_GBHeight)
 void CGame::setGBWidth(int m_GBWidth)
 {
     this->m_GBWidth = m_GBWidth;
+}
+
+void CGame::setDummyItemIcon(CSprite * pIcon) {
+	m_pDummyItemIcon = pIcon;
 }

@@ -24,6 +24,7 @@ friend class CSettings;
 	SDLKey KeySelectBlockType;
 	SDLKey KeyBuild;
 	SDLKey KeyBlockActions;//that key will let all blocks do their actions, shooting...
+	SDLKey KeyNextItem;
 
 private:
 	char name [30];

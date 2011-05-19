@@ -10,14 +10,15 @@
 
 #include "../Sprite.hpp"
 #include "../PhysicalObject.hpp"
+#include "Item.hpp"
 
 
 class CWorm;
 
-class CIFlag : public CPhysicalObject {
+class CIFlag : public CItem {
 private:
-	CWorm * m_pOwner;
 	static CSprite * m_pSprite;
+	static CWorm * m_pOwner;
 
 public:
 	CIFlag() {};
@@ -31,12 +32,15 @@ public:
 
 	void init();
 	void render();
-    void setPOwner(CWorm *m_pOwner);
-    CWorm * getOwner() {
-    	return m_pOwner;
-    };
+
 	void update();
 	void quit() {};
+
+	void setPOwner(CWorm *m_pOwner);
+	CWorm * getOwner() {
+		return m_pOwner;
+	};
+
 };
 
 #endif /* FLAG_HPP_ */

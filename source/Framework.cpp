@@ -38,6 +38,18 @@ void CFramework::InitItemsAndAttackAnmimations() {
 	pSprite->Load(_DIRDATA_+"/Flag.bmp", true);
 	CIFlag::setSprite(pSprite);
 	pSprite = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/IconFlag.bmp", true);
+	CIFlag::setIcon(pSprite);//MBE: static für jedes vererbete neue static??? ich hoffe doch mal!
+	pSprite = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true);
+	CGame::setDummyItemIcon(pSprite);
+	pSprite = NULL;
+
+
 }
 
 bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bFullscreen) {

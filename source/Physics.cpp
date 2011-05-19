@@ -112,8 +112,11 @@ bool CPhysics::doPhysics() {
 		}
 	}
 
-	if (m_pGame->m_pFlag->getCanMove()) {
-		doPhysicsFor(m_pGame->m_pFlag);
+	//do physics for every item!
+	list<CItem>::iterator Iit;
+	for (Iit = m_pGame->m_Items.begin(); Iit != m_pGame->m_Items.end(); ++Iit) {
+		if (Iit->getCanMove())
+			doPhysicsFor(&(*Iit));//MBE
 	}
 
 	return true;

@@ -10,6 +10,7 @@
 #include "../Worm.hpp"
 
 CSprite * CIFlag::m_pSprite;
+CWorm * CIFlag::m_pOwner;
 
 void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not null... but where to set null?)
 	setIsSolid(true);

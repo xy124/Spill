@@ -13,6 +13,8 @@
 
 #include "Block.hpp"
 
+#include "items/Item.hpp"
+
 #include <list>
 
 
@@ -62,6 +64,7 @@ class CWorm : public CPhysicalObject {
 		void ProcessBuilding();
 		void ProcessAnim();
 		void ProcessBlockActions();
+		void ProcessNextItemKey();
 
 	public:
 		CWorm(CGame *pGame);
@@ -77,6 +80,9 @@ class CWorm : public CPhysicalObject {
 		~CWorm();
 
 		std::list<CBlockKoord> m_BuiltBlocks;
+
+		std::list<CItem*> m_pItems;
+		std::list<CItem*>::iterator m_SelectedpItem;
 
 		void setViewPort(int Viewport) {
 			m_ViewPort = Viewport;

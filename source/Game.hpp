@@ -1,7 +1,7 @@
 #ifndef _GAME_HPP_
 #define _GAME_HPP_
 
-
+#include "items/Item.hpp"
 #include "items/IFlag.hpp"
 
 #include "Block.hpp"
@@ -54,12 +54,12 @@ class CGame
 
 		void updateRenderAttackAnimations();
 
-		void renderItems();
-
-
+		void UpdateRenderItems();
 
 	public:
-		CIFlag * m_pFlag;
+		static CSprite * m_pDummyItemIcon;
+
+		std::list<CItem> m_Items;//Worms only get pointers to objects in this item!
 
 		SDL_Rect getWorldRect() {return m_WorldRect;}
 		void setWorldRect(SDL_Rect &WorldRect) {m_WorldRect = WorldRect;}
@@ -83,6 +83,8 @@ class CGame
 		int getGBWidth() const;
 		void setGBHeight(int m_GBHeight);
 		void setGBWidth(int m_GBWidth);
+
+		static void setDummyItemIcon(CSprite * pIcon);
 };
 
 #endif

@@ -34,6 +34,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_Points = 0;
 	m_Energy = MAXENERGY;
 	m_fLastActionTime = 0.0f;
+	m_SelectedpItem = m_pItems.end();
 
 	setCanMove(true);
 	
@@ -83,9 +84,28 @@ void CWorm::reset() { //HINT: resettet nicht die Position
 }
 
 void CWorm::render() {
+	//render worm!
 	CVec newWormPos = CVec(getRect());
 	m_pWormSprite->SetPos( newWormPos);
 	m_pWormSprite->Render(m_fAnimphase, m_bOrientation, m_TeamID);
+	//render ItemIcons!
+	list<CItem*>::iterator it;
+	int x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x;
+	int y = 100;
+	for (it = m_pItems.begin(); it != m_pItems.end(); ++it) {
+		(*it)->renderIcon(x,y);
+		y += BLOCKSIZE;
+	}
+
+	//render selected Item again!
+	x += 100;
+	y = 100;
+	if (m_SelectedpItem == m_pItems.end()) {
+		m_pGame->m_pDummyItemIcon->SetPos(x,y);
+		m_pGame->m_pDummyItemIcon->Render();
+	} else {
+		(*m_SelectedpItem)->renderIcon(x,y);
+	}
 }
 
 void CWorm::ProcessMoving() {
@@ -299,6 +319,8 @@ void CWorm::update() {
 
 	ProcessAnim();
 
+	ProcessNextItemKey();
+
 	//Physics happens in do physics!
 }
 
@@ -311,19 +333,38 @@ void CWorm::ProcessBlockActions() {
 	if (g_pFramework->KeyDown(m_pSettings->KeyBlockActions) && canDoBlockAction) {
 		m_fLastActionTime = g_pTimer->now();
 		CBlockAction::action(m_pGame, this);
-		//HINT: Blockaction also drops/takes flag
-		if (m_pGame->m_pFlag->getOwner() == NULL) { //nobody else has got the flag!
 
-			CVec posFlag = CVec(m_pGame->m_pFlag->getRect());
-			CVec dist = CVec(getRect());
-			dist -= posFlag;
-			if (dist.quad_abs() < QUADMAXFLAGDIST) {
-				//take the flag
-				m_pGame->m_pFlag->setPOwner(this);
+//HINT: Blockaction also drops/takes item
+		//for all items in range: pick them up, if no item selected
+		if (m_SelectedpItem == m_pItems.end()) { //pick item up!
+			list<CItem>::iterator it;
+			for (it = m_pGame->m_Items.begin(); it != m_pGame->m_Items.end(); ++it) {
+				if (it->getOwned() == false) { //nobody owns it
+					//calculate distance to item:
+					CVec posItem = CVec(it->getRect());
+					CVec dist = CVec(getRect());
+					dist -= posItem;
+					if (dist.quad_abs() < QUADMAXITEMPICKUPDIST) { //in range...., so its mine now!
+						m_pItems.push_back(&(*it));//TODO hope that works...
+					}
+				}
 			}
-		} else if (m_pGame->m_pFlag->getOwner() == this ) {
-			//drop flag!;
-			m_pGame->m_pFlag->setPOwner(NULL);
-		}//elseif
+
+		} else {//drop item!
+			(*m_SelectedpItem)->setOwned(false);
+		}
+
 	}//can do blockaction
+}
+
+void CWorm::ProcessNextItemKey() {
+	if (g_pFramework->KeyDown(m_pSettings->KeyNextItem)) {
+		if (m_SelectedpItem == m_pItems.end())
+			m_SelectedpItem = m_pItems.begin();
+		else {
+			m_SelectedpItem++;
+			if (m_SelectedpItem == m_pItems.end())
+				m_SelectedpItem = m_pItems.begin();
+		}
+	}
 }
