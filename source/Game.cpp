@@ -260,9 +260,17 @@ void CGame::updateRenderAttackAnimations() {
 
 void CGame::updateRenderItems() {
 	list<CItem*>::iterator it;
-	for (it = m_Items.begin(); it != m_Items.end(); ++it) {
-		(*it)->update();
-		(*it)->render();
+	for (it = m_Items.begin(); it != m_Items.end(); /*++ is in other part!*/) {
+		if ((*it)->isAlive()) {
+			(*it)->update();
+			(*it)->render();
+			++it;
+		} else {
+			(*it)->quit();
+			delete(*it);
+			(*it) = NULL;
+			it = m_Items.erase(it);//set it to next one!
+		}
 	}
 }
 

@@ -8,6 +8,7 @@
 #include "IFlag.hpp"
 #include "../FloatRect.hpp"
 #include "../Worm.hpp"
+#include "../Logfile.hpp"
 
 CSprite * CIFlag::m_pSprite;
 
@@ -15,17 +16,18 @@ void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not nul
 	setIsSolid(true);
 	setCanMove(true);
 
-	//MBE: better typeconversation?
 	FloatRect FR;
 	FR.x = m_pSprite->GetRect().x;
 	FR.y = m_pSprite->GetRect().y;
 	FR.w = m_pSprite->GetRect().w;
 	FR.h = m_pSprite->GetRect().h;
 	setRect(FR);
+
+	g_pLogfile->Textout("</ br>inited Flag!");
 }
 
 void CIFlag::update() {
-	if (getOwner() != NULL) { //Move key on worm!
+	if (getOwner() != NULL) { //Move Flag on worm!
 		FloatRect FR = getRect();
 		FR.x = getOwner()->getRect().x;
 		FR.y = getOwner()->getRect().y-16;

@@ -3,13 +3,14 @@
 #include "AttackAnimations/CAA_Explosion1.hpp"
 #include "AttackAnimations/CAA_Cloud.hpp"
 #include "items/IFlag.hpp"
+#include "items/IMoney.hpp"
 //MBE: make overview about includes!
 
 //TODO: ITEMS ;)
 
 using namespace std;
 
-void CFramework::InitItemsAndAttackAnmimations() {
+void CFramework::InitItemsAndAttackAnmimations() {//MBE: maybe handle this better in other way!
 	CSprite * pSprite;
 
 	pSprite = new CSprite();
@@ -34,6 +35,7 @@ void CFramework::InitItemsAndAttackAnmimations() {
 	CAA_Cloud::setTextureSprite(pTexture);
 	pTexture = NULL;
 
+//Flag:
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Flag.bmp", true);
 	CIFlag::setSprite(pSprite);
@@ -44,9 +46,21 @@ void CFramework::InitItemsAndAttackAnmimations() {
 	CIFlag::setIcon(pSprite);//MBE: static für jedes vererbete neue static??? ich hoffe doch mal!
 	pSprite = NULL;
 
+//DummyIcon:
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true, false);
 	CGame::setDummyItemIcon(pSprite);
+	pSprite = NULL;
+
+//Money
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/IconMoney.bmp", true, false);
+	CIMoney::setIcon(pSprite);
+	pSprite = NULL;
+
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/Money.bmp", true, false);
+	CIMoney::setSprite(pSprite);
 	pSprite = NULL;
 
 

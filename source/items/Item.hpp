@@ -18,10 +18,11 @@ class CItem : public CPhysicalObject {
 private:
 	static CSprite * m_pIcon;
 	CWorm * m_pOwner;
+	bool m_bIsAlive;
 public:
 	virtual ~CItem() {};
 
-	void init() {m_pOwner = NULL; setCanMove(false);};
+	void init() {m_pOwner = NULL; setCanMove(false); m_bIsAlive = true;};
 	virtual void use() {};
 	virtual void update() {};
 	virtual void render() {};
@@ -42,6 +43,14 @@ public:
 
 	static void renderIcon(int x, int y);
 	static void setIcon(CSprite * pIcon);
+
+	void setIsAlive(bool alive) {
+		m_bIsAlive = alive;
+	}
+
+	bool isAlive() {
+		return m_bIsAlive;
+	}
 };
 
 #endif /* ITEM_HPP_ */
