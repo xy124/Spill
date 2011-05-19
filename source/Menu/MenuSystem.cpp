@@ -8,15 +8,7 @@
 #include "../Framework.hpp"
 #include "../Game.hpp"
 #include "../Settings.hpp"
-
-#define ENTRY_START		4001
-#define ENTRY_OPTIONS	4002
-#define ENTRY_QUIT		4003
-
-#define ENTRY_TEXTOX_P1	5001
-#define ENTRY_TEXTOX_P2	5002
-#define ENTRY_CHECKBOX  5003
-#define ENTRY_BACK		5004
+#include "../Highscorelist.hpp"
 
 void CMenuSystem::ProcessSelection(int messageID) {
 	switch (messageID) {
@@ -54,10 +46,16 @@ void CMenuSystem::ProcessSelection(int messageID) {
 	case ENTRY_CHECKBOX: {
 		//nothing
 	} break;
-	case ENTRY_BACK: {
+	case ENTRY_BACKMAIN: {
+		if (m_pCurrentMenu == &m_optionMenu) {
+			g_pSettings->setName(0, m_optionMenu.getItemText(ENTRY_TEXTOX_P1)) ;
+			g_pSettings->setName(1, m_optionMenu.getItemText(ENTRY_TEXTOX_P2)) ;
+		}
 		m_pCurrentMenu = &m_mainMenu;
-		g_pSettings->setName(0, m_optionMenu.getItemText(ENTRY_TEXTOX_P1)) ;
-		g_pSettings->setName(1, m_optionMenu.getItemText(ENTRY_TEXTOX_P2)) ;
+	} break;
+	case ENTRY_HIGHSCORE: {
+		g_pHighscorelist->generateHighscoreMenu(&m_highscoreMenu);
+		m_pCurrentMenu = &m_highscoreMenu;
 	} break;
 	case ENTRY_QUIT: {
 			m_bIsAlive = false;
@@ -76,13 +74,14 @@ void CMenuSystem::init() {
 	m_mainMenu.init("MainMenu");
 	m_mainMenu.addItem("Start",		ENTRY_START,	CMenu::BUTTON);
 	m_mainMenu.addItem("Options",	ENTRY_OPTIONS,	CMenu::BUTTON);
+	m_mainMenu.addItem("Highscores",ENTRY_HIGHSCORE,CMenu::BUTTON);
 	m_mainMenu.addItem("Quit",		ENTRY_QUIT,		CMenu::BUTTON);
 
 	m_optionMenu.init("Options");
 	m_optionMenu.addItem("Name Player one: ",	ENTRY_TEXTOX_P1,	CMenu::TEXTBOX);
 	m_optionMenu.addItem("Name Player two: ",	ENTRY_TEXTOX_P2,	CMenu::TEXTBOX);
 	m_optionMenu.addItem("Senseless Checkbox: ",ENTRY_CHECKBOX,		CMenu::CHECKBOX);
-	m_optionMenu.addItem("Back: ",				ENTRY_BACK,			CMenu::BUTTON);
+	m_optionMenu.addItem("Back: ",				ENTRY_BACKMAIN,			CMenu::BUTTON);
 
 	m_pCurrentMenu = &m_mainMenu;
 	g_pFramework->InitViewPorts(1); //init Viewport for Menusystem!

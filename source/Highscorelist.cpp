@@ -1,4 +1,7 @@
 #include "Highscorelist.hpp"
+
+#include "Menu/MenuSystem.hpp" //include menusystem for menuentryID's
+
 #define HIGHSCORESIZE 15
 //die besten 15 sind in der Highscoreliste aufgef�hrt
 
@@ -24,8 +27,20 @@ void CHighscorelist::SaveToFile(const char * sFilename) {
 	Output.close();
 }
 
-void CHighscorelist::show() {
-	CLogfile::get()->FunctionResult("CHighscorelist::show", L_FAIL, "could not show Highscorelist, = TODO");
+void CHighscorelist::generateHighscoreMenu(CMenu * pMenu) {
+	//TODO: Sortieren!
+
+	pMenu->init("Highscores");
+
+	multimap<int, std::string>::iterator it;
+	for (it = m_map.begin(); it != m_map.end(); ++it) {
+		char buffer[40];
+		sprintf(buffer, "%s : %i", it->second.c_str(), it->first);
+
+		pMenu->addItem(string(buffer), NULL, CMenu::BUTTON);
+	}
+	pMenu->addItem("back", ENTRY_BACKMAIN, CMenu::BUTTON);
+	CLogfile::get()->FunctionResult("CHighscorelist::generate...", L_OK, "generates Highscorelist");
 }
 
 bool CHighscorelist::isHighscore(CWorm &worm) {

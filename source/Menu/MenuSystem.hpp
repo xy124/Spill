@@ -12,12 +12,23 @@
 #include "../Singleton.hpp"
 #include "../Game.hpp"
 
+#define ENTRY_START		4001
+#define ENTRY_OPTIONS	4002
+#define ENTRY_QUIT		4003
+#define ENTRY_HIGHSCORE	4004
+
+#define ENTRY_TEXTOX_P1	5001
+#define ENTRY_TEXTOX_P2	5002
+#define ENTRY_CHECKBOX  5003
+#define ENTRY_BACKMAIN	5004
+
 class CMenuSystem : public TSingleton<CMenuSystem>{
 private:
 	CMenu * m_pCurrentMenu;
 
 	CMenu m_mainMenu;
 	CMenu m_optionMenu;
+	CMenu m_highscoreMenu;
 
 	bool m_bIsAlive;
 

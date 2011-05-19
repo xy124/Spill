@@ -7,6 +7,7 @@
 #include "Singleton.hpp"
 #include "Logfile.hpp"
 #include <fstream>
+#include "Menu/Menu.hpp"
 
 class CHighscorelist : public TSingleton<CHighscorelist> {
 	private:
@@ -15,9 +16,11 @@ class CHighscorelist : public TSingleton<CHighscorelist> {
 	public:		
 		void SaveToFile(const char * sFilename);
 		void LoadFromFile(const char * sFilename);
-		void show(); //FIXME! HighscoreMenu!
+		void generateHighscoreMenu(CMenu * pMenu);
 		bool isHighscore(CWorm &worm);
 		~CHighscorelist();
 };
+
+#define g_pHighscorelist CHighscorelist::get()
 
 #endif

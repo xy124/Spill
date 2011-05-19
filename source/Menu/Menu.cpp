@@ -15,6 +15,7 @@ using namespace std;
 bool CMenu::m_bKeyLock;
 
 void CMenu::init( std::string heading) {
+	m_Items.clear();//delete first all items!
 	m_selectedItem = m_Items.begin();
 	m_Heading = heading;
 	m_bKeyLock = false;
