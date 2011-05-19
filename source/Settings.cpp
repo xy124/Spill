@@ -36,7 +36,7 @@ CSettings::CSettings() {
 	s.WormSet[1].KeySelectBlockType 	= SDLK_RSHIFT;
 	s.WormSet[1].KeyBuild 				= SDLK_RCTRL;
 	s.WormSet[1].KeyBlockActions		= SDLK_RETURN;
-	s.WormSet[0].KeyNextItem			= SDLK_INSERT;
+	s.WormSet[1].KeyNextItem			= SDLK_INSERT;
 
 	setName(1, "John");
 }

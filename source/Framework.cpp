@@ -40,12 +40,12 @@ void CFramework::InitItemsAndAttackAnmimations() {
 	pSprite = NULL;
 
 	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/IconFlag.bmp", true);
+	pSprite->Load(_DIRDATA_+"/IconFlag.bmp", true, false);
 	CIFlag::setIcon(pSprite);//MBE: static für jedes vererbete neue static??? ich hoffe doch mal!
 	pSprite = NULL;
 
 	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true);
+	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true, false);
 	CGame::setDummyItemIcon(pSprite);
 	pSprite = NULL;
 

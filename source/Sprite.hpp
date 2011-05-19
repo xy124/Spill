@@ -16,7 +16,7 @@ class CSprite {
 
 		CSprite(const std::string sBlockFilename); //even fills the Sprite with the fitting Image
 
-		void Load		(const std::string sFilename, bool isBackGround = false);
+		void Load		(const std::string sFilename, bool isBackGround = false, bool isInWorld = true); //is in world has somthing to do with koordinates!
 		void Load		(const std::string sFilename, int NumFrames, int FrameWidth, int FrameHeight);
 		void SetColorKey(int R, int G, int B, int colorID);// beim Render transparente Farbe
 		void SetPos		(float fXPos, float fYPos);
@@ -38,6 +38,8 @@ class CSprite {
 
 		void setColorID(int colorID);
 		int m_ColorID;//current colorset
+
+		bool m_bIsInWorld;
 
 };
 

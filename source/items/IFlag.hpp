@@ -21,8 +21,8 @@ private:
 	static CWorm * m_pOwner;
 
 public:
-	CIFlag() {};
-	virtual ~CIFlag() {};
+	//CIFlag() {};
+	//~CIFlag() {};
 
 
 

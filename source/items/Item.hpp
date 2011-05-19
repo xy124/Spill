@@ -17,13 +17,13 @@ private:
 	static CSprite * m_pIcon;
 public:
 	CItem() {};
-	~CItem() {};//MBE make virtual??
+	virtual ~CItem() {};
 
 	void init() {m_bOwned = false; setCanMove(false);};
-	virtual void use();
-	virtual void update();
-	virtual void render();
-	virtual void quit();
+	virtual void use() {};
+	virtual void update() {};
+	virtual void render() {};
+	virtual void quit() {};
 
 	bool getOwned() {return m_bOwned;}
 	void setOwned(bool owned) {

@@ -157,13 +157,13 @@ void CGame::run() {
 		}
 		stopWatch("draw worms");
 
-		UpdateRenderItems();
-
 		g_pFramework->renderViewPortFrames();
 
 		g_pFramework->RenderDebugText();
 
 		updateRenderAttackAnimations();
+
+		updateRenderItems();
 
 		g_pFramework->Flip();
 	}
@@ -249,7 +249,7 @@ void CGame::updateRenderAttackAnimations() {
 	}
 }
 
-void CGame::UpdateRenderItems() {
+void CGame::updateRenderItems() {
 	list<CItem>::iterator it;
 	for (it = m_Items.begin(); it != m_Items.end(); ++it) {
 		it->update();

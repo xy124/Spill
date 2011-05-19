@@ -54,7 +54,7 @@ class CGame
 
 		void updateRenderAttackAnimations();
 
-		void UpdateRenderItems();
+		void updateRenderItems();
 
 	public:
 		static CSprite * m_pDummyItemIcon;

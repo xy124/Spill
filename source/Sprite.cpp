@@ -24,7 +24,8 @@ CSprite::~CSprite(void) {
 		g_pLogfile->Textout("<br />Error on freeing Image!<br />");
 }
 
-void CSprite::Load(const string sFilename, bool isBackGround ) { //L�d nicht animiertes sprite
+void CSprite::Load(const string sFilename, bool isBackGround, bool isInWorld ) { //L�d nicht animiertes sprite
+	m_bIsInWorld = isInWorld;
 
 	m_ColorID = 0;
 
@@ -122,38 +123,47 @@ void CSprite::Render() {//gesamtes Sprite auf Bildschirm rendern
 	SDL_Rect PositionRect;//Position relativ zu Viewport
 	SDL_Rect FrameRect; //rect describes the shown part of the sprite
 
-	vector<S_ViewPort>::iterator it;
-	for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
-		const SDL_Rect ViewRect = it->m_View;//viewRect auf gesamter world
-		if (g_pFramework->RectInView(SpriteRect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
-			FrameRect.x = 0;
-			FrameRect.y = 0;
-			FrameRect.w = SpriteRect.w;
-			FrameRect.h = SpriteRect.h;
+	if (!m_bIsInWorld) {
+		FrameRect.x = 0;
+		FrameRect.y = 0;
+		FrameRect.w = SpriteRect.w;
+		FrameRect.h = SpriteRect.h;
+		PositionRect = SpriteRect;
+		SDL_BlitSurface(m_pImages.at(m_ColorID), &FrameRect, m_pScreen, &PositionRect);
+	} else {
+		vector<S_ViewPort>::iterator it;
+		for (it = g_pFramework->ViewPorts.begin(); it != g_pFramework->ViewPorts.end(); ++it) {
+			const SDL_Rect ViewRect = it->m_View;//viewRect auf gesamter world
+			if (g_pFramework->RectInView(SpriteRect, it)) { //TODO: use view collissionm, mthaat only tests x-Koords! for higher Performance
+				FrameRect.x = 0;
+				FrameRect.y = 0;
+				FrameRect.w = SpriteRect.w;
+				FrameRect.h = SpriteRect.h;
 
-			PositionRect = SpriteRect;
+				PositionRect = SpriteRect;
 
-			PositionRect.x = SpriteRect.x - ViewRect.x;
+				PositionRect.x = SpriteRect.x - ViewRect.x;
 
-			if (SpriteRect.x < ViewRect.x) { //Left edge out of View
-				FrameRect.x = ViewRect.x - SpriteRect.x;
-				FrameRect.w = SpriteRect.w - FrameRect.x;
-				PositionRect.x = 0;
+				if (SpriteRect.x < ViewRect.x) { //Left edge out of View
+					FrameRect.x = ViewRect.x - SpriteRect.x;
+					FrameRect.w = SpriteRect.w - FrameRect.x;
+					PositionRect.x = 0;
+				}
+
+				if (SpriteRect.x+SpriteRect.w > ViewRect.x+ViewRect.w) { //Right edge out of View
+					FrameRect.w = FrameRect.w - (SpriteRect.x+SpriteRect.w - (ViewRect.x+ViewRect.w));
+					//Breite    = Breite      - überragende länge
+				}
+
+
+				// handle viewport
+				PositionRect.x += it->m_ScreenPosition.x;
+				SDL_BlitSurface(m_pImages.at(m_ColorID), &FrameRect, m_pScreen, &PositionRect);
+
 			}
-
-			if (SpriteRect.x+SpriteRect.w > ViewRect.x+ViewRect.w) { //Right edge out of View
-				FrameRect.w = FrameRect.w - (SpriteRect.x+SpriteRect.w - (ViewRect.x+ViewRect.w));
-				//Breite    = Breite      - überragende länge
-			}
-
-
-			// handle viewport
-			PositionRect.x += it->m_ScreenPosition.x;
-			SDL_BlitSurface(m_pImages.at(m_ColorID), &FrameRect, m_pScreen, &PositionRect);
 
 		}
-
-	}
+	}//is in World
 }
 
 void CSprite::Render(float fFrameNumber, bool bFlipped, int colorID) { //aktuellen Frame reinrendern..
