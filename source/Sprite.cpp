@@ -28,7 +28,7 @@ void CSprite::Load(const string sFilename, bool isBackGround ) { //L�d nicht a
 
 	m_ColorID = 0;
 
-	const int change = 45;
+	const unsigned char change = 51;
 
 	int max = (isBackGround ? 1 : MAXCOLORID);
 	for (int i = 0; i < max; i++) {//Einzelne bilder erstellen.
@@ -58,7 +58,8 @@ void CSprite::Load(const string sFilename, bool isBackGround ) { //L�d nicht a
 				(unsigned char *)cpImage->pixels,
 				(unsigned char *)cpImage->pixels,
 				(cpImage->pitch * cpImage->h),
-				(unsigned char)(i*change));
+				(unsigned char) change * i
+				);
 		if (res != 0) {
 			g_pLogfile->FunctionResult("CSPrite::Load", L_FAIL, SDL_GetError());
 		}
