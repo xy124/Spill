@@ -21,6 +21,7 @@ CSettings::CSettings() {
 	s.WormSet[0].KeyBuild 				= SDLK_LCTRL;
 	s.WormSet[0].KeyBlockActions		= SDLK_TAB;
 	s.WormSet[0].KeyNextItem			= SDLK_1;
+	s.WormSet[0].KeyUseItem				= SDLK_q;
 
 	setName(0, "Trottel");
 
@@ -37,6 +38,7 @@ CSettings::CSettings() {
 	s.WormSet[1].KeyBuild 				= SDLK_RCTRL;
 	s.WormSet[1].KeyBlockActions		= SDLK_RETURN;
 	s.WormSet[1].KeyNextItem			= SDLK_INSERT;
+	s.WormSet[1].KeyUseItem				= SDLK_0;
 
 	setName(1, "John");
 }

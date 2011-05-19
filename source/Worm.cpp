@@ -48,7 +48,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 
 	m_bOrientation = ORIGHT;
 	
-	m_pWormSprite = g_pSpritepool->last();
+	m_pWormSprite = g_pSpritepool->at(SPRITE_WORM);
 	m_fAnimphase = 0.0f;
 	m_isWalking = false;
 	setIsSolid(false);
@@ -69,6 +69,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	setLastCollisionY(lastCollisionY);
 
 	m_Alive = true;
+	m_bIsVisible = true;
 	CLogfile::get()->fTextout("<br />New Worm. ID:%i",m_WormID);
 
 	m_pSettings = &(g_pSettings->s.WormSet[m_WormID]);
@@ -84,9 +85,12 @@ void CWorm::reset() { //HINT: resettet nicht die Position
 
 void CWorm::render() {
 	//render worm!
-	CVec newWormPos = CVec(getRect());
-	m_pWormSprite->SetPos( newWormPos);
-	m_pWormSprite->Render(m_fAnimphase, m_bOrientation, m_TeamID);
+	if (m_bIsVisible) {
+		CVec newWormPos = CVec(getRect());
+		m_pWormSprite->SetPos( newWormPos);
+		m_pWormSprite->Render(m_fAnimphase, m_bOrientation, m_TeamID);
+	}
+
 	//render ItemIcons!
 	list<CItem*>::iterator it;
 	int x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x;
@@ -326,6 +330,8 @@ void CWorm::update() {
 
 	ProcessNextItemKey();
 
+	ProcessUseItemKey();
+
 	//Physics happens in do physics!
 }
 
@@ -373,5 +379,11 @@ void CWorm::ProcessNextItemKey() {
 		else {
 			m_SelectedpItem++;
 		}
+	}
+}
+
+void CWorm::ProcessUseItemKey() {
+	if (m_SelectedpItem != m_pItems.end()) {
+		(*m_SelectedpItem)->use();
 	}
 }

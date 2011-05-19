@@ -5,6 +5,7 @@
 #include "AttackAnimations/CAA_Explosion1.hpp"
 
 #include "items/IMoney.hpp"
+#include "items/IInvi.hpp"
 
 using namespace std;
 
@@ -118,6 +119,11 @@ void CGame::createDebugGameBoard() {//creates World for debugging
 	m_pItems.push_back(pMoney);
 	pMoney = NULL;
 
+	//invi!
+	CIInvi * pInvi = new CIInvi();
+	pInvi->init();
+	m_pItems.push_back(pInvi);
+	pInvi = NULL;
 
 }
 

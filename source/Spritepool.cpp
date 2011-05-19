@@ -46,14 +46,6 @@ CSpritepool::CSpritepool() {
 	m_pSprites.push_back(pSprite);
 	pSprite = NULL;
 
-
-	CTexture * pTexture;
-	pTexture = new CTexture();
-	pTexture->Load(_DIRDATA_+"/lightening.bmp");
-	CAA_Cloud::setTextureSprite(pTexture);
-	//TODO: pTexture isn't freed at the end!
-	pTexture = NULL;
-
 //Flag:
 //3
 	pSprite = new CSprite();
@@ -90,7 +82,32 @@ CSpritepool::CSpritepool() {
 	m_pSprites.push_back(pSprite);
 	pSprite = NULL;
 
-//Blocksprites:
+//Worms:
+//8
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 3 , 25, 18);
+	//Worm picks it out in itself!
+	m_pSprites.push_back(pSprite);
+	pSprite = NULL;
+
+//INVI:
+//9
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/INVI.bmp", true);
+	//Worm picks it out in itself!
+	m_pSprites.push_back(pSprite);
+	pSprite = NULL;
+//10
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/IconINVI.bmp", true);
+	//Worm picks it out in itself!
+	m_pSprites.push_back(pSprite);
+	pSprite = NULL;
+
+//FIXME:^^handle this better not with these defines... its ugly to do it like this... -_-
+	//Maybe sprites should get a namemember....
+
+	//Blocksprites: HINT: has to be the last!!
 	CBlock::m_pBlockSprites[0] = new CSprite(_DIRDATA_+"/BlockAir.bmp");
 	CBlock::m_pBlockSprites[1] = new CSprite(_DIRDATA_+"/BlockNormal.bmp");
 	CBlock::m_pBlockSprites[2] = new CSprite(_DIRDATA_+"/BlockShooting.bmp");
@@ -101,16 +118,18 @@ CSpritepool::CSpritepool() {
 	for (int i = 0; i < BLOCKAMOUNT; i++) {//push them into the vector!
 		m_pSprites.push_back(CBlock::m_pBlockSprites[i]);
 	}
-	g_pLogfile->Textout("<br />Successful loaded Sprites!");
 
-//Worms:
-//8
-	//HINT: Important that worms are the last because they take their animation from back!
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 3 , 25, 18);
-	//Worm picks it out in itself!
-	m_pSprites.push_back(pSprite);
-	pSprite = NULL;
+	/*
+	 * Texture
+	 */
+	CTexture * pTexture;
+	pTexture = new CTexture();
+	pTexture->Load(_DIRDATA_+"/lightening.bmp");
+	CAA_Cloud::setTextureSprite(pTexture);
+	//TODO: pTexture isn't freed at the end!
+	pTexture = NULL;
+
+	g_pLogfile->Textout("<br />Successful loaded Sprites!");
 }
 
 CSpritepool::~CSpritepool() {

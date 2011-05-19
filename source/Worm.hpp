@@ -47,6 +47,8 @@ class CWorm : public CPhysicalObject {
 		bool m_bBuildKeyLock;
 		bool m_bOrientation;
 
+		bool m_bIsVisible;
+
 		S_WormSettings * m_pSettings;
 
 		float m_fLastActionTime;
@@ -65,6 +67,7 @@ class CWorm : public CPhysicalObject {
 		void ProcessAnim();
 		void ProcessBlockActions();
 		void ProcessNextItemKey();
+		void ProcessUseItemKey();
 
 	public:
 		CWorm(CGame *pGame);
@@ -163,6 +166,10 @@ class CWorm : public CPhysicalObject {
 
 		void changeMoneyBy(int v) {
 			m_Money += v;
+		}
+
+		void setVisibility(bool isVisible) {
+			m_bIsVisible = isVisible;
 		}
 
 		
