@@ -10,12 +10,10 @@
 #include "../Worm.hpp"
 
 CSprite * CIFlag::m_pSprite;
-CWorm * CIFlag::m_pOwner;
 
 void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not null... but where to set null?)
 	setIsSolid(true);
 	setCanMove(true);
-	m_pOwner = NULL;
 
 	//MBE: better typeconversation?
 	FloatRect FR;
@@ -27,10 +25,10 @@ void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not nul
 }
 
 void CIFlag::update() {
-	if (m_pOwner != NULL) { //Move key on worm!
+	if (getOwner() != NULL) { //Move key on worm!
 		FloatRect FR = getRect();
-		FR.x = m_pOwner->getRect().x;
-		FR.y = m_pOwner->getRect().y-16;
+		FR.x = getOwner()->getRect().x;
+		FR.y = getOwner()->getRect().y-16;
 		setRect(FR);
 	}
 }
@@ -40,11 +38,8 @@ void CIFlag::render() {
 	m_pSprite->Render();
 }
 
-void CIFlag::setPOwner(CWorm *m_pOwner)
-{
-	setCanMove((m_pOwner == NULL));
-
-    this->m_pOwner = m_pOwner;
+void CIFlag::onSetOwner(CWorm * pOwner) {
+	setCanMove(pOwner == NULL);
 }
 
 

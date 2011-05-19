@@ -18,7 +18,6 @@ class CWorm;
 class CIFlag : public CItem {
 private:
 	static CSprite * m_pSprite;
-	static CWorm * m_pOwner;
 
 public:
 	~CIFlag() {};
@@ -29,17 +28,13 @@ public:
 		CIFlag::m_pSprite = pSprite;
 	}
 
-	virtual void init();
-	virtual void render();
+	void init();
+	void render();
 
-	virtual void update();
-	virtual void quit() {};
+	void onSetOwner(CWorm * pOwner);
 
-	//MBE: owner settet???
-	void setPOwner(CWorm *m_pOwner);
-	CWorm * getOwner() {
-		return m_pOwner;
-	};
+	void update();
+	void quit() {};
 
 };
 

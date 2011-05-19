@@ -339,19 +339,21 @@ void CWorm::ProcessBlockActions() {
 		if (m_SelectedpItem == m_pItems.end()) { //pick item up!
 			list<CItem*>::iterator it;
 			for (it = m_pGame->m_Items.begin(); it != m_pGame->m_Items.end(); ++it) {
-				if ((*it)->getOwned() == false) { //nobody owns it
+				if ((*it)->getOwner() == NULL) { //nobody owns it
 					//calculate distance to item:
 					CVec posItem = CVec((*it)->getRect());
 					CVec dist = CVec(getRect());
 					dist -= posItem;
 					if (dist.quad_abs() < QUADMAXITEMPICKUPDIST) { //in range...., so its mine now!
-						m_pItems.push_back((*it));//TODO hope that works...
+						(*it)->setOwner(this);
+						m_pItems.push_back((*it));
 					}
 				}
 			}
 
 		} else {//drop item!
-			(*m_SelectedpItem)->setOwned(false);
+			(*m_SelectedpItem)->setOwner(NULL);
+
 		}
 
 	}//can do blockaction
