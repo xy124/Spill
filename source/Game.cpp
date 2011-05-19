@@ -57,9 +57,6 @@ CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 	//or Take DebugWorld:
 	createDebugGameBoard();
 
-
-	CBlock::InitBlockSprites();
-
 	m_pBackGround = new CBackGround();
 	m_pBackGround->init(gameBoardWidth * BLOCKSIZE);
 

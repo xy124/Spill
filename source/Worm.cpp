@@ -4,6 +4,8 @@
 
 #include "Collision.hpp"
 #include "BlockAction.hpp"
+#include "Spritepool.hpp"
+
 
 using namespace std;
 
@@ -46,10 +48,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 
 	m_bOrientation = ORIGHT;
 	
-	m_pWormSprite = new CSprite();
-	//m_pWormSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 21, 32, 17);
-	//New animation: //braucht auch anpassung in Animate!
-	m_pWormSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 3 , 25, 18);
+	m_pWormSprite = g_pSpritepool->last();
 	m_fAnimphase = 0.0f;
 	m_isWalking = false;
 	setIsSolid(false);

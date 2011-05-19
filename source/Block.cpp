@@ -7,16 +7,6 @@ const float CBlock::BlockBouncingY[BLOCKAMOUNT] = BLOCKBOUNCING_Y;
 CSprite * CBlock::m_pBlockSprites[BLOCKAMOUNT];
 
 //DECLARATION: static CSprite * m_pBlockSprites[5];
-void CBlock::InitBlockSprites() {
-	m_pBlockSprites[0] = new CSprite(_DIRDATA_+"/BlockAir.bmp");
-	m_pBlockSprites[1] = new CSprite(_DIRDATA_+"/BlockNormal.bmp");
-	m_pBlockSprites[2] = new CSprite(_DIRDATA_+"/BlockShooting.bmp");
-	m_pBlockSprites[3] = new CSprite(_DIRDATA_+"/BlockJumpboard.bmp");
-	m_pBlockSprites[4] = new CSprite(_DIRDATA_+"/BlockInvisible.bmp");
-	m_pBlockSprites[5] = new CSprite(_DIRDATA_+"/BlockCannon.bmp");
-	m_pBlockSprites[6] = new CSprite(_DIRDATA_+"/BlockCloudGen.bmp");
-
-}
 
 void CBlock::FreeBlockSprites() {
 	for (int i=0; i<5; i++) {

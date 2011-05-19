@@ -1,68 +1,7 @@
 #include "Framework.hpp"
-#include "Sprite.hpp"
-#include "AttackAnimations/CAA_Explosion1.hpp"
-#include "AttackAnimations/CAA_Cloud.hpp"
-#include "items/IFlag.hpp"
-#include "items/IMoney.hpp"
 //MBE: create overview about includes!
 
 using namespace std;
-
-void CFramework::InitItemsAndAttackAnmimations() {//MBE: maybe handle this better in other way!
-	CSprite * pSprite;
-
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
-	CAA_CannonBall::setSprite(pSprite);
-	pSprite = NULL;
-
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
-	CAA_Explosion1::setSprite(pSprite);
-	pSprite = NULL;
-
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp", true);
-	CAA_Cloud::setSprite(pSprite);
-	pSprite = NULL;
-
-	CTexture * pTexture;
-
-	pTexture = new CTexture();
-	pTexture->Load(_DIRDATA_+"/lightening.bmp");
-	CAA_Cloud::setTextureSprite(pTexture);
-	pTexture = NULL;
-
-//Flag:
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/Flag.bmp", true);
-	CIFlag::setSprite(pSprite);
-	pSprite = NULL;
-
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/IconFlag.bmp", true, false);
-	CIFlag::setIcon(pSprite);//MBE: static für jedes vererbete neue static??? ich hoffe doch mal!
-	pSprite = NULL;
-
-//DummyIcon:
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true, false);
-	CGame::setDummyItemIcon(pSprite);
-	pSprite = NULL;
-
-//Money
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/IconMoney.bmp", true, false);
-	CIMoney::setIcon(pSprite);
-	pSprite = NULL;
-
-	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/Money.bmp", true);
-	CIMoney::setSprite(pSprite);
-	pSprite = NULL;
-
-
-}
 
 bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bFullscreen) {
 	//alle Systeme die wir brauchen der SDL initialisieren
@@ -117,9 +56,6 @@ bool CFramework::Init(int ScreenWidth, int ScreenHeight, int ColorDepth, bool bF
 	//SDL_SetColorKey(pFontImage, SDL_SRCCOLORKEY, SDL_MapRGB(pFontImage->format, 0, 0, 0)); //COLORKEY Black!
 	//^^why should we need a color key here???
 	pGameFont = SFont_InitFont(pFontImage);
-
-	//init AttackAnimations
-	InitItemsAndAttackAnmimations();
 
 	//Init Debugvalue
 	m_DebugValue = "";

@@ -17,11 +17,11 @@ CSprite::CSprite(void) {
 }
 
 CSprite::~CSprite(void) {
-	//TODO: alle freigeben!
-	if (m_pImages.at(m_ColorID) != NULL)
-		SDL_FreeSurface(m_pImages.at(m_ColorID)); //Surface freigeben, nicht per delete!!
-	else
-		g_pLogfile->Textout("<br />Error on freeing Image!<br />");
+	vector<SDL_Surface*>::iterator it;
+	for (it = m_pImages.begin(); it != m_pImages.end(); ++it) {
+		if ((*it) != NULL )
+			SDL_FreeSurface(*it); //don't delete Surfaces!
+	}
 }
 
 void CSprite::Load(const string sFilename, bool isBackGround, bool isInWorld ) { //L�d nicht animiertes sprite
