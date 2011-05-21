@@ -20,7 +20,7 @@ class CBlock { //I don't want to vererben the
 					CLOUDGEN
 		};
 		static BlockType nextBlockType(BlockType now);
-		static std::string BlockTypeString(BlockType bt);
+		static std::string getBlockTypeString(BlockType bt);
 
 
 		CBlock() {};

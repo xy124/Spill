@@ -30,7 +30,7 @@ void CBlock::render(CBlockKoord &MyBlockPos) {
 }
 
 //TODO: solve that without these ugly switches!
-std::string CBlock::BlockTypeString(CBlock::BlockType bt) {
+std::string CBlock::getBlockTypeString(CBlock::BlockType bt) {
 	std::string s;
 	switch (bt) {
 		case (CBlock::AIR): 		s="AIR"; 		break;

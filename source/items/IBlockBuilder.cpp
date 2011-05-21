@@ -40,7 +40,7 @@ void CIBlockBuilder::use() {
 				getOwner()->changePointsBy(1);
 				getOwner()->m_BuiltBlocks.push_back(pos);
 
-				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_BlockType)+" Costs:%i", CBlock::BlockCosts[m_BlockType]);
+				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::getBlockTypeString(m_BlockType)+" Costs:%i", CBlock::BlockCosts[m_BlockType]);
 			}
 		}
 	}
@@ -52,4 +52,5 @@ void CIBlockBuilder::init(CBlock::BlockType BT, CGame * pGame) {
 	m_pGame = pGame;
 	m_BlockType = BT;
 	setIcon(g_pSpritepool->at(SPRITEID::ICONBLOCKBUILDER));
+	setName(CBlock::getBlockTypeString(BT));
 }

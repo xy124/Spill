@@ -74,6 +74,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	//give the worm some items... for building blocks and doing blockactions!
 	CIBlockActionWand * pActionWand = new CIBlockActionWand();
 	pActionWand->init(m_pGame);
+	pActionWand->setOwner(this);
 	m_pItems.push_back(pActionWand);
 	pActionWand = NULL;
 
@@ -81,6 +82,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	for (int i=0; i< BLOCKAMOUNT ;i++) {
 		pBlockBuilder = new CIBlockBuilder();
 		pBlockBuilder->init(CBlock::getBlockTypeAt(i), m_pGame);
+		pBlockBuilder->setOwner(this);
 		m_pItems.push_back(pBlockBuilder);
 		pBlockBuilder = NULL;
 	}
@@ -118,7 +120,7 @@ void CWorm::render() {
 	for (it = m_pItems.begin(); it != m_pItems.end();/**/) {
 		if ((*it)->isAlive())  {//alive
 			(*it)->renderIcon(x,y);
-			y += BLOCKSIZE;
+			y += BLOCKSIZE+5;//+5 because of the frames of the itembar!
 			++it;
 		} else {
 			it = m_pItems.erase(it);
