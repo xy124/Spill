@@ -51,23 +51,17 @@ class CWorm : public CPhysicalObject {
 
 		S_WormSettings * m_pSettings;
 
-		float m_fLastActionTime;
-
-
-		bool m_bNextBTypeKeyLock;
-		CBlock::BlockType m_selectedBType;
-
 		std::string getWormColorString();
 
 		CSprite * m_pWormSprite;
 		float m_fAnimphase;
-
+		void ProcessMining();
 		void ProcessMoving();
-		void ProcessBuilding();
 		void ProcessAnim();
-		void ProcessBlockActions();
 		void ProcessNextItemKey();
 		void ProcessUseItemKey();
+		void ProcessPickDropItem();
+		//FIXME update aktuallisieren das all die processes abgearbeitet werden!
 
 	public:
 		CWorm(CGame *pGame);
@@ -170,6 +164,14 @@ class CWorm : public CPhysicalObject {
 
 		void setVisibility(bool isVisible) {
 			m_bIsVisible = isVisible;
+		}
+
+		int getViewPortID() {
+			return m_ViewPort;
+		}
+
+		bool getOrientation() {
+			return m_bOrientation;
 		}
 
 		

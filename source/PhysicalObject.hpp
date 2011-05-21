@@ -28,7 +28,7 @@ class CPhysicalObject { //HINT: diese klasse nicht instanzieren!!!!!! nur vererb
 		bool getCanMove() const;
 		CVec getDir() const;
 		bool getIsSolid() const;
-		FloatRect getRect();
+		FloatRect & getRect();
 		bool getCanJump() const;
 		void setCanMove(bool bCanMove);
 		void setDir(CVec dir);

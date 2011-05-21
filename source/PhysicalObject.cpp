@@ -22,7 +22,7 @@ bool CPhysicalObject::getIsSolid() const
     return m_bIsSolid;
 }
 
-FloatRect CPhysicalObject::getRect()
+FloatRect & CPhysicalObject::getRect()
 {
     return m_rect;
 }

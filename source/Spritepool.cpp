@@ -23,40 +23,35 @@ CSpritepool::CSpritepool() {
 	CSprite * pSprite;
 
 //Cannonball
-//0
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
 	m_pSprites[SPRITEID::CANNONBALL] = (pSprite);
 	pSprite = NULL;
 
 //Explosion
-//1
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
 	m_pSprites[SPRITEID::EXPLOSION] = (pSprite);
 	pSprite = NULL;
 
 //Cloud
-//2
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp", true);
 	m_pSprites[SPRITEID::CLOUD] = (pSprite);
 	pSprite = NULL;
 
 //Flag:
-//3
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Flag.bmp", true);
 	m_pSprites[SPRITEID::FLAG] = (pSprite);
 	pSprite = NULL;
-//4
+
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/IconFlag.bmp", true, false);
 	m_pSprites[SPRITEID::ICONFLAG] = (pSprite);
 	pSprite = NULL;
 
 //DummyIcon:
-//5
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true, false);
 	CGame::setDummyItemIcon(pSprite);
@@ -64,26 +59,23 @@ CSpritepool::CSpritepool() {
 	pSprite = NULL;
 
 //Money
-//6
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/IconMoney.bmp", true, false);
 	m_pSprites[SPRITEID::ICONMONEY] = (pSprite);
 	pSprite = NULL;
-//7
+
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Money.bmp", true);
 	m_pSprites[SPRITEID::MONEY] = (pSprite);
 	pSprite = NULL;
 
 //Worms:
-//8
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 3 , 25, 18);
 	m_pSprites[SPRITEID::WORM] = (pSprite);
 	pSprite = NULL;
 
 //INVI:
-//9
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/INVI.bmp", true);
 	m_pSprites[SPRITEID::INVI] = (pSprite);
@@ -95,19 +87,28 @@ CSpritepool::CSpritepool() {
 	pSprite = NULL;
 
 //Itembar
-//10
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/ItemBar_Front.bmp", true, false);
 	m_pSprites[SPRITEID::ITEMBARFRONT] = (pSprite);
 	pSprite = NULL;
-//10
+
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/ItemBar_Back.bmp", true, false);
 	m_pSprites[SPRITEID::ITEMBARBACK] = (pSprite);
 	pSprite = NULL;
 
-//FIXME:^^handle this better not with these defines... its ugly to do it like this... -_-
-	//Maybe sprites should get a namemember....
+//IconBlockBuilder
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/IconBlockBuilder.bmp", true, false);
+	m_pSprites[SPRITEID::ICONBLOCKBUILDER] = (pSprite);
+	pSprite = NULL;
+
+//IconWand
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"IconWand.bmp", true, false);
+	m_pSprites[SPRITEID::ICONBLOCKBUILDER] = (pSprite);
+	pSprite = NULL;
+
 
 	//Blocksprites: HINT: has to be the last!!
 	CBlock::m_pBlockSprites[0] = new CSprite(_DIRDATA_+"/BlockAir.bmp");

@@ -17,11 +17,9 @@ CSettings::CSettings() {
 	s.WormSet[0].KeyLeft	 			= SDLK_a;
 	s.WormSet[0].KeyMine 				= SDLK_s;
 	s.WormSet[0].KeyRight 				= SDLK_d;
-	s.WormSet[0].KeySelectBlockType 	= SDLK_LSHIFT;
-	s.WormSet[0].KeyBuild 				= SDLK_LCTRL;
-	s.WormSet[0].KeyBlockActions		= SDLK_TAB;
-	s.WormSet[0].KeyNextItem			= SDLK_1;
-	s.WormSet[0].KeyUseItem				= SDLK_q;
+	s.WormSet[0].KeyPickDropItem			= SDLK_TAB;
+	s.WormSet[0].KeyNextItem			= SDLK_LSHIFT;
+	s.WormSet[0].KeyUseItem				= SDLK_LCTRL;
 
 	setName(0, "Trottel");
 
@@ -34,11 +32,9 @@ CSettings::CSettings() {
 	s.WormSet[1].KeyLeft	 			= SDLK_LEFT;
 	s.WormSet[1].KeyMine 				= SDLK_DOWN;
 	s.WormSet[1].KeyRight 				= SDLK_RIGHT;
-	s.WormSet[1].KeySelectBlockType 	= SDLK_RSHIFT;
-	s.WormSet[1].KeyBuild 				= SDLK_RCTRL;
-	s.WormSet[1].KeyBlockActions		= SDLK_RETURN;
-	s.WormSet[1].KeyNextItem			= SDLK_INSERT;
-	s.WormSet[1].KeyUseItem				= SDLK_0;
+	s.WormSet[1].KeyPickDropItem			= SDLK_RETURN;
+	s.WormSet[1].KeyNextItem			= SDLK_RSHIFT;
+	s.WormSet[1].KeyUseItem				= SDLK_RCTRL;
 
 	setName(1, "John");
 }
@@ -65,7 +61,6 @@ void CSettings::LoadFromFile(std::string sFilename) {
 	Input.read((char*) &s, sizeof(s));
 	Input.close();
 	g_pLogfile->FunctionResult("CSettings::LoadFromFile",L_OK, "Successfull loaded settings from " + sFilename);
-	//string ss = s.WormSet[0].name+"Loaded"+s.WormSet[1].name;
 	string ss = "0";
 	g_pLogfile->Textout(ss);
 }

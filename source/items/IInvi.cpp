@@ -8,7 +8,6 @@
 #include "IInvi.hpp"
 
 #include "../Worm.hpp"
-#include "../Spritepool.hpp"
 #include "../Timer.hpp"
 #include "../Logfile.hpp"
 

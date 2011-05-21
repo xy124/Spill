@@ -9,7 +9,6 @@
 #include "../FloatRect.hpp"
 #include "../Worm.hpp"
 #include "../Logfile.hpp"
-#include "../Spritepool.hpp"
 
 CSprite * CIFlag::m_pSprite;
 

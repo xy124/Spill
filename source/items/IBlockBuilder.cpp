@@ -6,15 +6,50 @@
  */
 
 #include "IBlockBuilder.hpp"
+#include "../Game.hpp"
+#include "../Physics.hpp"
 
 CIBlockBuilder::CIBlockBuilder() {
-	// TODO Auto-generated constructor stub
-	// TODO don't allow to drop blockbuilding!
-	// TODO: different key for do blockactions or magic wand for all blockactions!
-
-
+	m_pGame = NULL;
 }
 
 CIBlockBuilder::~CIBlockBuilder() {
 	// TODO Auto-generated destructor stub
+}
+
+void CIBlockBuilder::use() {
+	//FIXME: errors with keylock???
+	if (getOwner()->getMoney() >= CBlock::BlockCosts[m_BlockType]) {//player has enough money
+		//get field next to worm
+		CVec vec(getOwner()->getRect());
+		if (getOwner()->getOrientation() == ORIGHT)
+			vec.x += (getOwner()->getRect().w + BLOCKSIZE);//next block
+		else
+			vec.x -= BLOCKSIZE;
+
+		CBlockKoord pos = vec.toBlockKoord();
+
+		//is field free???
+		CBlock* buildingBlock = m_pGame->getBlock(pos);
+		if ( (buildingBlock != NULL)
+				&& (buildingBlock->getBlockType() == CBlock::AIR)
+				&& (g_pPhysics->isEmpty(pos)) ) {
+			if (m_pGame->BuildBlock(pos, m_BlockType,
+					getOwner()->getWormID(), getOwner()->getTeamID())) {
+				getOwner()->changeMoneyBy(-CBlock::BlockCosts[m_BlockType]);
+				getOwner()->changePointsBy(1);
+				getOwner()->m_BuiltBlocks.push_back(pos);
+
+				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_BlockType)+" Costs:%i", CBlock::BlockCosts[m_BlockType]);
+			}
+		}
+	}
+}
+
+void CIBlockBuilder::init(CBlock::BlockType BT, CGame * pGame) {
+	this->CItem::init();
+	setDropable(false);
+	m_pGame = pGame;
+	m_BlockType = BT;
+	setIcon(g_pSpritepool->at(SPRITEID::ICONBLOCKBUILDER));
 }

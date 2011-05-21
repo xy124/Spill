@@ -11,6 +11,7 @@
 #include "../Sprite.hpp"
 #include "../PhysicalObject.hpp"
 #include <string>
+#include "../Spritepool.hpp"
 
 //To be able to declare prototype of setowner:
 class CWorm;
@@ -51,8 +52,6 @@ public:
 		return m_pOwner;
 	};
 
-//FIXME: zauberstab zum unsichtbar machen!
-
 	void renderIcon(int x, int y);
 	void setIcon(CSprite * pIcon);
 
@@ -64,7 +63,7 @@ public:
 		return m_bIsAlive;
 	}
 
-	void setIsDropable(bool Dropable) {
+	void setDropable(bool Dropable) {
 		m_bDropable = Dropable;
 	}
 

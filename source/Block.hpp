@@ -11,7 +11,7 @@ class CBlock { //I don't want to vererben the
 	//Different kinds of blocks:
 	public:
 		enum BlockType {
-					AIR,
+					AIR = 0,
 					NORMAL,
 					SHOOTING,
 					JUMPBOARD,
@@ -47,6 +47,7 @@ class CBlock { //I don't want to vererben the
 		static CSprite * m_pBlockSprites[BLOCKAMOUNT];
 		static void InitBlockSprites();
 		static void FreeBlockSprites();
+		static BlockType getBlockTypeAt(int i);
 	private:
 			BlockType m_BlockType;
 			int m_TeamID;

@@ -11,9 +11,15 @@
 #include "Item.hpp"
 #include "../Block.hpp"
 
+class CGame;
+
 class CIBlockBuilder: public CItem {
+private:
+	CGame * m_pGame;
+	CBlock::BlockType m_BlockType;
 public:
-	void init(CBlock::BlockType);
+	void init(CBlock::BlockType BT, CGame * pGame);
+	void use();
 	CIBlockBuilder();
 	virtual ~CIBlockBuilder();
 };

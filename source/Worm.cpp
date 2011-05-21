@@ -6,6 +6,9 @@
 #include "BlockAction.hpp"
 #include "Spritepool.hpp"
 
+#include "items/IBlockActionWand.hpp"
+#include "items/IBlockBuilder.hpp"
+
 
 using namespace std;
 
@@ -35,16 +38,12 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_Money = 140;//MBE ForDebugReasons
 	m_Points = 0;
 	m_Energy = MAXENERGY;
-	m_fLastActionTime = 0.0f;
 	m_SelectedpItem = m_pItems.end();
 
 	setCanMove(true);
 	
 	m_bJumpKeyLock = false;
 	m_bBuildKeyLock = false;
-
-	m_bNextBTypeKeyLock = false;
-	m_selectedBType = CBlock::NORMAL;
 
 	m_bOrientation = ORIGHT;
 	
@@ -68,11 +67,25 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 
 	setLastCollisionY(lastCollisionY);
 
-	m_Alive = true;
-	m_bIsVisible = true;
 	CLogfile::get()->fTextout("<br />New Worm. ID:%i",m_WormID);
 
 	m_pSettings = &(g_pSettings->s.WormSet[m_WormID]);
+
+	//give the worm some items... for building blocks and doing blockactions!
+	CIBlockActionWand * pActionWand = new CIBlockActionWand();
+	pActionWand->init(m_pGame);
+	m_pItems.push_back(pActionWand);
+	pActionWand = NULL;
+
+	CIBlockBuilder * pBlockBuilder;
+	for (int i=0; i< BLOCKAMOUNT ;i++) {
+		pBlockBuilder = new CIBlockBuilder();
+		pBlockBuilder->init(CBlock::getBlockTypeAt(i), m_pGame);
+		pBlockBuilder = NULL;
+	}
+
+	m_Alive = true;
+	m_bIsVisible = true;
 
 }
 
@@ -162,13 +175,7 @@ void CWorm::ProcessMoving() {
 	setDir(newDir);
 }
 
-void CWorm::ProcessBuilding() {
-	/*
-	 * KeyDown:	MineBlock
-	 * STRG:	BuildBlock
-	 * Shift:	SelectBuildBlockType
-	 */
-
+void CWorm::ProcessMining() {//HINT Mining without item!
 	if (g_pFramework->KeyDown(m_pSettings->KeyMine)) {
 		//get Block under Worm!
 		CVec vec(getRect());
@@ -202,48 +209,8 @@ void CWorm::ProcessBuilding() {
 		} else g_pLogfile->Textout("<br /> Couldn't mine Block because miningBlock == NULL");
 	}//Keydown
 
-	if ( (g_pFramework->KeyDown(m_pSettings->KeySelectBlockType)) && (m_bNextBTypeKeyLock == false) ) {
-		m_selectedBType = CBlock::nextBlockType(m_selectedBType);
-		m_bNextBTypeKeyLock = true;
-	}
-	if (!g_pFramework->KeyDown(m_pSettings->KeySelectBlockType))
-		m_bNextBTypeKeyLock = false;
 
-	if ( (g_pFramework->KeyDown(m_pSettings->KeyBuild))
-			&& (m_bBuildKeyLock == false)
-			&& (m_selectedBType != CBlock::AIR)//Build Air has no sense...
-			&& (m_Money >= CBlock::BlockCosts[m_selectedBType]) //player has enough money
-			) {
-		m_bBuildKeyLock = true;
-		//get field next to worm
-		CVec vec(getRect());
-		if (m_bOrientation == ORIGHT)
-			vec.x += (getRect().w + BLOCKSIZE);//next block
-		else
-			vec.x -= BLOCKSIZE;
-
-		CBlockKoord pos = vec.toBlockKoord();
-
-		//is field free???
-		CBlock* buildingBlock = m_pGame->getBlock(pos);
-		if ( (buildingBlock != NULL)
-				&& (buildingBlock->getBlockType() == CBlock::AIR)
-				&& (g_pPhysics->isEmpty(pos)) ) {
-			if (m_pGame->BuildBlock(pos, m_selectedBType, m_WormID, m_TeamID)) {
-				m_Money -= CBlock::BlockCosts[m_selectedBType];
-				m_Points++;
-				m_BuiltBlocks.push_back(pos);
-
-				g_pLogfile->fTextout("</br >Built BLock: "+CBlock::BlockTypeString(m_selectedBType)+" Costs:%i", CBlock::BlockCosts[m_selectedBType]);
-			}
-
-		}
-//FIXME: Key!
-	}
-	if (!g_pFramework->KeyDown(m_pSettings->KeyBuild))
-			m_bBuildKeyLock = false;
-
-
+	//FIXME: use keylock also for useitem keys and so on....
 }
 
 void CWorm::ProcessAnim() {
@@ -285,14 +252,10 @@ void CWorm::ProcessView() {
 	s = g_pSettings->getName(m_WormID);
 	g_pFramework->TextOut(s, 0, 70, m_ViewPort);
 
-	s = "::"+CBlock::BlockTypeString(m_selectedBType)+"::";
+	s = "[Item]::"+(*m_SelectedpItem)->getName()+"::";
 	g_pFramework->TextOut(s, 0, 15, m_ViewPort);
 
-	int BlockEnergyState = static_cast<int>(100*(g_pTimer->now()-m_fLastActionTime)/LOADINGTIME);
-	if (BlockEnergyState > 100) BlockEnergyState = 100;
-	sprintf(buffer, "BlockEnergy: %i %%", BlockEnergyState);
-	s = buffer;
-	g_pFramework->TextOut(s, 0, 30, m_ViewPort);
+
 }
 
 CWorm::~CWorm() {
@@ -333,15 +296,15 @@ string CWorm::getWormColorString() {
 void CWorm::update() {
 	ProcessMoving();
 
-	ProcessBuilding();
-
-	ProcessBlockActions();
-
-	ProcessAnim();
+	ProcessMining();
 
 	ProcessNextItemKey();
 
 	ProcessUseItemKey();
+
+	ProcessPickDropItem();
+
+	ProcessAnim();
 
 	//Physics happens in do physics!
 }
@@ -350,14 +313,9 @@ bool CWorm::isAlive() {
 	return m_Alive;
 }
 
-void CWorm::ProcessBlockActions() {
-	bool canDoBlockAction = (g_pTimer->now()-m_fLastActionTime > LOADINGTIME);
-	if (g_pFramework->KeyDown(m_pSettings->KeyBlockActions) && canDoBlockAction) {
-		m_fLastActionTime = g_pTimer->now();
-		CBlockAction::action(m_pGame, this);
-
-//HINT: Blockaction also drops/takes item
-		//for all items in range: pick them up, if no item selected
+void CWorm::ProcessPickDropItem() {
+	//for all items in range: pick them up, if no item selected
+	if ((g_pFramework->isNewEvent()) && (g_pFramework->KeyDown(m_pSettings->KeyPickDropItem))) {
 		if (m_SelectedpItem == m_pItems.end()) { //pick item up!
 			list<CItem*>::iterator it;
 			for (it = m_pGame->m_pItems.begin(); it != m_pGame->m_pItems.end(); ++it) {
@@ -371,16 +329,16 @@ void CWorm::ProcessBlockActions() {
 						m_pItems.push_back((*it));
 					}
 				}
-			}
-
+			}//for
 		} else {//drop item!
-			(*m_SelectedpItem)->setOwner(NULL);
-			m_SelectedpItem = m_pItems.erase(m_SelectedpItem);
-
+			if ((*m_SelectedpItem)->isDropable()) {//can drop item
+				(*m_SelectedpItem)->setOwner(NULL);
+				m_SelectedpItem = m_pItems.erase(m_SelectedpItem);
+			}
 		}
-
-	}//can do blockaction
+	}//keydown
 }
+
 
 void CWorm::ProcessNextItemKey() {
 	if (g_pFramework->isNewEvent() && //Keylog

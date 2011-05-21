@@ -20,5 +20,7 @@ void CItem::init() {
 	m_pOwner = NULL;
 	setCanMove(true);
 	m_bIsAlive = true;
+	m_bDropable = true;
 	m_Name = "[Item]";
+	setIcon(g_pSpritepool->at(SPRITEID::DUMMYICON));
 };

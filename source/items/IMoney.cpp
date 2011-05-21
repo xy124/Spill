@@ -7,7 +7,6 @@
 
 #include "IMoney.hpp"
 #include "../Worm.hpp"
-#include "../Spritepool.hpp"
 
 
 CSprite * CIMoney::m_pSprite;

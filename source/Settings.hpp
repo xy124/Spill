@@ -23,7 +23,7 @@ friend class CSettings;
 	SDLKey KeyMine;
 	SDLKey KeyNextItem;
 	SDLKey KeyUseItem;
-	SDLKey KeyDropItem;
+	SDLKey KeyPickDropItem;
 
 private:
 	char name [30];

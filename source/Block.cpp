@@ -29,6 +29,7 @@ void CBlock::render(CBlockKoord &MyBlockPos) {
 	}
 }
 
+//TODO: solve that without these ugly switches!
 std::string CBlock::BlockTypeString(CBlock::BlockType bt) {
 	std::string s;
 	switch (bt) {
@@ -55,6 +56,21 @@ CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType now) {//you can't sele
 		case (CBlock::CLOUDGEN): 	s=CBlock::JUMPBOARD; 	break;
 
 		default: 					s=CBlock::NORMAL;		break;
+	}
+	return s;
+}
+
+CBlock::BlockType CBlock::getBlockTypeAt(int i) {
+	CBlock::BlockType s;
+	switch (i) {
+		case 0: 	s=CBlock::NORMAL; 		break;
+		case 1: 	s=CBlock::SHOOTING; 	break;
+		case 2: 	s=CBlock::INVISIBLE;	break;
+		case 3: 	s=CBlock::CANNON;	 	break;
+		case 4:	 	s=CBlock::CLOUDGEN; 	break;
+		case 5: 	s=CBlock::JUMPBOARD; 	break;
+
+		default: 	s=CBlock::NORMAL;		break;
 	}
 	return s;
 }
