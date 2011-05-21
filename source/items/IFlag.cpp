@@ -16,6 +16,7 @@ CSprite * CIFlag::m_pSprite;
 void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not null... but where to set null?)
 	this->CItem::init();
 	setIsSolid(true);
+	setName("Flag");
 
 	setIcon(g_pSpritepool->at(SPRITEID::ICONFLAG));
 	setSprite(g_pSpritepool->at(SPRITEID::FLAG));

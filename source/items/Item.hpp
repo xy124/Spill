@@ -10,6 +10,7 @@
 
 #include "../Sprite.hpp"
 #include "../PhysicalObject.hpp"
+#include <string>
 
 //To be able to declare prototype of setowner:
 class CWorm;
@@ -19,14 +20,19 @@ private:
 	CSprite * m_pIcon;
 	CWorm * m_pOwner;
 	bool m_bIsAlive;
+	std::string m_Name;
+
 public:
+	void setName(std::string name) {
+		m_Name = name;
+	}
+	std::string getName() {
+		return m_Name;
+	}
+
 	virtual ~CItem() {};
 
-	void init() {
-		m_pOwner = NULL;
-		setCanMove(true);
-		m_bIsAlive = true;
-	};
+	void init();
 	virtual void use() {};
 	virtual void update() {};
 	virtual void render() {};

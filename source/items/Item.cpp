@@ -15,3 +15,10 @@ void CItem::renderIcon(int x, int y) {
 void CItem::setIcon(CSprite * pIcon) {
 	m_pIcon = pIcon;
 }
+
+void CItem::init() {
+	m_pOwner = NULL;
+	setCanMove(true);
+	m_bIsAlive = true;
+	m_Name = "[Item]";
+};

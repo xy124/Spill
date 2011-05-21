@@ -36,6 +36,7 @@ void CIMoney::update() {
 void CIMoney::init() {
 	this->CItem::init();
 	setIsSolid(true);
+	setName("Money");
 
 	setIcon(g_pSpritepool->at(SPRITEID::ICONMONEY));
 	setSprite(g_pSpritepool->at(SPRITEID::MONEY));

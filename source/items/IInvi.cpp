@@ -39,6 +39,7 @@ void CIInvi::update() {
 void CIInvi::init() {
 	this->CItem::init();
 	setIsSolid(true);
+	setName("sets u Invisible");
 
 	setIcon(g_pSpritepool->at(SPRITEID::ICONINVI));
 	setSprite(g_pSpritepool->at(SPRITEID::INVI));
