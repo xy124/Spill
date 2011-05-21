@@ -9,6 +9,9 @@
 
 CIBlockBuilder::CIBlockBuilder() {
 	// TODO Auto-generated constructor stub
+	// TODO don't allow to drop blockbuilding!
+	// TODO: different key for do blockactions or magic wand for all blockactions!
+
 
 }
 

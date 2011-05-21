@@ -20,6 +20,7 @@ private:
 	CSprite * m_pIcon;
 	CWorm * m_pOwner;
 	bool m_bIsAlive;
+	bool m_bDropable;
 	std::string m_Name;
 
 public:
@@ -61,6 +62,14 @@ public:
 
 	bool isAlive() {
 		return m_bIsAlive;
+	}
+
+	void setIsDropable(bool Dropable) {
+		m_bDropable = Dropable;
+	}
+
+	bool isDropable() {
+		return m_bDropable;
 	}
 };
 

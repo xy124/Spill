@@ -21,11 +21,9 @@ friend class CSettings;
 	SDLKey KeyLeft;
 	SDLKey KeyRight;
 	SDLKey KeyMine;
-	SDLKey KeySelectBlockType;
-	SDLKey KeyBuild;
-	SDLKey KeyBlockActions;//that key will let all blocks do their actions, shooting...
 	SDLKey KeyNextItem;
 	SDLKey KeyUseItem;
+	SDLKey KeyDropItem;
 
 private:
 	char name [30];
