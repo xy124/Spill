@@ -8,7 +8,7 @@
 #include "Item.hpp"
 
 void CItem::renderIcon(int x, int y) {
-	m_pIcon->SetPos(x, y);
+	m_pIcon->SetPos(static_cast<float>(x), static_cast<float>(y));
 	m_pIcon->Render();
 }
 

@@ -105,8 +105,8 @@ CSpritepool::CSpritepool() {
 
 //IconWand
 	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"IconWand.bmp", true, false);
-	m_pSprites[SPRITEID::ICONBLOCKBUILDER] = (pSprite);
+	pSprite->Load(_DIRDATA_+"/IconWand.bmp", true, false);
+	m_pSprites[SPRITEID::ICONWAND] = (pSprite);
 	pSprite = NULL;
 
 

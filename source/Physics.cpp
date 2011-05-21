@@ -178,6 +178,7 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 
 void CPhysics::init(CGame * game) {
 	m_pGame = game;
+	g_pLogfile->Textout("</br>inited Physics");
 }
 
 bool CPhysics::isEmpty(CBlockKoord &bc) {

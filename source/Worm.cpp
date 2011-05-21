@@ -81,6 +81,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	for (int i=0; i< BLOCKAMOUNT ;i++) {
 		pBlockBuilder = new CIBlockBuilder();
 		pBlockBuilder->init(CBlock::getBlockTypeAt(i), m_pGame);
+		m_pItems.push_back(pBlockBuilder);
 		pBlockBuilder = NULL;
 	}
 
@@ -252,7 +253,10 @@ void CWorm::ProcessView() {
 	s = g_pSettings->getName(m_WormID);
 	g_pFramework->TextOut(s, 0, 70, m_ViewPort);
 
-	s = "[Item]::"+(*m_SelectedpItem)->getName()+"::";
+	if (m_SelectedpItem == m_pItems.end())
+		s = "[Item]::Nothing";
+	else
+		s = "[Item]::"+(*m_SelectedpItem)->getName()+"::";
 	g_pFramework->TextOut(s, 0, 15, m_ViewPort);
 
 
