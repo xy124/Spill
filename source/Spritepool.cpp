@@ -26,33 +26,33 @@ CSpritepool::CSpritepool() {
 //0
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::CANNONBALL] = (pSprite);
 	pSprite = NULL;
 
 //Explosion
 //1
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::EXPLOSION] = (pSprite);
 	pSprite = NULL;
 
 //Cloud
 //2
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp", true);
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::CLOUD] = (pSprite);
 	pSprite = NULL;
 
 //Flag:
 //3
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Flag.bmp", true);
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::FLAG] = (pSprite);
 	pSprite = NULL;
 //4
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/IconFlag.bmp", true, false);
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::ICONFLAG] = (pSprite);
 	pSprite = NULL;
 
 //DummyIcon:
@@ -60,55 +60,50 @@ CSpritepool::CSpritepool() {
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true, false);
 	CGame::setDummyItemIcon(pSprite);
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::DUMMYICON] = (pSprite);
 	pSprite = NULL;
 
 //Money
 //6
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/IconMoney.bmp", true, false);
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::ICONMONEY] = (pSprite);
 	pSprite = NULL;
 //7
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Money.bmp", true);
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::MONEY] = (pSprite);
 	pSprite = NULL;
 
 //Worms:
 //8
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/christmaswormjustwalk.bmp", 3 , 25, 18);
-	//Worm picks it out in itself!
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::WORM] = (pSprite);
 	pSprite = NULL;
 
 //INVI:
 //9
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/INVI.bmp", true);
-	//Worm picks it out in itself!
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::INVI] = (pSprite);
 	pSprite = NULL;
 //10
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/IconINVI.bmp", true, false);
-	//Worm picks it out in itself!
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::ICONINVI] = (pSprite);
 	pSprite = NULL;
 
 //Itembar
 //10
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/ItemBar_Front.bmp", true, false);
-	//Worm picks it out in itself!
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::ITEMBARFRONT] = (pSprite);
 	pSprite = NULL;
 //10
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/ItemBar_Back.bmp", true, false);
-	//Worm picks it out in itself!
-	m_pSprites.push_back(pSprite);
+	m_pSprites[SPRITEID::ITEMBARBACK] = (pSprite);
 	pSprite = NULL;
 
 //FIXME:^^handle this better not with these defines... its ugly to do it like this... -_-
@@ -123,7 +118,7 @@ CSpritepool::CSpritepool() {
 	CBlock::m_pBlockSprites[5] = new CSprite(_DIRDATA_+"/BlockCannon.bmp");
 	CBlock::m_pBlockSprites[6] = new CSprite(_DIRDATA_+"/BlockCloudGen.bmp");
 	for (int i = 0; i < BLOCKAMOUNT; i++) {//push them into the vector!
-		m_pSprites.push_back(CBlock::m_pBlockSprites[i]);
+		m_pSprites[i+1000] = (CBlock::m_pBlockSprites[i]);
 	}
 
 	/*
@@ -140,16 +135,16 @@ CSpritepool::CSpritepool() {
 }
 
 CSpritepool::~CSpritepool() {
-	vector<CSprite*>::iterator it;
+	map<int, CSprite*>::iterator it;
 	for (it = m_pSprites.begin(); it != m_pSprites.end(); ++it) {
-		delete ((*it));
+		delete (it->second);
 	}
 }
 
-CSprite* CSpritepool::at(int i) {
-	return m_pSprites.at(i);
-}
-
-CSprite* CSpritepool::last() {
-	return m_pSprites.back();
+CSprite* CSpritepool::at(SPRITEID::S i) {
+	map<int, CSprite*>::iterator it;
+	it  = m_pSprites.find(i);
+	if (it != m_pSprites.end()) {
+		return (it->second);
+	} else return NULL;
 }

@@ -40,8 +40,8 @@ void CIInvi::init() {
 	this->CItem::init();
 	setIsSolid(true);
 
-	setIcon(g_pSpritepool->at(SPRITE_ICONINVI));
-	setSprite(g_pSpritepool->at(SPRITE_INVI));
+	setIcon(g_pSpritepool->at(SPRITEID::ICONINVI));
+	setSprite(g_pSpritepool->at(SPRITEID::INVI));
 	//FIXME: itemicons aren't drawn
 
 	FloatRect FR;

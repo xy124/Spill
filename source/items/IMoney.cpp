@@ -37,8 +37,8 @@ void CIMoney::init() {
 	this->CItem::init();
 	setIsSolid(true);
 
-	setIcon(g_pSpritepool->at(SPRITE_ICONMONEY));
-	setSprite(g_pSpritepool->at(SPRITE_MONEY));
+	setIcon(g_pSpritepool->at(SPRITEID::ICONMONEY));
+	setSprite(g_pSpritepool->at(SPRITEID::MONEY));
 
 	FloatRect FR;
 	FR.x = m_pSprite->GetRect().x+500;

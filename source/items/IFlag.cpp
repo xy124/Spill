@@ -17,8 +17,8 @@ void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not nul
 	this->CItem::init();
 	setIsSolid(true);
 
-	setIcon(g_pSpritepool->at(SPRITE_ICONFLAG));
-	setSprite(g_pSpritepool->at(SPRITE_FLAG));
+	setIcon(g_pSpritepool->at(SPRITEID::ICONFLAG));
+	setSprite(g_pSpritepool->at(SPRITEID::FLAG));
 
 	FloatRect FR;
 	FR.x = m_pSprite->GetRect().x;

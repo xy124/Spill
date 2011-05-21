@@ -48,7 +48,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 
 	m_bOrientation = ORIGHT;
 	
-	m_pWormSprite = g_pSpritepool->at(SPRITE_WORM);
+	m_pWormSprite = g_pSpritepool->at(SPRITEID::WORM);
 	m_fAnimphase = 0.0f;
 	m_isWalking = false;
 	setIsSolid(false);
@@ -95,8 +95,8 @@ void CWorm::render() {
 	int y = 100;
 
 	//render Itembar-Background
-	g_pSpritepool->at(SPRITE_ICONITEMBARBACK)->SetPos(x, y);
-	g_pSpritepool->at(SPRITE_ICONITEMBARBACK)->Render();
+	g_pSpritepool->at(SPRITEID::ITEMBARBACK)->SetPos(x, y);
+	g_pSpritepool->at(SPRITEID::ITEMBARBACK)->Render();
 
 	//render ItemIcons!
 	list<CItem*>::iterator it;
@@ -114,8 +114,8 @@ void CWorm::render() {
 
 	y = 100;
 	//render Itembar-Background
-	g_pSpritepool->at(SPRITE_ICONITEMBARFRONT)->SetPos(x, y);
-	g_pSpritepool->at(SPRITE_ICONITEMBARFRONT)->Render();
+	g_pSpritepool->at(SPRITEID::ITEMBARFRONT)->SetPos(x, y);
+	g_pSpritepool->at(SPRITEID::ITEMBARFRONT)->Render();
 
 	//render selected Item again!
 	x += 100;

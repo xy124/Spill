@@ -11,31 +11,35 @@
 
 #include "Singleton.hpp"
 #include "Sprite.hpp"
-#include <vector>
+#include <map>
 
-#define SPRITE_MONEY 7
-#define SPRITE_ICONMONEY 6
-#define SPRITE_DUMMYICON 5
-#define SPRITE_ICONFLAG 4
-#define SPRITE_FLAG 3
-#define SPRITE_CLOUD 2
-#define SPRITE_EXPLOSION 1
-#define SPRITE_CANNONBALL 0
-#define SPRITE_WORM 8
-#define SPRITE_INVI 9
-#define SPRITE_ICONINVI 10
-#define SPRITE_ICONITEMBARFRONT 11
-#define SPRITE_ICONITEMBARBACK 12
+namespace SPRITEID {
+	enum S {
+		MONEY=7,
+		ICONMONEY=6,
+		DUMMYICON=5,
+		ICONFLAG=4,
+		FLAG=3,
+		CLOUD=2,
+		EXPLOSION=1,
+		CANNONBALL=0,
+		WORM=8,
+		INVI=9,
+		ICONINVI=10,
+		ITEMBARFRONT=11,
+		ITEMBARBACK=12
+	};
+}
+
 
 
 class CSpritepool : public TSingleton<CSpritepool>  {
 private:
-	std::vector<CSprite*> m_pSprites;
+	std::map<int, CSprite*> m_pSprites;
 public:
 	CSpritepool();
 	~CSpritepool();
-	CSprite* at(int i);
-	CSprite* last();
+	CSprite* at(SPRITEID::S i);
 };
 
 #define g_pSpritepool CSpritepool::get()
