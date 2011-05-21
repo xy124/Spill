@@ -26,18 +26,21 @@ CSpritepool::CSpritepool() {
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
 	m_pSprites[SPRITEID::CANNONBALL] = (pSprite);
+	CAA_CannonBall::setSprite(pSprite);
 	pSprite = NULL;
 
 //Explosion
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/Explosion1.bmp", 6, 30, 30);
 	m_pSprites[SPRITEID::EXPLOSION] = (pSprite);
+	CAA_Explosion1::setSprite(pSprite);
 	pSprite = NULL;
 
 //Cloud
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/cloudfinal.bmp", true);
 	m_pSprites[SPRITEID::CLOUD] = (pSprite);
+	CAA_Cloud::setSprite(pSprite);
 	pSprite = NULL;
 
 //Flag:
@@ -80,7 +83,7 @@ CSpritepool::CSpritepool() {
 	pSprite->Load(_DIRDATA_+"/INVI.bmp", true);
 	m_pSprites[SPRITEID::INVI] = (pSprite);
 	pSprite = NULL;
-//10
+
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/IconINVI.bmp", true, false);
 	m_pSprites[SPRITEID::ICONINVI] = (pSprite);

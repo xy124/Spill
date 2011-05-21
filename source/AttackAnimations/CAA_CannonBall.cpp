@@ -58,6 +58,7 @@ void CAA_CannonBall::quit() {
 
 void CAA_CannonBall::init(CVec StartPos, CWorm * pAimWorm, CWorm * pOwnerWorm,
 	list<CAttackAnimation*> * pAttackAnimations) {
+
 	initKillTime(5.0f);
 	FloatRect fr = StartPos.toFloatRect();
 	fr.w = m_pSprite->GetRect().w;
