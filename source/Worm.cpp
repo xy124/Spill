@@ -91,10 +91,16 @@ void CWorm::render() {
 		m_pWormSprite->Render(m_fAnimphase, m_bOrientation, m_TeamID);
 	}
 
-	//render ItemIcons!
-	list<CItem*>::iterator it;
 	int x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x;
 	int y = 100;
+
+	//render Itembar-Background
+	g_pSpritepool->at(SPRITE_ICONITEMBARBACK)->SetPos(x, y);
+	g_pSpritepool->at(SPRITE_ICONITEMBARBACK)->Render();
+
+	//render ItemIcons!
+	list<CItem*>::iterator it;
+
 	for (it = m_pItems.begin(); it != m_pItems.end();/**/) {
 		if ((*it)->isAlive())  {//alive
 			(*it)->renderIcon(x,y);
@@ -105,6 +111,11 @@ void CWorm::render() {
 			m_SelectedpItem = it;
 		}
 	}
+
+	y = 100;
+	//render Itembar-Background
+	g_pSpritepool->at(SPRITE_ICONITEMBARFRONT)->SetPos(x, y);
+	g_pSpritepool->at(SPRITE_ICONITEMBARFRONT)->Render();
 
 	//render selected Item again!
 	x += 100;

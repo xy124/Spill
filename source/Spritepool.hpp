@@ -24,6 +24,8 @@
 #define SPRITE_WORM 8
 #define SPRITE_INVI 9
 #define SPRITE_ICONINVI 10
+#define SPRITE_ICONITEMBARFRONT 11
+#define SPRITE_ICONITEMBARBACK 12
 
 
 class CSpritepool : public TSingleton<CSpritepool>  {

@@ -92,7 +92,21 @@ CSpritepool::CSpritepool() {
 	pSprite = NULL;
 //10
 	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/IconINVI.bmp", true);
+	pSprite->Load(_DIRDATA_+"/IconINVI.bmp", true, false);
+	//Worm picks it out in itself!
+	m_pSprites.push_back(pSprite);
+	pSprite = NULL;
+
+//Itembar
+//10
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/ItemBar_Front.bmp", true, false);
+	//Worm picks it out in itself!
+	m_pSprites.push_back(pSprite);
+	pSprite = NULL;
+//10
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/ItemBar_Back.bmp", true, false);
 	//Worm picks it out in itself!
 	m_pSprites.push_back(pSprite);
 	pSprite = NULL;
