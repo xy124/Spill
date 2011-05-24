@@ -73,6 +73,10 @@ bool CFramework::InitViewPorts(int Amount) {
 	vp.m_View.w = static_cast<int>((m_ScreenRect.w-(Amount-1)*VIEWPORTFRAMEWIDTH)/Amount);
 	g_pLogfile->fTextout("<br />Viewportwidth = %i", vp.m_View.w);
 	vp.m_View.h = m_ScreenRect.h;
+	if (Amount != 1)/* need Space for itembar if no menuviewport*/
+		vp.m_View.h -= 35;
+
+
 
 	//init position on screen:
 	vp.m_ScreenPosition = vp.m_View;

@@ -119,7 +119,7 @@ void CWorm::render() {
 	}
 
 	int x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x;
-	int y = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.h - 35;
+	int y = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.h;
 
 	//render Itembar-Background
 	g_pSpritepool->at(SPRITEID::ITEMBARBACK)->SetPos(x, y);
