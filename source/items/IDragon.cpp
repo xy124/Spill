@@ -20,64 +20,77 @@ CIDragon::~CIDragon() {
 }
 
 void CIDragon::init() {
-m_fAnimPhase = 0.0f;
-this->CItem::init();
-setIsSolid(true);
-setName("Dragon");
-setDropable(true);
+	m_fAnimPhase = 0.0f;
+	m_fFireAnimPhase = 0.0f;
+	this->CItem::init();
+	setIsSolid(true);
+	setName("Dragon");
+	setDropable(true);
 
 
-setIcon(g_pSpritepool->at(SPRITEID::ICONDRAGON));
-m_pSpriteBody = g_pSpritepool->at(SPRITEID::DRAGONBODY);
-m_pSpriteWings = g_pSpritepool->at(SPRITEID::DRAGONWINGS);
-FloatRect FR;
-FR = m_pSpriteBody->GetRect();
-setRect(FR);
-m_bActive = false;
+	setIcon(g_pSpritepool->at(SPRITEID::ICONDRAGON));
+	m_pSpriteBody = g_pSpritepool->at(SPRITEID::DRAGONBODY);
+	m_pSpriteWings = g_pSpritepool->at(SPRITEID::DRAGONWINGS);
+	FloatRect FR;
+	FR = m_pSpriteBody->GetRect();
+	setRect(FR);
+	m_bActive = false;
 }
 
 void CIDragon::update() {
-if (m_bActive) {
-	//set pos under Owner!
-	FloatRect worm = getOwner()->getRect();
-	FloatRect dragon = getRect();
+	if (m_bActive) {
+		//set pos under Owner!
+		FloatRect worm = getOwner()->getRect();
+		FloatRect dragon = getRect();
 
-	worm.x = dragon.x + 87;
-	worm.y = dragon.y;
+		worm.x = dragon.x + 87;
+		worm.y = dragon.y;
 
-	getOwner()->setRect(worm);
+		getOwner()->setRect(worm);
 
-	m_fAnimPhase += 10.0f * g_pTimer->getElapsed();
-	if (m_fAnimPhase > 3.0f)
-		m_fAnimPhase -= 3.0f;
+		m_fAnimPhase += 10.0f * g_pTimer->getElapsed();
+		if (m_fAnimPhase > 3.0f)
+			m_fAnimPhase -= 6.0f;
 
-	ProcessMovingKeys();
-}
+		ProcessMovingKeys();
+
+		if (m_fFireAnimPhase > 0.0f) {//salve wurde abgefeuert!
+			m_fFireAnimPhase += m_fAnimPhase += 10.0f * g_pTimer->getElapsed();
+
+			if (m_fFireAnimPhase > 90.0f) {
+				//TODO: destroy blocks, delete fire
+
+			}
+		}
+	}
 }
 
 void CIDragon::render() {
-if (!m_bActive) { //draw just if nobody has it!
-	m_pSpriteBody->SetPos(CVec(getRect()));
-	m_pSpriteBody->Render();
-} else {
-	m_pSpriteBody->SetPos(CVec(getRect()));
-	m_pSpriteBody->Render(0.0f, getOwner()->getOrientation(), getOwner()->getWormID());
-	m_pSpriteWings->SetPos(CVec(getRect()));
-	m_pSpriteWings->Render(m_fAnimPhase, getOwner()->getOrientation(), getOwner()->getWormID());
-}
+	if (!m_bActive) { //draw just if nobody has it!
+		m_pSpriteBody->SetPos(CVec(getRect()));
+		m_pSpriteBody->Render();
+	} else {
+		m_pSpriteBody->SetPos(CVec(getRect()));
+		m_pSpriteBody->Render(0.0f, getOwner()->getOrientation(), getOwner()->getWormID());
+		m_pSpriteWings->SetPos(CVec(getRect()));
+		m_pSpriteWings->Render( (m_fAnimPhase < 0 ? -m_fAnimPhase : m_fAnimPhase) //MBE use real ABS-Func!
+				, getOwner()->getOrientation(), getOwner()->getWormID());
+	}
 }
 
 void CIDragon::onSetOwner(CWorm * pNewOwner) {
-m_bActive = (pNewOwner != NULL);
-if (getOwner() != NULL) //alter owner kann scih bewegen!
-	getOwner()->setCanMove(true);
-if (pNewOwner != NULL)
-	pNewOwner->setCanMove(false);
-g_pLogfile->Textout("dragon changed  owner!");
+	m_bActive = (pNewOwner != NULL);
+	if (getOwner() != NULL) //alter owner kann scih bewegen!
+		getOwner()->setCanMove(true);
+	if (pNewOwner != NULL)
+		pNewOwner->setCanMove(false);
+	g_pLogfile->Textout("dragon changed  owner!");
 }
 
 void CIDragon::use() {
-//TODO: fill it!
+	//pay attention on Orientation
+	//TODO: cooldown!
+
 }
 
 void CIDragon::ProcessMovingKeys() {

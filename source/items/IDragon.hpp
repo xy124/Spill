@@ -17,6 +17,8 @@ private:
 	float m_fAnimPhase;
 	bool m_bActive;
 
+	float m_fFireAnimPhase;
+
 	void ProcessMovingKeys();
 public:
 	void onSetOwner(CWorm * pNewOwner);
