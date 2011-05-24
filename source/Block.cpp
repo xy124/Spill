@@ -29,7 +29,7 @@ void CBlock::render(CBlockKoord &MyBlockPos) {
 	}
 }
 
-//TODO: solve that without these ugly switches!
+
 std::string CBlock::getBlockTypeString(CBlock::BlockType bt) {
 	std::string s;
 	switch (bt) {
@@ -45,32 +45,8 @@ std::string CBlock::getBlockTypeString(CBlock::BlockType bt) {
 	return s;
 }
 
-CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType now) {//you can't select air!!!
+CBlock::BlockType CBlock::nextBlockType(CBlock::BlockType &at) {
 	CBlock::BlockType s;
-	switch (now) {
-		case (CBlock::JUMPBOARD): 	s=CBlock::NORMAL; 		break;
-		case (CBlock::NORMAL): 		s=CBlock::SHOOTING; 	break;
-		case (CBlock::SHOOTING): 	s=CBlock::INVISIBLE;	break;
-		case (CBlock::INVISIBLE): 	s=CBlock::CANNON;	 	break;
-		case (CBlock::CANNON):	 	s=CBlock::CLOUDGEN; 	break;
-		case (CBlock::CLOUDGEN): 	s=CBlock::JUMPBOARD; 	break;
-
-		default: 					s=CBlock::NORMAL;		break;
-	}
-	return s;
-}
-
-CBlock::BlockType CBlock::getBlockTypeAt(int i) {
-	CBlock::BlockType s;
-	switch (i) {
-		case 0: 	s=CBlock::NORMAL; 		break;
-		case 1: 	s=CBlock::SHOOTING; 	break;
-		case 2: 	s=CBlock::INVISIBLE;	break;
-		case 3: 	s=CBlock::CANNON;	 	break;
-		case 4:	 	s=CBlock::CLOUDGEN; 	break;
-		case 5: 	s=CBlock::JUMPBOARD; 	break;
-
-		default: 	s=CBlock::NORMAL;		break;
-	}
+	s = BlockType((at+1)%BLOCKAMOUNT);
 	return s;
 }

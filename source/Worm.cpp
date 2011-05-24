@@ -91,7 +91,7 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	CIBlockBuilder * pBlockBuilder;
 	for (int i=0; i< BLOCKAMOUNT ;i++) {
 		pBlockBuilder = new CIBlockBuilder();
-		pBlockBuilder->init(CBlock::getBlockTypeAt(i), m_pGame);
+		pBlockBuilder->init(CBlock::BlockType(i), m_pGame);
 		pBlockBuilder->setOwner(this);
 		m_pItems.push_back(pBlockBuilder);
 		pBlockBuilder = NULL;

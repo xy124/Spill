@@ -11,7 +11,7 @@ class CBlock { //I don't want to vererben the
 	//Different kinds of blocks:
 	public:
 		enum BlockType {
-					AIR = 0,
+					AIR,
 					NORMAL,
 					SHOOTING,
 					JUMPBOARD,
@@ -19,7 +19,7 @@ class CBlock { //I don't want to vererben the
 					CANNON,
 					CLOUDGEN
 		};
-		static BlockType nextBlockType(BlockType now);
+
 		static std::string getBlockTypeString(BlockType bt);
 
 
@@ -47,11 +47,29 @@ class CBlock { //I don't want to vererben the
 		static CSprite * m_pBlockSprites[BLOCKAMOUNT];
 		static void InitBlockSprites();
 		static void FreeBlockSprites();
-		static BlockType getBlockTypeAt(int i);
+		static BlockType nextBlockType(CBlock::BlockType &at);
 	private:
 			BlockType m_BlockType;
 			int m_TeamID;
 			int m_BuilderID;
 };
+
+
+/* MBE: instead of nextBlockType. Infact: nextBlockType is'nt used! SyntaxError.... How to....???? then delete nextBlock!
+//laut wiki geht so die enuminkrementierung:
+//source: http://de.wikibooks.org/wiki/C++-Programmierung:_Aufz%C3%A4hlungen
+
+//Prä-Inkrement
+CBlock::BlockType& operator++(BlockType& w) {
+		  return (w = BCBlock::lockType((w+1)%BLOCKAMOUNT));
+}
+// Post-Inkrement
+CBlock::BlockType operator++(BlockType& w, int) {
+	CBlock::BlockType alt = w;
+	++w;
+	return alt;
+}
+
+*/
 
 #endif
