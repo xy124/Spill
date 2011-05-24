@@ -57,7 +57,6 @@ CSpritepool::CSpritepool() {
 //DummyIcon:
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/EmptyItemSlot.bmp", true, false);
-	CGame::setDummyItemIcon(pSprite);
 	m_pSprites[SPRITEID::DUMMYICON] = (pSprite);
 	pSprite = NULL;
 

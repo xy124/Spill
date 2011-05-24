@@ -57,7 +57,6 @@ class CGame
 		void updateRenderItems();
 
 	public:
-		static CSprite * m_pDummyItemIcon;
 
 		std::list<CItem*> m_pItems;//Worms only get pointers to objects in this item!
 
@@ -83,8 +82,6 @@ class CGame
 		int getGBWidth() const;
 		void setGBHeight(int m_GBHeight);
 		void setGBWidth(int m_GBWidth);
-
-		static void setDummyItemIcon(CSprite * pIcon);
 };
 
 #endif

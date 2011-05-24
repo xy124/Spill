@@ -9,7 +9,6 @@
 
 using namespace std;
 
-CSprite * CGame::m_pDummyItemIcon;
 
 CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 	//TODO: cut in more functions!
@@ -308,8 +307,4 @@ void CGame::setGBHeight(int m_GBHeight)
 void CGame::setGBWidth(int m_GBWidth)
 {
     this->m_GBWidth = m_GBWidth;
-}
-
-void CGame::setDummyItemIcon(CSprite * pIcon) {
-	m_pDummyItemIcon = pIcon;
 }

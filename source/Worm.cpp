@@ -8,6 +8,7 @@
 
 #include "items/IBlockActionWand.hpp"
 #include "items/IBlockBuilder.hpp"
+#include "items/IEmpty.hpp"
 
 
 using namespace std;
@@ -38,7 +39,6 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_Money = 140;//MBE ForDebugReasons
 	m_Points = 0;
 	m_Energy = MAXENERGY;
-	m_SelectedpItem = m_pItems.end();
 
 	setCanMove(true);
 	
@@ -72,6 +72,16 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 	m_pSettings = &(g_pSettings->s.WormSet[m_WormID]);
 
 	//give the worm some items... for building blocks and doing blockactions!
+	//FirstItem is the item u use to pickup other Items (Empty!):
+	CIEmpty * pEmpty = new CIEmpty;
+	pEmpty->init();
+	//don't need to set owner for this!
+	m_pItems.push_back(pEmpty);
+	pEmpty = NULL;
+
+	//Now it makes sense to set this up:
+	m_SelectedpItem = m_pItems.begin();
+
 	CIBlockActionWand * pActionWand = new CIBlockActionWand();
 	pActionWand->init(m_pGame);
 	pActionWand->setOwner(this);
@@ -87,9 +97,10 @@ void CWorm::init(int WormID, int TeamID, float X, float Y, WORMCOLORS WC) {
 		pBlockBuilder = NULL;
 	}
 
+
+	//let's have fun:
 	m_Alive = true;
 	m_bIsVisible = true;
-
 }
 
 void CWorm::reset() { //HINT: resettet nicht die Position
@@ -117,9 +128,12 @@ void CWorm::render() {
 	//render ItemIcons!
 	list<CItem*>::iterator it;
 	y+=2;
-	x+=37;
+	x+=2;
 
-	for (it = m_pItems.begin(); it != m_pItems.end();/**/) {
+	it = m_SelectedpItem;//start with selected item!
+	for (int i = 1; i<=8; i++) {
+		if (it == m_pItems.end())
+			it = m_pItems.begin();
 		if ((*it)->isAlive())  {//alive
 			(*it)->renderIcon(x,y);
 			x += BLOCKSIZE+5;//+5 because of the frames of the itembar!
@@ -130,18 +144,7 @@ void CWorm::render() {
 		}
 	}
 
-
-
-	//render selected Item again!
 	x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x+2;
-	if (m_SelectedpItem == m_pItems.end()) {
-		m_pGame->m_pDummyItemIcon->SetPos(x,y);
-		m_pGame->m_pDummyItemIcon->Render();
-	} else {
-		(*m_SelectedpItem)->renderIcon(x,y);
-	}
-
-	x -= 2;
 		//render Itembar-Background
 	g_pSpritepool->at(SPRITEID::ITEMBARFRONT)->SetPos(x, y);
 	g_pSpritepool->at(SPRITEID::ITEMBARFRONT)->Render();
@@ -259,7 +262,7 @@ void CWorm::ProcessView() {
 	g_pFramework->TextOut(s, 0, 70, m_ViewPort);
 
 	if (m_SelectedpItem == m_pItems.end())
-		s = "[Item]::Nothing";
+		s = "[Item]::END!";
 	else
 		s = "[Item]::"+(*m_SelectedpItem)->getName()+"::";
 	g_pFramework->TextOut(s, 0, 15, m_ViewPort);
@@ -325,7 +328,7 @@ bool CWorm::isAlive() {
 void CWorm::ProcessPickDropItem() {
 	//for all items in range: pick them up, if no item selected
 	if ((g_pFramework->isNewEvent()) && (g_pFramework->KeyDown(m_pSettings->KeyPickDropItem))) {
-		if (m_SelectedpItem == m_pItems.end()) { //pick item up!
+		if (m_SelectedpItem == m_pItems.begin()) { //pick item up!
 			list<CItem*>::iterator it;
 			for (it = m_pGame->m_pItems.begin(); it != m_pGame->m_pItems.end(); ++it) {
 				if ((*it)->getOwner() == NULL) { //nobody owns it
@@ -352,11 +355,9 @@ void CWorm::ProcessPickDropItem() {
 void CWorm::ProcessNextItemKey() {
 	if (g_pFramework->isNewEvent() && //Keylog
 			g_pFramework->KeyDown(m_pSettings->KeyNextItem)) {
+		m_SelectedpItem++;
 		if (m_SelectedpItem == m_pItems.end())
 			m_SelectedpItem = m_pItems.begin();
-		else {
-			m_SelectedpItem++;
-		}
 	}
 }
 
