@@ -122,9 +122,9 @@ CSpritepool::CSpritepool() {
 	pSprite->Load(_DIRDATA_+"/dragonWings.bmp", 3, 175, 100);
 	m_pSprites[SPRITEID::DRAGONWINGS] = (pSprite);
 	pSprite = NULL;
-	//dragon
+	//dragon HINT: hjandle as animated sprite to be able to flip it!
 	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/dragon.bmp", true, false);
+	pSprite->Load(_DIRDATA_+"/dragon.bmp", 1, 175, 100);
 	m_pSprites[SPRITEID::DRAGONBODY] = (pSprite);
 	pSprite = NULL;
 

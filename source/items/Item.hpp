@@ -44,8 +44,8 @@ public:
 
 	virtual void onSetOwner(CWorm * pNewOwner) {};
 	void setOwner(CWorm * pOwner) {
-		m_pOwner = pOwner;
 		onSetOwner(pOwner);
+		m_pOwner = pOwner;
 	};
 
 	CWorm * getOwner() {

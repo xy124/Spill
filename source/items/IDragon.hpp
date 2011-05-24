@@ -16,6 +16,8 @@ private:
 	CSprite * m_pSpriteWings;
 	float m_fAnimPhase;
 	bool m_bActive;
+
+	void ProcessMovingKeys();
 public:
 	void onSetOwner(CWorm * pNewOwner);
 	void init();

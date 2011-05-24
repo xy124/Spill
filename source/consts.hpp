@@ -36,6 +36,11 @@
 #define OLEFT true
 #define ORIGHT false
 
+//Dragon:
+#define DRAGONJUMPSPEED_Y -150.0f
+#define DRAGONMAXSPEED_X 300.0f
+#define DRAGONACCELERATION 100.0f
+
 
 
 //FIXME: find a way to do new blocktype not at so much points!
