@@ -111,6 +111,25 @@ CSpritepool::CSpritepool() {
 	m_pSprites[SPRITEID::ICONWAND] = (pSprite);
 	pSprite = NULL;
 
+//dragon:
+	//icon
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/IconDragon.bmp", true, false);
+	m_pSprites[SPRITEID::ICONDRAGON] = (pSprite);
+	pSprite = NULL;
+	//wings
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/dragonWings.bmp", 3, 175, 100);
+	m_pSprites[SPRITEID::DRAGONWINGS] = (pSprite);
+	pSprite = NULL;
+	//dragon
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/dragon.bmp", true, false);
+	m_pSprites[SPRITEID::DRAGONBODY] = (pSprite);
+	pSprite = NULL;
+
+
+
 
 	//Blocksprites: HINT: has to be the last!!
 	CBlock::m_pBlockSprites[0] = new CSprite(_DIRDATA_+"/BlockAir.bmp");

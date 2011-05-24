@@ -21,11 +21,8 @@ void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not nul
 	setSprite(g_pSpritepool->at(SPRITEID::FLAG));
 
 	FloatRect FR;
-	FR.x = m_pSprite->GetRect().x;
-	FR.y = m_pSprite->GetRect().y;
-	FR.w = m_pSprite->GetRect().w;
-	FR.h = m_pSprite->GetRect().h;
-	setRect(FR);
+	FR = m_pSprite->GetRect();
+	setRect( FR );
 
 	g_pLogfile->Textout("</ br>inited Flag!");
 }

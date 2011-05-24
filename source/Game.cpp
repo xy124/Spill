@@ -6,6 +6,7 @@
 
 #include "items/IMoney.hpp"
 #include "items/IInvi.hpp"
+#include "items/IDragon.hpp"
 
 using namespace std;
 
@@ -123,6 +124,12 @@ void CGame::createDebugGameBoard() {//creates World for debugging
 	pInvi->init();
 	m_pItems.push_back(pInvi);
 	pInvi = NULL;
+
+	//dragon :P
+	CIDragon * pDragon = new CIDragon();
+	pDragon->init();
+	m_pItems.push_back(pDragon);
+	pDragon = NULL;
 
 }
 
