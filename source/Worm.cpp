@@ -108,7 +108,7 @@ void CWorm::render() {
 	}
 
 	int x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x;
-	int y = 100;
+	int y = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.h - 35;
 
 	//render Itembar-Background
 	g_pSpritepool->at(SPRITEID::ITEMBARBACK)->SetPos(x, y);
@@ -116,11 +116,13 @@ void CWorm::render() {
 
 	//render ItemIcons!
 	list<CItem*>::iterator it;
+	y+=2;
+	x+=37;
 
 	for (it = m_pItems.begin(); it != m_pItems.end();/**/) {
 		if ((*it)->isAlive())  {//alive
 			(*it)->renderIcon(x,y);
-			y += BLOCKSIZE+5;//+5 because of the frames of the itembar!
+			x += BLOCKSIZE+5;//+5 because of the frames of the itembar!
 			++it;
 		} else {
 			it = m_pItems.erase(it);
@@ -128,20 +130,21 @@ void CWorm::render() {
 		}
 	}
 
-	y = 100;
-	//render Itembar-Background
-	g_pSpritepool->at(SPRITEID::ITEMBARFRONT)->SetPos(x, y);
-	g_pSpritepool->at(SPRITEID::ITEMBARFRONT)->Render();
+
 
 	//render selected Item again!
-	x += 100;
-	y = 100;
+	x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x+2;
 	if (m_SelectedpItem == m_pItems.end()) {
 		m_pGame->m_pDummyItemIcon->SetPos(x,y);
 		m_pGame->m_pDummyItemIcon->Render();
 	} else {
 		(*m_SelectedpItem)->renderIcon(x,y);
 	}
+
+	x -= 2;
+		//render Itembar-Background
+	g_pSpritepool->at(SPRITEID::ITEMBARFRONT)->SetPos(x, y);
+	g_pSpritepool->at(SPRITEID::ITEMBARFRONT)->Render();
 }
 
 void CWorm::ProcessMoving() {
