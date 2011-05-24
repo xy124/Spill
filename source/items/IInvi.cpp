@@ -42,7 +42,6 @@ void CIInvi::init() {
 
 	setIcon(g_pSpritepool->at(SPRITEID::ICONINVI));
 	setSprite(g_pSpritepool->at(SPRITEID::INVI));
-	//FIXME: itemicons aren't drawn
 
 	FloatRect FR;
 	FR.x = m_pSprite->GetRect().x+1200;

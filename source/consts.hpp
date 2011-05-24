@@ -40,11 +40,12 @@
 
 //FIXME: find a way to do new blocktype not at so much points!
 //BLock.hpp:
-#define BLOCKAMOUNT 7
 #define BLOCKSIZE 30
+
+#define BLOCKAMOUNT 7
 /*
  * IMPORTANT: 	if you change amount of blocktypes also change
- * 				CBlock::BlockTypeString and CBlock::nextBlockType(BlockType Now)
+ * 				CBlock::BlockTypeString
  */
 							//AIR,NORMAL,SHOOTING,JUMPBOARD,INVISIBLE,CANNON,CLOUDGEN
 #define BLOCKCOSTS 			{0   ,     5,      40,       10,       10,   100,	   80}

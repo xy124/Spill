@@ -61,7 +61,6 @@ class CWorm : public CPhysicalObject {
 		void ProcessNextItemKey();
 		void ProcessUseItemKey();
 		void ProcessPickDropItem();
-		//FIXME update aktuallisieren das all die processes abgearbeitet werden!
 
 	public:
 		CWorm(CGame *pGame);
