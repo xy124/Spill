@@ -43,7 +43,7 @@ void CIDragon::init(CGame * pGame) {
 
 void CIDragon::update() {
 	if (m_bActive) {
-		//set pos under Owner!
+		//set pos under Owner! //owner on top of dragon ;)
 		FloatRect worm = getOwner()->getRect();
 		FloatRect dragon = getRect();
 
@@ -98,7 +98,8 @@ void CIDragon::use() {
 void CIDragon::ProcessMovingKeys() {
 	CVec newDir = getDir();
 	S_WormSettings settings;
-	settings = (g_pSettings->s.WormSet[getOwner()->getWormID()]);//TODO senseless to handle it with pointer!
+	settings = (g_pSettings->s.WormSet[getOwner()->getWormID()]);
+	//TODO senseless to handle it with pointer!^^
 
 	//Jumping = Flying
 	if (g_pFramework->KeyDown(settings.KeyJump)) { //Jump!
@@ -107,7 +108,7 @@ void CIDragon::ProcessMovingKeys() {
 
 	//Left or Right!!
 	if (g_pFramework->KeyDown(settings.KeyLeft) == true) {
-		newDir.x += -DRAGONACCELERATION; //FIXME: USE DRAGON-Consts
+		newDir.x += -DRAGONACCELERATION;
 		if (newDir.x < -DRAGONMAXSPEED_X) newDir.x = -DRAGONMAXSPEED_X;
 	} else if (g_pFramework->KeyDown(settings.KeyRight) == true ) {
 		newDir.x += +DRAGONACCELERATION;

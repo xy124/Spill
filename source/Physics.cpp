@@ -90,6 +90,7 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 	if (YCollision.BlockType != CBlock::AIR)
 		it->setLastCollisionY(YCollision);
 
+	//MBE: don't work?? with x??
 	if (XCollision.BlockType != CBlock::AIR)
 			it->setLastCollisionX(XCollision);
 }

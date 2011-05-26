@@ -14,6 +14,8 @@ How to get this project compiling with eclipse - MingW:
 			
 	-included SFont to print Text --> just files in source are set to be sourcefiles
 		(look at projectproperties)
+		
+	-i'm using SDL_gfx too!
 
 
 How to get this project compiling with MSVC++:
