@@ -66,7 +66,7 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 		}
 
 		if (YCollision.bIsCollision && XCollision.bIsCollision)
-			break;
+			break; //HINT aborts whole for-loop. "continue" would meah "GO TO NEXT ITERATOR..."
 
 	}//für jeden SChritt...
 	//wenn keine x-Kollission:
