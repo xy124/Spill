@@ -32,6 +32,13 @@ bool CPhysicalObject::getCanJump() const
 	return m_bCanJump;
 }
 
+bool CPhysicalObject::getHasGravity() const
+{
+	return m_bHasGravity;
+}
+
+
+
 void CPhysicalObject::setCanMove(bool bCanMove)
 {
     this->m_bCanMove = bCanMove;
@@ -57,6 +64,11 @@ void CPhysicalObject::setCanJump(bool bCanJump)
 	m_bCanJump = bCanJump;
 }
 
+void CPhysicalObject::setHasGravity(bool bHasGravity)
+{
+	m_bHasGravity = bHasGravity;
+}
+
 S_Collision CPhysicalObject::getLastCollisionY()
 {
     return m_lastCollisionY;
@@ -66,4 +78,16 @@ void CPhysicalObject::setLastCollisionY(S_Collision &m_lastCollisionY)
 {
     this->m_lastCollisionY = m_lastCollisionY;
 }
+
+S_Collision CPhysicalObject::getLastCollisionX()
+{
+    return m_lastCollisionX;
+}
+
+void CPhysicalObject::setLastCollisionX(S_Collision &m_lastCollisionX)
+{
+    this->m_lastCollisionX = m_lastCollisionX;
+}
+
+
 

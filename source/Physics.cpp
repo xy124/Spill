@@ -85,6 +85,9 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 	//gegebenenfalls neue collision setzen
 	if (YCollision.BlockType != CBlock::AIR)
 		it->setLastCollisionY(YCollision);
+
+	if (XCollision.BlockType != CBlock::AIR)
+			it->setLastCollisionX(XCollision);
 }
 
 
