@@ -326,7 +326,7 @@ void CWorm::update() {
 bool CWorm::isAlive() {
 	return m_Alive;
 }
-//TODO: draw icons of build items with .....
+
 void CWorm::ProcessPickDropItem() {
 	//for all items in range: pick them up, if no item selected
 	if ((g_pFramework->isNewEvent()) && (g_pFramework->KeyDown(m_pSettings->KeyPickDropItem))) {

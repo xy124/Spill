@@ -54,3 +54,9 @@ void CIBlockBuilder::init(CBlock::BlockType BT, CGame * pGame) {
 	setIcon(g_pSpritepool->at(SPRITEID::ICONBLOCKBUILDER));
 	setName(CBlock::getBlockTypeString(BT));
 }
+
+void CIBlockBuilder::onRenderIcon(int x, int y) {
+	//render block under buildingtool-Icon
+	CBlock::m_pBlockSprites[m_BlockType]->SetPos(static_cast<float>(x),static_cast<float>(y));
+	CBlock::m_pBlockSprites[m_BlockType]->Render(0);
+}

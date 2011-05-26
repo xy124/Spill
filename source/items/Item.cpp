@@ -8,6 +8,7 @@
 #include "Item.hpp"
 
 void CItem::renderIcon(int x, int y) {
+	onRenderIcon(x,y);
 	m_pIcon->SetPos(static_cast<float>(x), static_cast<float>(y));
 	m_pIcon->Render();
 	if (isCoolDown()) {//Cooldown?

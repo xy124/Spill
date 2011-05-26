@@ -22,6 +22,8 @@ public:
 	void use();
 	CIBlockBuilder();
 	virtual ~CIBlockBuilder();
+
+	void onRenderIcon(int x, int y);
 };
 
 #endif /* IBLOCKBUILDER_HPP_ */

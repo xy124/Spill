@@ -56,8 +56,10 @@ public:
 		return m_pOwner;
 	};
 
-	void renderIcon(int x, int y);
 	void setIcon(CSprite * pIcon);
+	void renderIcon(int x, int y);
+	virtual void onRenderIcon(int x, int y) {}; //we need this to draw icons of builders...
+
 
 	void setIsAlive(bool alive) {
 		m_bIsAlive = alive;
