@@ -42,7 +42,9 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 			//yes all physicall objects fall!
 			//Fallbeschleunigung dazu!
 			//HINT: Fallkurve hängt von getTimeelapsed ab!! evtl mit s=g/2t² arbeieten
-			dir.y += Gravity*time; //graviy muss nach unten zeigen...
+			if (it->getHasGravity()) {
+				dir.y += Gravity*time; //graviy muss nach unten zeigen...
+			}
 
 
 			it->setCanJump(false); //kann auf jeden erstmal nicht springen
@@ -58,6 +60,7 @@ void CPhysics::doPhysicsFor(CPhysicalObject * it) {
 					it->setCanJump(true);
 				}
 			}
+
 
 		}
 

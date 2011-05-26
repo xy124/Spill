@@ -25,8 +25,6 @@ void CIDragon::init(CGame * pGame) {
 	m_pGame = pGame;
 
 	m_fAnimPhase = 0.0f;
-	m_fFireCreateTime = -30.0f;
-	m_fFireRelativeX = 0.0f;
 	this->CItem::init();
 	setIsSolid(true);
 	setName("Dragon");
@@ -88,7 +86,7 @@ void CIDragon::use() {
 	//TODO: COOLDOWN!
 	CAA_DragonFire * pDragonFire;
 	pDragonFire = new CAA_DragonFire();
-	pDragonFire->init(CVec(getRect()),getOwner()->getOrientation(), m_pGame,
+	pDragonFire->init(getRect(), getOwner()->getOrientation(), m_pGame,
 			getOwner()->getWormID(), getOwner()->getTeamID() );
 	m_pGame->m_AttackAnimations.push_back(pDragonFire);
 }

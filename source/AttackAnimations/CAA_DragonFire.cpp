@@ -18,7 +18,7 @@ CAA_DragonFire::~CAA_DragonFire() {
 	// TODO Auto-generated destructor stub
 }
 
-void CAA_DragonFire::init(FloatRect dragonRect, bool bOrientation, CGame* pGame, int WormID, int TeamID) {
+void CAA_DragonFire::init(FloatRect dragonRect, bool bOrientation, CGame * pGame, int WormID, int TeamID) {
 	m_pGame = pGame;
 	m_WormID = WormID;
 	m_TeamID = TeamID;

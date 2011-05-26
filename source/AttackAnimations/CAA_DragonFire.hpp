@@ -25,7 +25,7 @@ public:
 	CAA_DragonFire();
 	virtual ~CAA_DragonFire();
 
-	void init(FloatRect dragonRect, bool bOrientation, CGame* pGame, int WormID, int TeamID);
+	void init(FloatRect dragonRect, bool bOrientation, CGame * pGame, int WormID, int TeamID);
 	void update();
 	void render();
 };
