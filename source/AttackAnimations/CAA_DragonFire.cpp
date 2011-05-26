@@ -46,7 +46,6 @@ void CAA_DragonFire::render() {
 
 void CAA_DragonFire::update() {
 	if (getLastCollisionX().bIsCollision) {
-		//TODO: why is biscollision never true?
 		CBlockKoord blockKoord;
 		CVec vec = CVec(	getRect().x+(m_bOrientation == OLEFT ? -3.0f : getRect().w+3.0f),	//x
 							getRect().y + 50.0f);												//y
@@ -56,7 +55,6 @@ void CAA_DragonFire::update() {
 			m_pGame->BuildBlock(blockKoord, CBlock::AIR, m_WormID, m_TeamID);
 		}
 
-//TODO: set itempickpoint in middle of item not on left top corner!
 		//TODO: save map in xml...
 
 

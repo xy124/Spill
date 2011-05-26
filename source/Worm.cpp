@@ -326,7 +326,7 @@ void CWorm::update() {
 bool CWorm::isAlive() {
 	return m_Alive;
 }
-
+//TODO: draw icons of build items with .....
 void CWorm::ProcessPickDropItem() {
 	//for all items in range: pick them up, if no item selected
 	if ((g_pFramework->isNewEvent()) && (g_pFramework->KeyDown(m_pSettings->KeyPickDropItem))) {
@@ -335,9 +335,10 @@ void CWorm::ProcessPickDropItem() {
 			for (it = m_pGame->m_pItems.begin(); it != m_pGame->m_pItems.end(); ++it) {
 				if ((*it)->getOwner() == NULL) { //nobody owns it
 					//calculate distance to item:
-					CVec posItem = CVec((*it)->getRect());
+					CVec posItem = CVec((*it)->getRect(), true);
 					CVec dist = CVec(getRect());
 					dist -= posItem;
+
 					if (dist.quad_abs() < QUADMAXITEMPICKUPDIST) { //in range...., so its mine now!
 						(*it)->setOwner(this);
 						m_pItems.push_back((*it));

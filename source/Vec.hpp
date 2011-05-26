@@ -26,9 +26,14 @@ class CVec { //real Koords in Pixels!
 			x = X;
 			y = Y;
 		}
-		CVec(const FloatRect &fr) {
-					x = fr.x;
-					y = fr.y;
+		CVec(const FloatRect &fr, bool getCenter = false) {
+			if (getCenter) {
+				x = fr.x+(fr.w/2.0f);
+				y = fr.y+(fr.h/2.0f);
+			} else {
+				x = fr.x;
+				y = fr.y;
+			}
 		}
 		CVec(const CBlockKoord &blockKoord) {
 			x = BLOCKSIZE*blockKoord.x;
@@ -95,6 +100,7 @@ class CVec { //real Koords in Pixels!
 			old.y = y;
 			return old;
 		}
+
 
 };
 
