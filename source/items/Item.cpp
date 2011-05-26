@@ -10,6 +10,10 @@
 void CItem::renderIcon(int x, int y) {
 	m_pIcon->SetPos(static_cast<float>(x), static_cast<float>(y));
 	m_pIcon->Render();
+	if (isCoolDown()) {//Cooldown?
+		g_pSpritepool->at(SPRITEID::ICONCOOLDOWN)->SetPos(static_cast<float>(x), static_cast<float>(y));
+		g_pSpritepool->at(SPRITEID::ICONCOOLDOWN)->Render();
+	}
 }
 
 void CItem::setIcon(CSprite * pIcon) {

@@ -19,6 +19,8 @@ private:
 	float m_fAnimPhase;
 	bool m_bActive;
 
+	float m_fLastShot;
+
 	void ProcessMovingKeys();
 
 	CGame * m_pGame;
@@ -30,6 +32,8 @@ public:
 	void use();//burns!
 	CIDragon();
 	virtual ~CIDragon();
+
+	bool isCoolDown();
 };
 
 #endif /* IDRAGON_HPP_ */

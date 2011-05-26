@@ -38,6 +38,7 @@ void CIDragon::init(CGame * pGame) {
 	FR = m_pSpriteBody->GetRect();
 	setRect(FR);
 	m_bActive = false;
+	m_fLastShot = 0.0f;
 }
 
 void CIDragon::update() {
@@ -83,12 +84,15 @@ void CIDragon::onSetOwner(CWorm * pNewOwner) {
 
 void CIDragon::use() {
 	//pay attention on Orientation
-	//TODO: COOLDOWN!
-	CAA_DragonFire * pDragonFire;
-	pDragonFire = new CAA_DragonFire();
-	pDragonFire->init(getRect(), getOwner()->getOrientation(), m_pGame,
-			getOwner()->getWormID(), getOwner()->getTeamID() );
-	m_pGame->m_AttackAnimations.push_back(pDragonFire);
+	//TODO: COOLDOWN with cooldownicon ... ???
+	if (isCoolDown() == false) {
+		CAA_DragonFire * pDragonFire;
+		pDragonFire = new CAA_DragonFire();
+		pDragonFire->init(getRect(), getOwner()->getOrientation(), m_pGame,
+				getOwner()->getWormID(), getOwner()->getTeamID() );
+		m_pGame->m_AttackAnimations.push_back(pDragonFire);
+		m_fLastShot = g_pTimer->now();
+	}
 }
 
 void CIDragon::ProcessMovingKeys() {
@@ -111,4 +115,8 @@ void CIDragon::ProcessMovingKeys() {
 	}
 
 	setDir(newDir);
+}
+
+bool CIDragon::isCoolDown() {
+	return (g_pTimer->now() - m_fLastShot <= 10.0f);  //ten sec COOLDOWN
 }

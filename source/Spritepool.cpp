@@ -133,6 +133,11 @@ CSpritepool::CSpritepool() {
 	m_pSprites[SPRITEID::DRAGONFIRE] = (pSprite);
 	pSprite = NULL;
 
+//IconCoolDown
+	pSprite = new CSprite();
+	pSprite->Load(_DIRDATA_+"/IconCooldown.bmp", true, false);
+	m_pSprites[SPRITEID::ICONCOOLDOWN] = (pSprite);
+	pSprite = NULL;
 
 
 
