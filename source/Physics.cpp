@@ -143,21 +143,44 @@ bool CPhysics::rectCollision(const FloatRect &FR1, const FloatRect &FR2) { //üb
 }
 
 S_Collision CPhysics::getCollision(const FloatRect &FR) {
-	#define CHECKPOINTS 4//jez reichen 4 Punke, da Worm kleiner Block!!
 
-	CVec vecs[CHECKPOINTS];
+	//calculate how many Checkpoints we'll need:
+	int x_CheckpointAmount = static_cast<int>( (FR.w/(BLOCKSIZE)+1));
+	int y_CheckpointAmount = static_cast<int>( (FR.h/(BLOCKSIZE)+1));
 
-	vecs[0] = CVec (FR);
-	vecs[1] = CVec (FR.x+FR.w, FR.y);
-	vecs[2] = CVec (FR.x, FR.y+FR.h);
-	vecs[3] = CVec (FR.x+FR.w, FR.y+FR.h);
-	/*vecs[4] = CVec (FR.x+FR.w/2, FR.y);
-	vecs[5] = CVec (FR.x+FR.w/2, FR.y+FR.h);*/
+	const int CheckpointAmount = (x_CheckpointAmount+y_CheckpointAmount)*2;
+
+	CVec vecs[CheckpointAmount+3];//+3 weitere ecken ;)
+
+//X
+	int i;
+	for (i = 0; i < 2*(x_CheckpointAmount); i+=2){
+		//upper edge
+		vecs[i].x = FR.x + i * BLOCKSIZE;
+		vecs[i].y = FR.y;
+
+		//lower edge
+		vecs[i+1].x = FR.x + i * BLOCKSIZE;
+		vecs[i+1].y = FR.y + FR.h;
+	}
+
+//Y	(I has last value from x-loop)
+	for (i+=2; i <CheckpointAmount; i+=2){
+		//upper edge
+		vecs[i].x = FR.x;
+		vecs[i].y = FR.y + i * BLOCKSIZE;
+
+		//lower edge
+		vecs[i+1].x = FR.x+FR.w;
+		vecs[i+1].y = FR.y + i * BLOCKSIZE;
+	}
+
+
 
 
 	//TODO USE RECTCOLLISION!!!
-	//HINT: reicht z.z.T wenn wir die Ecken + 2 Mitten überprüfen, da unser Worm maximal auf vier verschiedenen Feldern Sein kann!!
-	S_Collision result;//init Result:
+	S_Collision result;
+	//init Result:
 	result.fBouncingFactorX = 0.0f;
 	result.fBouncingFactorY = 0.0f;
 	result.bIsCollision = false;
@@ -165,7 +188,7 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 
 
 
-	for (int i=0; i<CHECKPOINTS; i++) {
+	for (i=0; i<CheckpointAmount; i++) {
 		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i]);
 		if (curType != CBlock::AIR)
 			result.bIsCollision = true;
