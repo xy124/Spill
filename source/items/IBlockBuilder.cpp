@@ -57,6 +57,8 @@ void CIBlockBuilder::init(CBlock::BlockType BT, CGame * pGame) {
 
 void CIBlockBuilder::onRenderIcon(int x, int y) {
 	//render block under buildingtool-Icon
-	CBlock::m_pBlockSprites[m_BlockType]->SetPos(static_cast<float>(x),static_cast<float>(y));
-	CBlock::m_pBlockSprites[m_BlockType]->Render(0);
+	CBlock::m_pBlockSprites[m_BlockType]->setIsInWord(false);
+	CBlock::m_pBlockSprites[m_BlockType]->SetPos(x,y);
+	CBlock::m_pBlockSprites[m_BlockType]->Render(1);
+	CBlock::m_pBlockSprites[m_BlockType]->setIsInWord(true);
 }
