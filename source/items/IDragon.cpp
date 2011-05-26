@@ -10,6 +10,11 @@
 #include "../FloatRect.hpp"
 #include "../Worm.hpp"
 
+#include "../BlockKoord.hpp"
+#include "../Block.hpp"
+
+#include "../AttackAnimations/CAA_Explosion1.hpp"
+
 CIDragon::CIDragon() {
 // TODO Auto-generated constructor stub
 
@@ -19,9 +24,12 @@ CIDragon::~CIDragon() {
 // TODO Auto-generated destructor stub
 }
 
-void CIDragon::init() {
+void CIDragon::init(CGame * pGame) {
+	m_pGame = pGame;
+
 	m_fAnimPhase = 0.0f;
-	m_fFireAnimPhase = 0.0f;
+	m_fFireCreateTime = -30.0f;
+	m_fFireRelativeX = 0.0f;
 	this->CItem::init();
 	setIsSolid(true);
 	setName("Dragon");
@@ -31,6 +39,7 @@ void CIDragon::init() {
 	setIcon(g_pSpritepool->at(SPRITEID::ICONDRAGON));
 	m_pSpriteBody = g_pSpritepool->at(SPRITEID::DRAGONBODY);
 	m_pSpriteWings = g_pSpritepool->at(SPRITEID::DRAGONWINGS);
+	m_pSpriteFire = g_pSpritepool->at(SPRITEID::DRAGONFIRE);
 	FloatRect FR;
 	FR = m_pSpriteBody->GetRect();
 	setRect(FR);
@@ -54,13 +63,24 @@ void CIDragon::update() {
 
 		ProcessMovingKeys();
 
-		if (m_fFireAnimPhase > 0.0f) {//salve wurde abgefeuert!
-			m_fFireAnimPhase += m_fAnimPhase += 10.0f * g_pTimer->getElapsed();
+		if ((m_fFireCreateTime > 0.0f) && (g_pTimer->now() - m_fFireCreateTime > 1.5f)) { //Fire just lives 1.5s
+			m_fFireCreateTime = -30.0f;
+			//destroy Blocks...
+			CBlockKoord blockKoord;
+			CVec vec = CVec(getRect().x + m_fFireRelativeX-(m_bFireOrientation == OLEFT ? -75 : 0),
+					getRect().y + 38.0f);
+			blockKoord = vec.toBlockKoord();
+			m_pGame->BuildBlock(blockKoord, CBlock::AIR, getOwner()->getWormID(), getOwner()->getTeamID());
+			/* TODO: explosion! on block!
+			CAA_Explosion1 * pExplostion;
+			pExplostion = new CAA_Explosion1();
+			pExplostion->init(getOwner())
+			*/
 
-			if (m_fFireAnimPhase > 90.0f) {
-				//TODO: destroy blocks, delete fire
+		} else {//was fired
+			m_fFireRelativeX += g_pTimer->getElapsed() * 100.0f
+					* (m_bFireOrientation == OLEFT ? -1 : 1);//move it
 
-			}
 		}
 	}
 }
@@ -68,13 +88,19 @@ void CIDragon::update() {
 void CIDragon::render() {
 	if (!m_bActive) { //draw just if nobody has it!
 		m_pSpriteBody->SetPos(CVec(getRect()));
-		m_pSpriteBody->Render();
+		m_pSpriteBody->Render(0);
 	} else {
 		m_pSpriteBody->SetPos(CVec(getRect()));
 		m_pSpriteBody->Render(0.0f, getOwner()->getOrientation(), getOwner()->getWormID());
 		m_pSpriteWings->SetPos(CVec(getRect()));
 		m_pSpriteWings->Render( (m_fAnimPhase < 0 ? -m_fAnimPhase : m_fAnimPhase) //MBE use real ABS-Func!
 				, getOwner()->getOrientation(), getOwner()->getWormID());
+
+		//fired??
+		if (m_fFireCreateTime > 0.0f) {
+			m_pSpriteFire->SetPos(getRect().x+m_fFireRelativeX,getRect().y);
+			m_pSpriteFire->Render(getOwner()->getWormID());
+		}
 	}
 }
 
@@ -90,7 +116,14 @@ void CIDragon::onSetOwner(CWorm * pNewOwner) {
 void CIDragon::use() {
 	//pay attention on Orientation
 	//TODO: cooldown!
-
+	if (m_fFireCreateTime < 0.0f) {//only if you can fire...
+		m_fFireCreateTime = g_pTimer->now();
+		m_bFireOrientation = getOwner()->getOrientation();
+		//set start-pos of fire:
+		if (m_bFireOrientation == OLEFT)
+			m_fFireRelativeX = 0.0f;
+		else m_fFireRelativeX = getRect().w;
+	}
 }
 
 void CIDragon::ProcessMovingKeys() {

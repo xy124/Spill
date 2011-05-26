@@ -17,7 +17,7 @@ CSettings::CSettings() {
 	s.WormSet[0].KeyLeft	 			= SDLK_a;
 	s.WormSet[0].KeyMine 				= SDLK_s;
 	s.WormSet[0].KeyRight 				= SDLK_d;
-	s.WormSet[0].KeyPickDropItem			= SDLK_TAB;
+	s.WormSet[0].KeyPickDropItem		= SDLK_TAB;
 	s.WormSet[0].KeyNextItem			= SDLK_LSHIFT;
 	s.WormSet[0].KeyUseItem				= SDLK_LCTRL;
 
@@ -32,7 +32,7 @@ CSettings::CSettings() {
 	s.WormSet[1].KeyLeft	 			= SDLK_LEFT;
 	s.WormSet[1].KeyMine 				= SDLK_DOWN;
 	s.WormSet[1].KeyRight 				= SDLK_RIGHT;
-	s.WormSet[1].KeyPickDropItem			= SDLK_RETURN;
+	s.WormSet[1].KeyPickDropItem		= SDLK_RETURN;
 	s.WormSet[1].KeyNextItem			= SDLK_RSHIFT;
 	s.WormSet[1].KeyUseItem				= SDLK_RCTRL;
 

@@ -129,7 +129,7 @@ CSpritepool::CSpritepool() {
 	pSprite = NULL;
 	//fire:
 	pSprite = new CSprite();
-	pSprite->Load(_DIRDATA_+"/dragon.bmp", 1, 75, 100);
+	pSprite->Load(_DIRDATA_+"/DragonWeapon.bmp", 1, 75, 100);
 	m_pSprites[SPRITEID::DRAGONFIRE] = (pSprite);
 	pSprite = NULL;
 

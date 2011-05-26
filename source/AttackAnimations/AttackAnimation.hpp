@@ -14,14 +14,15 @@
 class CAttackAnimation : public CPhysicalObject {
 private:
 	float m_fKillTime;//when to destroy it
-public:
+protected:
 	void initKillTime(float liveTime);//HINT: make sure that all subclasses call this!
+public:
 	void setDead();
 
 	bool isAlive();
 
 	virtual void render() {
-		g_pLogfile->Textout("lal");
+		g_pLogfile->Textout("rendered Attackanimation");
 	};
 	virtual void update() {};
 	virtual void quit() {};

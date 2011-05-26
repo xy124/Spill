@@ -36,3 +36,4 @@ Please set all pictures to 24 Bit!!!!!
 			Hey that looks great: http://members.chello.nl/w.boeke/SDL-widgets/index.html
 			http://www.libsdl.org/projects/GUIlib/
 		  
+		  http://nehe.gamedev.net/wiki/Default.aspx?Page=LessonEclipse&AspxAutoDetectCookieSupport=1

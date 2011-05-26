@@ -127,7 +127,7 @@ void CGame::createDebugGameBoard() {//creates World for debugging
 
 	//dragon :P
 	CIDragon * pDragon = new CIDragon();
-	pDragon->init();
+	pDragon->init(this);
 	m_pItems.push_back(pDragon);
 	pDragon = NULL;
 
