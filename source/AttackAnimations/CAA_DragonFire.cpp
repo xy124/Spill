@@ -21,7 +21,7 @@ void CAA_DragonFire::init(FloatRect dragonRect, bool bOrientation, CGame * pGame
 	setCanMove(true);
 	FR = m_pSprite->GetRect();
 	if (m_bOrientation == OLEFT) {
-		FR.x = dragonRect.x+FR.w;
+		FR.x = dragonRect.x;
 		dir.x = -500.0f;
 	} else {
 		FR.x = dragonRect.x+dragonRect.w-FR.w;

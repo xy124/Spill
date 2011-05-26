@@ -24,6 +24,9 @@ private:
 	bool m_bDropable;
 	std::string m_Name;
 
+protected:
+	virtual void onSetOwner(CWorm * pNewOwner) {};
+
 public:
 	void setName(std::string name) {
 		m_Name = name;
@@ -43,7 +46,7 @@ public:
 
 
 
-	virtual void onSetOwner(CWorm * pNewOwner) {};
+
 	void setOwner(CWorm * pOwner) {
 		onSetOwner(pOwner);
 		m_pOwner = pOwner;

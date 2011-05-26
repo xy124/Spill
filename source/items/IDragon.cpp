@@ -30,6 +30,9 @@ void CIDragon::init(CGame * pGame) {
 	setName("Dragon");
 	setDropable(true);
 
+	//TODO: for debug only:
+	setOwner(NULL);
+
 
 	setIcon(g_pSpritepool->at(SPRITEID::ICONDRAGON));
 	m_pSpriteBody = g_pSpritepool->at(SPRITEID::DRAGONBODY);
@@ -75,11 +78,14 @@ void CIDragon::render() {
 
 void CIDragon::onSetOwner(CWorm * pNewOwner) {
 	m_bActive = (pNewOwner != NULL);
-	if (getOwner() != NULL) //alter owner kann scih bewegen!
+	if (getOwner() != NULL) //old owner can move!
 		getOwner()->setCanMove(true);
 	if (pNewOwner != NULL)
 		pNewOwner->setCanMove(false);
-	g_pLogfile->Textout("dragon changed  owner!");
+	g_pLogfile->Textout("dragon changed  owner! name:");
+	if (pNewOwner != NULL) {
+		g_pLogfile->Textout(pNewOwner->getName());
+	}
 }
 
 void CIDragon::use() {

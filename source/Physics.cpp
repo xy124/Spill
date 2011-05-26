@@ -103,16 +103,15 @@ bool CPhysics::doPhysics() {
 	//TODO: falls es noch andere solid-physicalobjets gibt, diese berücksichtigen!!!
 
 	vector<CWorm*>::iterator it;
-	for (it = m_pGame->m_vWorms.begin(); it!=m_pGame->m_vWorms.end(); ++it) {
+	for (it = m_pGame->m_vWorms.begin(); it != m_pGame->m_vWorms.end(); ++it) {
 		if ( !((*it)->getCanMove() && (*it)->isAlive()) )
-			break; //auf zum n�chsten Wurm!
+			continue; //let's go to the next worm
 		doPhysicsFor((*it));
 
 
-	}//FÜPR JEDEN WURM
+	}//for every Worm
 
-	//für jede attack:
-
+	//for every attack:
 	list<CAttackAnimation*>::iterator Ait;
 	for (Ait = m_pGame->m_AttackAnimations.begin(); Ait != m_pGame->m_AttackAnimations.end(); ++Ait) {
 		if ( ((*Ait)->getCanMove())) {
