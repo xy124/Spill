@@ -128,6 +128,8 @@ bool CPhysics::doPhysics() {
 	return true;
 }
 
+
+
 CBlock::BlockType CPhysics::getBlockType(CVec &vec) {
 	CBlock* b;
 	b= m_pGame->getBlock(vec.toBlockKoord());
