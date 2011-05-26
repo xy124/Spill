@@ -22,8 +22,8 @@ private:
 	int m_TeamID, m_WormID;
 
 public:
-	CAA_DragonFire();
-	virtual ~CAA_DragonFire();
+	CAA_DragonFire() {};
+	virtual ~CAA_DragonFire() {};
 
 	void init(FloatRect dragonRect, bool bOrientation, CGame * pGame, int WormID, int TeamID);
 	void update();

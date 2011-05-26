@@ -9,15 +9,6 @@
 #include "../Game.hpp"
 #include "../Spritepool.hpp"
 
-CAA_DragonFire::CAA_DragonFire() {
-	// TODO Auto-generated constructor stub
-
-}
-
-CAA_DragonFire::~CAA_DragonFire() {
-	// TODO Auto-generated destructor stub
-}
-
 void CAA_DragonFire::init(FloatRect dragonRect, bool bOrientation, CGame * pGame, int WormID, int TeamID) {
 	m_pGame = pGame;
 	m_WormID = WormID;
@@ -34,8 +25,10 @@ void CAA_DragonFire::init(FloatRect dragonRect, bool bOrientation, CGame * pGame
 		dir.x = -100.0f;
 	} else {
 		FR.x = dragonRect.x+dragonRect.w-FR.w;
-		dir.x = 100.0f;
+		dir.x = 500.0f;
 	}
+	FR.y = dragonRect.y;
+	FR.w -= 15.0f; //Physical rect is smaller then sprite ;) --> looks better
 	setDir(dir);
 	setRect(FR);
 	setHasGravity(false);
