@@ -1,6 +1,7 @@
 #include "Physics.hpp"
 #include <list>
 #include "AttackAnimations/AttackAnimation.hpp"
+#include <vector>
 
 using namespace std;
 
@@ -147,35 +148,46 @@ bool CPhysics::rectCollision(const FloatRect &FR1, const FloatRect &FR2) { //üb
 S_Collision CPhysics::getCollision(const FloatRect &FR) {
 
 	//calculate how many Checkpoints we'll need:
-	int x_CheckpointAmount = static_cast<int>( (FR.w/(BLOCKSIZE)+1));
-	int y_CheckpointAmount = static_cast<int>( (FR.h/(BLOCKSIZE)+1));
+	int x_CheckpointAmount = static_cast<int>( (FR.w/(BLOCKSIZE)+2));
+	int y_CheckpointAmount = static_cast<int>( (FR.h/(BLOCKSIZE)+2));
 
 	const int CheckpointAmount = (x_CheckpointAmount+y_CheckpointAmount)*2;
 
-	CVec vecs[CheckpointAmount+3];//+3 weitere ecken ;)
+	CVec vecs[CheckpointAmount];//+3 weitere ecken ;)
 
 //X
-	int i;
-	for (i = 0; i < 2*(x_CheckpointAmount); i+=2){
+	int i, d; //i=Arrayindex, d= factor!
+	for (i = 0, d=0; i < 2*(x_CheckpointAmount); i+=2, d++){
 		//upper edge
-		vecs[i].x = FR.x + i * BLOCKSIZE;
+		vecs[i].x = FR.x + d * BLOCKSIZE;
 		vecs[i].y = FR.y;
 
 		//lower edge
-		vecs[i+1].x = FR.x + i * BLOCKSIZE;
+		vecs[i+1].x = FR.x + d * BLOCKSIZE;
 		vecs[i+1].y = FR.y + FR.h;
+		if (FR.x + d * BLOCKSIZE > FR.x + FR.w) { //handle out of range
+			vecs[i+1].x = FR.w + FR.x;
+			vecs[i].x = FR.w + FR.x;
+		}
 	}
 
-//Y	(I has last value from x-loop)
-	for (i+=2; i <CheckpointAmount; i+=2){
-		//upper edge
+//Y	(i has last value from x-loop) -> i < 2*(x_CheckpointAmount)==false -> i= startvalue for y-Loop
+	for (/*i=i*/d=0; i <CheckpointAmount; i+=2, d++){
+		//left edge
 		vecs[i].x = FR.x;
-		vecs[i].y = FR.y + i * BLOCKSIZE;
+		vecs[i].y = FR.y + d * BLOCKSIZE;
 
-		//lower edge
-		vecs[i+1].x = FR.x+FR.w;
-		vecs[i+1].y = FR.y + i * BLOCKSIZE;
+		//right edge
+		vecs[i+1].x = FR.x + FR.w;
+		vecs[i+1].y = FR.y + d * BLOCKSIZE;
+
+		if (FR.y + d * BLOCKSIZE > FR.y + FR.h) { //handle out of range
+			vecs[i+1].y = FR.h + FR.y;
+			vecs[i].y = FR.h + FR.y;
+		}
 	}
+
+
 
 
 
@@ -188,8 +200,6 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 	result.bIsCollision = false;
 	result.BlockType = CBlock::AIR;
 
-
-
 	for (i=0; i<CheckpointAmount; i++) {
 		CBlock::BlockType curType = CPhysics::getBlockType(vecs[i]);
 		if (curType != CBlock::AIR)
@@ -201,6 +211,7 @@ S_Collision CPhysics::getCollision(const FloatRect &FR) {
 		if (curType > result.BlockType) {
 			result.BlockType = curType;
 		}
+
 	}
 
 
