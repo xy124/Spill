@@ -30,6 +30,7 @@ void CIBlockBuilder::use() {
 		CBlockKoord pos = vec.toBlockKoord();
 
 		//is field free???
+		//FIXME: test also whether on field is no dragon etc.....
 		CBlock* buildingBlock = m_pGame->getBlock(pos);
 		if ( (buildingBlock != NULL)
 				&& (buildingBlock->getBlockType() == CBlock::AIR)
