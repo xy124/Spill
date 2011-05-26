@@ -143,6 +143,8 @@ void CWorm::render() {
 			m_SelectedpItem = it;
 		}
 	}
+	if (m_SelectedpItem == m_pItems.end())
+		m_SelectedpItem = m_pItems.begin();
 
 	x = g_pFramework->ViewPorts.at(m_WormID).m_ScreenPosition.x+2;
 		//render Itembar-Background
@@ -339,6 +341,9 @@ void CWorm::ProcessPickDropItem() {
 					if (dist.quad_abs() < QUADMAXITEMPICKUPDIST) { //in range...., so its mine now!
 						(*it)->setOwner(this);
 						m_pItems.push_back((*it));
+						//new item = selected one:
+						m_SelectedpItem = m_pItems.end();
+						m_SelectedpItem--;
 					}
 				}
 			}//for
