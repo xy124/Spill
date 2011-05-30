@@ -10,7 +10,16 @@
 #include <fstream>
 #include "Logfile.hpp"
 
+#include <stdio.h>
+
+#include "Block.hpp"
+#include "BlockKoord.hpp"
+#include <map>
+
+
 using namespace std;
+
+const int formatVersion = 1;//TODO whaa globals -__-
 
 CSettings::CSettings() {
 	s.WormSet[0].KeyJump 				= SDLK_w;
@@ -73,6 +82,85 @@ const char* CSettings::getName(int arrayIndex) {
 void CSettings::setName(int arrayIndex, std::string str) {
 	for (unsigned int i = 0; ( (i<str.length()) && (i<30) ); i++)
 		s.WormSet[arrayIndex].name[i] = str.at(i);
+}
+
+void CSettings::SaveWorldToFile	(std::string sFilename, CGame * pGame) {
+
+	FILE * pFile;
+	pFile = fopen((sFilename+".world").c_str(), "w");
+	if (pFile == NULL) {
+		g_pLogfile->FunctionResult("CSettings::SaveWorldToFile", L_FAIL,
+				("error while opening "+sFilename));
+		return;
+	}
+	//Header:
+	fwrite(pFile, formatVersion);
+	fwrite(pFile, pGame->m_Gameboard.size());
+
+	std::map<CBlockKoord,CBlock*>::iterator Mit;
+
+	for (Mit = pGame->m_Gameboard.begin(); Mit != pGame->m_Gameboard.end(); ++Mit) {
+		fwrite(pFile, Mit->first);
+		fwrite(pFile, *(Mit->second));
+	}
+
+	fclose(pFile);
+
+
+	//TODO: find a way to save the items!
+	//Header:
+	/*
+	fwrite(pFile, formatVersion);
+	fwrite(pFile, pGame->m_pItems.size());
+
+	pFile = fopen((sFilename+".items").c_str(), "w");
+	std::list<CItem*>::iterator Iit;
+
+	for (Iit = pGame->m_pItems.begin(); Iit != pGame->m_pItems.end(); ++Iit) {
+		fwrite(pFile,(*Iit));
+	}
+
+	fclose(pFile);
+	*/
+
+}
+
+
+bool CSettings::LoadWorldFromFile	(std::string sFilename, CGame * pGame) {
+	FILE * pFile;
+	pFile = fopen((sFilename+".world").c_str(), "r");
+	if (pFile == NULL) {
+		g_pLogfile->FunctionResult("CSettings::LoadWorldFromFile", L_FAIL,
+				("error while opening "+sFilename));
+		return false;
+	}
+
+	int version;
+	version = fread(pFile);
+	if (version != formatVersion) {//wrong format!
+		return false;
+	}
+
+	long size;
+	size = fread(pFile);
+
+
+	pair<CBlockKoord, CBlock*> Gamefield;
+	for (long i = 0; i < size; ++i) {
+		CBlockKoord pos = fread(pFile);
+		CBlock block = fread(pFile);
+		Gamefield = make_pair( pos, new CBlock(block));//ion heap kopieren!
+
+		pGame->m_Gameboard.insert(Gamefield);
+	}
+
+
+
+
+
+	fclose(pFile);
+
+	return true;
 }
 
 

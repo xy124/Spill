@@ -10,6 +10,8 @@
 #include "../Worm.hpp"
 #include "../Logfile.hpp"
 
+
+
 CSprite * CIFlag::m_pSprite;
 
 void CIFlag::init() {//MBE maybe its better to init sprites in inits (if not null... but where to set null?)

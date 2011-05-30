@@ -15,6 +15,8 @@
 
 class CSettings;
 
+class CGame;
+
 struct S_WormSettings {
 friend class CSettings;
 	SDLKey KeyJump;
@@ -37,6 +39,8 @@ struct S_saveIt {
 #define g_pSettings CSettings::get()
 class CSettings : public TSingleton<CSettings>{
 public:
+
+
 	CSettings();
 	virtual ~CSettings() {};
 
@@ -47,6 +51,9 @@ public:
 
 	void SaveToFile	(std::string sFilename);
 	void LoadFromFile(std::string sFilename);
+
+	void SaveWorldToFile	(std::string sFilename, CGame * pGame);
+	bool LoadWorldFromFile	(std::string sFilename, CGame * pGame);
 
 	const char* getName(int arrayIndex);
 	void setName(int arrayIndex, std::string str);

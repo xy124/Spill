@@ -43,20 +43,13 @@ CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 	g_pLogfile->Textout("Created Gameboard <br />");
 
 	
-	pair<CBlockKoord, CBlock*> Gamefield;
-	for (int x=0; x<m_GBWidth; x++) {	//fill the whole Gameboard with air
-		for (int y=0; y<m_GBHeight; y++) {	
-			CBlockKoord pos(x,y);						
-			Gamefield = make_pair( pos, new CBlock(CBlock::AIR));
-			Gamefield.second->setBuilderID(NOBODY);
-			Gamefield.second->setTeamID(NOBODY);
-			m_Gameboard.insert(Gamefield);
-		}
-	}
-	g_pLogfile->Textout("Gameboard filled with NULL... <br />");
+
 	//TODO: load World...
 	//or Take DebugWorld:
-	createDebugGameBoard();
+	if (g_pSettings->LoadWorldFromFile("world01", this) != true ) {
+		createDebugGameBoard();
+	}
+
 
 	m_pBackGround = new CBackGround();
 	m_pBackGround->init(gameBoardWidth * BLOCKSIZE);
@@ -83,6 +76,19 @@ void CGame::initWorms(int amount) {
 }
 
 void CGame::createDebugGameBoard() {//creates World for debugging
+	pair<CBlockKoord, CBlock*> Gamefield;
+	for (int x=0; x<m_GBWidth; x++) {	//fill the whole Gameboard with air
+		for (int y=0; y<m_GBHeight; y++) {
+			CBlockKoord pos(x,y);
+			Gamefield = make_pair( pos, new CBlock(CBlock::AIR));
+			Gamefield.second->setBuilderID(NOBODY);
+			Gamefield.second->setTeamID(NOBODY);
+			m_Gameboard.insert(Gamefield);
+		}
+	}
+	g_pLogfile->Textout("Gameboard filled with NULL... <br />");
+
+
 	//with a GROUND!
 	for (int x = 0; x < m_GBWidth; x++) {
 		CBlockKoord pos(x,18);
@@ -239,6 +245,7 @@ void CGame::quit() {
 	}
 
 
+	g_pSettings->SaveWorldToFile("world01",this);
 }
 
 CBlock* CGame::getBlock(CBlockKoord Where) {
