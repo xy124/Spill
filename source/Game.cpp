@@ -210,6 +210,10 @@ void CGame::renderGameboard() {
 }
 
 void CGame::quit() {
+	//save game...
+	g_pSettings->SaveWorldToFile("world01",this);
+
+
 	//DeleteWorms
 	//free Gameboard
 	//free Blockimages!
@@ -245,7 +249,7 @@ void CGame::quit() {
 	}
 
 
-	g_pSettings->SaveWorldToFile("world01",this);
+
 }
 
 CBlock* CGame::getBlock(CBlockKoord Where) {

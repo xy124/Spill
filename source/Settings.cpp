@@ -15,11 +15,11 @@
 #include "Block.hpp"
 #include "BlockKoord.hpp"
 #include <map>
-
+#include "Game.hpp"
 
 using namespace std;
 
-const int formatVersion = 1;//TODO whaa globals -__-
+const unsigned int formatVersion = 2;//TODO whaa globals -__-
 
 CSettings::CSettings() {
 	s.WormSet[0].KeyJump 				= SDLK_w;
@@ -94,14 +94,17 @@ void CSettings::SaveWorldToFile	(std::string sFilename, CGame * pGame) {
 		return;
 	}
 	//Header:
-	fwrite(pFile, formatVersion);
-	fwrite(pFile, pGame->m_Gameboard.size());
+	fwrite(&formatVersion, sizeof(unsigned int), 1, pFile);
+	long size = (long) pGame->m_Gameboard.size();
+	fwrite(&size, sizeof(long), 1, pFile);
+	g_pLogfile->fTextout("writing %i elements into file", size);
 
-	std::map<CBlockKoord,CBlock*>::iterator Mit;
+
+	std::map<CBlockKoord, CBlock*>::iterator Mit;
 
 	for (Mit = pGame->m_Gameboard.begin(); Mit != pGame->m_Gameboard.end(); ++Mit) {
-		fwrite(pFile, Mit->first);
-		fwrite(pFile, *(Mit->second));
+		fwrite(&(Mit->first), sizeof(CBlockKoord), 1, pFile);
+		fwrite((Mit->second), sizeof(CBlock), 1, pFile);
 	}
 
 	fclose(pFile);
@@ -135,22 +138,25 @@ bool CSettings::LoadWorldFromFile	(std::string sFilename, CGame * pGame) {
 		return false;
 	}
 
-	int version;
-	version = fread(pFile);
+	unsigned int version;
+	fread(&version, sizeof(unsigned int), 1, pFile);
 	if (version != formatVersion) {//wrong format!
 		return false;
 	}
 
 	long size;
-	size = fread(pFile);
+	fread(&size, sizeof(long), 1, pFile);
+	g_pLogfile->fTextout("loading %i elements from file", size);
 
 
 	pair<CBlockKoord, CBlock*> Gamefield;
+	CBlockKoord pos;
+	CBlock block;
 	for (long i = 0; i < size; ++i) {
-		CBlockKoord pos = fread(pFile);
-		CBlock block = fread(pFile);
-		Gamefield = make_pair( pos, new CBlock(block));//ion heap kopieren!
+		fread(&pos, sizeof(CBlockKoord), 1, pFile);
+		fread(&block, sizeof(CBlock), 1, pFile);
 
+		Gamefield = make_pair(pos, new CBlock(block));
 		pGame->m_Gameboard.insert(Gamefield);
 	}
 
