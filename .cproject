@@ -22,7 +22,7 @@
 							<builder buildPath="${workspace_loc:/Spill/Debug}" id="cdt.managedbuild.tool.gnu.builder.mingw.base.200335308" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" parallelBuildOn="false" parallelizationNumber="1" stopOnErr="true" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.1765468883" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug">
 								<option id="gnu.both.asm.option.include.paths.367922124" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.48865306" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -31,7 +31,7 @@
 								<option id="gnu.cpp.compiler.mingw.exe.debug.option.optimization.level.1119130298" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.mingw.exe.debug.option.debugging.level.1502248753" name="Debug Level" superClass="gnu.cpp.compiler.mingw.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1295081688" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.2090415402" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -39,7 +39,7 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.mingw.exe.debug.option.optimization.level.1145750748" name="Optimization Level" superClass="gnu.c.compiler.mingw.exe.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.mingw.exe.debug.option.debugging.level.1687051294" name="Debug Level" superClass="gnu.c.compiler.mingw.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.220801899" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1350553262" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
@@ -51,7 +51,7 @@
 									<listOptionValue builtIn="false" value="SDL"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.326513549" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/lib&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1148689478" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
 									<additionalInput kind="additionalinputdependency" paths="$(USER_OBJS)"/>
@@ -681,7 +681,8 @@
 							<builder buildPath="${workspace_loc:/Spill/Release}" id="cdt.managedbuild.tool.gnu.builder.mingw.base.1298419206" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.release.1656163249" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.release">
 								<option id="gnu.both.asm.option.include.paths.110138148" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1035525503" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -690,7 +691,8 @@
 								<option id="gnu.cpp.compiler.mingw.exe.release.option.optimization.level.1582088733" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.exe.release.option.optimization.level" value="gnu.cpp.compiler.optimization.level.most" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.mingw.exe.release.option.debugging.level.1948734867" name="Debug Level" superClass="gnu.cpp.compiler.mingw.exe.release.option.debugging.level" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.966339922" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.preprocessor.undef.2032422087" name="Undefined symbols (-U)" superClass="gnu.cpp.compiler.option.preprocessor.undef" valueType="undefDefinedSymbols">
 									<listOptionValue builtIn="false" value="__GXX_WEAK__"/>
@@ -710,7 +712,8 @@
 									<listOptionValue builtIn="false" value="c:/programme/eclipse/mingw/lib/gcc/mingw32/4.4.1-dw2/include/c++"/>
 									<listOptionValue builtIn="false" value="c:/programme/eclipse/mingw/lib/gcc/mingw32/4.4.1-dw2/include/c++/mingw32"/>
 									<listOptionValue builtIn="false" value="c:/programme/eclipse/mingw/lib/gcc/mingw32/4.4.1-dw2/include/c++/backward"/>
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.270957137" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__EXCEPTIONS=1"/>
@@ -726,7 +729,7 @@
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release.1697042343" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.release"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release.390816739" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.release">
 								<option id="gnu.cpp.link.option.paths.2048454658" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/lib&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1060246457" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="mingw32"/>
@@ -1361,7 +1364,8 @@
 							<builder buildPath="${workspace_loc:/Spill/Debug}" enabledIncrementalBuild="true" id="cdt.managedbuild.tool.gnu.builder.mingw.base.1291931095" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" stopOnErr="false" superClass="cdt.managedbuild.tool.gnu.builder.mingw.base"/>
 							<tool id="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug.1465251664" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.mingw.exe.debug">
 								<option id="gnu.both.asm.option.include.paths.246764096" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.494559373" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 							</tool>
@@ -1370,7 +1374,8 @@
 								<option id="gnu.cpp.compiler.mingw.exe.debug.option.optimization.level.389467593" name="Optimization Level" superClass="gnu.cpp.compiler.mingw.exe.debug.option.optimization.level" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.mingw.exe.debug.option.debugging.level.1113866901" name="Debug Level" superClass="gnu.cpp.compiler.mingw.exe.debug.option.debugging.level" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1862467601" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.1485545620" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
@@ -1378,14 +1383,15 @@
 								<option defaultValue="gnu.c.optimization.level.none" id="gnu.c.compiler.mingw.exe.debug.option.optimization.level.1738395904" name="Optimization Level" superClass="gnu.c.compiler.mingw.exe.debug.option.optimization.level" valueType="enumerated"/>
 								<option id="gnu.c.compiler.mingw.exe.debug.option.debugging.level.1533552080" name="Debug Level" superClass="gnu.c.compiler.mingw.exe.debug.option.debugging.level" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.include.paths.1695701356" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\include\SDL&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/include/SDL&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1812541193" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug.541524460" name="MinGW C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.mingw.exe.debug"/>
 							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug.2092561128" name="MinGW C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.mingw.exe.debug">
 								<option id="gnu.cpp.link.option.paths.961803267" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
-									<listOptionValue builtIn="false" value="&quot;D:\Daten\Programmierung\SDL-1.2.14_MINGW\lib&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${SDL_HOME}/lib&quot;"/>
 								</option>
 								<option id="gnu.cpp.link.option.libs.1260263780" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="mingw32"/>

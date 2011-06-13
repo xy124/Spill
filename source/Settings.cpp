@@ -130,6 +130,8 @@ void CSettings::SaveWorldToFile	(std::string sFilename, CGame * pGame) {
 
 
 bool CSettings::LoadWorldFromFile	(std::string sFilename, CGame * pGame) {
+	return false;//FIXME make it working ;)
+
 	FILE * pFile;
 	pFile = fopen((sFilename+".world").c_str(), "r");
 	if (pFile == NULL) {

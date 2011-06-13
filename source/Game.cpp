@@ -13,7 +13,6 @@ using namespace std;
 
 CGame::CGame(int amountOfPlayers, int gameBoardWidth, int gameBoardHeight) {
 	//TODO: cut in more functions!
-
 	if (amountOfPlayers > 4) {
 		amountOfPlayers = 4;
 		CLogfile::get()->Textout("Can't Create so many Players, will create 4<br />");
@@ -151,6 +150,9 @@ void CGame::run() {
 
 		//nimmt unwesentliche Zeit von 1ms:
 		//g_pFramework->Clear(); //Clear current surface
+#ifdef ac
+		g_pLogfile->Textout("<br/ >");
+#endif
 		startWatch();
 		m_pBackGround->render();
 		stopWatch("rendered back");
