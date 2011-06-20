@@ -50,7 +50,7 @@ void CSprite::Load(const string sFilename, bool isBackGround, bool isInWorld ) {
 			exit(1);
 		}
 
-		SDL_DisplayFormat(cpImage);
+
 
 		SDL_LockSurface(cpImage);//hoffe man kann so die adresse einer referenz erhalten!!!
 
@@ -78,7 +78,14 @@ void CSprite::Load(const string sFilename, bool isBackGround, bool isInWorld ) {
 
 		SDL_SetColorKey(cpImage, SDL_SRCCOLORKEY, SDL_MapRGB(cpImage->format, r, g, b) );
 
-		m_pImages.push_back(cpImage);
+		SDL_Surface * cpImageInDisplayFormat;
+		cpImageInDisplayFormat = SDL_DisplayFormat(cpImage);
+
+		m_pImages.push_back(cpImageInDisplayFormat);
+
+		cpImageInDisplayFormat = NULL;
+
+		SDL_FreeSurface(cpImage);
 
 		cpImage = NULL;
 	}
