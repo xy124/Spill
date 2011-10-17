@@ -19,9 +19,11 @@
 using namespace std;
 
 CSpritepool::CSpritepool() {
+/*
+ * Sprites...
+ */
 	//load all sprites in Heap!
 	CSprite * pSprite;
-
 //Cannonball
 	pSprite = new CSprite();
 	pSprite->Load(_DIRDATA_+"/CannonBall.bmp");
@@ -154,13 +156,12 @@ CSpritepool::CSpritepool() {
 	}
 
 	/*
-	 * Texture
+	 * Textures
 	 */
 	CTexture * pTexture;
 	pTexture = new CTexture();
 	pTexture->Load(_DIRDATA_+"/lightening.bmp");
 	CAA_Cloud::setTextureSprite(pTexture);
-	//TODO: pTexture isn't freed at the end!
 	pTexture = NULL;
 
 	g_pLogfile->Textout("<br />Successful loaded Sprites!");
@@ -171,6 +172,10 @@ CSpritepool::~CSpritepool() {
 	for (it = m_pSprites.begin(); it != m_pSprites.end(); ++it) {
 		delete (it->second);
 	}
+
+	//TODO: delete Texture too!
+
+
 }
 
 CSprite* CSpritepool::at(SPRITEID::S i) {

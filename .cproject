@@ -60,6 +60,7 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
+					<fileInfo id="cdt.managedbuild.config.gnu.mingw.exe.debug.1894231365.2141520922" name="IMoney.hpp" rcbsApplicability="disable" resourcePath="source/items/IMoney.hpp" toolsToInvoke=""/>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="source"/>
 					</sourceEntries>

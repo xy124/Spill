@@ -11,6 +11,9 @@
 #include <SDL.h>
 #include <string>
 
+/**
+ * Use Textures for draw-tools, @see lightening of CAA_Clouds
+ */
 class CTexture {
 public:
 	CTexture() {};
